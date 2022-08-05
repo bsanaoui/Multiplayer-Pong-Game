@@ -1,0 +1,8 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/bsanaoui/Documents/42/Multiplayer-Pong-Game'
+git add .
+git commit -m ""
+git push origin
+ 
+make: Leaving directory `/Users/bsanaoui/Documents/42/Multiplayer-Pong-Game'
+ 
