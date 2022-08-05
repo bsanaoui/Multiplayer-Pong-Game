@@ -8,4 +8,5 @@
 
 # CSS Styles && Material UI:
 
+`* aria-label="logo" `
 `* `
