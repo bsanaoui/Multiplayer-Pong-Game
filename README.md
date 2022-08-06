@@ -9,4 +9,10 @@
 # CSS Styles && Material UI:
 
 `* aria-label="logo" `
-`* `
+`*  sx={{flexGrow: 1}}`
+    This property specifies how much of the remaining space in the flex container should be assigned to the item
+
+`* <Stack> Component:`
+    Stack is concerned with one-dimensional layouts, while Grid handles two-dimensional layouts. The default direction is column which stacks children vertically.
+
+`* :`
