@@ -2,6 +2,7 @@
 import './App.css';
 import MuiTypography from './components/MuiTypography';
 import MuiNavbar from './components/MuiNavbar';
+import Main from './components/Main'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,6 +18,7 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <MuiNavbar></MuiNavbar>
+      <Main></Main>
     </ThemeProvider>
   );
 }
