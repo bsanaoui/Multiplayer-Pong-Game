@@ -2,7 +2,7 @@ import { Avatar } from "@mui/material"
 
 const Main = () => {
     return (
-        <Avatar></Avatar>
+        <div></div>
     )
 }
 

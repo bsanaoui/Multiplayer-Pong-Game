@@ -11,6 +11,13 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
   },
+  
+  typography: {
+    fontFamily: [
+      "Exo",
+      "sans-serif"
+    ].join(",")
+  }
 });
 
 function App() {

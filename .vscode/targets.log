@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Sat Aug  6 19:41:14 2022
+# Make data base, printed on Mon Aug  8 16:17:14 2022
 
 # Variables
 
@@ -37,7 +37,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.KKGwOFfBCP/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.zK3idHzrrl/Render
 # environment
 PATH = /Volumes/USB-FIT/InstalledApp/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
 # environment
@@ -47,7 +47,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.LZ0FxWqhCZ/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.Q9xvJr99BO/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -111,7 +111,7 @@ MFLAGS = -Rrqp
 # environment
 NVM_DIR = /Volumes/USB-FIT/InstalledApp/.nvm
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000003.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000005.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -129,7 +129,7 @@ PAGER = less
 # environment
 LC_ALL = C
 # environment
-SECURITYSESSIONID = 186a8
+SECURITYSESSIONID = 186f2
 # automatic
 ^F = $(notdir $^)
 # default
@@ -141,7 +141,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 1486
+VSCODE_PID = 25307
 # variable set hash-table stats:
 # Load=64/1024=6%, Rehash=0, Collisions=1/88=1%
 
@@ -214,6 +214,6 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Aug  6 19:41:14 2022
+# Finished Make data base on Mon Aug  8 16:17:14 2022
 
  
