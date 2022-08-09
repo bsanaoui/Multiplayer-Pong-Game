@@ -22,7 +22,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-} 
+}
 
 .App-link {
   color: #61dafb;
@@ -32,7 +32,25 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.center-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+}
+
+.button-custom {
+  position: absolute;
+  width: 70%;
+  height: 75%;
+  
+
+  background: linear-gradient(90.01deg, #E39024 -5.18%, #E91035 99.99%);
+  border-radius: 100px;
 }

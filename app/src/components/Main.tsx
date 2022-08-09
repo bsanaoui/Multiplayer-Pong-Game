@@ -1,8 +1,18 @@
-import { Avatar } from "@mui/material"
+import { Avatar, Stack } from "@mui/material"
+import Header from "./Header"
+import ProtectedRooms from "./ProtectedRooms"
+import PublicRooms from "./PublicRooms"
 
 const Main = () => {
     return (
-        <div></div>
+        <Stack spacing={2}
+                sx={{
+                    height:'100vh'
+                }}>
+            <Header></Header>
+            <PublicRooms></PublicRooms>
+            <ProtectedRooms></ProtectedRooms>
+        </Stack>
     )
 }
 
