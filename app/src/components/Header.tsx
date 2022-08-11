@@ -11,57 +11,40 @@ const Header = () => {
 		<Box
 			sx={{
 				width: '100%',
-				height: '15vh',
-				backgroundColor: '#001E3C',
+				backgroundColor: '#000',
 			}}
 		>
 			<Stack
 				direction="row"
-				spacing={1}
-				sx={{
-					height: '100%'
-				}}>
+				spacing={1}>
 				<Box
 					sx={{
 						width: '100%',
-						backgroundColor: '#005E3C',
 					}}>
 					<Stack
-						spacing={1}
-						sx={{
-							height: '15vh',
-						}}>
+						spacing={1}>
 						<Box
 							sx={{
 								height: "50%",
-								backgroundColor: '#008E3C',
 							}}>
-							<img src={HeaderPong} className="center-img" />
+							<img src={HeaderPong} className="center-img" height="130px" />
 						</Box>
-						<Box
-							sx={{
-								height: "50%",
-								backgroundColor: '#008E3C',
-							}}>
-							<Button className='button-custom'>
-								<Typography variant="h6">
-									Start a new room
-								</Typography>
-							</Button>
+						<Box className='center-button ' >
+							<div className='button-custom center-text center-button' style={{width: '280px'}}>
+								Start a new room
+							</div>
 						</Box>
 					</Stack>
 				</Box>
 				<Box
 					sx={{
 						width: '100%',
-						backgroundColor: '#007E3C',
 					}}>
-					<img src={animatedPong} className="center-img" />
+					<img src={animatedPong} className="center-img" height="210px" />
 				</Box>
 				<Box
 					sx={{
 						width: '100%',
-						backgroundColor: '#005E3C',
 					}}></Box>
 			</Stack>
 		</Box>
