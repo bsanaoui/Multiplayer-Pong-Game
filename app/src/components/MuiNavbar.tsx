@@ -184,38 +184,6 @@ const MuiNavbar = () => {
 				</Toolbar>
 			</Container>
 		</AppBar>
-		// <AppBar position="static">
-		// 	<Toolbar>
-		// 		<IconButton size="large" edge="start" color="inherit" aria-label="logo">
-		// 			<SportsEsportsIcon />
-		// 		</IconButton>
-		// 		<Typography variant="h6" component='div' sx={{ flexGrow: 2 }} fontWeight="bold">
-		// 			PONG GAME ONLINE
-		// 		</Typography>
-		// 		<Stack direction='row' spacing={1} alignItems ='center'>
-		// 			<Button color="inherit">Matchmaking</Button>
-		// 			<Button color="inherit">Live Games</Button>
-		// 			<Button color="inherit">Friends</Button>
-		// 			<Button color="inherit">Rooms</Button>
-		// 			<Button color="inherit">Chat</Button>
-		// 			<Button color="inherit">Profile</Button>
-		// 			<IconButton
-		// 				size="large"
-		// 				aria-label="show 9 new notifications"
-		// 				color="inherit"
-		// 			>
-		// 				<Badge badgeContent={9} color="error">
-		// 					<NotificationsIcon />
-		// 				</Badge>
-		// 			</IconButton>
-		// 			{/* <Typography>
-		// 				<Typography variant="h6" component='div'>Bsanaoui</Typography>
-		// 				<Typography variant="body2">My Account</Typography>
-		// 			</Typography> */}
-		// 			<Avatar src={customAvatar} />
-		// 		</Stack>
-		// 	</Toolbar>
-		// </AppBar>
 	);
 }
 

@@ -6,12 +6,13 @@ import PublicRooms from "./PublicRooms"
 const Main = () => {
     return (
         <Stack spacing={2}
-                sx={{
-                    height:'100vh'
-                }}>
-            <Header></Header>
+                // sx={{
+                //     height:'100vh'
+                // }}
+                >
+            {/* <Header></Header> */}
             <PublicRooms></PublicRooms>
-            <ProtectedRooms></ProtectedRooms>
+            {/* <ProtectedRooms></ProtectedRooms> */}
         </Stack>
     )
 }

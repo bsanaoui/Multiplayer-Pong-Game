@@ -64,3 +64,34 @@
   font-weight: 700;
 
 }
+
+.room-title {
+  display: inline-block;
+  height: 35px;
+  background: #E91E63 ;
+  border-radius: 45px;
+}
+
+.dot {
+  height: 37px;
+  width: 37px;
+  background-color: #BF360D ;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+
+  border: 2px solid #8941EA;
+	border-radius: '28px'
+}
+/* .room-button {
+  width: 320px;
+	height: 230px;
+  box-sizing: border-box;
+
+  background: linear - gradient(110.14deg, #355B88 27.7%, #341760 83.08%);
+	border: 2px solid #FFFFFF;
+	border-radius: '27px'
+
+  font-family: 'Lexend', sans-serif;
+
+} */

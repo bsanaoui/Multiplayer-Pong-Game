@@ -27,7 +27,7 @@ const Header = () => {
 						}}>
 						<img src={HeaderPong} className="center-img" height="130px" />
 					</Box>
-					<Box className='center-button ' >
+					<Box className='center-button' >
 						<div className='button-custom center-text center-button' style={{ width: '280px' }}>
 							Start a new room
 						</div>
