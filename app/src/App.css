@@ -83,15 +83,37 @@
   border: 2px solid #8941EA;
 	border-radius: '28px'
 }
-/* .room-button {
-  width: 320px;
-	height: 230px;
+
+.dot-dotted {
+  height: 37px;
+  width: 37px;
+  border-radius: 50%;
+  display: inline-block;
+
+  border: 3px dotted #FFF;
+	border-radius: '28px'
+}
+
+/* *********** Scrooling horizontal **************** */
+.horizontal_slider {
+  display: block;
+  width: 100%;
+  overflow-x: scroll;
+  padding: 25px 0px;
   box-sizing: border-box;
+}
 
-  background: linear - gradient(110.14deg, #355B88 27.7%, #341760 83.08%);
-	border: 2px solid #FFFFFF;
-	border-radius: '27px'
-
-  font-family: 'Lexend', sans-serif;
-
+/*this is for chrome / firefox/ opera and safari*/
+/* .horizontal_slider::-webkit-scrollbar {
+  display: none;
 } */
+
+.slider_container {
+  display: block;
+  white-space: nowrap;
+}
+
+.item {
+  display: inline-block;
+  margin-right: 10px;
+}

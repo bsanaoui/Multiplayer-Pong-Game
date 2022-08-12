@@ -14,7 +14,7 @@ const darkTheme = createTheme({
   
   typography: {
     fontFamily: [
-      "Exo",
+      "Lexer",
       "sans-serif"
     ].join(",")
   }
