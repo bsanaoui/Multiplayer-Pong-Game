@@ -24,7 +24,7 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <MuiNavbar></MuiNavbar>
+      {/* <MuiNavbar></MuiNavbar> */}
       <Main></Main>
     </ThemeProvider>
   );
