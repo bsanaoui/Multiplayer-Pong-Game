@@ -21,7 +21,7 @@ const PublicRooms = ({kind}:RoomProps) => {
 			spacing={2}
 			sx={{
 				width: '100%',
-				marginLeft: '50px'
+				// marginLeft: '50px'
 			}}>
 			<Stack
 				spacing={2}

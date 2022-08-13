@@ -7,22 +7,23 @@ import User from "./User"
 
 const Main = () => {
     return (
-        <Stack spacing={2}
-            sx={{
-                // height: '100vh',
-            }}
-        >
-            {/* <Header/> */}
-            {/* <Stack
-                spacing={3}
-                sx={{
-                    margin:"50px"
-                }}>
-                <PublicRooms kind="Public rooms"/>
-                <PublicRooms kind="Protected rooms"/>
-            </Stack> */}
-            <AllUsers/>
-        </Stack>
+        // <Stack spacing={2}
+        //     sx={{
+        //         height: '100vh',
+        //     }}
+        // >
+        <div>
+            <Header/>
+            <Stack
+                marginTop='100px'
+                marginLeft='30px'
+                spacing={3}>
+                <PublicRooms kind="Public rooms" />
+                <PublicRooms kind="Protected rooms" />
+            </Stack>
+            <AllUsers />
+        </div>
+        // </Stack>
     )
 }
 
