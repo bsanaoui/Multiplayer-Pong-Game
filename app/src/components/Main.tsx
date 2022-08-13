@@ -7,15 +7,10 @@ import User from "./User"
 
 const Main = () => {
     return (
-        // <Stack spacing={2}
-        //     sx={{
-        //         height: '100vh',
-        //     }}
-        // >
         <div>
             <Header/>
             <Stack
-                marginTop='100px'
+                marginTop='45px'
                 marginLeft='30px'
                 spacing={3}>
                 <PublicRooms kind="Public rooms" />
@@ -23,7 +18,6 @@ const Main = () => {
             </Stack>
             <AllUsers />
         </div>
-        // </Stack>
     )
 }
 
