@@ -1,4 +1,5 @@
 import { Avatar, Stack } from "@mui/material"
+import AllUsers from "./AllUsers"
 import Header from "./Header"
 import ProtectedRooms from "./ProtectedRooms"
 import PublicRooms from "./PublicRooms"
@@ -20,7 +21,7 @@ const Main = () => {
                 <PublicRooms kind="Public rooms"/>
                 <PublicRooms kind="Protected rooms"/>
             </Stack> */}
-            <User/>
+            <AllUsers/>
         </Stack>
     )
 }

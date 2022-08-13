@@ -83,6 +83,16 @@
   border: 2px solid #8941EA;
 	border-radius: '28px'
 }
+/* **************** For User ************************ */
+.dot_status{
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+}
+
+/* ************************************************** */
 
 .dot-dotted {
   height: 37px;
