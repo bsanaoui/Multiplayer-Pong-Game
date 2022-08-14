@@ -6,12 +6,19 @@ import Main from './components/Main'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import MessageRecieved from './components/MessageRecieved';
+import MessageSent from './components/MessageSent';
+import Friends from './components/Friend';
+import Friend from './components/Friend';
+import { Room } from '@mui/icons-material';
+import Room_ from './components/Room_';
+import ChatUI from './components/ChatUI';
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
   },
-  
+
   typography: {
     fontFamily: [
       "Lexer",
@@ -24,10 +31,17 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <MuiNavbar></MuiNavbar>
-      <Main></Main>
+      {/* <MuiNavbar></MuiNavbar> 
+      <Main></Main>  */}
+      {/* <MessageSent msg={msg}/>
+      <MessageRecieved msg={msg}/> */}
+      {/* <Room_ name="CMOS 2.X Ava"/>
+      {/* <ChatUI/> */}
     </ThemeProvider>
   );
 }
+
+//******************* Temp Data ********************** //
+const msg: string = "typesetting industry. Lorem Ipsum Dom";
 
 export default App;

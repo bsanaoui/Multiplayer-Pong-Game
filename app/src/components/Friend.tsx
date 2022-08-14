@@ -1,20 +1,23 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import avatar2 from '../assets/avatar2.png'
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
+interface FriendProps{
+  name:string
+}
 
-
-const User = () => {
+const Friend = ({name}:FriendProps) => {
   return (
     <Box
       sx={{
-        backgroundColor: "#242526",
-        width: '320px',
-        height: '63px',
+        backgroundColor: "#4289F3", // 2E3256
+        width: '310px',
+        height: '56px',
         paddingTop: '5px',
-        paddingLeft: '13px'
+        paddingLeft: '13px',
+        borderRadius: '14px',
       }}>
-      <Stack spacing={2} direction="row">
+      <Stack spacing={2} direction="row"
+          sx={{paddingTop:'0.22em'}}>
         <div>
           <Badge
             overlap="circular"
@@ -25,8 +28,8 @@ const User = () => {
           >
             <Avatar
               sx={{
-                height: '50px',
-                width: '50px',
+                height: '38px',
+                width: '38px',
                 backgroundColor: "#FFF",
                 padding: "3px",
               }}
@@ -36,24 +39,14 @@ const User = () => {
         <Stack>
           <Typography
             sx={{
-              fontWeight: '600',
-              fontSize: '1.4rem',
-            }}>Lion</Typography>
-          <Stack direction="row" spacing={0.5}>
-            <SportsEsportsIcon sx={{ width: "19px" }} />
-            <Typography
-              sx={{
-                color: '#ADADAD',
-                fontWeight: '600',
-                fontSize: '0.9rem',
-                paddingTop: '1.3px',
-              }}>
-              Level 23</Typography>
-          </Stack>
+              fontWeight: '500',
+              fontSize: '1.7rem',
+              fontStyle: 'normal',
+            }}>{name}</Typography>
         </Stack>
       </Stack>
     </Box>
   )
 }
 
-export default User
+export default Friend

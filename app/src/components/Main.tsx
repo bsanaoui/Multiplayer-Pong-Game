@@ -11,7 +11,7 @@ const Main = () => {
             <Header/>
             <Stack
                 marginTop='45px'
-                marginLeft='30px'
+                marginLeft='50px'
                 spacing={3}>
                 <PublicRooms kind="Public rooms" />
                 <PublicRooms kind="Protected rooms" />
