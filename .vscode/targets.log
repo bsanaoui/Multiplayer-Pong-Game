@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Tue Aug 16 15:22:38 2022
+# Make data base, printed on Tue Aug 16 19:40:24 2022
 
 # Variables
 
@@ -39,7 +39,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.9OT19mVmN4/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.Cnhyfy9Svo/Render
 # environment
 PATH = /Volumes/USB-FIT/InstalledApp/.nvm/versions/node/v18.4.0/bin:/Volumes/USB-FIT/InstalledApp/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
 # environment
@@ -51,7 +51,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.Qw0irAIcps/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.DsL4K0GgnG/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -117,7 +117,7 @@ MFLAGS = -Rrqp
 # environment
 NVM_DIR = /Volumes/USB-FIT/InstalledApp/.nvm
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000002.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000004.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -135,7 +135,7 @@ PAGER = less
 # environment
 LC_ALL = C
 # environment
-SECURITYSESSIONID = 186a8
+SECURITYSESSIONID = 186cc
 # automatic
 ^F = $(notdir $^)
 # default
@@ -147,7 +147,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 3747
+VSCODE_PID = 10698
 # variable set hash-table stats:
 # Load=67/1024=7%, Rehash=0, Collisions=1/91=1%
 
@@ -157,7 +157,7 @@ VSCODE_PID = 3747
 
 # Directories
 
-# . (device 16777227, inode 1005897): 8 files, no impossibilities.
+# . (device 16777232, inode 1005897): 8 files, no impossibilities.
 
 # 8 files, no impossibilities in 1 directories.
 
@@ -220,6 +220,6 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Tue Aug 16 15:22:38 2022
+# Finished Make data base on Tue Aug 16 19:40:24 2022
 
  

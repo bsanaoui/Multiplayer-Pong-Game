@@ -8,34 +8,35 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MessageRecieved from './components/MessageRecieved';
 import MessageSent from './components/MessageSent';
-import Friends from './components/Friend';
+import Friends from './components/Friends';
 import Friend from './components/Friend';
 import { Room } from '@mui/icons-material';
 import Room_ from './components/Room_';
 import ChatUI from './components/ChatUI';
 
 const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
+	palette: {
+		mode: 'dark',
+	},
 
-  typography: {
-    fontFamily: [
-      "Lexer",
-      "sans-serif"
-    ].join(",")
-  }
+	typography: {
+		fontFamily: [
+			"Lexer",
+			"sans-serif"
+		].join(",")
+	}
 });
 
 function App() {
-  return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-     {/* <MuiNavbar></MuiNavbar> 
-      <Main></Main> */}
-     <ChatUI/>
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider theme={darkTheme}>
+			<CssBaseline />
+			{/* <MuiNavbar></MuiNavbar> */}
+			{/* <Main></Main> */}
+			<ChatUI />
+			{/* <Friends/> */}
+		</ThemeProvider >
+	);
 }
 
 //******************* Temp Data ********************** //

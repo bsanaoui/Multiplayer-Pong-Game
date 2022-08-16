@@ -4,7 +4,6 @@ import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
 import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
-// import sendIcon from '../assets/send_icon.png'
 
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -32,7 +31,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const msgs = Array.from({ length: 1 }, (_, index) => {
+const msgs = Array.from({ length: 5 }, (_, index) => {
     return (
         <div >
             <div style={{ float: 'right', marginTop: "5px" }}>
@@ -59,14 +58,16 @@ const ChatUI = () => {
                 backgroundColor: "#202541",
                 width: "600px",
                 height: '100vh',
+                // height: 'calc( 100vh - 67px )',
+                borderLeft: "1px solid #FFFFFF"
 
             }}>
             <Stack height='inherit'>
-                {/* <div>
+                <div>
                     <HeaderChat name="JockThem" />
-                </div> */}
-                <Stack spacing={2} direction="column-reverse" sx={{ width: "532px", height: "calc( 100vh - 67px )", margin: 'auto', marginBottom: "35px" }}>
-                    {/* <Stack direction="row">
+                </div>
+                <Stack spacing={2} direction="column-reverse" sx={{ width: "532px", minHeight: "calc( 100vh - 67px )", margin: 'auto'}}>
+                    <Stack direction="row" marginBottom="45px">
                         <FormControl variant="standard" >
                             <BootstrapInput placeholder="Write a message ..." id="bootstrap-input" />
                         </FormControl>
@@ -77,8 +78,8 @@ const ChatUI = () => {
                                 <SendIcon />
                             </Button>
                         </div>
-                    </Stack> */}
-                    <List style={{ height: "100vh", overflow: 'auto', padding: '0 6px 0px 5px' }} >
+                    </Stack>
+                    <List style={{ overflow: 'auto', padding: '0 6px 0px 5px' }} >
                         {msgs}
                     </List>
                 </Stack>
