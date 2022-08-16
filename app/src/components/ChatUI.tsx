@@ -1,4 +1,4 @@
-import { alpha, Button, FormControl, IconButton, InputBase, InputLabel, Stack, styled } from '@mui/material'
+import { Button, FormControl, InputBase, List, Stack, styled } from '@mui/material'
 import { Box } from '@mui/system'
 import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
@@ -25,12 +25,31 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
             'background-color',
             'box-shadow',
         ]),
-        '&:focus': {
-            // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-            // borderColor: theme.palette.primary.main,
-        },
+        // '&:focus': {
+        //     boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+        //     borderColor: theme.palette.primary.main,
+        // },
     },
 }));
+
+const msgs = Array.from({ length: 1 }, (_, index) => {
+    return (
+        <div >
+            <div style={{ float: 'right', marginTop: "5px" }}>
+                <MessageSent msg="Caveat with refs Caveat with refs Caveat with refs" />
+            </div>
+            <div style={{ float: 'left', marginTop: "5px" }}>
+                <MessageRecieved msg="Hello industry. Lorem Ipsum Dom" />
+            </div>
+            <div style={{ float: 'left', marginTop: "5px" }}>
+                <MessageRecieved msg="Lorem Ipsum Dom ?" />
+            </div>
+            <div style={{ float: 'right', marginTop: "5px" }}>
+                <MessageSent msg="See you" />
+            </div>
+        </div>
+    );
+});
 
 const ChatUI = () => {
     return (
@@ -39,30 +58,34 @@ const ChatUI = () => {
             sx={{
                 backgroundColor: "#202541",
                 width: "600px",
-                height: '100vw',
+                height: '100vh',
 
             }}>
-            <Stack spacing={2}>
-                <HeaderChat name="JockThem" />
-                {/* <MessageSent msg={msg}/>
-                <MessageRecieved msg={msg}/>    */}
-                <Stack direction="row">
-                    <FormControl variant="standard" sx={{ paddingLeft: "20px" }}>
-                        <BootstrapInput defaultValue="Write a message ..." id="bootstrap-input" />
-                    </FormControl>
-                    <div style={{
-                        backgroundColor: "#151416", padding: "10px", borderRadius: '0 12px 12px 0',
-                    }}>
-                        <Button sx={{ backgroundColor: "#3475D7", height: "50px", color: "#FFF" }}>
-                            <SendIcon />
-                        </Button>
-                    </div>
+            <Stack height='inherit'>
+                {/* <div>
+                    <HeaderChat name="JockThem" />
+                </div> */}
+                <Stack spacing={2} direction="column-reverse" sx={{ width: "532px", height: "calc( 100vh - 67px )", margin: 'auto', marginBottom: "35px" }}>
+                    {/* <Stack direction="row">
+                        <FormControl variant="standard" >
+                            <BootstrapInput placeholder="Write a message ..." id="bootstrap-input" />
+                        </FormControl>
+                        <div style={{
+                            backgroundColor: "#151416", padding: "10px", borderRadius: '0 12px 12px 0',
+                        }}>
+                            <Button sx={{ backgroundColor: "#3475D7", height: "50px", color: "#FFF" }}>
+                                <SendIcon />
+                            </Button>
+                        </div>
+                    </Stack> */}
+                    <List style={{ height: "100vh", overflow: 'auto', padding: '0 6px 0px 5px' }} >
+                        {msgs}
+                    </List>
                 </Stack>
             </Stack>
         </Box>
     )
 }
 
-const msg: string = "typesetting industry. Lorem Ipsum Dom";
 
 export default ChatUI

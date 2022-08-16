@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Stack, Typography } from '@mui/material'
 import avatar2 from '../assets/avatar2.png'
 import dot3Icon from '../assets/dot3_white.png'
 
@@ -12,11 +12,11 @@ const HeaderChat = ({ name }: FriendProps) => {
             sx={{
                 backgroundColor: "#2E3256",
                 width: '540px',
-                height: '65px',
+                height: '67px',
                 paddingTop: '5px',
                 paddingLeft: '13px',
                 borderRadius: '0 0 15px 15px',
-                margin:'auto'
+                margin:'auto',
             }}>
             <Stack spacing={2} direction="row"
                 sx={{ paddingTop: '0.22em' }}>

@@ -11,6 +11,7 @@ const users = Array.from({ length: 15 }, (_, index) => {
 		</div>
 	);
 });
+
 function AllUsers() {
 	return (
 		<Box
@@ -50,7 +51,7 @@ function AllUsers() {
 				</div>
 			</Stack>
 			<List style={{ maxHeight: '100%', overflow: 'auto' }} >
-				{users}
+				{users} 
 			</List>
 
 

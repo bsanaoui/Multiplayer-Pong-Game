@@ -31,17 +31,14 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      {/* <MuiNavbar></MuiNavbar> 
-      <Main></Main>  */}
-      {/* <MessageSent msg={msg}/>
-      <MessageRecieved msg={msg}/> */}
-      {/* <Room_ name="CMOS 2.X Ava"/>
-      {/* <ChatUI/> */}
+     {/* <MuiNavbar></MuiNavbar> 
+      <Main></Main> */}
+     <ChatUI/>
     </ThemeProvider>
   );
 }
 
 //******************* Temp Data ********************** //
-const msg: string = "typesetting industry. Lorem Ipsum Dom";
+const msg: string = "Hello industry. Lorem Ipsum Dom";
 
 export default App;
