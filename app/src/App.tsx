@@ -21,7 +21,7 @@ const darkTheme = createTheme({
 
 	typography: {
 		fontFamily: [
-			"Lexer",
+			"Lexend",
 			"sans-serif"
 		].join(",")
 	}
@@ -33,8 +33,8 @@ function App() {
 			<CssBaseline />
 			{/* <MuiNavbar></MuiNavbar> */}
 			{/* <Main></Main> */}
-			<ChatUI />
-			{/* <Friends/> */}
+			{/* <ChatUI /> */}
+			<Friends/>
 		</ThemeProvider >
 	);
 }

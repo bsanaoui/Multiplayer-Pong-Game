@@ -85,6 +85,18 @@
   border: 2px solid #8941EA;
 	border-radius: '28px'
 }
+
+.dot-nb {
+  height: 22px;
+  width: 22px;
+  background-color: #F86968 ;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
 /* **************** For User ************************ */
 .dot_status{
   height: 15px;
