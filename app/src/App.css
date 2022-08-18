@@ -87,8 +87,8 @@
 }
 
 .dot-nb {
-  height: 22px;
-  width: 22px;
+  height: 20px;
+  width: 20px;
   background-color: #F86968 ;
   border-radius: 50%;
   display: inline-block;
@@ -138,6 +138,11 @@
   margin-right: 30px;
 }
 
+.item-friend{
+  display: inline-block;
+  margin-right: 30px;
+  margin-bottom: 13px;
+}
 /* *********** Scrooling Vertical **************** */
 
 .vertical_slider {

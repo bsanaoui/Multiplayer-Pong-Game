@@ -9,15 +9,13 @@ const Friend = ({name}:FriendProps) => {
   return (
     <Box
       sx={{
-        backgroundColor: "#4289F3", // 2E3256
-        width: '310px',
-        height: '56px',
-        paddingTop: '5px',
-        paddingLeft: '13px',
+        backgroundColor: "#2E3256", // #4289F3
+        width: '420px',
+        height: '66px',
         borderRadius: '14px',
       }}>
       <Stack spacing={2} direction="row"
-          sx={{paddingTop:'0.22em'}}>
+          sx={{padding:'0.9em'}}>
         <div>
           <Badge
             overlap="circular"
@@ -28,8 +26,8 @@ const Friend = ({name}:FriendProps) => {
           >
             <Avatar
               sx={{
-                height: '38px',
-                width: '38px',
+                height: '36px',
+                width: '37px',
                 backgroundColor: "#FFF",
                 padding: "3px",
               }}
@@ -39,8 +37,9 @@ const Friend = ({name}:FriendProps) => {
         <Stack>
           <Typography
             sx={{
+              fontFamily: 'Lexend',
               fontWeight: '500',
-              fontSize: '1.7rem',
+              fontSize: '1.4rem',
               fontStyle: 'normal',
             }}>{name}</Typography>
         </Stack>

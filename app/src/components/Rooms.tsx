@@ -1,6 +1,6 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
-import messengerIcon from '../assets/messenger.png'
-import Friend from './Friend';
+import roomIcon from '../assets/group.png'
+import Room_ from './Room_';
 
 
 function pickRandom() {
@@ -9,15 +9,15 @@ function pickRandom() {
     return names[Math.floor(Math.random() * names.length)];
 }
 
-const friends = Array.from({ length: 5 }, (_, index) => {
+const rooms = Array.from({ length: 5 }, (_, index) => {
     return (
         <div className='item-friend'>
-            <Friend name={pickRandom()} />
+            <Room_ name={pickRandom()} />
         </div>
     );
 });
 
-const Friends = () => {
+const Rooms = () => {
     return (
         <Box
             sx={{
@@ -30,7 +30,7 @@ const Friends = () => {
             <Stack height="100%">
                 <Stack spacing={1} direction="row">
                     <IconButton>
-                        <img src={messengerIcon} width="37px" />
+                        <img src={roomIcon} width="37px" />
                     </IconButton>
                     <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                         <Typography sx={{
@@ -39,7 +39,7 @@ const Friends = () => {
                             lineHeight: '109.52%',
 
                         }}>
-                            Instant Messaging
+                            Chat Room
                         </Typography>
                     </div>
                 </Stack>
@@ -50,7 +50,7 @@ const Friends = () => {
                         lineHeight: '109.52%',
 
                     }}>
-                        Friends
+                        Rooms
                     </Typography>
                     <div className='dot-nb center-button'>
                         8
@@ -69,11 +69,11 @@ const Friends = () => {
                     </div>
                 </Stack>
                 <List style={{ overflow: 'auto', height:"100%"}} >
-                    {friends}
+                    {rooms}
                 </List>
             </Stack>
         </Box>
     )
 }
 
-export default Friends
+export default Rooms

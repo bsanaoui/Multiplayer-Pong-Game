@@ -17,20 +17,18 @@ const Room_ = ({ name }: RoomProps) => {
         <div>
             <Box
                 sx={{
-                    backgroundColor: "#4289F3", // 2E3256
-                    width: '310px',
-                    height: '54px',
-                    paddingTop: '9px',
-                    paddingLeft: '13px',
+                    backgroundColor: "#2E3256", // 2E3256
+                    width: '420px',
+                    height: '66px',
                     borderRadius: '14px',
                 }}>
-                <Stack spacing={2} direction="row"
+                <Stack spacing={2} direction="row" padding="0.9em"
                 >
                     <div>
                         <Avatar
                             sx={{
-                                height: '35px',
-                                width: '35px',
+                                height: '33px',
+                                width: '33px',
                                 backgroundColor: "#FFF",
                                 padding: "3px",
                             }}>
@@ -40,8 +38,9 @@ const Room_ = ({ name }: RoomProps) => {
                     <Stack>
                         <Typography
                             sx={{
+                                fontFamily:'Lexend',
                                 fontWeight: '500',
-                                fontSize: '1.4rem',
+                                fontSize: '1.3rem',
                                 fontStyle: 'normal',
                             }}>{name}</Typography>
                     </Stack>

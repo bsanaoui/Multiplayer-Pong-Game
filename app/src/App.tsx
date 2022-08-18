@@ -13,6 +13,8 @@ import Friend from './components/Friend';
 import { Room } from '@mui/icons-material';
 import Room_ from './components/Room_';
 import ChatUI from './components/ChatUI';
+import Rooms from './components/Rooms';
+import { Stack } from '@mui/material';
 
 const darkTheme = createTheme({
 	palette: {
@@ -34,7 +36,12 @@ function App() {
 			{/* <MuiNavbar></MuiNavbar> */}
 			{/* <Main></Main> */}
 			{/* <ChatUI /> */}
-			<Friends/>
+			<Stack direction="row">
+				<Friends />
+				<ChatUI />
+			</Stack>
+
+			{/* <Rooms/> */}
 		</ThemeProvider >
 	);
 }
