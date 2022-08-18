@@ -10,11 +10,11 @@ import MessageRecieved from './components/MessageRecieved';
 import MessageSent from './components/MessageSent';
 import Friends from './components/Friends';
 import Friend from './components/Friend';
-import { Room } from '@mui/icons-material';
 import Room_ from './components/Room_';
 import ChatUI from './components/ChatUI';
 import Rooms from './components/Rooms';
 import { Stack } from '@mui/material';
+import ChatGlobal from './components/ChatGlobal';
 
 const darkTheme = createTheme({
 	palette: {
@@ -35,12 +35,7 @@ function App() {
 			<CssBaseline />
 			{/* <MuiNavbar></MuiNavbar> */}
 			{/* <Main></Main> */}
-			{/* <ChatUI /> */}
-			<Stack direction="row">
-				<Friends />
-				<ChatUI />
-			</Stack>
-
+			<ChatGlobal/>
 			{/* <Rooms/> */}
 		</ThemeProvider >
 	);

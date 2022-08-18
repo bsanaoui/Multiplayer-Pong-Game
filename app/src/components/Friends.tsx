@@ -1,5 +1,7 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import messengerIcon from '../assets/messenger.png'
+import roomIcon from '../assets/group.png'
+
 import Friend from './Friend';
 
 
@@ -22,7 +24,7 @@ const Friends = () => {
         <Box
             sx={{
                 backgroundColor: "#202541",
-                width: "500px",
+                // width: "500px",
                 height: '100vh',
                 padding: '30px'
 

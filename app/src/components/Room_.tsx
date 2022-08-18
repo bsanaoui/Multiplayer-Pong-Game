@@ -1,6 +1,5 @@
 import { Avatar, Badge, Box, Icon, IconButton, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles';
-import avatar2 from '../assets/avatar2.png'
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
     width: 22,

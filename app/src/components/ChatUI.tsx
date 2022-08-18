@@ -59,6 +59,8 @@ const ChatUI = () => {
                 width: "600px",
                 height: '100vh',
                 // height: 'calc( 100vh - 67px )',
+                paddingLeft: "20px",
+                paddingRight: "20px",
                 borderLeft: "1px solid #FFFFFF"
 
             }}>
