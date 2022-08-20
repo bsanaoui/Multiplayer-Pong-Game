@@ -15,4 +15,16 @@
 `* <Stack> Component:`
     Stack is concerned with one-dimensional layouts, while Grid handles two-dimensional layouts. The default direction is column which stacks children vertically.
 
-`* :`
+
+# TypeScript:
+`* Spread syntax (...)`
+Spread syntax (...) allows an iterable, such as an array or string, to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected. In an object literal, the spread syntax enumerates the properties of an object and adds the key-value pairs to the object being created.
+
+
+
+# React:
+`* Reducer:`
+Reducer function. The reducer is a pure function that accepts 2 parameters: the current state and an action object. Depending on the action object, the reducer function must update the state in an immutable manner, and return the new state.
+
+
+

@@ -53,8 +53,6 @@ function AllUsers() {
 			<List style={{ maxHeight: '100%', overflow: 'auto' }} >
 				{users} 
 			</List>
-
-
 		</Box>
 	)
 }

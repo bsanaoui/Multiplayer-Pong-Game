@@ -31,7 +31,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const msgs = Array.from({ length: 5 }, (_, index) => {
+const msgs = Array.from({ length: 9 }, (_, index) => {
     return (
         <div >
             <div style={{ float: 'right', marginTop: "5px" }}>

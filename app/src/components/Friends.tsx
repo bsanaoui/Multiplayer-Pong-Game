@@ -11,7 +11,7 @@ function pickRandom() {
     return names[Math.floor(Math.random() * names.length)];
 }
 
-const friends = Array.from({ length: 5 }, (_, index) => {
+const friends = Array.from({ length: 20 }, (_, index) => {
     return (
         <div className='item-friend'>
             <Friend name={pickRandom()} />
