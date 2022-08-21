@@ -143,7 +143,7 @@
   margin-right: 30px;
   margin-bottom: 13px;
 }
-/* *********** Scrooling Vertical **************** */
+/* ******************* Scrooling Vertical ***************** */
 
 .vertical_slider {
   display: block;
@@ -163,3 +163,28 @@
 {
   background-color: #3F4478;
 }
+
+/* ******************* Material Form *********************** */
+
+/* .MaterialForm {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+}
+
+.MaterialForm > form {
+  display: flex;
+  flex-direction: column;
+  background-color: #282948;
+  padding: 32px;
+  min-width: 350px;
+  border-radius: 8px;
+  margin: 32px;
+} */
+
+/* ******************************************************* */

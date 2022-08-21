@@ -22,7 +22,7 @@ const Rooms = () => {
         <Box
             sx={{
                 backgroundColor: "#202541",
-                width: "500px",
+                // width: "500px",
                 height: '100vh',
                 padding: '30px'
 
@@ -68,7 +68,7 @@ const Rooms = () => {
                         </Typography>
                     </div>
                 </Stack>
-                <List style={{ overflow: 'auto', height:"100%"}} >
+                <List style={{ overflow: 'auto', height: "100%" }} >
                     {rooms}
                 </List>
             </Stack>

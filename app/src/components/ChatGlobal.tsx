@@ -10,16 +10,16 @@ import Rooms from "./Rooms"
 
 
 const ChatGlobal = () => {
-    const is_friends = useSelector((state:State) => state.chat); // call-back function
+    const is_friends = useSelector((state: State) => state.chat); // call-back function
     return (
         <Stack direction="row" height="100vh" >
             <Stack sx={{ height: "100%", backgroundColor: "#262948" }}>
-                <div style={{ margin:'auto'}}>
-                    <CustomButton _name="Chat Room"/>
+                <div style={{ margin: 'auto' }}>
+                    <CustomButton _name="Chat Room" />
                     <CustomButton _name="Instant Messaging" />
                 </div>
             </Stack>
-            {is_friends ? <Friends/> : <Rooms/>}
+            {is_friends ? <Friends /> : <Rooms />}
             <ChatUI />
         </Stack>
     )
@@ -29,13 +29,14 @@ interface ButtonProps {
     _name: string,
 }
 
-const CustomButton = ({_name,}: ButtonProps) => {
+const CustomButton = ({ _name, }: ButtonProps) => {
     let custom_icon = (_name.charAt(0) === 'I') ? messengerIcon : roomIcon;
     const dispatch = useDispatch();
-    const {changeStatus} = bindActionCreators(actionCreators, dispatch);
+    const { changeStatusFriends } = bindActionCreators(actionCreators, dispatch);
 
     return (
-        <div className="center-button button-chat" onClick={() => {_name === "Chat Room" ? changeStatus(false) : changeStatus(true)}}>
+        <div className="center-button button-chat"
+            onClick={() => { _name === "Chat Room" ? changeStatusFriends(false) : changeStatusFriends(true) }}>
             <Stack spacing={2} direction="row" sx={{
                 width: "300px", padding: "3px"
             }}>

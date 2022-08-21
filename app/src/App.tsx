@@ -15,6 +15,8 @@ import ChatUI from './components/ChatUI';
 import Rooms from './components/Rooms';
 import { Stack } from '@mui/material';
 import ChatGlobal from './components/ChatGlobal';
+import CustomizedDialog from './components/CustomizedDialog';
+import FormNewRoom from './components/FormNewRoom';
 
 const darkTheme = createTheme({
 	palette: {
@@ -35,8 +37,10 @@ function App() {
 			<CssBaseline />
 			{/* <MuiNavbar></MuiNavbar> */}
 			{/* <Main></Main> */}
-			<ChatGlobal/>
-			{/* <Rooms/> */}
+			{/* <ChatGlobal/> */}
+			<CustomizedDialog>
+				<FormNewRoom />
+			</CustomizedDialog>
 		</ThemeProvider >
 	);
 }

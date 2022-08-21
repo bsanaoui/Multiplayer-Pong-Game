@@ -1,3 +1,8 @@
+# Installed Libraries:
+`* Material UI: `to use some components
+`* Redux: `to manage stats in the app
+`* Formik: `to handle forms
+`* Yup: `is a schema builder for runtime value parsing and validation.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
