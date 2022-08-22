@@ -1,3 +1,10 @@
+# Installed Libraries:
+`* Material UI: `to use some components
+`* Redux: `to manage stats in the app
+`* Formik: `to handle forms
+`* Yup: `is a schema builder for runtime value parsing and validation.
+`* Axios * `
+
 # CSS Styles && Tailwindcss:
 
 `* flex justify-between`
@@ -25,6 +32,11 @@ Spread syntax (...) allows an iterable, such as an array or string, to be expand
 # React:
 `* Reducer:`
 Reducer function. The reducer is a pure function that accepts 2 parameters: the current state and an action object. Depending on the action object, the reducer function must update the state in an immutable manner, and return the new state.
+
+# References:
+* Making Http GET requests with Axios in TypeScript:
+    -https://bobbyhadz.com/blog/typescript-http-request-axios
+* 
 
 
 

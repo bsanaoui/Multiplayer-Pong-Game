@@ -35,12 +35,12 @@ function App() {
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			{/* <MuiNavbar></MuiNavbar> */}
-			{/* <Main></Main> */}
+			<MuiNavbar></MuiNavbar>
+			<Main></Main>
 			{/* <ChatGlobal/> */}
-			<CustomizedDialog>
+			{/* <CustomizedDialog>
 				<FormNewRoom />
-			</CustomizedDialog>
+			</CustomizedDialog> */}
 		</ThemeProvider >
 	);
 }

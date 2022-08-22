@@ -1,8 +1,10 @@
 import { Box, Card, Stack, Typography } from '@mui/material'
 import React from 'react'
 import groupIcon from '../assets/group-icon.svg'
+import { RoomData } from '../requests/get'
 
-const RoomButton = () => {
+
+const RoomButton = (Props: RoomData) => {
 	return (
 		<Box
 			sx={{
@@ -18,7 +20,8 @@ const RoomButton = () => {
 					margin: '15px 20px'
 				}}>
 				<div className='room-title center-text center-button' style={{ padding: '0 15px' }}>
-					Room Cmos 3.x
+					{/* Room Cmos 3.x */}
+					{Props.room_name}
 				</div>
 			</Box>
 
@@ -30,13 +33,16 @@ const RoomButton = () => {
 				}}>
 				<Box>
 					<div className='dot center-text center-button' style={{ padding: '1px', marginLeft: '5px' }}>
-						B
+						{/* B */}
+						{Props.owner_name.charAt(0)}
 					</div>
 					<Typography
 						sx={{
 							fontWeight: '300px'
 						}}>
-						bsana..</Typography>
+						{/* bsana.. */}
+						{Props.owner_name}
+						</Typography>
 				</Box>
 				<Box>
 					<div className='dot-dotted' />
@@ -50,7 +56,10 @@ const RoomButton = () => {
 					marginTop: '10px'
 				}}>
 				<img src={groupIcon} alt="room users" style={{ height: 34, marginTop: 14 }} />
-				<div style={{ fontSize: '44px', fontWeight: 550 }}>58</div>
+				<div style={{ fontSize: '44px', fontWeight: 550 }}>
+					{/* 58 */}
+					{Props.nb_users}
+					</div>
 			</Stack>
 		</Box>
 	)

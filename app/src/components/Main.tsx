@@ -5,6 +5,7 @@ import ProtectedRooms from "./ProtectedRooms"
 import PublicRooms from "./PublicRooms"
 import User from "./User"
 
+
 const Main = () => {
     return (
         <div>
@@ -13,8 +14,8 @@ const Main = () => {
                 marginTop='45px'
                 marginLeft='50px'
                 spacing={3}>
-                <PublicRooms kind="Public rooms" />
-                <PublicRooms kind="Protected rooms" />
+                <PublicRooms kind="Public rooms"/>
+                <PublicRooms kind="Protected rooms"/>
             </Stack>
             <AllUsers />
         </div>

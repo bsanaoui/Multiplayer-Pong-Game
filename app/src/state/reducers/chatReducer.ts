@@ -3,7 +3,6 @@ import { Action } from "../actions/index";
 
 const initialState:boolean = true;
 
-
 const reducer = (state: boolean = initialState, action: Action) => {
     switch (action.type){
         case ActionType.UPDATE:
