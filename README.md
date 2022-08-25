@@ -1,9 +1,10 @@
 # Installed Libraries:
-`* Material UI: `to use some components
-`* Redux: `to manage stats in the app
-`* Formik: `to handle forms
-`* Yup: `is a schema builder for runtime value parsing and validation.
-`* Axios * `
+* `Material UI: `to use some components
+* `Redux: `to manage stats in the app
+* `Formik: `to handle forms
+* `Yup: `is a schema builder for runtime value parsing and validation.
+* `Axios: `
+* `socket.io-client: `
 
 # CSS Styles && Tailwindcss:
 
@@ -38,5 +39,24 @@ Reducer function. The reducer is a pure function that accepts 2 parameters: the 
     -https://bobbyhadz.com/blog/typescript-http-request-axios
 * 
 
+
+# Install Socket and Express project for SetupServer test:
+```
+npm init
+npm i express socket.io
+//  "rootDir": "./src", 
+// "outDir": "./dist",      
+npm i -D nodemon typescript ts-node @types/express @types/socket.io
+// package json :
+ "scripts": {
+    "start": "node dist/server.js",
+    "dev" : "nodemon src/server.ts",
+    "build" : "tsc -p ."
+  },
+```
+
+```
+npm i --save @types/socket.io
+```
 
 

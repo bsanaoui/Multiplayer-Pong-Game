@@ -4,8 +4,11 @@ import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
 import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { io, Socket } from 'socket.io-client';
+import { TonalitySharp } from '@mui/icons-material';
 
+let socketclient:Socket;;
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
@@ -25,10 +28,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
             'background-color',
             'box-shadow',
         ]),
-        // '&:focus': {
-        //     boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-        //     borderColor: theme.palette.primary.main,
-        // },
     },
 }));
 
@@ -50,27 +49,66 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 //         </div>
 //     );
 // });
+const current_user_id:number = 1;  // dynamic handle ????
+
 const initMessages = [
     {
         username: 'bsanaoui',
+        id: 1,
         msg: 'Hello'
     }
 ];
 
+const renderMessage = (id:number, msg:string): JSX.Element =>
+{
+    if (current_user_id === id)
+        return (
+            <MessageSent msg={msg} />
+        );
+    else
+        return (
+            <MessageRecieved msg={msg} />
+        );
+}
 
 const ChatUI = () => {
+    const [connected, setConnected] = useState(false);
+    const [username, setUserName] = useState("");
+    const [connectedUsers, setConnectedUsers] = useState([] as {id: string, username:string}[]);
+
+    useEffect(() => {
+        socketclient = io('http://localhost:4000');
+        if (socketclient)
+        {
+            socketclient.on("username-taken", () => {
+                console.error("Username is taken") //toast.error
+            });
+
+            socketclient.on("username-submitted-successfully", () => {
+                setConnected(true)
+            });
+
+            socketclient.on("get-connected-users", (connectedUsers:{id: string, username:string}[]) => {
+                setConnectedUsers(connectedUsers.filter(user => user.username !== username));
+                console.log(connectedUsers);
+            })
+        }
+    }, [])
+
+    const handleConnection = () => {
+        if (socketclient)
+            socketclient.emit("handle-connection");
+    }
 
     const [message_input, setMessage] = useState("");
     const [msgs, setMsgs] = useState(initMessages);
 
-
     const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(event.target.value);
     }
-
     const sendMsg = () => {
         if (message_input) {
-            const newMsgs = msgs.concat({ username: '', msg: message_input });
+            const newMsgs = msgs.concat({ username: 'bsanaoui', id: 1, msg: message_input}); // dynamic handle ????
             setMsgs(newMsgs);
             console.log("message sent");
         }
@@ -91,7 +129,6 @@ const ChatUI = () => {
                 paddingLeft: "20px",
                 paddingRight: "20px",
                 borderLeft: "1px solid #FFFFFF"
-
             }}>
             <Stack height='inherit'>
                 <div>
@@ -114,7 +151,7 @@ const ChatUI = () => {
                         {/* {msgs} */}
                         {msgs.map((item) => (
                             <div style={{ float: 'right', marginTop: "5px" }}>
-                                <MessageSent msg={item.msg} />
+                                {renderMessage(item.id, item.msg)}
                             </div>
                         ))}
                     </List>
