@@ -21,7 +21,7 @@ const RoomButton = (Props: RoomData) => {
 				}}>
 				<div className='room-title center-text center-button' style={{ padding: '0 15px' }}>
 					{/* Room Cmos 3.x */}
-					{Props.room_name}
+					{Props.name}
 				</div>
 			</Box>
 
@@ -33,15 +33,14 @@ const RoomButton = (Props: RoomData) => {
 				}}>
 				<Box>
 					<div className='dot center-text center-button' style={{ padding: '1px', marginLeft: '5px' }}>
-						{/* B */}
-						{Props.owner_name.charAt(0)}
+						{Props.owner.charAt(0)}
 					</div>
 					<Typography
 						sx={{
 							fontWeight: '300px'
 						}}>
 						{/* bsana.. */}
-						{Props.owner_name}
+						{Props.owner}
 						</Typography>
 				</Box>
 				<Box>
@@ -57,8 +56,7 @@ const RoomButton = (Props: RoomData) => {
 				}}>
 				<img src={groupIcon} alt="room users" style={{ height: 34, marginTop: 14 }} />
 				<div style={{ fontSize: '44px', fontWeight: 550 }}>
-					{/* 58 */}
-					{Props.nb_users}
+					{Props._count.users_room}
 					</div>
 			</Stack>
 		</Box>

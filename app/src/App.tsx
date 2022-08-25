@@ -10,7 +10,7 @@ import MessageRecieved from './components/MessageRecieved';
 import MessageSent from './components/MessageSent';
 import Friends from './components/Friends';
 import Friend from './components/Friend';
-import Room_ from './components/Room_';
+import Room_ from './components/RoomButtonChat';
 import ChatUI from './components/ChatUI';
 import Rooms from './components/Rooms';
 import { Stack } from '@mui/material';
@@ -35,9 +35,9 @@ function App() {
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			<MuiNavbar></MuiNavbar>
-			<Main></Main>
-			{/* <ChatGlobal/> */}
+			{/* <MuiNavbar></MuiNavbar>
+			<Main></Main> */}
+			<ChatGlobal/>
 			{/* <CustomizedDialog>
 				<FormNewRoom />
 			</CustomizedDialog> */}

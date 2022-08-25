@@ -11,7 +11,7 @@ interface RoomProps {
     name: string
 }
 
-const Room_ = ({ name }: RoomProps) => {
+const RoomButtonChat = ({ name }: RoomProps) => {
     return (
         <div>
             <Box
@@ -49,4 +49,4 @@ const Room_ = ({ name }: RoomProps) => {
     )
 }
 
-export default Room_
+export default RoomButtonChat

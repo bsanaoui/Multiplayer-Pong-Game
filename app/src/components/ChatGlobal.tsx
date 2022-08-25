@@ -41,7 +41,7 @@ const CustomButton = ({ _name, }: ButtonProps) => {
                 width: "300px", padding: "3px"
             }}>
                 <IconButton>
-                    <img src={custom_icon} width="24px" />
+                    <img src={custom_icon} width="24px" alt="IconChat"/>
                 </IconButton>
                 <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                     <Typography sx={{

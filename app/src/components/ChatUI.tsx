@@ -4,6 +4,7 @@ import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
 import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
+import { useState } from 'react';
 
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -31,26 +32,54 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const msgs = Array.from({ length: 9 }, (_, index) => {
-    return (
-        <div >
-            <div style={{ float: 'right', marginTop: "5px" }}>
-                <MessageSent msg="Caveat with refs Caveat with refs Caveat with refs" />
-            </div>
-            <div style={{ float: 'left', marginTop: "5px" }}>
-                <MessageRecieved msg="Hello industry. Lorem Ipsum Dom" />
-            </div>
-            <div style={{ float: 'left', marginTop: "5px" }}>
-                <MessageRecieved msg="Lorem Ipsum Dom ?" />
-            </div>
-            <div style={{ float: 'right', marginTop: "5px" }}>
-                <MessageSent msg="See you" />
-            </div>
-        </div>
-    );
-});
+// const msgs = Array.from({ length: 9 }, (_, index) => {
+//     return (
+//         <div >
+//             <div style={{ float: 'right', marginTop: "5px" }}>
+//                 <MessageSent msg="Caveat with refs Caveat with refs Caveat with refs" />
+//             </div>
+//             <div style={{ float: 'left', marginTop: "5px" }}>
+//                 <MessageRecieved msg="Hello industry. Lorem Ipsum Dom" />
+//             </div>
+//             <div style={{ float: 'left', marginTop: "5px" }}>
+//                 <MessageRecieved msg="Lorem Ipsum Dom ?" />
+//             </div>
+//             <div style={{ float: 'right', marginTop: "5px" }}>
+//                 <MessageSent msg="See you" />
+//             </div>
+//         </div>
+//     );
+// });
+const initMessages = [
+    {
+        username: 'bsanaoui',
+        msg: 'Hello'
+    }
+];
+
 
 const ChatUI = () => {
+
+    const [message_input, setMessage] = useState("");
+    const [msgs, setMsgs] = useState(initMessages);
+
+
+    const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage(event.target.value);
+    }
+
+    const sendMsg = () => {
+        if (message_input) {
+            const newMsgs = msgs.concat({ username: '', msg: message_input });
+            setMsgs(newMsgs);
+            console.log("message sent");
+        }
+    }
+    const handleEnterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.keyCode === 13)
+            sendMsg();
+    }
+
     return (
         <Box
             bgcolor="#202541"
@@ -68,21 +97,26 @@ const ChatUI = () => {
                 <div>
                     <HeaderChat name="JockThem" />
                 </div>
-                <Stack spacing={2} direction="column-reverse" sx={{ width: "532px", minHeight: "calc( 100vh - 67px )", margin: 'auto'}}>
+                <Stack spacing={2} direction="column-reverse" sx={{ width: "532px", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="45px">
                         <FormControl variant="standard" >
-                            <BootstrapInput placeholder="Write a message ..." id="bootstrap-input" />
+                            <BootstrapInput placeholder="Write a message ..." id="bootstrap-input" onChange={handleMsgChange} onKeyDown={handleEnterkey}/>
                         </FormControl>
                         <div style={{
                             backgroundColor: "#151416", padding: "10px", borderRadius: '0 12px 12px 0',
                         }}>
-                            <Button sx={{ backgroundColor: "#3475D7", height: "50px", color: "#FFF" }}>
+                            <Button sx={{ backgroundColor: "#3475D7", height: "50px", color: "#FFF" }} onClick={sendMsg}>
                                 <SendIcon />
                             </Button>
                         </div>
                     </Stack>
                     <List style={{ overflow: 'auto', padding: '0 6px 0px 5px' }} >
-                        {msgs}
+                        {/* {msgs} */}
+                        {msgs.map((item) => (
+                            <div style={{ float: 'right', marginTop: "5px" }}>
+                                <MessageSent msg={item.msg} />
+                            </div>
+                        ))}
                     </List>
                 </Stack>
             </Stack>

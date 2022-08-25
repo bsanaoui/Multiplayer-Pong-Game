@@ -1,21 +1,22 @@
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import RoomButton from './RoomButton'
 import reloadIcon from '../assets/reload-icon.png'
-import { getRoomsDataa, RoomData } from '../requests/get';
+import { getRoomsData, RoomData } from '../requests/get';
+import { useEffect, useState } from 'react';
 
-const data_rooms:Array<RoomData> = [
-    {room_name: 'Room Cmos 3.x', owner_name: 'bsana..', nb_users: 85},
-    {room_name: 'Gtx Cmos 3.x', owner_name: 'Testos..', nb_users: 25},
-];
+// const data_rooms: Array<RoomData> = [
+// 	{ name: 'Room Cmos 3.x', owner: 'bsana..', count: [85] },
+// 	{ name: 'Gtx Cmos 3.x', owner: 'Testos..', count: [25] },
+// ];
 
 
 function createRooms(rooms_info: Array<RoomData>): JSX.Element[] {
 	const rooms = Array.from({ length: rooms_info.length }, (_, index) => {
 		return (
 			<div className="item">
-				<RoomButton room_name={rooms_info[index].room_name}
-					owner_name={rooms_info[index].owner_name}
-					nb_users={rooms_info[index].nb_users} />
+				<RoomButton name={rooms_info[index].name}
+					owner={rooms_info[index].owner}
+					_count={rooms_info[index]._count} />
 			</div>
 		);
 	});
@@ -28,17 +29,14 @@ interface VisibilityProps {
 
 const PublicRooms = ({ kind }: VisibilityProps) => {
 
-	// state = {
-	// 	persons: []
-	//   }
+	const [value, setValue] = useState(Array<RoomData>());
 
-	// componentDidMount() {
-	// 	axios.get(`https://jsonplaceholder.typicode.com/users`)
-	// 	  .then(res => {
-	// 		const persons = res.data;
-	// 		this.setState({ persons });
-	// 	  })
-	// }
+	useEffect(() => {
+		getRoomsData().then((value) => {
+			const data = value as Array<RoomData>;
+			setValue(data);
+		})
+	});
 
 	return (
 		<Stack
@@ -71,7 +69,10 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 							console.log(data_rooms); // 👉️ {name: 'Tom', country: 'Chile'}
 						});
 					} */}
-					{createRooms(getRoomsDataa())}
+					{createRooms(value)}
+					{/* {
+						const datas:RoomData
+					} */}
 				</div>
 			</div>
 		</Stack>

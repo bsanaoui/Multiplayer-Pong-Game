@@ -32,7 +32,7 @@ const Friends = () => {
             <Stack height="100%">
                 <Stack spacing={1} direction="row">
                     <IconButton>
-                        <img src={messengerIcon} width="37px" />
+                        <img src={messengerIcon} width="37px" alt='MessengerIcon'/>
                     </IconButton>
                     <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                         <Typography sx={{

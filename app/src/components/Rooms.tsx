@@ -1,6 +1,7 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
+import React from 'react';
 import roomIcon from '../assets/group.png'
-import Room_ from './Room_';
+import RoomButtonChat from './RoomButtonChat';
 
 
 function pickRandom() {
@@ -12,7 +13,7 @@ function pickRandom() {
 const rooms = Array.from({ length: 5 }, (_, index) => {
     return (
         <div className='item-friend'>
-            <Room_ name={pickRandom()} />
+            <RoomButtonChat name={pickRandom()} />
         </div>
     );
 });
@@ -30,7 +31,7 @@ const Rooms = () => {
             <Stack height="100%">
                 <Stack spacing={1} direction="row">
                     <IconButton>
-                        <img src={roomIcon} width="37px" />
+                        <img src={roomIcon} width="37px" alt='roomIcon' />
                     </IconButton>
                     <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                         <Typography sx={{
