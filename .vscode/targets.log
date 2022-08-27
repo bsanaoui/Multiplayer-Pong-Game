@@ -10,14 +10,13 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Thu Aug 25 15:07:40 2022
+# Make data base, printed on Sat Aug 27 15:26:45 2022
 
 # Variables
 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
- 
 ?F = $(notdir $?)
 # environment
 NVM_INC = /Volumes/USB-FIT/InstalledApp/.nvm/versions/node/v18.4.0/include/node
@@ -40,7 +39,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.MdV3Q3W0Gs/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.5ZcAGaZxBB/Render
 # environment
 PATH = /Volumes/USB-FIT/InstalledApp/.nvm/versions/node/v18.4.0/bin:/Volumes/USB-FIT/InstalledApp/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Applications/Visual Studio Code.app/Contents/Resources/app/bin
 # environment
@@ -52,7 +51,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.Y3762iBCPq/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.IWyfUtItTt/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -118,7 +117,7 @@ MFLAGS = -Rrqp
 # environment
 NVM_DIR = /Volumes/USB-FIT/InstalledApp/.nvm
 # environment
-XPC_SERVICE_NAME = com.microsoft.VSCode.2532
+XPC_SERVICE_NAME = com.microsoft.VSCode.3588
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -144,7 +143,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 3944
+VSCODE_PID = 28561
 # variable set hash-table stats:
 # Load=65/1024=6%, Rehash=0, Collisions=1/89=1%
 
@@ -154,9 +153,9 @@ VSCODE_PID = 3944
 
 # Directories
 
-# . (device 16777232, inode 1005897): 8 files, no impossibilities.
+# . (device 16777232, inode 1005897): 9 files, no impossibilities.
 
-# 8 files, no impossibilities in 1 directories.
+# 9 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -217,6 +216,6 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Aug 25 15:07:40 2022
+# Finished Make data base on Sat Aug 27 15:26:45 2022
 
  

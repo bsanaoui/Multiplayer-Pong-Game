@@ -21,10 +21,12 @@ io.on("connection", (socket) => {
         }
     })
 
+    socket.on("message", (message: {message: string, username:string}) =>{
+        socket.broadcast.to("myChat").emit("recieve-message", message)
+    })
     socket.on("disconnect", () => {
         userLeave(socket.id);
     })
 })
 
 server.listen(4000, () => console.log("Server started on port 4000."));
-
