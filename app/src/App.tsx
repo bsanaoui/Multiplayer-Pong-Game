@@ -17,6 +17,10 @@ import { Stack } from '@mui/material';
 import ChatGlobal from './components/ChatGlobal';
 import CustomizedDialog from './components/CustomizedDialog';
 import FormNewRoom from './components/FormNewRoom';
+import { useSelector } from 'react-redux';
+
+import LoginPage from './components/LoginPage';
+import { State } from './state';
 
 const darkTheme = createTheme({
 	palette: {
@@ -32,12 +36,15 @@ const darkTheme = createTheme({
 });
 
 function App() {
+	const user_conneced = useSelector((state: State) => state.currentUser); // call-back function
+	
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
+			{user_conneced === '' && <LoginPage/>}
 			{/* <MuiNavbar></MuiNavbar>
 			<Main></Main> */}
-			<ChatGlobal/>
+			{user_conneced !== '' && <ChatGlobal/>}
 			{/* <CustomizedDialog>
 				<FormNewRoom />
 			</CustomizedDialog> */}

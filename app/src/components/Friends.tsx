@@ -1,7 +1,5 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import messengerIcon from '../assets/messenger.png'
-import roomIcon from '../assets/group.png'
-
 import Friend from './Friend';
 
 
@@ -13,9 +11,9 @@ function pickRandom() {
 
 const friends = Array.from({ length: 20 }, (_, index) => {
     return (
-        <div className='item-friend'>
+        <li key={index} className='item-friend'>
             <Friend name={pickRandom()} />
-        </div>
+        </li>
     );
 });
 

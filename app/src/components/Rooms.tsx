@@ -12,9 +12,9 @@ function pickRandom() {
 
 const rooms = Array.from({ length: 5 }, (_, index) => {
     return (
-        <div className='item-friend'>
+        <li key={index} className='item-friend'>
             <RoomButtonChat name={pickRandom()} />
-        </div>
+        </li>
     );
 });
 

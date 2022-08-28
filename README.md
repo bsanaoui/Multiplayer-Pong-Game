@@ -59,4 +59,7 @@ npm i -D nodemon typescript ts-node @types/express @types/socket.io
 npm i --save @types/socket.io
 ```
 
+# Generate Key of list:
+npm install --save @types/shortid
+
 

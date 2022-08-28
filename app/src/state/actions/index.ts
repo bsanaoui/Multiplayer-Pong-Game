@@ -1,13 +1,21 @@
 import { ActionType } from "../action-types"
 
-interface UpdateAction {
+//**************************************************** */
+interface UpdateActionChat {
     type: ActionType.UPDATE,
     payload: boolean
 }
 
-interface RemoveAction {
+interface RemoveActionChat {
     type: ActionType.REMOVE,
-    payload: boolean
+    payload:  boolean
 }
 
-export type Action = UpdateAction | RemoveAction
+interface UpdateActionUsername {
+    type: ActionType.UPDATE,
+    payload: string
+}
+// *************************************************** */
+
+
+export type Action = UpdateActionChat | RemoveActionChat | UpdateActionUsername

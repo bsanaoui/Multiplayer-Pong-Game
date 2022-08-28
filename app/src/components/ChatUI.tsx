@@ -1,4 +1,4 @@
-import { Button, FormControl, InputBase, List, Stack, styled, TextField } from '@mui/material'
+import { Button, FormControl, InputBase, List, Stack, styled } from '@mui/material'
 import { Box } from '@mui/system'
 import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
@@ -6,11 +6,14 @@ import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
 import { useState, useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { SafetyCheckSharp, TonalitySharp } from '@mui/icons-material';
-import { connected } from 'process';
 import LoginPage from './LoginPage';
+import shortid from 'shortid';
+import { State } from '../state';
+import { useSelector } from 'react-redux';
 
 let socketclient: Socket;;
+const initMessages: { username: string, msg: string }[] = [];
+
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
@@ -34,93 +37,67 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 // const msgs = Array.from({ length: 9 }, (_, index) => {return ()}
-const current_user_id: number = 1;  // dynamic handle ????
 
-const initMessages = [
-    {
-        username: 'bsanaoui',
-        id: 1,
-        msg: 'Hello'
-    }
-];
-
-const renderMessage = (current: string, usernamee: string, msg: string): JSX.Element => {
-    if (current === usernamee)
+const renderMessage = (current: string, user_name: string, msg: string): JSX.Element => {
+    if (current === user_name)
         return (
-            <div style={{ float: 'right', marginTop: "5px" }}>
+            <li key={parseInt(shortid.generate())} style={{ float: 'right', marginTop: "5px" }}>
                 <MessageSent msg={msg} />
-            </div>
+            </li>
         );
     else
         return (
-            <div style={{ float: 'left', marginTop: "5px" }}>
+            <li key={parseInt(shortid.generate())}style={{ float: 'left', marginTop: "5px" }}>
                 <MessageRecieved msg={msg} />
-            </div>
+            </li>
         );
 }
 
 const ChatUI = () => {
-    const [connected, setConnected] = useState(false);
-    const [username, setUserName] = useState("");
-    const [connectedUsers, setConnectedUsers] = useState([] as { id: string, username: string }[]);
+    const user_conneced = useSelector((state: State) => state.currentUser); // call-back function
+    const [message_input, setMessage] = useState("");
+    const [msgs, setMsgs] = useState(initMessages);
+    // const [connected, setConnected] = useState(false);
+    // const [connectedUsers, setConnectedUsers] = useState([] as { id: string, username: string }[]);
 
     useEffect(() => {
         socketclient = io('http://localhost:3333');
 
         if (socketclient) {
-            console.log("heeeeeereee");
             socketclient.on('msgToClient', (messagee: { name: string, text: string }) => {
-                const newMsgs = msgs.concat({ username: messagee.name, id: 1, msg: messagee.text }); // dynamic handle ????
-
-                console.log(msgs);
-                console.log("/------\n-----/");
-                console.log(newMsgs);
+                const newMsgs = msgs.concat({ username: messagee.name, msg: messagee.text }); // dynamic handle ????
                 setMsgs(newMsgs);
+                console.log(msgs);
             })
         }
-        // if (socketclient) {
-        //     socketclient.on("username-taken", () => {
-        //         console.error("Username is taken") //toast.error
-        //     });
-
-        //     socketclient.on("username-submitted-successfully", () => {
-        //         setConnected(true)
-        //     });
-
-        // socketclient.on("get-connected-users", (connectedUsers: { id: string, username: string }[]) => {
-        //     setConnectedUsers(connectedUsers.filter(user => user.username !== username));
-        //     console.log(connectedUsers);
-        // })
-        // }
-    }, [username])
+    }, [user_conneced])
 
     const handleConnection = () => {
         if (socketclient) {
-            socketclient.emit("JoinRoom1", { name: username, text: '' });
-            setConnected(true);
+            socketclient.emit("JoinRoom1", { name: user_conneced, text: '' });
         }
     }
-
-    const [message_input, setMessage] = useState("");
-    const [msgs, setMsgs] = useState(initMessages);
-
 
     const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(event.target.value);
     }
+    // Delete setMsgs 
     const sendMsg = () => {
         if (message_input) {
-            const newMsgs = msgs.concat({ username: username, id: 1, msg: message_input }); // dynamic handle ????
+            const newMsgs = msgs.concat({ username: user_conneced, msg: message_input }); // dynamic handle ????
             setMsgs(newMsgs);
-            socketclient.emit('SendMessageRoom', { name: username, text: message_input });
+            socketclient.emit('SendMessageRoom', { name: user_conneced, text: message_input });
             console.log("message sent");
+            setMessage('');
         }
     }
     const handleEnterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.keyCode === 13)
+        if (event.keyCode === 13) {
             sendMsg();
+        }
     }
 
+    handleConnection(); // connect to the socket specied room ??
     return (
         <Box
             bgcolor="#202541"
@@ -133,15 +110,16 @@ const ChatUI = () => {
                 paddingRight: "20px",
                 borderLeft: "1px solid #FFFFFF"
             }}>
-            {!connected && <LoginPage handleConnection={handleConnection} username={username} setUsername={setUserName} />}
-            {connected && <Stack height='inherit'>
+           <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={username} />
+                    <HeaderChat name={user_conneced} />
                 </div>
                 <Stack spacing={2} direction="column-reverse" sx={{ width: "532px", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="45px">
                         <FormControl variant="standard">
-                            <BootstrapInput placeholder="Write a message ..." id="bootstrap-input" onChange={handleMsgChange} onKeyDown={handleEnterkey} />
+                            <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
+                                onChange={handleMsgChange} onKeyDown={handleEnterkey}
+                                value={message_input}/>
                         </FormControl>
                         <div style={{
                             backgroundColor: "#151416", padding: "10px", borderRadius: '0 12px 12px 0',
@@ -151,20 +129,12 @@ const ChatUI = () => {
                             </Button>
                         </div>
                     </Stack>
-                    <List style={{ overflow: 'auto', padding: '0 6px 0px 5px' }} >
+                    <List style={{ overflow: 'auto', padding: '0 6px 0px 5px'}} >
                         {/* {msgs} */}
-                        <div>
-
-                        {msgs.map((item) => (
-                            <div style={{ float: 'right', marginTop: "5px" }}>
-                                {renderMessage(username, item.username, item.msg)}
-                            </div>
-                        ))}
-                        </div>
+                        {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg) ))}
                     </List>
                 </Stack>
             </Stack>
-            }
         </Box>
     )
 }
