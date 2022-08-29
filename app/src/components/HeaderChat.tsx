@@ -28,18 +28,18 @@ const HeaderChat = ({ name }: FriendProps) => {
                             backgroundColor: "#FFF",
                             padding: "3px",
                         }}
-                        alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
+                        alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' }}} />
                 </div>
-                <Stack>
+                <Stack width="100%">
                     <Typography
                         sx={{
-                            margin: 'auto',
+                            margin: 'auto 5px',
                             fontWeight: '600',
-                            fontSize: '1.4rem',
+                            fontSize: '1.43rem',
                             fontStyle: 'normal',
                         }}>{name}</Typography>
                 </Stack>
-                <div style={{ width: "100%", margin: 'auto' }}>
+                <div style={{  margin: 'auto' }}>
 					<img
 						style={{ height: '28px', float: 'right' }}
 						className="center" alt='users' src={dot3Icon} />

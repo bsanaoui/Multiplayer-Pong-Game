@@ -1,12 +1,11 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
-import React from 'react';
 import roomIcon from '../assets/group.png'
 import RoomButtonChat from './RoomButtonChat';
 
 
 function pickRandom() {
-    const names: string[] = ["Nathanial Howell", "Leon Beard", "Madeleine Martin",
-        "Cristopher Fitzgerald", "Judah Rose"];
+    const names: string[] = ["JoinRoom1", "JoinRoom2", "JoinRoom3",
+        "JoinRoom4", "JoinRoom5"];
     return names[Math.floor(Math.random() * names.length)];
 }
 

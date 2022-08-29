@@ -8,8 +8,9 @@ import { useState, useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 import LoginPage from './LoginPage';
 import shortid from 'shortid';
-import { State } from '../state';
 import { useSelector } from 'react-redux';
+import { RootState } from "../store";
+
 
 let socketclient: Socket;;
 const initMessages: { username: string, msg: string }[] = [];
@@ -54,12 +55,16 @@ const renderMessage = (current: string, user_name: string, msg: string): JSX.Ele
 }
 
 const ChatUI = () => {
-    const user_conneced = useSelector((state: State) => state.currentUser); // call-back function
+    const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
+    const chat_state = useSelector((state: RootState) => state.chat);
+
     const [message_input, setMessage] = useState("");
     const [msgs, setMsgs] = useState(initMessages);
-    // const [connected, setConnected] = useState(false);
-    // const [connectedUsers, setConnectedUsers] = useState([] as { id: string, username: string }[]);
 
+
+    const currentRoom = chat_state.curr_room;
+    const currentConvr= chat_state.curr_converation;
+    const is_friend = chat_state.is_friend;
     useEffect(() => {
         socketclient = io('http://localhost:3333');
 
@@ -74,7 +79,7 @@ const ChatUI = () => {
 
     const handleConnection = () => {
         if (socketclient) {
-            socketclient.emit("JoinRoom1", { name: user_conneced, text: '' });
+            socketclient.emit(currentRoom, { name: user_conneced, text: '' });
         }
     }
 
@@ -112,7 +117,7 @@ const ChatUI = () => {
             }}>
            <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={user_conneced} />
+                    <HeaderChat name={is_friend ? currentConvr :currentRoom} />
                 </div>
                 <Stack spacing={2} direction="column-reverse" sx={{ width: "532px", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="45px">

@@ -4,13 +4,14 @@ import Friends from "./Friends"
 import messengerIcon from '../assets/messenger.png'
 import roomIcon from '../assets/group.png'
 import { useDispatch, useSelector } from "react-redux"
-import { bindActionCreators } from "@reduxjs/toolkit"
-import { actionCreators, State } from "../state"
+import { RootState } from "../store";
+import { changeStatusFriends } from "../store/chatUiReducer";
+
 import Rooms from "./Rooms"
 
 
 const ChatGlobal = () => {
-    const is_friends = useSelector((state: State) => state.chat); // call-back function
+    const is_friends = useSelector((state: RootState) => state.chat).is_friend; // call-back function
     return (
         <Stack direction="row" height="100vh" >
             <Stack sx={{ height: "100%", backgroundColor: "#262948" }}>
@@ -30,9 +31,8 @@ interface ButtonProps {
 }
 
 const CustomButton = ({ _name, }: ButtonProps) => {
-    const is_friends = useSelector((state: State) => state.chat); // call-back function
+    const is_friends = useSelector((state: RootState) => state.chat).is_friend; // call-back function
     const dispatch = useDispatch();
-    const { changeStatusFriends } = bindActionCreators(actionCreators, dispatch);
 
 
     let custom_icon = (_name.charAt(0) === 'I') ? messengerIcon : roomIcon;
@@ -40,7 +40,7 @@ const CustomButton = ({ _name, }: ButtonProps) => {
         (_name.charAt(0) !== 'I') && !is_friends) ? "#3F4478" : "#282948";
     return (
         <div className="center-button" style={{ backgroundColor: backgroundButton }}
-            onClick={() => { _name === "Chat Room" ? changeStatusFriends(false) : changeStatusFriends(true) }}>
+            onClick={() => { _name === "Chat Room" ? dispatch(changeStatusFriends(false)) : dispatch(changeStatusFriends(true)) }}>
             <Stack spacing={2} direction="row" sx={{
                 width: "300px", padding: "3px"
             }}>

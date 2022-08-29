@@ -35,10 +35,14 @@ Spread syntax (...) allows an iterable, such as an array or string, to be expand
 Reducer function. The reducer is a pure function that accepts 2 parameters: the current state and an action object. Depending on the action object, the reducer function must update the state in an immutable manner, and return the new state.
 
 # References:
+* MUI :
+    - https://mui.com/
 * Making Http GET requests with Axios in TypeScript:
-    -https://bobbyhadz.com/blog/typescript-http-request-axios
+    - https://bobbyhadz.com/blog/typescript-http-request-axios
+* redux: 
+    - https://bluelight.co/blog/redux-toolkit-with-typescript
 * 
-
+....
 
 # Install Socket and Express project for SetupServer test:
 ```

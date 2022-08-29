@@ -1,5 +1,9 @@
 import { Avatar, Badge, Box, Icon, IconButton, Stack, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { changeCurrRoom } from "../store/chatUiReducer";
+
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
     width: 22,
@@ -12,11 +16,15 @@ interface RoomProps {
 }
 
 const RoomButtonChat = ({ name }: RoomProps) => {
+    const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
+    const dispatch = useDispatch();
+
+    let backgroundButton:string = currentRoom !== name ? "#2E3256" : "#4289F3";
     return (
-        <div>
+        <div onClick={() => {dispatch(changeCurrRoom(name))}} className="center-button">
             <Box
                 sx={{
-                    backgroundColor: "#2E3256", // 2E3256
+                    backgroundColor: backgroundButton,
                     width: '420px',
                     height: '66px',
                     borderRadius: '14px',

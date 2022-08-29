@@ -2,13 +2,12 @@ import { Button, Input } from '@mui/material';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { actionCreators } from '../state';
+import { setUsername } from "../store/userReducer";
 
 
 const LoginPage = () => {
     const dispatch = useDispatch();
-    const { setUsername } = bindActionCreators(actionCreators, dispatch);
-
+    
     const [username, setUser] = useState("");
 
     return (
@@ -22,7 +21,7 @@ const LoginPage = () => {
                 placeholder="Enter a username..."
                 required={true}
             />
-            <Button type="submit" onClick={() => setUsername(username)}>Submit</Button>
+            <Button type="submit" onClick={() => dispatch(setUsername(username))}>Submit</Button>
         </form>
     )
 }
