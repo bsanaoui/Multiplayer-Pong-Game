@@ -136,7 +136,6 @@ const ChatUI = () => {
                         </div>
                     </Stack>
                     <List style={{ overflow: 'auto', padding: '0 6px 0px 5px'}} >
-                        {/* {msgs} */}
                         {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg)))}
                     </List>
                 </Stack>

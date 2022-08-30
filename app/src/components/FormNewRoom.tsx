@@ -5,11 +5,17 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as Yup from 'yup'
+import { createRoom, RoomInfo } from "../requests/posts";
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
 
 const FormNewRoom = () => {
+    const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
+
     const paperStyle = { padding: '0px 15px 40px 15px', width: 320 }
     const btnStyle = { marginTop: '10px' }
-    const initialValues = {
+    const initialValues:RoomInfo = {
+        user: user_conneced,
         room_name: '',
         kind: '',
         password: ''
@@ -20,9 +26,10 @@ const FormNewRoom = () => {
         password: Yup.string().min(8, "Minimum characters should be 8")
     })
     
-    const onSubmit = (values: any, props: any) => {
+    const onSubmit = (values: RoomInfo, props: any) => {
 
-        alert(JSON.stringify(values, null, 2))
+        // alert(JSON.stringify(values, null, 2))
+        createRoom(values);
         props.resetForm()
     }
 
