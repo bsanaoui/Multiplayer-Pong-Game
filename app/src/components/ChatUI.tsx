@@ -8,12 +8,13 @@ import { useState, useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 import LoginPage from './LoginPage';
 import shortid from 'shortid';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
+import { addMessage } from "../store/chatUiReducer";
 
 
-let socketclient: Socket;;
-const initMessages: { username: string, msg: string }[] = [];
+let socketclient: Socket;
+let index_msg:number = 0;
 
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -38,17 +39,16 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 // const msgs = Array.from({ length: 9 }, (_, index) => {return ()}
-
 const renderMessage = (current: string, user_name: string, msg: string): JSX.Element => {
     if (current === user_name)
         return (
-            <li key={parseInt(shortid.generate())} style={{ float: 'right', marginTop: "5px" }}>
+            <li key={index_msg++} style={{ float: 'right', marginTop: "5px" }}>
                 <MessageSent msg={msg} />
             </li>
         );
     else
         return (
-            <li key={parseInt(shortid.generate())}style={{ float: 'left', marginTop: "5px" }}>
+            <li key={index_msg++} style={{ float: 'left', marginTop: "5px" }}>
                 <MessageRecieved msg={msg} />
             </li>
         );
@@ -57,21 +57,21 @@ const renderMessage = (current: string, user_name: string, msg: string): JSX.Ele
 const ChatUI = () => {
     const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
     const chat_state = useSelector((state: RootState) => state.chat);
-
     const [message_input, setMessage] = useState("");
-    const [msgs, setMsgs] = useState(initMessages);
+    // const [msgs, setMsgs] = useState(initMessages);
 
+    const dispatch = useDispatch();
 
     const currentRoom = chat_state.curr_room;
     const currentConvr= chat_state.curr_converation;
     const is_friend = chat_state.is_friend;
+    const msgs = chat_state.msgs;
     useEffect(() => {
         socketclient = io('http://localhost:3333');
 
-        if (socketclient) {
+        if (socketclient && currentRoom) {
             socketclient.on('msgToClient', (messagee: { name: string, text: string }) => {
-                const newMsgs = msgs.concat({ username: messagee.name, msg: messagee.text }); // dynamic handle ????
-                setMsgs(newMsgs);
+                dispatch(addMessage({ username: user_conneced, msg: message_input }));
                 console.log(msgs);
             })
         }
@@ -89,10 +89,9 @@ const ChatUI = () => {
     // Delete setMsgs 
     const sendMsg = () => {
         if (message_input) {
-            const newMsgs = msgs.concat({ username: user_conneced, msg: message_input }); // dynamic handle ????
-            setMsgs(newMsgs);
+            dispatch(addMessage({ username: user_conneced, msg: message_input }));
             socketclient.emit('SendMessageRoom', { name: user_conneced, text: message_input });
-            console.log("message sent");
+            console.log(message_input);
             setMessage('');
         }
     }
@@ -102,7 +101,8 @@ const ChatUI = () => {
         }
     }
 
-    handleConnection(); // connect to the socket specied room ??
+    if (currentRoom)
+        handleConnection(); // connect to the socket specied room ??
     return (
         <Box
             bgcolor="#202541"
@@ -123,7 +123,8 @@ const ChatUI = () => {
                     <Stack direction="row" marginBottom="45px">
                         <FormControl variant="standard">
                             <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
-                                onChange={handleMsgChange} onKeyDown={handleEnterkey}
+                                onChange={handleMsgChange} 
+                                onKeyDown={handleEnterkey}
                                 value={message_input}/>
                         </FormControl>
                         <div style={{
@@ -136,7 +137,7 @@ const ChatUI = () => {
                     </Stack>
                     <List style={{ overflow: 'auto', padding: '0 6px 0px 5px'}} >
                         {/* {msgs} */}
-                        {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg) ))}
+                        {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg)))}
                     </List>
                 </Stack>
             </Stack>

@@ -1,15 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+export interface MessageState {
+    username: string,
+    msg: string
+};
+
 export interface ChatUIState {
     is_friend: boolean,
     curr_converation: string,
-    curr_room: string
+    curr_room: string,
+    msgs: MessageState[]
 }
 
 const initialState: ChatUIState = {
     is_friend: true,
     curr_converation: '',
-    curr_room: ''
+    curr_room: '',
+    msgs:[]
+
 }
 
 export const chatSlice = createSlice({
@@ -27,9 +35,13 @@ export const chatSlice = createSlice({
         changeCurrConversation: (state, action: PayloadAction<string>) => {
             state.curr_converation = action.payload
         },
+
+        addMessage: (state, action: PayloadAction<MessageState>) => {
+            state.msgs.push(action.payload)
+        },
     }
 })
 
-export const {changeStatusFriends, changeCurrRoom, changeCurrConversation} = chatSlice.actions
+export const { changeStatusFriends, changeCurrRoom, changeCurrConversation, addMessage } = chatSlice.actions
 
 export default chatSlice.reducer

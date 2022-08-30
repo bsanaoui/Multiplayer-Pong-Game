@@ -39,11 +39,11 @@ function App() {
 			{currentuser === '' && <LoginPage />}
 			{currentuser !== '' &&
 				<div>
-					<MuiNavbar></MuiNavbar>
-					<Main></Main>
+					{/* <MuiNavbar></MuiNavbar>
+					<Main></Main> */}
+					<ChatGlobal />
 				</div>
 			}
-			{/* <ChatGlobal /> */}
 		</ThemeProvider >
 	);
 }
