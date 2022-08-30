@@ -4,10 +4,10 @@ import reloadIcon from '../assets/reload-icon.png'
 import { getRoomsData, RoomData } from '../requests/get';
 import { useEffect, useState } from 'react';
 
-// const data_rooms: Array<RoomData> = [
-// 	{ name: 'Room Cmos 3.x', owner: 'bsana..', count: [85] },
-// 	{ name: 'Gtx Cmos 3.x', owner: 'Testos..', count: [25] },
-// ];
+const data_rooms: Array<RoomData> = [
+	{ name: 'Room Cmos 3.x', owner: 'bsana..', _count : {users_room: 84} },
+	{ name: 'Gtx Cmos 3.x', owner: 'Testos..',  _count : {users_room: 47} },
+];
 
 
 function createRooms(rooms_info: Array<RoomData>): JSX.Element[] {
@@ -69,7 +69,8 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 							console.log(data_rooms); // 👉️ {name: 'Tom', country: 'Chile'}
 						});
 					} */}
-					{createRooms(value)}
+					{/* {createRooms(value)} */}
+					{createRooms(data_rooms)}
 					{/* {
 						const datas:RoomData
 					} */}

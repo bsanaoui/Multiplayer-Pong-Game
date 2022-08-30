@@ -3,11 +3,6 @@ import { Field, Form, Formik } from 'formik';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { Children } from 'react';
 
-interface MyFormValues {
-	roomName: string;
-	roomKind: string;
-	password: string;
-}
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 	'& .MuiDialogContent-root': {
@@ -52,7 +47,7 @@ type Props = {
 	children: JSX.Element,
 };
 
-const CustomizedDialog = ({children}:Props) => {
+const CustomizedDialog = ({ children }: Props) => {
 
 	const [open, setOpen] = React.useState(false);
 
@@ -65,9 +60,13 @@ const CustomizedDialog = ({children}:Props) => {
 
 	return (
 		<div>
-			<Button variant="outlined" onClick={handleClickOpen}>
+			{/* <Button variant="outlined" onClick={handleClickOpen}>
 				Create New Room
-			</Button>
+			</Button> */}
+			<div className='button-custom center-text center-button' style={{ width: '280px' }}
+				onClick={handleClickOpen}>
+				Start a new room
+			</div>
 			<BootstrapDialog
 				onClose={handleClose}
 				aria-labelledby="customized-dialog-title"

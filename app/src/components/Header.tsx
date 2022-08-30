@@ -1,12 +1,14 @@
-import { Fullscreen } from '@mui/icons-material'
-import { Box, Button, Stack, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Stack } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import CustomizedDialog from './CustomizedDialog';
+import FormNewRoom from './FormNewRoom';
 
 import animatedPong from '../assets/animatedPong.gif'
 import HeaderPong from '../assets/HeaderPong.png'
 
 
 const Header = () => {
+
 	return (
 		<Stack
 			sx={{
@@ -27,10 +29,11 @@ const Header = () => {
 						}}>
 						<img src={HeaderPong} className="center-img" height="130px" />
 					</Box>
+					 {/* button Create Room */}
 					<Box className='center-button' >
-						<div className='button-custom center-text center-button' style={{ width: '280px' }}>
-							Start a new room
-						</div>
+						<CustomizedDialog>
+							<FormNewRoom />
+						</CustomizedDialog>
 					</Box>
 				</Stack>
 			</Box>

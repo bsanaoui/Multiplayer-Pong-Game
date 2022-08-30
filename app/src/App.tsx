@@ -6,17 +6,12 @@ import Main from './components/Main'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import MessageRecieved from './components/MessageRecieved';
-import MessageSent from './components/MessageSent';
 import Friends from './components/Friends';
 import Friend from './components/Friend';
 import Room_ from './components/RoomButtonChat';
 import ChatUI from './components/ChatUI';
 import Rooms from './components/Rooms';
-import { Stack } from '@mui/material';
 import ChatGlobal from './components/ChatGlobal';
-import CustomizedDialog from './components/CustomizedDialog';
-import FormNewRoom from './components/FormNewRoom';
 import { useSelector } from 'react-redux';
 import { RootState } from "./store";
 
@@ -37,17 +32,18 @@ const darkTheme = createTheme({
 
 function App() {
 	const currentuser = useSelector((state: RootState) => state.user).username; // call-back function
-	
+
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			{currentuser  === '' && <LoginPage/>}
-			{/* <MuiNavbar></MuiNavbar>
-			<Main></Main> */}
-			{currentuser !== '' && <ChatGlobal/>}
-			{/* <CustomizedDialog>
-				<FormNewRoom />
-			</CustomizedDialog> */}
+			{currentuser === '' && <LoginPage />}
+			{currentuser !== '' &&
+				<div>
+					<MuiNavbar></MuiNavbar>
+					<Main></Main>
+				</div>
+			}
+			{/* <ChatGlobal /> */}
 		</ThemeProvider >
 	);
 }

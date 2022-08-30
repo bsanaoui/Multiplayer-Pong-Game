@@ -19,6 +19,7 @@ const FormNewRoom = () => {
         kind: Yup.string().required("Required"),
         password: Yup.string().min(8, "Minimum characters should be 8")
     })
+    
     const onSubmit = (values: any, props: any) => {
 
         alert(JSON.stringify(values, null, 2))
@@ -28,13 +29,13 @@ const FormNewRoom = () => {
     return (
         <Grid>
             <Paper elevation={30} style={paperStyle}>
-                <Grid alignContent='center' marginBottom='25px'>ß
+                <Grid alignContent='center' marginBottom='25px'>
                     <Typography variant='caption'>Fill the form to create a new room</Typography>
                 </Grid>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                     {(props) => (
                         <Form>
-                            <Field as={TextField} name='room_ßname' label='Room Name' fullWidth
+                            <Field as={TextField} name='room_name' label='Room Name' fullWidth
                                 error={props.errors.room_name && props.touched.room_name}
                                 helperText={<ErrorMessage name='room_name' />} required />
 

@@ -1,9 +1,7 @@
-import { Avatar, Stack } from "@mui/material"
+import { Stack } from "@mui/material"
 import AllUsers from "./AllUsers"
 import Header from "./Header"
-import ProtectedRooms from "./ProtectedRooms"
 import PublicRooms from "./PublicRooms"
-import User from "./User"
 
 
 const Main = () => {
