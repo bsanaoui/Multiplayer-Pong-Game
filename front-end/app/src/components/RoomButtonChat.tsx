@@ -3,6 +3,10 @@ import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { changeCurrRoom } from "../store/chatUiReducer";
+import DropMenu from './DropMenu';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { margin } from '@mui/system';
+
 
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
@@ -19,9 +23,9 @@ const RoomButtonChat = ({ name }: RoomProps) => {
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const dispatch = useDispatch();
 
-    let backgroundButton:string = currentRoom !== name ? "#2E3256" : "#4289F3";
+    let backgroundButton: string = currentRoom !== name ? "#2E3256" : "#4289F3";
     return (
-        <div onClick={() => {dispatch(changeCurrRoom(name))}} className="center-button">
+        <div onClick={() => { dispatch(changeCurrRoom(name)) }} className="center-button">
             <Box
                 sx={{
                     backgroundColor: backgroundButton,
@@ -45,15 +49,23 @@ const RoomButtonChat = ({ name }: RoomProps) => {
                     <Stack>
                         <Typography
                             sx={{
-                                fontFamily:'Lexend',
+                                fontFamily: 'Lexend',
                                 fontWeight: '500',
                                 fontSize: '1.3rem',
                                 fontStyle: 'normal',
                             }}>{name}</Typography>
                     </Stack>
+                    <div style={{marginLeft: 'auto'}}>
+                        <IconButton aria-label="DropMenu" component="label">
+                            <MoreVertIcon />
+                        </IconButton>
+                    </div>
                 </Stack>
-            </Box>
-        </div>
+                {/* {/* <div style={{ position: 'absolute' }} > */}
+                    <DropMenu />
+                {/* </div> */} 
+            </Box >
+        </div >
     )
 }
 

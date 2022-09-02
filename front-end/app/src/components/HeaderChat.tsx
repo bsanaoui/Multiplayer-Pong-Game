@@ -42,7 +42,7 @@ const HeaderChat = ({ name }: FriendProps) => {
                 <div style={{  margin: 'auto' }}>
 					<img
 						style={{ height: '28px', float: 'right' }}
-						className="center" alt='users' src={dot3Icon} />
+						className="center-button" alt='users' src={dot3Icon} />
 				</div>
             </Stack>
         </Box>
