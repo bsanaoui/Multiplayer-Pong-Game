@@ -14,7 +14,7 @@ export interface ChatUIState {
 }
 
 const initialState: ChatUIState = {
-    is_friend: true,
+    is_friend: false,
     curr_converation: '',
     curr_room: '',
     msgs:[]

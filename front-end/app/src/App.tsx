@@ -44,6 +44,7 @@ function App() {
 					{/* <Main></Main>  */}
 					<ChatGlobal />
 					{/* <RoomButtonChat name='Room 2C.X'/> */}
+					{/* <Friend name='Jocky Ball'/> */}
 				</div>
 			}
 		</ThemeProvider>

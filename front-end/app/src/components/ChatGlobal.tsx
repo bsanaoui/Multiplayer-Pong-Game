@@ -22,6 +22,7 @@ const ChatGlobal = () => {
                 </div>
             </Stack>
             {is_friends ? <Friends /> : <Rooms />}
+            {is_friends ? <Friends /> : <Rooms />}
             {is_friends ? <ChatUIFriend /> : <ChatUIRoom />}
         </Stack>
     )

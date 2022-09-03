@@ -97,7 +97,7 @@ export default function DropMenu() {
 					'aria-labelledby': 'basic-button',
 				}}
 			>
-				<Box sx={{ maxWidth: 360, bgcolor: '#3D4060', paddingTop:'0', paddingBotto:'0' }}>
+				<Box sx={{ maxWidth: 360, bgcolor: '#3D4060',paddingTop:'0', paddingBottom:'0' }}>
 					<nav aria-label="main folders">
 						<List dense={true} >
 							<ListItem disablePadding>

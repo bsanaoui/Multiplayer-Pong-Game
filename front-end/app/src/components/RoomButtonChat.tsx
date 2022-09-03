@@ -23,7 +23,6 @@ interface RoomProps {
 const RoomButtonChat = ({ name }: RoomProps) => {
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const dispatch = useDispatch();
-    const [openMenu, setOpenMenu] = useState(false);
 
     let backgroundButton: string = currentRoom !== name ? "#2E3256" : "#4289F3";
     return (
@@ -36,7 +35,7 @@ const RoomButtonChat = ({ name }: RoomProps) => {
                 height: '55px',
                 borderRadius: '12px',
                 position: 'relative',
-
+                cursor: 'pointer',
             }}>
             <Stack spacing={2} direction="row" padding='3% 3%'
             >
@@ -63,15 +62,6 @@ const RoomButtonChat = ({ name }: RoomProps) => {
                     <DropMenu/>
                 </div>
             </Stack>
-            {/* {openMenu &&
-                <div style={{
-                    position: 'absolute',
-                    right: '13%',
-                    top: '50%'
-                }} >
-                    <DropMenu/>
-                </div>
-            } */}
         </Box >
     )
 }
