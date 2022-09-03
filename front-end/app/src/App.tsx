@@ -16,7 +16,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from "./store";
 
 import LoginPage from './components/LoginPage';
-import DropMenu from './components/DropMenu';
 import RoomButtonChat from './components/RoomButtonChat';
 
 const darkTheme = createTheme({
@@ -41,13 +40,13 @@ function App() {
 			{/* {currentuser === '' && <LoginPage />} */}
 			{currentuser === '' &&
 				<div>
-					{/* <MuiNavbar></MuiNavbar>
-					<Main></Main> */}
-					{/* <ChatGlobal /> */}
-					<RoomButtonChat name='Room 2C.X'/>
+					{/* <MuiNavbar></MuiNavbar> */}
+					{/* <Main></Main>  */}
+					<ChatGlobal />
+					{/* <RoomButtonChat name='Room 2C.X'/> */}
 				</div>
 			}
-		</ThemeProvider >
+		</ThemeProvider>
 	);
 }
 
