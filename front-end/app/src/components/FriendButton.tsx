@@ -10,22 +10,17 @@ interface FriendProps {
 	name: string
 }
 
-const Friend = ({ name }: FriendProps) => {
-	const currentConver = useSelector((state: RootState) => state.chat).curr_converation;
-	const dispatch = useDispatch();
+export const FriendButton = ({ name }: FriendProps) => {
 
-	let backgroundButton: string = currentConver !== name ? "#2E3256" : "#4289F3";
 	return (
 		<Box
-			onClick={() => { dispatch(changeCurrConversation(name)) }}
 			sx={{
-				backgroundColor: backgroundButton,
+				background: 'linear-gradient(to bottom right, #2E2256, #4289F3)',
 				minWidth: '290px',
 				width: '290px',
 				height: '55px',
 				borderRadius: '12px',
 				position: 'relative',
-				cursor: 'pointer',
 
 			}}>
 			<Stack spacing={2} direction="row" padding='3% 3%'
@@ -56,7 +51,7 @@ const Friend = ({ name }: FriendProps) => {
 							fontWeight: '500',
 							fontSize: '1.15rem',
 							fontStyle: 'normal',
-							margin: '3% auto'
+							margin: '5.2% auto'
 						}}>{name}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
@@ -66,7 +61,3 @@ const Friend = ({ name }: FriendProps) => {
 		</Box >
 	)
 }
-
-
-
-export default Friend

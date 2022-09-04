@@ -7,7 +7,6 @@ import Main from './components/Main'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Friends from './components/Friends';
-import Friend from './components/Friend';
 import Room_ from './components/RoomButtonChat';
 import ChatUI from './components/ChatUIRoom';
 import Rooms from './components/Rooms';
@@ -43,8 +42,6 @@ function App() {
 					{/* <MuiNavbar></MuiNavbar> */}
 					{/* <Main></Main>  */}
 					<ChatGlobal />
-					{/* <RoomButtonChat name='Room 2C.X'/> */}
-					{/* <Friend name='Jocky Ball'/> */}
 				</div>
 			}
 		</ThemeProvider>

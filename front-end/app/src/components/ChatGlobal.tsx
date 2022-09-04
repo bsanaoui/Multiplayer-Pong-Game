@@ -2,13 +2,15 @@ import { IconButton, Stack, Typography } from "@mui/material"
 import ChatUIRoom from "./ChatUIRoom"
 import Friends from "./Friends"
 import messengerIcon from '../assets/messenger.png'
-import roomIcon from '../assets/group.png'
+import roomIcon from '../assets/chat-room.png'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store";
 import { changeStatusFriends, clearMessages } from "../store/chatUiReducer";
 
 import Rooms from "./Rooms"
 import ChatUIFriend from "./ChatUIFriend"
+import { UsersRoom } from "./UsersRoom"
+import { UsersMessaging } from "./UsersMessaging"
 
 
 const ChatGlobal = () => {
@@ -22,11 +24,12 @@ const ChatGlobal = () => {
                 </div>
             </Stack>
             {is_friends ? <Friends /> : <Rooms />}
-            {is_friends ? <Friends /> : <Rooms />}
+            {is_friends ? <UsersMessaging /> : <UsersRoom />}
             {is_friends ? <ChatUIFriend /> : <ChatUIRoom />}
         </Stack>
     )
 }
+
 
 interface ButtonProps {
     _name: string,
@@ -46,7 +49,7 @@ const CustomButton = ({ _name, }: ButtonProps) => {
                 dispatch(clearMessages())
             }}>
             <Stack spacing={2} direction="row" sx={{
-                width: "300px", padding: "3px"
+                width: "220px", padding: "3px"
             }}>
                 <IconButton>
                     <img src={custom_icon} width="24px" alt="IconChat" />
@@ -54,7 +57,7 @@ const CustomButton = ({ _name, }: ButtonProps) => {
                 <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                     <Typography sx={{
                         fontWeight: '400',
-                        fontSize: '22px',
+                        fontSize: '16px',
                         lineHeight: '109.52%',
                     }}>
                         {_name}

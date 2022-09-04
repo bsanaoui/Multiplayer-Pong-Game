@@ -2,7 +2,7 @@ import { Avatar, Badge, Box, Icon, IconButton, Stack, Typography } from '@mui/ma
 import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { changeCurrRoom } from "../store/chatUiReducer";
+import { changeCurrConversation } from "../store/chatUiReducer";
 import DropMenu from './DropMenu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { margin } from '@mui/system';
@@ -20,14 +20,14 @@ interface RoomProps {
     name: string
 }
 
-const RoomButtonChat = ({ name }: RoomProps) => {
-    const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
+export const UserButtonChat = ({ name }: RoomProps) => {
+    const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const dispatch = useDispatch();
 
-    let backgroundButton: string = currentRoom !== name ? "#2E3256" : "#4289F3";
+    let backgroundButton: string = currentConv !== name ? "#2E3256" : "#4289F3";
     return (
         <Box
-            onClick={() => { dispatch(changeCurrRoom(name)) }}
+            onClick={() => { dispatch(changeCurrConversation(name)) }}
             sx={{
                 backgroundColor: backgroundButton,
                 minWidth: '290px',
@@ -65,5 +65,3 @@ const RoomButtonChat = ({ name }: RoomProps) => {
         </Box >
     )
 }
-
-export default RoomButtonChat

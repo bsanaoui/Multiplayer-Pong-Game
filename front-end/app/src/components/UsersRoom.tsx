@@ -1,66 +1,68 @@
-import { Box, IconButton, List, Stack, Typography } from '@mui/material'
-import friendIcon from '../assets/friends.png'
-import { FriendButton } from './FriendButton';
-
+import { Box, Icon, IconButton, List, Stack, Typography } from '@mui/material'
+import roomIcon from '../assets/group.png'
+import RoomButtonChat from './RoomButtonChat';
+import usersRoomIcon from '../assets/usersRoom.png'
+import { UserButton } from './UserButton';
 
 // function pickRandom() {
-//     const names: string[] = ["Nathanial Howell", "Leon Beard", "Madeleine Martin",
-//         "Cristopher Fitzgerald", "Judah Rose"];
+//     const names: string[] = ["JoinRoom1", "JoinRoom2", "JoinRoom3",
+//         "JoinRoom4", "JoinRoom5"];
 //     return names[Math.floor(Math.random() * names.length)];
 // }
 
-// const friends = Array.from({ length: 20 }, (_, index) => {
+// const rooms = Array.from({ length: 5 }, (_, index) => {
 //     return (
 //         <li key={index} className='item-friend'>
-//             <Friend name={pickRandom()} />
+//             <RoomButtonChat name={pickRandom()} />
 //         </li>
 //     );
 // });
 
-const Friends = () => {
+export const UsersRoom = () => {
     return (
         <Box
             sx={{
-                backgroundColor: "#202541",
+                backgroundColor: "#262948",
                 // width: "500px",
                 height: '100vh',
                 padding: '30px',
+                borderLeft: "1px solid #FFFFFF",
+                paddingTop: "7.2em"
 
             }}>
             <Stack height="100%">
-                <Stack spacing={1} direction="row" marginBottom= "2.4em">
-                    <IconButton>
-                        <img src={friendIcon} width="37px" alt='MessengerIcon' />
+                <Stack spacing={1} direction="row" marginBottom="3%">
+                    <IconButton >
+                        <img src={usersRoomIcon} width="30px" alt='roomIcon' />
                     </IconButton>
                     <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                         <Typography sx={{
-                            fontWeight: '700',
-                            fontSize: '28px',
+                            fontWeight: '600',
+                            fontSize: '22px',
                             lineHeight: '109.52%',
 
                         }}>
-                            Friends
+                            Room Users
                         </Typography>
                     </div>
                 </Stack>
+
                 <List style={{ overflow: 'auto', height: "100%" }} >
                     {/* {friends} */}
                     <li key='3' className='item-friend'>
-                        <FriendButton name="Hamza" />
+                        <UserButton name="Hamza" />
                     </li>
                     <li key='1' className='item-friend'>
-                        <FriendButton name="Safa" />
+                        <UserButton name="Safa" />
                     </li>
                     <li key='2' className='item-friend'>
-                        <FriendButton name="Brahim" />
+                        <UserButton name="Brahim" />
                     </li>
                     <li key='4' className='item-friend'>
-                        <FriendButton name="Soukaina" />
+                        <UserButton name="Soukaina" />
                     </li>
                 </List>
             </Stack>
         </Box>
     )
 }
-
-export default Friends
