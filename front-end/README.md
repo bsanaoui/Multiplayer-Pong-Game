@@ -1,6 +1,7 @@
 # Installed Libraries:
 * `Material UI: `to use some components
 * `Joy UI: `
+* `Mui Style`
 * `Redux: `to manage stats in the app
 * `Formik: `to handle forms
 * `Yup: `is a schema builder for runtime value parsing and validation.

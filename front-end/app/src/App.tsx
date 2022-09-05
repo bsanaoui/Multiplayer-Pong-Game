@@ -16,6 +16,8 @@ import { RootState } from "./store";
 
 import LoginPage from './components/LoginPage';
 import RoomButtonChat from './components/RoomButtonChat';
+import LiveMatchBtn, { AvatarPlayer } from './components/LiveMatchBtn';
+import avatar1 from './assets/man.png';
 
 const darkTheme = createTheme({
 	palette: {
@@ -42,6 +44,7 @@ function App() {
 					{/* <MuiNavbar></MuiNavbar> */}
 					{/* <Main></Main>  */}
 					<ChatGlobal />
+					{/* <LiveMatchBtn/> */}
 				</div>
 			}
 		</ThemeProvider>
