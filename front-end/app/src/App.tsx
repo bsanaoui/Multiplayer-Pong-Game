@@ -18,6 +18,11 @@ import LoginPage from './components/LoginPage';
 import RoomButtonChat from './components/RoomButtonChat';
 import LiveMatchBtn, { AvatarPlayer } from './components/LiveMatchBtn';
 import avatar1 from './assets/man.png';
+import StatElementBar from './components/Profile/StatElementBar';
+import UserNameElement from './components/Profile/UserNameElement';
+import AvatarProfile from './components/Profile/AvatarProfile';
+import StatSegment from './components/Profile/StatSegment';
+import AchievementElement from './components/Profile/AchievementElement';
 
 const darkTheme = createTheme({
 	palette: {
@@ -43,8 +48,8 @@ function App() {
 				<div>
 					{/* <MuiNavbar></MuiNavbar> */}
 					{/* <Main></Main>  */}
-					<ChatGlobal />
-					{/* <LiveMatchBtn/> */}
+					{/* <ChatGlobal /> */}
+					<AchievementElement name="1" valide={true}/>
 				</div>
 			}
 		</ThemeProvider>
