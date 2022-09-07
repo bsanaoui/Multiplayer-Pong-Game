@@ -59,7 +59,6 @@ const ChatUI = () => {
     const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
     const chat_state = useSelector((state: RootState) => state.chat);
     const [message_input, setMessage] = useState("");
-    // const [msgs, setMsgs] = useState(initMessages);
 
     const dispatch = useDispatch();
 
@@ -130,7 +129,7 @@ const ChatUI = () => {
                     <Stack direction="row" marginBottom="45px">
                         <FormControl variant="standard">
                             <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
-                                onChange={handleMsgChange} 
+                                onChange={handleMsgChange}
                                 onKeyDown={handleEnterkey}
                                 value={message_input}/>
                         </FormControl>

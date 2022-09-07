@@ -23,6 +23,9 @@ import UserNameElement from './components/Profile/UserNameElement';
 import AvatarProfile from './components/Profile/AvatarProfile';
 import StatSegment from './components/Profile/StatSegment';
 import AchievementElement from './components/Profile/AchievementElement';
+import PlayerTable from './components/Profile/PlayerTable';
+import { MatchHistory } from './components/Profile/MatchHistory';
+import ScoreTable from './components/Profile/ScoreTable';
 
 const darkTheme = createTheme({
 	palette: {
@@ -49,7 +52,8 @@ function App() {
 					{/* <MuiNavbar></MuiNavbar> */}
 					{/* <Main></Main>  */}
 					{/* <ChatGlobal /> */}
-					<AchievementElement name="1" valide={true}/>
+					{/* <MatchHistory /> */}
+					<ScoreTable score_1={25} score_2={10}/>
 				</div>
 			}
 		</ThemeProvider>
