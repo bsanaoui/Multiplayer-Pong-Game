@@ -38,7 +38,9 @@
   }
 }
 
-::-webkit-scrollbar {display:none;}
+::-webkit-scrollbar {
+  display: none;
+}
 
 .center-img {
   display: block;
@@ -53,7 +55,18 @@
   border-radius: 100px;
 }
 
-.center-button{
+.button-Auth {
+  height: calc(( 4vh + 5vw ) / 2);
+  background: linear-gradient(90.01deg, #287BF8 -5.18%, #1B0E6A 99.99%);
+  border-radius: 45px;
+}
+
+.button-Auth:hover {
+  background: linear-gradient(90.01deg, #2062c5 -5.18%, #120a48 99.99%);
+  border: 1px solid #0b4078;
+}
+
+.center-button {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -70,26 +83,26 @@
 .room-title {
   display: inline-block;
   height: 35px;
-  background: #E91E63 ;
+  background: #E91E63;
   border-radius: 45px;
 }
 
 .dot {
   height: 37px;
   width: 37px;
-  background-color: #BF360D ;
+  background-color: #BF360D;
   border-radius: 50%;
   display: inline-block;
   text-align: center;
 
   border: 2px solid #8941EA;
-	border-radius: '28px'
+  border-radius: '28px'
 }
 
 .dot-nb {
   height: 20px;
   width: 20px;
-  background-color: #F86968 ;
+  background-color: #F86968;
   border-radius: 50%;
   display: inline-block;
   text-align: center;
@@ -98,7 +111,7 @@
 }
 
 /* **************** For User ************************ */
-.dot_status{
+.dot_status {
   height: 15px;
   width: 15px;
   border-radius: 50%;
@@ -115,7 +128,7 @@
   display: inline-block;
 
   border: 3px dotted #FFF;
-	border-radius: '28px'
+  border-radius: '28px'
 }
 
 /* *********** Scrooling horizontal **************** */
@@ -138,11 +151,12 @@
   margin-right: 30px;
 }
 
-.item-friend{
+.item-friend {
   display: inline-block;
   margin-right: 30px;
   margin-bottom: 13px;
 }
+
 /* ******************* Scrooling Vertical ***************** */
 
 .vertical_slider {
@@ -152,6 +166,7 @@
   padding: 25px 0px;
   box-sizing: border-box;
 }
+
 /* ******************************************************* */
 
 /* ******************* Material Form *********************** */
@@ -188,45 +203,53 @@
   align-items: center;
 } */
 
-.enter-username-form > input{
-      display: inline-block;
-      width: 300px;
-      height: 35px;
-      margin-bottom: 10px;
-      color: #333;
-      padding: 5px 10px;
-      font-size: 1rem;
+.enter-username-form>input {
+  display: inline-block;
+  width: 300px;
+  height: 35px;
+  margin-bottom: 10px;
+  color: #333;
+  padding: 5px 10px;
+  font-size: 1rem;
 }
 
- .enter-username-form > input > placeholder{
+.enter-username-form>input>placeholder {
   color: #ccc;
   font-size: .9rem;
 }
 
-.enter-username-form > button{
-      color: white;
-      font-weight: 300;
-      font-size: 1rem;
-      padding: 7px 35px;
-} 
+.enter-username-form>button {
+  color: white;
+  font-weight: 300;
+  font-size: 1rem;
+  padding: 7px 35px;
+}
 
 /* ========================= For Match lives =========================================== */
-.red_dot{
+.red_dot {
   height: 1rem;
   width: 1rem;
   border-radius: 50%;
   display: inline-block;
   text-align: center;
-  background:red;
+  background: red;
 }
 
 /* ============================== Make it Golbale !!! =================================== */
 .truncate-typo {
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .truncate-typo:hover {
   overflow: visible;
+}
+
+/* ============================== History =================================== */
+
+.typo-table-history {
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
 }

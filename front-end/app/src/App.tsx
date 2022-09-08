@@ -26,6 +26,8 @@ import AchievementElement from './components/Profile/AchievementElement';
 import PlayerTable from './components/Profile/PlayerTable';
 import { MatchHistory } from './components/Profile/MatchHistory';
 import ScoreTable from './components/Profile/ScoreTable';
+import MessageSent from './components/MessageSent';
+import MessageRecieved from './components/MessageRecieved';
 
 const darkTheme = createTheme({
 	palette: {
@@ -53,7 +55,7 @@ function App() {
 					{/* <Main></Main>  */}
 					{/* <ChatGlobal /> */}
 					{/* <MatchHistory /> */}
-					<ScoreTable score_1={25} score_2={10}/>
+					<LoginPage/>
 				</div>
 			}
 		</ThemeProvider>

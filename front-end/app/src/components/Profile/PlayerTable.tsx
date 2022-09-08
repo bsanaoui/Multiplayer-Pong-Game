@@ -10,7 +10,6 @@ const PlayerTable = (Props: PlayerTableProps) => {
 	return (
 		<Box
 			sx={{
-				// background: '#4E548D',
 				width: '130px',
 				height: '60px',
 			}}>
@@ -18,6 +17,7 @@ const PlayerTable = (Props: PlayerTableProps) => {
 				<Typography
 					className='truncate-typo'
 					width='100%'
+					textAlign="center"
 					fontWeight='500'
 					fontSize='1.3rem'>
 					{Props.username}

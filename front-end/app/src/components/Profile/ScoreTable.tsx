@@ -7,19 +7,20 @@ interface ScoreProps {
 }
 
 const ScoreTable = (Props: ScoreProps) => {
-	let color_bg:string;
-	let msg:string;
-	
+	let color_bg: string;
+	let msg: string;
+
 	if (Props.score_1 === Props.score_2) { color_bg = "yellow"; msg = "It is a draw" }
-	else if (Props.score_1 > Props.score_2 ) {color_bg = "#11EF92"; msg = "You are winning"}
-	else {color_bg = "#FD506F"; msg = "You are loosing"}
+	else if (Props.score_1 > Props.score_2) { color_bg = "#11EF92"; msg = "You are winning" }
+	else { color_bg = "#FD506F"; msg = "You are loosing" }
 	return (
 		<Stack justifyContent="center" alignItems="center" spacing={0} width='110px'
-			height='60px'>
+			height='60px' marginTop="-7px" margin='auto'
+		>
 			<Typography
-				color= {color_bg}
+				color={color_bg}
 				fontWeight='500'
-				fontSize='27.5px'>
+				fontSize='26px'>
 				{Props.score_1}{" - "}{Props.score_2}
 			</Typography>
 			<Typography
@@ -27,8 +28,9 @@ const ScoreTable = (Props: ScoreProps) => {
 					color: '#E6E7F2',
 					fontWeight: '500',
 					fontSize: '11px',
+					marginTop: '-3px'
 				}}>
-					{msg}
+				{msg}
 			</Typography>
 		</Stack>
 	)
