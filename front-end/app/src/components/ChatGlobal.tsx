@@ -35,7 +35,7 @@ interface ButtonProps {
     _name: string,
 }
 
-const CustomButton = ({ _name, }: ButtonProps) => {
+export const CustomButton = ({ _name, }: ButtonProps) => {
     const is_friends = useSelector((state: RootState) => state.chat).is_friend; // call-back function
     const dispatch = useDispatch();
 

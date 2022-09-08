@@ -28,6 +28,7 @@ import { MatchHistory } from './components/Profile/MatchHistory';
 import ScoreTable from './components/Profile/ScoreTable';
 import MessageSent from './components/MessageSent';
 import MessageRecieved from './components/MessageRecieved';
+import { NavBarNew } from './components/NavBarNew';
 
 const darkTheme = createTheme({
 	palette: {
@@ -54,8 +55,9 @@ function App() {
 					{/* <MuiNavbar></MuiNavbar> */}
 					{/* <Main></Main>  */}
 					{/* <ChatGlobal /> */}
+					<NavBarNew/>
 					{/* <MatchHistory /> */}
-					<LoginPage/>
+					{/* <LoginPage/> */}
 				</div>
 			}
 		</ThemeProvider>
