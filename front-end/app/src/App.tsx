@@ -29,6 +29,8 @@ import ScoreTable from './components/Profile/ScoreTable';
 import MessageSent from './components/MessageSent';
 import MessageRecieved from './components/MessageRecieved';
 import { NavBarNew } from './components/NavBarNew';
+import { NavbarCollapsed } from './components/NavbarCollapsed';
+import { Stack } from '@mui/material';
 
 const darkTheme = createTheme({
 	palette: {
@@ -55,7 +57,7 @@ function App() {
 					{/* <MuiNavbar></MuiNavbar> */}
 					{/* <Main></Main>  */}
 					{/* <ChatGlobal /> */}
-					<NavBarNew/>
+					<NavBarNew />
 					{/* <MatchHistory /> */}
 					{/* <LoginPage/> */}
 				</div>

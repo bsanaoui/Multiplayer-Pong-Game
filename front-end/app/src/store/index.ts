@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import chatReducer from './chatUiReducer'
+import collapseNavReducer from './collapseNavReducer'
 import interfacesReducer from './interfacesReducer'
 import openDialogReducer from './openDialogReducer'
 import userReducer  from './userReducer'
@@ -10,6 +11,7 @@ export const store = configureStore({
     chat: chatReducer,
     openDialog: openDialogReducer,
     interfaces: interfacesReducer, 
+    collapseNav: collapseNavReducer, 
   },
 })
 

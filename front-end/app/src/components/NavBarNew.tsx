@@ -13,12 +13,13 @@ import matchmakingIcon from '../assets/matchmaking-icon.png'
 import streamingIcon from '../assets/streaming.png'
 import homeIcon from '../assets/home.png'
 import avatar2 from '../assets/avatar2.png'
-import PlayerTable from './Profile/PlayerTable';
 import LogoutIcon from '../assets/log-out.png';
 import collapseIcon from '../assets/collapse-nav.png';
 
 import { Box } from '@mui/system';
 import { Button2FA } from './Button2FA';
+import { setCollapse } from '../store/collapseNavReducer';
+import { NavbarCollapsed } from './NavbarCollapsed';
 
 let getInterface = (interfaceEnum: InterfaceEnum): string => {
     switch (interfaceEnum) {
@@ -35,61 +36,67 @@ let getInterface = (interfaceEnum: InterfaceEnum): string => {
 };
 
 export const NavBarNew = () => {
+    const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
+
     return (
-        <Stack justifyContent="space-between"
-            sx={{ height: "100vh", width: "240px", backgroundColor: "#262948" }}>
-            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1.8}
-                sx={{ padding: "3.3%", paddingTop: "5%" }}>
-                <Avatar
-                    variant="circular"
-                    sx={{
-                        height: '52px',
-                        width: '52px',
-                        backgroundColor: "#FFF",
-                        padding: "3.5px",
-                        border: "3px solid #535995",
-                    }}
-                    alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
-                <Stack justifyContent="space-between" alignItems="flex-start" spacing={0}>
-                    <Typography
-                        className='truncate-typo'
-                        width='100%'
-                        fontWeight="700"
-                        fontSize="1.3rem"
-                        fontFamily="Lato"
-                        lineHeight="130%">
-                        Cmos Pancake
-                    </Typography>
-                    <Stack direction="row" spacing={0.5}>
-                        <SportsEsportsIcon sx={{ width: "17px" }} />
+        <Box>
+            {is_collapsedNav && <NavbarCollapsed />}
+            {!is_collapsedNav &&
+            <Stack justifyContent="space-between"
+                sx={{ height: "100vh", width: "240px", backgroundColor: "#262948" }}>
+                <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1.8}
+                    sx={{ padding: "3.3%", paddingTop: "5%" }}>
+                    <Avatar
+                        variant="circular"
+                        sx={{
+                            height: '52px',
+                            width: '52px',
+                            backgroundColor: "#FFF",
+                            padding: "3.5px",
+                            border: "3px solid #535995",
+                        }}
+                        alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
+                    <Stack justifyContent="space-between" alignItems="flex-start" spacing={0}>
                         <Typography
-                            sx={{
-                                color: '#ADADAD',
-                                fontWeight: '600',
-                                fontSize: '0.9rem',
-                                paddingTop: '1.2px',
-                            }}>
-                            Level 32</Typography>
+                            className='truncate-typo'
+                            width='100%'
+                            fontWeight="700"
+                            fontSize="1.3rem"
+                            fontFamily="Lato"
+                            lineHeight="130%">
+                            Cmos Pancake
+                        </Typography>
+                        <Stack direction="row" spacing={0.5}>
+                            <SportsEsportsIcon sx={{ width: "17px" }} />
+                            <Typography
+                                sx={{
+                                    color: '#ADADAD',
+                                    fontWeight: '600',
+                                    fontSize: '0.9rem',
+                                    paddingTop: '1.2px',
+                                }}>
+                                Level 32</Typography>
+                        </Stack>
                     </Stack>
                 </Stack>
-            </Stack>
-            <Stack
-                divider={<Divider orientation="horizontal" flexItem />}>
-                <CustomButton _name={InterfaceEnum.Home} _icon={homeIcon} />
-                <CustomButton _name={InterfaceEnum.Dashboard} _icon={dashboardIcon} />
-                <CustomButton _name={InterfaceEnum.ChatRoom} _icon={roomIcon} />
-                <CustomButton _name={InterfaceEnum.InstantMessaging} _icon={messengerIcon} />
-                <CustomButton _name={InterfaceEnum.Friends} _icon={friendsIcon} />
-                <CustomButton _name={InterfaceEnum.Matchmaking} _icon={matchmakingIcon} />
-                <CustomButton _name={InterfaceEnum.LiveGames} _icon={streamingIcon} />
-            </Stack>
-            <Box>
-                <Box sx={{marginBottom:"20%"}}><Button2FA verified={true} /></Box>
-                <Collapse />
-                <Divider orientation="horizontal" flexItem />
-                <CustomButton _name={InterfaceEnum.Logout} _icon={LogoutIcon} />
-            </Box>
-        </Stack>
+                <Stack
+                    divider={<Divider orientation="horizontal" flexItem />}>
+                    <CustomButton _name={InterfaceEnum.Home} _icon={homeIcon} />
+                    <CustomButton _name={InterfaceEnum.Dashboard} _icon={dashboardIcon} />
+                    <CustomButton _name={InterfaceEnum.ChatRoom} _icon={roomIcon} />
+                    <CustomButton _name={InterfaceEnum.InstantMessaging} _icon={messengerIcon} />
+                    <CustomButton _name={InterfaceEnum.Friends} _icon={friendsIcon} />
+                    <CustomButton _name={InterfaceEnum.Matchmaking} _icon={matchmakingIcon} />
+                    <CustomButton _name={InterfaceEnum.LiveGames} _icon={streamingIcon} />
+                </Stack>
+                <Box>
+                    <Box sx={{ marginBottom: "20%" }}><Button2FA verified={true} /></Box>
+                    <Collapse />
+                    <Divider orientation="horizontal" flexItem />
+                    <CustomButton _name={InterfaceEnum.Logout} _icon={LogoutIcon} />
+                </Box>
+            </Stack>}
+        </Box>
     )
 }
 
@@ -109,7 +116,7 @@ const CustomButton = ({ _name, _icon }: ButtonProps) => {
                 dispatch(setCurrentInterface(_name))
             }}>
             <Stack alignItems="center" justifyContent="flex-start" spacing={2} direction="row" sx={{
-                paddingLeft: "10px", cursor: "pointer", height: "44px"
+                paddingLeft: "10px", cursor: "pointer", height: "44px", ":hover":{backgroundColor:"#3F5274"}
             }}>
                 <Avatar src={_icon} style={{ padding: "3.5%" }} />
                 <Typography sx={{
@@ -125,10 +132,14 @@ const CustomButton = ({ _name, _icon }: ButtonProps) => {
 }
 
 const Collapse = () => {
+    const dispatch = useDispatch();
     return (
-        <Stack alignItems="center" justifyContent="flex-start" spacing={2} direction="row" sx={{
-            paddingLeft: "6px", cursor: "pointer", height: "44px", backgroundColor: "#3F5274",
-        }}>
+        <Stack alignItems="center" justifyContent="flex-start" spacing={2} direction="row"
+            sx={{
+                paddingLeft: "6px", cursor: "pointer", height: "44px", backgroundColor: "#3F5274",
+                ":hover":{backgroundColor:"#3F4478"}
+            }}
+            onClick={() => { dispatch(setCollapse(true)) }}>
             <Avatar src={collapseIcon} style={{ padding: "2%" }} />
             <Typography sx={{
                 fontWeight: '400',
