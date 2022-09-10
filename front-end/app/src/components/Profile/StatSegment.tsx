@@ -42,7 +42,7 @@ const StatSegment = (Props: statSegmentProps) => {
 					{Props.value}
 				</Typography>
 				<Box style={{
-					marginTop: "-14%"
+					marginTop: "-4.5px"
 				}}>
 					<Typography
 						fontWeight='300'

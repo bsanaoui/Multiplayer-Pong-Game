@@ -1,12 +1,12 @@
-import { Box, Button, Input, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import { bindActionCreators } from '@reduxjs/toolkit';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUsername } from "../store/userReducer";
 
 
 const LoginPage = () => {
+	const dispatch = useDispatch();
+
 	return (
 		<Box
 			sx={{
@@ -40,7 +40,8 @@ const LoginPage = () => {
 					Use your keyboard as gamepads
 					and start playing instantly
 				</Typography>
-				<div className='button-Auth center-text center-button' style={{ width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}>
+				<div className='button-Auth center-text center-button' style={{ width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}
+					onClick={() => { dispatch(setUsername("Cmos")) }}>
 					Start playing now
 				</div>
 			</Stack >

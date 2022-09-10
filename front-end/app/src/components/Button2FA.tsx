@@ -1,4 +1,4 @@
-import { Avatar, Fab, Stack, Typography } from '@mui/material';
+import { Fab, Stack, Typography } from '@mui/material';
 import shieldIcon from '../assets/shield.png';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import RemoveModeratorIcon from '@mui/icons-material/RemoveModerator';
@@ -10,7 +10,7 @@ interface Props2FA {
 export const Button2FA = ({ verified }: Props2FA) => {
     return (
         <Stack alignItems="center" justifyContent="flex-start" spacing={2}>
-            <img src={shieldIcon} style={{ height: "55px" }} />
+            <img alt='shield' src={shieldIcon} style={{ height: "55px" }} />
             <Typography sx={{
                 width: "83%",
                 fontWeight: '500',

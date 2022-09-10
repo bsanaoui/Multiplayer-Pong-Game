@@ -29,8 +29,8 @@ const StatSegment = (Props: statSegmentProps) => {
 const StatElementBar = () => {
 	return (
 		<Box sx={{
-			width: "240px",
-			height: "66px",
+			width: "220px",
+			height: "63px",
 			background: "#4E548D",
 			borderRadius: "17px",
 			padding: '10px 19px'

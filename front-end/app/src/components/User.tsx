@@ -8,7 +8,7 @@ const User = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#242526",
+        backgroundColor: "##130742",
         width: '320px',
         height: '63px',
         paddingTop: '5px',

@@ -12,8 +12,9 @@ const Header = () => {
 	return (
 		<Stack
 			sx={{
+				paddingLeft:"5.3%",
 				width: '100%',
-				backgroundColor: '#000',
+				backgroundColor: '#202541',
 			}}
 			direction="row"
 			spacing={1}>

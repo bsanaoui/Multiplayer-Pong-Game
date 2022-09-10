@@ -1,36 +1,19 @@
 
 import './App.css';
-import MuiTypography from './components/MuiTypography';
-import MuiNavbar from './components/MuiNavbar';
 import Main from './components/Main'
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import Friends from './components/Friends';
-import Room_ from './components/RoomButtonChat';
-import ChatUI from './components/ChatUIRoom';
-import Rooms from './components/Rooms';
 import ChatGlobal from './components/ChatGlobal';
 import { useSelector } from 'react-redux';
 import { RootState } from "./store";
 
 import LoginPage from './components/LoginPage';
-import RoomButtonChat from './components/RoomButtonChat';
-import LiveMatchBtn, { AvatarPlayer } from './components/LiveMatchBtn';
-import avatar1 from './assets/man.png';
-import StatElementBar from './components/Profile/StatElementBar';
-import UserNameElement from './components/Profile/UserNameElement';
-import AvatarProfile from './components/Profile/AvatarProfile';
-import StatSegment from './components/Profile/StatSegment';
-import AchievementElement from './components/Profile/AchievementElement';
-import PlayerTable from './components/Profile/PlayerTable';
-import { MatchHistory } from './components/Profile/MatchHistory';
-import ScoreTable from './components/Profile/ScoreTable';
-import MessageSent from './components/MessageSent';
-import MessageRecieved from './components/MessageRecieved';
 import { NavBarNew } from './components/NavBarNew';
-import { NavbarCollapsed } from './components/NavbarCollapsed';
-import { Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
+import { LiveMatchs } from './components/LiveMatchs';
+import { DashboardUser } from './components/DashboardUser';
+import { InterfaceEnum } from './store/interfacesReducer';
 
 const darkTheme = createTheme({
 	palette: {
@@ -47,20 +30,24 @@ const darkTheme = createTheme({
 
 function App() {
 	const currentuser = useSelector((state: RootState) => state.user).username; // call-back function
+	const currentIterface = useSelector((state: RootState) => state.interfaces).current
 
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			{/* {currentuser === '' && <LoginPage />} */}
-			{currentuser === '' &&
-				<div>
-					{/* <MuiNavbar></MuiNavbar> */}
-					{/* <Main></Main>  */}
-					{/* <ChatGlobal /> */}
+			{currentuser === '' && <LoginPage />}
+			{currentuser !== '' &&
+				<Stack direction="row"
+					sx={{backgroundColor:"#202541", width:"100%", height:"100%"}}>
 					<NavBarNew />
-					{/* <MatchHistory /> */}
-					{/* <LoginPage/> */}
-				</div>
+					{currentIterface === InterfaceEnum.Home && <Main/>}
+					{currentIterface === InterfaceEnum.Dashboard && <DashboardUser/>}
+					{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal/>}
+					{currentIterface === InterfaceEnum.InstantMessaging && <ChatGlobal/>}
+					{currentIterface === InterfaceEnum.Friends && <ChatGlobal/>}
+					{currentIterface === InterfaceEnum.Matchmaking && <Box/>}
+					{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs/>}
+				</Stack>
 			}
 		</ThemeProvider>
 	);

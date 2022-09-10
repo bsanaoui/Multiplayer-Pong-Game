@@ -2,6 +2,7 @@ import { Box, List, Paper, Stack, Typography } from '@mui/material'
 import usersIcon from '../assets/users.png'
 import dot3Icon from '../assets/dot3.png'
 import User from './User';
+import { useState } from 'react';
 
 
 const users = Array.from({ length: 15 }, (_, index) => {
@@ -13,15 +14,16 @@ const users = Array.from({ length: 15 }, (_, index) => {
 });
 
 function AllUsers() {
+	const [is_collapse, setCollapse] = useState(true);
+
 	return (
 		<Box
 			sx={{
 				position: 'fixed',
 				bottom: '0%',
 				right: '0%',
-				backgroundColor: "#242526",
-				width: '390px', // delete after finish "AllUsers"
-				height: '600px',
+				backgroundColor: "#130742",
+				width: '350px', // delete after finish "AllUsers"
 				borderRadius: '30px 0 0 0',
 				padding: '17px',
 			}}>
@@ -29,9 +31,10 @@ function AllUsers() {
 				direction="row"
 				spacing={1.2}
 				sx={{
-					height: '60px',
-
-				}}>
+					height: '45px',
+					cursor: "pointer",
+				}}
+				onClick={() => { is_collapse ? setCollapse(false) : setCollapse(true) }}>
 				<div>
 					<img
 						style={{ height: '33px', paddingLeft: '12px' }}
@@ -50,9 +53,11 @@ function AllUsers() {
 						className="center" alt='users' src={dot3Icon} />
 				</div>
 			</Stack>
-			<List style={{ maxHeight: '100%', overflow: 'auto' }} >
-				{users} 
-			</List>
+			{is_collapse &&
+				<List style={{ maxHeight: '500px', overflow: 'auto' }} >
+					{users}
+				</List>
+			}
 		</Box>
 	)
 }

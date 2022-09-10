@@ -4,14 +4,12 @@ import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
 import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
-import LoginPage from './LoginPage';
-import shortid from 'shortid';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
 import { addMessage, initMessages } from "../store/chatUiReducer";
-import { requestDirectMsgs, requestMessages } from '../requests/posts';
+import { requestDirectMsgs } from '../requests/posts';
 
 
 let socketclient: Socket;
@@ -26,7 +24,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         borderRadius: '12px 0 0 12px',
         position: 'relative',
         backgroundColor: "#151416",
-        // border: '1px solid #ced4da',
         fontSize: 13,
         width: '440px',
         height: '50px',
@@ -55,7 +52,7 @@ const renderMessage = (current: string, user_name: string, msg: string): JSX.Ele
         );
 }
 
-{/* Handle Clear msgs when switch room */}
+/* Handle Clear msgs when switch room */
 const ChatUIFriend = () => {
     const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
     const chat_state = useSelector((state: RootState) => state.chat);
@@ -67,7 +64,6 @@ const ChatUIFriend = () => {
     const currentConvr= chat_state.curr_converation;
     const msgs = chat_state.msgs;
 
-    // const [value, setValue] = useState(Array<{from:string, content_msg:string}>());
     useEffect(() => {
         socketclient = io('http://localhost:3333');
         if (socketclient) {
@@ -76,7 +72,7 @@ const ChatUIFriend = () => {
                 dispatch(addMessage({ username: m.from, to: m.to, msg: m.msg }));
             })
         }
-    }, [user_conneced])
+    },)
 
     const handleConnection = () => {
         if (socketclient) {

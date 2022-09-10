@@ -1,5 +1,4 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material"
-import { match } from "assert"
+import { Avatar, Box, List, Stack, Typography } from "@mui/material"
 import avatar2 from '../../assets/avatar2.png'
 import PlayerTable from "./PlayerTable"
 import ScoreTable from "./ScoreTable"
@@ -64,8 +63,8 @@ export const MatchHistory = () => {
 			justifyContent="flex-start" alignItems="center"
 			sx={{
 				backgroundColor: "#3F4478",
-				width: "880px",
-				height: "500px",
+				width: "855px",
+				height: "100%",
 				borderRadius: '30px',
 			}}>
 			<Stack
@@ -79,29 +78,55 @@ export const MatchHistory = () => {
 				<HeaderTable name="Game" />
 				<HeaderTable name="Duration" />
 			</Stack>
-			{/* { {matchs.map((item) => <ContentField/>))}} */}
-			<ContentField id={1} name={match_h.name}
-				url_avatr={match_h.url_avatr}
-				level={match_h.level}
-				score_1={match_h.score_1} score_2={match_h.score_2}
-				date={match_h.date}
-				game_type={match_h.game_type}
-				duration={match_h.duration} />
-			<ContentField id={2} name={match_h.name}
-				url_avatr={match_h.url_avatr}
-				level={match_h.level}
-				score_1={match_h.score_1} score_2={match_h.score_2}
-				date={match_h.date}
-				game_type={match_h.game_type}
-				duration={match_h.duration} />
-			<ContentField id={3} name={match_h.name}
-				url_avatr={match_h.url_avatr}
-				level={match_h.level}
-				score_1={match_h.score_1} score_2={match_h.score_2}
-				date={match_h.date}
-				game_type={match_h.game_type}
-				duration={match_h.duration} />
-
+			<List style={{ width: "100%", overflow: 'auto', height: "100%" }} >
+				{/* {friends} */}
+				<li key='1' >
+					<ContentField id={1} name={match_h.name}
+						url_avatr={match_h.url_avatr}
+						level={match_h.level}
+						score_1={match_h.score_1} score_2={match_h.score_2}
+						date={match_h.date}
+						game_type={match_h.game_type}
+						duration={match_h.duration} />
+				</li>
+				<li key='2' >
+					<ContentField id={2} name={match_h.name}
+						url_avatr={match_h.url_avatr}
+						level={match_h.level}
+						score_1={match_h.score_1} score_2={match_h.score_2}
+						date={match_h.date}
+						game_type={match_h.game_type}
+						duration={match_h.duration} />
+				</li>
+				<li key='3' >
+					<ContentField id={3} name={match_h.name}
+						url_avatr={match_h.url_avatr}
+						level={match_h.level}
+						score_1={match_h.score_1} score_2={match_h.score_2}
+						date={match_h.date}
+						game_type={match_h.game_type}
+						duration={match_h.duration} />
+				</li>
+				<li key='4' >
+					<ContentField id={4} name={match_h.name}
+						url_avatr={match_h.url_avatr}
+						level={match_h.level}
+						score_1={match_h.score_1} score_2={match_h.score_2}
+						date={match_h.date}
+						game_type={match_h.game_type}
+						duration={match_h.duration} />
+				</li>
+				<li key='5' >
+					<ContentField id={5} name={match_h.name}
+						url_avatr={match_h.url_avatr}
+						level={match_h.level}
+						score_1={match_h.score_1} score_2={match_h.score_2}
+						date={match_h.date}
+						game_type={match_h.game_type}
+						duration={match_h.duration} />
+				</li>
+				
+			</List>
 		</Stack>
 	)
 }

@@ -1,19 +1,17 @@
 import { Box, Stack, Typography } from '@mui/material'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
-
 const UserNameElement = () => {
 	return (
 		<Box
 			sx={{
 				width: "240px",
 				height: "79px",
-				background: "#3F4478",
 			}}>
 			<Stack
 				spacing={1}
 				justifyContent="space-between"
-				alignItems="center">
+				alignItems="flex-start">
 				<Typography
 					fontFamily="Lato"
 					fontWeight='800'
