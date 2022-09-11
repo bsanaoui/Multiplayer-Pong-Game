@@ -1,6 +1,4 @@
-import { Box, Icon, IconButton, List, Stack, Typography } from '@mui/material'
-import roomIcon from '../assets/group.png'
-import RoomButtonChat from './RoomButtonChat';
+import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import usersRoomIcon from '../assets/usersRoom.png'
 import { UserButton } from './UserButton';
 
@@ -18,12 +16,17 @@ import { UserButton } from './UserButton';
 //     );
 // });
 
+
 export const UsersRoom = () => {
+    // init UsersRoom, fetch with axios and when change room init!! && unmout component!!
+    // useEffect(() => {
+  
+    // },)
+
     return (
         <Box
             sx={{
                 backgroundColor: "#262948",
-                // width: "500px",
                 height: '100vh',
                 padding: '30px',
                 borderLeft: "1px solid #FFFFFF",
@@ -50,16 +53,19 @@ export const UsersRoom = () => {
                 <List style={{ overflow: 'auto', height: "100%" }} >
                     {/* {friends} */}
                     <li key='3' className='item-friend'>
-                        <UserButton name="Hamza" />
+                        <UserButton id={0} username={'Hama'} avatar={''} user_role={''} />
                     </li>
                     <li key='1' className='item-friend'>
-                        <UserButton name="Safa" />
+                        <UserButton id={0} username={'Safa'} avatar={''} user_role={''} />
+
                     </li>
                     <li key='2' className='item-friend'>
-                        <UserButton name="Brahim" />
+                        <UserButton id={0} username={'Brahim'} avatar={''} user_role={''} />
+
                     </li>
                     <li key='4' className='item-friend'>
-                        <UserButton name="Soukaina" />
+                        <UserButton id={0} username={'Soukaina'} avatar={''} user_role={''} />
+
                     </li>
                 </List>
             </Stack>

@@ -1,16 +1,10 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import avatar2 from '../assets/avatar2.png'
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { changeCurrConversation } from "../store/chatUiReducer";
 import DropMenu from './DropMenu';
+import { UserOfRoom } from '../store/roomUsersReducer';
 
 
-interface FriendProps {
-	name: string
-}
-
-export const UserButton = ({ name }: FriendProps) => {
+export const UserButton = (Props:UserOfRoom) => {
 
 	return (
 		<Box
@@ -52,7 +46,7 @@ export const UserButton = ({ name }: FriendProps) => {
 							fontSize: '1.15rem',
 							fontStyle: 'normal',
 							margin: '5.2% auto'
-						}}>{name}</Typography>
+						}}>{Props.username}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
 					<DropMenu />
