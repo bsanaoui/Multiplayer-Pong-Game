@@ -1,15 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
+
 @Injectable()
-export class PrismaService extends PrismaClient {
-    constructor(){
-        super({
-            datasources: {
-                db: {
-                    url: 'postgresql://postgres:postgrespw@localhost:55000/tran_db?schema=public'
-                }
-            }
-        })
-    }
+/* When setting up your NestJS application, you'll want to abstract away the Prisma Client API for database queries within a service */
+/* create a new PrismaService that takes care of instantiating PrismaClient and connecting to your database */
+export class PrismaService extends PrismaClient implements OnModuleDestroy , OnModuleInit {
+
+  async onModuleDestroy() {
+    await this.$disconnect()
+  }
+
+  async onModuleInit() {
+    await this.$connect()
+  }
 }

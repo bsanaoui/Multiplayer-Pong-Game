@@ -9,49 +9,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dm_room = exports.room_name = exports.createRoomDto = void 0;
+exports.CreateRoomDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-class createRoomDto {
+class CreateRoomDto {
 }
 __decorate([
-    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ description: "The Name of current user" }),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, swagger_1.ApiProperty)({ required: true, description: "this input used  to add  room name" }),
-    __metadata("design:type", String)
-], createRoomDto.prototype, "name", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ required: true, description: "this input used  to add  room type if it's private, protected or public" }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], createRoomDto.prototype, "type", void 0);
+], CreateRoomDto.prototype, "username", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)({ required: true, description: "this input used  to add password room of the protected rooms" }),
-    __metadata("design:type", String)
-], createRoomDto.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)({ required: true, description: "this input used  to add the owner of room" }),
-    __metadata("design:type", String)
-], createRoomDto.prototype, "owner", void 0);
-exports.createRoomDto = createRoomDto;
-class room_name {
-}
-__decorate([
+    (0, swagger_1.ApiProperty)({ description: "The Name of Room" }),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], room_name.prototype, "name", void 0);
-exports.room_name = room_name;
-class dm_room {
-}
+], CreateRoomDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({ description: ' the type should be protected / private or public ' }),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_transformer_1.Transform)(({ value }) => value.toLowerCase()),
+    (0, class_validator_1.IsIn)(["protected", "public", "private"]),
     __metadata("design:type", String)
-], dm_room.prototype, "from", void 0);
+], CreateRoomDto.prototype, "type", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], dm_room.prototype, "to", void 0);
-exports.dm_room = dm_room;
+], CreateRoomDto.prototype, "password", void 0);
+exports.CreateRoomDto = CreateRoomDto;
 //# sourceMappingURL=create-room.dto.js.map

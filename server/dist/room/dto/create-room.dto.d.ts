@@ -1,13 +1,6 @@
-export declare class createRoomDto {
+export declare class CreateRoomDto {
+    username: string;
     name: string;
     type: string;
     password: string;
-    owner: string;
-}
-export declare class room_name {
-    name: string;
-}
-export declare class dm_room {
-    from: string;
-    to: string;
 }
