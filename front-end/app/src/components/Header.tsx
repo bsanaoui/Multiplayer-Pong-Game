@@ -1,5 +1,4 @@
 import { Box, Stack } from '@mui/material'
-import { useDispatch } from 'react-redux'
 import CustomizedDialog from './CustomizedDialog';
 import FormNewRoom from './FormNewRoom';
 
@@ -17,18 +16,18 @@ const Header = () => {
 				backgroundColor: '#202541',
 			}}
 			direction="row"
-			spacing={1}>
+			spacing={35}>
 			<Box
 				sx={{
 					width: '100%',
 				}}>
 				<Stack
-					spacing={1}>
+					spacing={0.4}>
 					<Box
 						sx={{
 							height: "50%",
 						}}>
-						<img src={HeaderPong} className="center-img" height="130px" />
+						<img  alt="Ping Pong" src={HeaderPong} className="center-img" height="130px" />
 					</Box>
 					 {/* button Create Room */}
 					<Box className='center-button' >
@@ -42,7 +41,7 @@ const Header = () => {
 				sx={{
 					width: '100%',
 				}}>
-				<img src={animatedPong} className="center-img" height="210px" />
+				<img alt="Pong Online" src={animatedPong} className="center-img" height="210px" />
 			</Box>
 			<Box
 				sx={{

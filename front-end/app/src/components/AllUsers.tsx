@@ -1,4 +1,4 @@
-import { Box, List, Paper, Stack, Typography } from '@mui/material'
+import { Box, List, Stack, Typography } from '@mui/material'
 import usersIcon from '../assets/users.png'
 import dot3Icon from '../assets/dot3.png'
 import User from './User';
@@ -7,9 +7,9 @@ import { useState } from 'react';
 
 const users = Array.from({ length: 15 }, (_, index) => {
 	return (
-		<div className="item">
+		<li key={index} className="item">
 			<User />
-		</div>
+		</li>
 	);
 });
 

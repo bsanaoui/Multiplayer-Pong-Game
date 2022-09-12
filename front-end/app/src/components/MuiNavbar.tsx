@@ -1,10 +1,8 @@
-// import { AppBar, Toolbar, IconButton, Typography, Stack, Button, Badge, Avatar } from "@mui/material";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import customAvatar from '../assets/man.png'
 import React from 'react'
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';

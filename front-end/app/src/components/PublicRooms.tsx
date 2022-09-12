@@ -1,7 +1,7 @@
 import { Stack, Typography } from '@mui/material'
 import RoomButton from './RoomButton'
 import reloadIcon from '../assets/reload-icon.png'
-import { getRoomsData, RoomData } from '../requests/get';
+import { RoomData } from '../requests/home';
 import { useEffect, useState } from 'react';
 
 const data_rooms: Array<RoomData> = [
@@ -13,11 +13,11 @@ const data_rooms: Array<RoomData> = [
 function createRooms(rooms_info: Array<RoomData>): JSX.Element[] {
 	const rooms = Array.from({ length: rooms_info.length }, (_, index) => {
 		return (
-			<div className="item">
+			<li key={index} className="item">
 				<RoomButton name={rooms_info[index].name}
 					owner={rooms_info[index].owner}
 					_count={rooms_info[index]._count} />
-			</div>
+			</li>
 		);
 	});
 	return rooms;
@@ -53,7 +53,7 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 						align: 'center',
 					}}>
 					{kind}</Typography>
-				<img src={reloadIcon} style={{ width: 35 }} />
+				<img alt='reload Icon' src={reloadIcon} style={{ width: 35 }} />
 			</Stack>
 			<div className="horizontal_slider">
 				<div className="slider_container">

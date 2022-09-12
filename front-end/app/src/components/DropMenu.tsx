@@ -10,61 +10,10 @@ import HttpsIcon from '@mui/icons-material/Https';
 import SettingsIcon from '@mui/icons-material/Settings';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
-// interface Props {
-//   setOpenMenu: (val: boolean) => void;
-// }
-
-// export default function DropMenu({setOpenMenu}:Props) {
-//   return (
-// <Box sx={{ maxWidth: 360, bgcolor: '#3D4060'}}>
-//   <nav aria-label="main folders">
-//     <List dense={true}>
-//       <ListItem disablePadding>
-//         <ListItemButton onClick={() => setOpenMenu(false)}>
-//           <ListItemIcon>
-//             <ExitToAppIcon />
-//           </ListItemIcon>
-//           <ListItemText primary="Leave" />
-//         </ListItemButton>
-//       </ListItem>
-//       <ListItem disablePadding>
-//         <ListItemButton onClick={() => setOpenMenu(false)}>
-//           <ListItemIcon>
-//             <HttpsIcon />
-//           </ListItemIcon>
-//           <ListItemText primary="Change the password" />
-//         </ListItemButton>
-//       </ListItem>
-//       <ListItem disablePadding>
-//         <ListItemButton onClick={() => setOpenMenu(false)}>
-//           <ListItemIcon>
-//             <SettingsIcon />
-//           </ListItemIcon>
-//           <ListItemText primary="Change type room" />
-//         </ListItemButton>
-//       </ListItem>
-//       <ListItem disablePadding>
-//         <ListItemButton onClick={() => setOpenMenu(false)}>
-//           <ListItemIcon>
-//             <GroupAddIcon />
-//           </ListItemIcon>
-//           <ListItemText primary="Invite a user" />
-//         </ListItemButton>
-//       </ListItem>
-//     </List>
-//   </nav>
-//   <Divider />
-// </Box>
-//   );
-// }
-
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import { IconButton } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
 
 
 export default function DropMenu() {

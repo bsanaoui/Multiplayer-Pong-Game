@@ -8,13 +8,13 @@ import { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
-import { addMessage, initMessages } from "../store/chatUiReducer";
-import { requestDirectMsgs } from '../requests/posts';
+import { addMessage, clearMessages, initMessages } from "../store/chatUiReducer";
+import { requestDirectMsgs } from '../requests/messages';
 
 
 let socketclient: Socket;
-let index_msg:number = 0;
-let prev_room:string = '';
+let index_msg: number = 0;
+let prev_room: string = '';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
@@ -54,29 +54,39 @@ const renderMessage = (current: string, user_name: string, msg: string): JSX.Ele
 
 /* Handle Clear msgs when switch room */
 const ChatUIFriend = () => {
+    const dispatch = useDispatch();
+
     const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
     const chat_state = useSelector((state: RootState) => state.chat);
     const [message_input, setMessage] = useState("");
-    // const [msgs, setMsgs] = useState(initMessages);
 
-    const dispatch = useDispatch();
-
-    const currentConvr= chat_state.curr_converation;
+    const currentConvr = chat_state.curr_converation;
     const msgs = chat_state.msgs;
 
     useEffect(() => {
         socketclient = io('http://localhost:3333');
+        handleConnection();
+        requestDirectMsgs(user_conneced, currentConvr).then((value) => {
+            const data = value as Array<{ from: string; to: string; content_msg: string }>;
+            dispatch(initMessages(data));
+        })
+
         if (socketclient) {
-            socketclient.on('msgToClient_dm', (m: { from: string, to:string, msg: string }) => {
+            socketclient.on('msgToClient_dm', (m: { from: string, to: string, msg: string }) => {
                 console.log(m);
                 dispatch(addMessage({ username: m.from, to: m.to, msg: m.msg }));
             })
+        }
+
+        return () => {
+            dispatch(clearMessages());
+            socketclient.disconnect(); // Check if works
         }
     },)
 
     const handleConnection = () => {
         if (socketclient) {
-            socketclient.emit('check_room', { from: user_conneced, to: currentConvr, msg:'' });
+            socketclient.emit('check_room', { from: user_conneced, to: currentConvr, msg: '' });
         }
     }
 
@@ -95,17 +105,17 @@ const ChatUIFriend = () => {
             sendMsg();
         }
     }
-    
-    if (prev_room !== currentConvr && currentConvr !== '')
-    {
-        requestDirectMsgs(user_conneced ,currentConvr).then((value) => {
-            
-			const data = value as Array< { from: string; to: string; content_msg: string }>;
-            dispatch(initMessages(data));
-		})
-        handleConnection(); // connect to the socket specied room ??
-        prev_room = currentConvr;
-    }
+
+    // if (prev_room !== currentConvr && currentConvr !== '')
+    // {
+    //     requestDirectMsgs(user_conneced ,currentConvr).then((value) => {
+
+    // 		const data = value as Array< { from: string; to: string; content_msg: string }>;
+    //         dispatch(initMessages(data));
+    // 	})
+    //     handleConnection(); // connect to the socket specied room ??
+    //     prev_room = currentConvr;
+    // }
 
     return (
         <Box
@@ -118,7 +128,7 @@ const ChatUIFriend = () => {
                 paddingRight: "20px",
                 borderLeft: "1px solid #FFFFFF"
             }}>
-           <Stack height='inherit'>
+            <Stack height='inherit'>
                 <div>
                     <HeaderChat name={currentConvr + " " + user_conneced} />
                 </div>
@@ -126,9 +136,9 @@ const ChatUIFriend = () => {
                     <Stack direction="row" marginBottom="45px">
                         <FormControl variant="standard">
                             <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
-                                onChange={handleMsgChange} 
+                                onChange={handleMsgChange}
                                 onKeyDown={handleEnterkey}
-                                value={message_input}/>
+                                value={message_input} />
                         </FormControl>
                         <div style={{
                             backgroundColor: "#151416", padding: "10px", borderRadius: '0 12px 12px 0',
@@ -138,7 +148,7 @@ const ChatUIFriend = () => {
                             </Button>
                         </div>
                     </Stack>
-                    <List style={{ overflow: 'auto', padding: '0 6px 0px 5px'}} >
+                    <List style={{ overflow: 'auto', padding: '0 6px 0px 5px' }} >
                         {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg)))}
                     </List>
                 </Stack>

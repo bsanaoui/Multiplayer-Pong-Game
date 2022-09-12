@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
-import React from 'react'
 import AchievementElement from './Profile/AchievementElement'
 import AvatarProfile from './Profile/AvatarProfile'
 import { MatchHistory } from './Profile/MatchHistory'

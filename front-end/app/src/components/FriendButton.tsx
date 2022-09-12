@@ -1,8 +1,5 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import avatar2 from '../assets/avatar2.png'
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { changeCurrConversation } from "../store/chatUiReducer";
 import DropMenu from './DropMenu';
 
 

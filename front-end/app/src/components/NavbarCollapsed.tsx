@@ -1,9 +1,8 @@
 
-import { Avatar, Divider, Stack, Typography } from '@mui/material'
+import { Avatar, Divider, Stack } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store";
 import { InterfaceEnum, setCurrentInterface } from "../store/interfacesReducer";
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
 import messengerIcon from '../assets/messenger.png'
 import roomIcon from '../assets/chat-room.png'
@@ -17,22 +16,7 @@ import LogoutIcon from '../assets/log-out.png';
 import collapseIcon from '../assets/right-arrow.png';
 
 import { Box } from '@mui/system';
-import { Button2FA } from './Button2FA';
 import { setCollapse } from '../store/collapseNavReducer';
-
-let getInterface = (interfaceEnum: InterfaceEnum): string => {
-    switch (interfaceEnum) {
-        case InterfaceEnum.Home: return "Home"
-        case InterfaceEnum.Dashboard: return "Dashboard";
-        case InterfaceEnum.ChatRoom: return "Chat Room";
-        case InterfaceEnum.InstantMessaging: return "Instant Messaging";
-        case InterfaceEnum.Friends: return "Friends";
-        case InterfaceEnum.Matchmaking: return "Matchmaking";
-        case InterfaceEnum.LiveGames: return "Live Games";
-        case InterfaceEnum.Logout: return "Log Out";
-        default: return "Home";
-    }
-};
 
 export const NavbarCollapsed = () => {
     return (

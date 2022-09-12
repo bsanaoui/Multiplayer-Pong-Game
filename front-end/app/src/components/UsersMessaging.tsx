@@ -1,8 +1,5 @@
-import { Box, Icon, IconButton, List, Stack, Typography } from '@mui/material'
-import roomIcon from '../assets/group.png'
-import RoomButtonChat from './RoomButtonChat';
+import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import usersRoomIcon from '../assets/usersRoom.png'
-import { UserButton } from './UserButton';
 import { UserButtonChat } from './UserButtonChat';
 
 // function pickRandom() {

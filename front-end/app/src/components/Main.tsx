@@ -10,8 +10,8 @@ const Main = () => {
             <Header/>
             <Stack
                 marginTop='45px'
-                marginLeft='50px'
-                spacing={3}>
+                marginLeft='6%'
+                spacing={4}>
                 <PublicRooms kind="Public rooms"/>
                 <PublicRooms kind="Protected rooms"/>
             </Stack>

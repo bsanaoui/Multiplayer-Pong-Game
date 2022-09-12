@@ -3,12 +3,6 @@ import friendIcon from '../assets/friends.png'
 import { FriendButton } from './FriendButton';
 
 
-// function pickRandom() {
-//     const names: string[] = ["Nathanial Howell", "Leon Beard", "Madeleine Martin",
-//         "Cristopher Fitzgerald", "Judah Rose"];
-//     return names[Math.floor(Math.random() * names.length)];
-// }
-
 // const friends = Array.from({ length: 20 }, (_, index) => {
 //     return (
 //         <li key={index} className='item-friend'>

@@ -10,7 +10,7 @@ export interface UserOfRoom {
 const initialState: UserOfRoom[] = [];
 
 export const roomUsersSlice = createSlice({
-    name: 'roomUsers',
+    name: 'room_users',
     initialState,
     reducers: {
         addUserRoom: (state, action: PayloadAction<UserOfRoom>) => {

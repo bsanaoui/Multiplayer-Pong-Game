@@ -1,20 +1,8 @@
-import { Avatar, Badge, Box, Icon, IconButton, Stack, Typography } from '@mui/material'
-import { styled } from '@mui/material/styles';
+import { Avatar, Box, Stack, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { changeCurrRoom } from "../store/chatUiReducer";
 import DropMenu from './DropMenu';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { margin } from '@mui/system';
-import { useState } from 'react';
-
-
-
-const SmallAvatar = styled(Avatar)(({ theme }) => ({
-    width: 22,
-    height: 22,
-    border: `2px solid ${theme.palette.background.paper}`,
-}));
 
 interface RoomProps {
     name: string

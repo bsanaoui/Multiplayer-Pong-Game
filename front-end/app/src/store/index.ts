@@ -3,6 +3,7 @@ import chatReducer from './chatUiReducer'
 import collapseNavReducer from './collapseNavReducer'
 import interfacesReducer from './interfacesReducer'
 import openDialogReducer from './openDialogReducer'
+import roomUsersReducer from './roomUsersReducer'
 import userReducer  from './userReducer'
 
 export const store = configureStore({
@@ -11,7 +12,8 @@ export const store = configureStore({
     chat: chatReducer,
     openDialog: openDialogReducer,
     interfaces: interfacesReducer, 
-    collapseNav: collapseNavReducer, 
+    collapseNav: collapseNavReducer,
+    room_users: roomUsersReducer, 
   },
 })
 

@@ -1,7 +1,6 @@
-import { Box, Card, Stack, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Stack, Typography } from '@mui/material'
 import groupIcon from '../assets/group-icon.svg'
-import { RoomData } from '../requests/get'
+import { RoomData } from '../requests/home'
 
 
 const RoomButton = (Props: RoomData) => {
@@ -20,7 +19,6 @@ const RoomButton = (Props: RoomData) => {
 					margin: '15px 20px'
 				}}>
 				<div className='room-title center-text center-button' style={{ padding: '0 15px' }}>
-					{/* Room Cmos 3.x */}
 					{Props.name}
 				</div>
 			</Box>
@@ -39,7 +37,6 @@ const RoomButton = (Props: RoomData) => {
 						sx={{
 							fontWeight: '300px'
 						}}>
-						{/* bsana.. */}
 						{Props.owner}
 						</Typography>
 				</Box>

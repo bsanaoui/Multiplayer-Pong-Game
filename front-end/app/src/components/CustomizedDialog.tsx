@@ -1,7 +1,6 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, styled, TextField, Typography } from '@mui/material';
-import { Field, Form, Formik } from 'formik';
+import { Dialog, DialogContent, DialogTitle, IconButton, styled } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import React, { Children } from 'react';
+import React from 'react';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -60,9 +59,6 @@ const CustomizedDialog = ({ children }: Props) => {
 
 	return (
 		<div>
-			{/* <Button variant="outlined" onClick={handleClickOpen}>
-				Create New Room
-			</Button> */}
 			<div className='button-custom center-text center-button' style={{ width: '280px' }}
 				onClick={handleClickOpen}>
 				Start a new room

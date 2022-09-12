@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as Yup from 'yup'
-import { createRoom, RoomInfo } from "../requests/posts";
+import { createRoom, RoomInfo } from "../requests/home";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
 
