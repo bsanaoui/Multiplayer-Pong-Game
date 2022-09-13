@@ -171,7 +171,6 @@ const ChatUIFriend = () => {
                         {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
                         {renderMessage(user_conneced, user_conneced, "Hello")}
                         {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
-                        
                         <li key={index_msg++} style={{ float: 'right', marginTop: "5px" }}>
                             <div ref={bottomRef} ></div>
                         </li>

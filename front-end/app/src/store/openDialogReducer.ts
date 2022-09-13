@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState: boolean = false;
+const initialState: {is_open: boolean} = {is_open:false};
 
 export const openDialogSlice = createSlice({
     name: 'openDialog',
     initialState,
     reducers: {
         setOpenDialogRoom: (state, action: PayloadAction<boolean>) => {
-            state = action.payload
+            state.is_open = action.payload
         },
     }
 })

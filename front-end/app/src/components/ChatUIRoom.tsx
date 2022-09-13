@@ -4,7 +4,7 @@ import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
 import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
@@ -54,6 +54,7 @@ const renderMessage = (current: string, user_name: string, msg: string): JSX.Ele
 
 /* Handle Clear msgs when switch room */
 const ChatUI = () => {
+    const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
     const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
     const chat_state = useSelector((state: RootState) => state.chat);
     const [message_input, setMessage] = useState("");
@@ -77,6 +78,10 @@ const ChatUI = () => {
                 dispatch(addMessage({ username: msg.name, msg: msg.message, to: currentRoom }));
                 console.log(msgs);
             })
+        }
+
+        if (bottomRef) {
+            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
         }
 
         return () => {
@@ -152,6 +157,9 @@ const ChatUI = () => {
                     </Stack>
                     <List style={{ overflow: 'auto', padding: '0 6px 0px 5px' }} >
                         {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg)))}
+                        <li key={index_msg++} style={{ float: 'right', marginTop: "5px" }}>
+                            <div ref={bottomRef} ></div>
+                        </li>
                     </List>
                 </Stack>
             </Stack>

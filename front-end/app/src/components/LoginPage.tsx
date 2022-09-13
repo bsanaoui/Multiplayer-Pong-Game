@@ -40,10 +40,12 @@ const LoginPage = () => {
 					Use your keyboard as gamepads
 					and start playing instantly
 				</Typography>
-				<div className='button-Auth center-text center-button' style={{ width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}
-					onClick={() => { dispatch(setUsername("Cmos")) }}>
-					Start playing now
-				</div>
+				<form action='' method='POST'>
+					<button className='button-Auth center-text center-button' style={{ color:"#FFF", width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}
+						type="submit" onClick={() => { dispatch(setUsername("Cmos")) }}>
+						Start playing now
+					</button>
+				</form>
 			</Stack >
 		</Box>
 	)
