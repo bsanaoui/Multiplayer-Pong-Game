@@ -14,7 +14,7 @@ import { Box, Stack } from '@mui/material';
 import { LiveMatchs } from './components/LiveMatchs';
 import { DashboardUser } from './components/DashboardUser';
 import { InterfaceEnum } from './store/interfacesReducer';
-import { SignUp } from './components/SignUp';
+import { InvitationFriend } from './components/InvitationFriend&Game/InvitationFriend';
 
 const darkTheme = createTheme({
 	palette: {
@@ -36,9 +36,9 @@ function App() {
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			{currentuser === '' && <LoginPage />}
-			{currentuser !== '' && <SignUp/>
-				/* <Stack direction="row"
+			{/* {currentuser === '' && <LoginPage />}
+			{currentuser !== '' &&
+				<Stack direction="row"
 					sx={{backgroundColor:"#202541", width:"100%", height:"100%"}}>
 					<NavBarNew />
 					{currentIterface === InterfaceEnum.Home && <Main/>}
@@ -48,8 +48,9 @@ function App() {
 					{currentIterface === InterfaceEnum.Friends && <ChatGlobal/>}
 					{currentIterface === InterfaceEnum.Matchmaking && <Box/>}
 					{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs/>}
-				</Stack> */
-			}
+				</Stack> 
+			} */}
+			<InvitationFriend/>
 		</ThemeProvider>
 	);
 }

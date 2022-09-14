@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState: {is_collapsed: boolean} = {is_collapsed: true};
+const initialState: {is_collapsed: boolean} = {is_collapsed: false};
 
 export const collapseNavSlice = createSlice({
     name: 'collapseNav',
