@@ -21,6 +21,11 @@ import { Box } from '@mui/system';
 import { Button2FA } from './Button2FA';
 import { setCollapse } from '../store/collapseNavReducer';
 import { NavbarCollapsed } from './NavbarCollapsed';
+import { InvitationsMenu } from './InvitationsMenu';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import NavigationIcon from '@mui/icons-material/Navigation';
 
 let getInterface = (interfaceEnum: InterfaceEnum): string => {
     switch (interfaceEnum) {
@@ -52,16 +57,14 @@ export const NavBarNew = () => {
                             overlap="circular"
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                             badgeContent={
-                                <IconButton component="label"  sx={{ background: "#0564FC", width: "25px", height: "25px" }}
-                                >
-                                    <EditIcon sx={{ width: "14px" }} />
+                                <IconButton component="label" sx={{ background: "#0564FC", width: "25px", height: "25px" }}>
+                                    <EditIcon sx={{ width: "18px" }} />
                                     <input hidden accept="image/*" multiple type="file" onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                         if (event.target.files)
                                             avatar = event.target.files[0];
                                     }} />
                                 </IconButton>
-                            }
-                        >
+                            }>
                             <Avatar
                                 variant="circular"
                                 sx={{
@@ -73,26 +76,27 @@ export const NavBarNew = () => {
                                 }}
                                 alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
                         </Badge>
-                        <Stack justifyContent="space-between" alignItems="flex-start" spacing={0}>
+                        <Stack justifyContent="space-between" alignItems="flex-start" spacing={0.25}>
                             <Typography
                                 className='truncate-typo'
                                 width='100%'
                                 fontWeight="700"
-                                fontSize="1.3rem"
+                                fontSize="1.4rem"
                                 fontFamily="Lato"
                                 lineHeight="130%">
                                 Cmos Pancake
                             </Typography>
-                            <Stack direction="row" spacing={0.5}>
-                                <SportsEsportsIcon sx={{ width: "17px" }} />
+                            <Stack direction="row" spacing={0.6}>
+                                <SportsEsportsIcon sx={{ width: "18px", paddingTop: "3%" }} />
                                 <Typography
                                     sx={{
                                         color: '#ADADAD',
                                         fontWeight: '600',
-                                        fontSize: '0.9rem',
+                                        fontSize: '1rem',
                                         paddingTop: '1.2px',
                                     }}>
                                     Level 32</Typography>
+                                    <Box paddingLeft="23px" paddingTop="3px"><InvitationsMenu/></Box>
                             </Stack>
                         </Stack>
                     </Stack>

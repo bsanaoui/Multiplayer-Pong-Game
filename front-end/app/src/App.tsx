@@ -15,6 +15,7 @@ import { LiveMatchs } from './components/LiveMatchs';
 import { DashboardUser } from './components/DashboardUser';
 import { InterfaceEnum } from './store/interfacesReducer';
 import { InvitationFriend } from './components/InvitationFriend&Game/InvitationFriend';
+import { InvitationsMenu } from './components/InvitationsMenu';
 
 const darkTheme = createTheme({
 	palette: {
@@ -30,7 +31,7 @@ const darkTheme = createTheme({
 });
 
 function App() {
-	const currentuser = useSelector((state: RootState) => state.user).username; // call-back function
+	const currentuser = useSelector((state: RootState) => state.user).username; 
 	const currentIterface = useSelector((state: RootState) => state.interfaces).current
 
 	return (
@@ -50,9 +51,12 @@ function App() {
 					{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs/>}
 				</Stack> 
 			} */}
-			<InvitationFriend/>
+
+			<NavBarNew/>
+			{/* <InvitationsMenu/> */}
+			{/* <InvitationFriend username="Cmos Foody" avatar={avatar2}/> */}
 		</ThemeProvider>
 	);
 }
-
+//Snackbar MUI to handle Invite Play
 export default App;

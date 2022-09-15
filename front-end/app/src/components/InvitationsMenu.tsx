@@ -9,14 +9,17 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HttpsIcon from '@mui/icons-material/Https';
 import SettingsIcon from '@mui/icons-material/Settings';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
-
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import * as React from 'react';
 import Menu from '@mui/material/Menu';
-import { IconButton } from '@mui/material';
+import { Avatar, Badge, Button, Fab, IconButton, Stack, Typography } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import notification_invite from '../assets/notification.png'
+import { InvitationFriend } from './InvitationFriend&Game/InvitationFriend';
+import avatar2 from '../assets/man.png'
 
 export const InvitationsMenu = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -26,16 +29,17 @@ export const InvitationsMenu = () => {
 	};
 
 	return (
-		<div>
-			<IconButton id="basic-button"
-				aria-controls={open ? 'basic-menu' : undefined}
-				aria-haspopup="true"
-				aria-expanded={open ? 'true' : undefined}
-				onClick={handleClick}
-			>
-				<MoreVertIcon />
-			</IconButton>
-
+		<Box>
+			<Badge badgeContent={4} color="secondary">
+				<IconButton sx={{ width: "20px", height: "20px" }}
+					id="basic-button"
+					aria-controls={open ? 'basic-menu' : undefined}
+					aria-haspopup="true"
+					aria-expanded={open ? 'true' : undefined}
+					onClick={handleClick}>
+					<NotificationsIcon />
+				</IconButton>
+			</Badge>
 			<Menu
 				id="basic-menu"
 				anchorEl={anchorEl}
@@ -44,47 +48,32 @@ export const InvitationsMenu = () => {
 				MenuListProps={{
 					'aria-labelledby': 'basic-button',
 				}}
+				sx={{
+					"& .MuiPaper-root": {
+						backgroundColor: "#3D4060"
+					}
+				}}
 			>
-				<Box sx={{ maxWidth: 360, bgcolor: '#3D4060',paddingTop:'0', paddingBottom:'0' }}>
-					<nav aria-label="main folders">
-						<List dense={true} >
-							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
-									<ListItemIcon>
-										<ExitToAppIcon />
-									</ListItemIcon>
-									<ListItemText primary="Leave" />
-								</ListItemButton>
-							</ListItem>
-							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
-									<ListItemIcon>
-										<HttpsIcon />
-									</ListItemIcon>
-									<ListItemText primary="Change the password" />
-								</ListItemButton>
-							</ListItem>
-							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
-									<ListItemIcon>
-										<SettingsIcon />
-									</ListItemIcon>
-									<ListItemText primary="Change type room" />
-								</ListItemButton>
-							</ListItem>
-							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
-									<ListItemIcon>
-										<GroupAddIcon />
-									</ListItemIcon>
-									<ListItemText primary="Invite a user" />
-								</ListItemButton>
-							</ListItem>
-						</List>
-					</nav>
+				<Box sx={{ maxWidth: 380 }}>
+					{/* <nav aria-label="main folders"> */}
+					<List >
+						<ListItem >
+							<InvitationFriend username="Joky Cmos" avatar={avatar2} />
+						</ListItem>
+						<ListItem >
+							<InvitationFriend username="Foody Cmos" avatar={avatar2} />
+						</ListItem>
+						<ListItem >
+							<InvitationFriend username="Cmo Cmos" avatar={avatar2} />
+						</ListItem>
+						<ListItem >
+							<InvitationFriend username="Joky Cmos" avatar={avatar2} />
+						</ListItem>
+					</List>
+					{/* </nav> */}
 					<Divider />
 				</Box>
 			</Menu>
-		</div>
+		</Box>
 	);
 }

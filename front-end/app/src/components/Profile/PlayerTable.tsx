@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
-interface PlayerTableProps {
+export interface PlayerTableProps {
 	username: string,
 	level: number,
 }
