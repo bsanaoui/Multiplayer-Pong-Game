@@ -7,17 +7,24 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HttpsIcon from '@mui/icons-material/Https';
-import SettingsIcon from '@mui/icons-material/Settings';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 import * as React from 'react';
 import Menu from '@mui/material/Menu';
-import { IconButton } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import NoEncryptionIcon from '@mui/icons-material/NoEncryption';
+import playIcon from '../../assets/DropMenus/play.png'
+import addFriendIcon from '../../assets/notification.png'
+import profileIcon from '../../assets/DropMenus/profile.png'
+import chatIcon from '../../assets/DropMenus/chat.png'
+import muteIcon from '../../assets/DropMenus/mute.png'
+import banIcon from '../../assets/DropMenus/ban.png'
+import seAdminIcon from '../../assets/DropMenus/admin.png'
 
 // disable for current  // set admin 
 //name, 
-export default function DropMenuRoom() {
+export default function DropMenuUsersRoom() {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,39 +59,49 @@ export default function DropMenuRoom() {
 					}
 				}}
 			>
-				<Box sx={{ maxWidth: 360}}>
+				<Box sx={{ maxWidth: 340, minWidth: 170 }}>
 					<nav aria-label="main folders">
 						<List dense={true} >
-							<ListItem disablePadding>
+							<ListItem disablePadding >
 								<ListItemButton onClick={handleClose}>
-									<ListItemIcon>
-										<ExitToAppIcon />
-									</ListItemIcon>
-									<ListItemText primary="Leave" />
+									<Avatar variant="square" src={playIcon} sx={{ marginRight: "15%", width: "19px", height: "19px" }} />
+									<ListItemText primary="Play" />
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
 								<ListItemButton onClick={handleClose}>
-									<ListItemIcon>
-										<HttpsIcon />
-									</ListItemIcon>
-									<ListItemText primary="Change the password" />
+									<Avatar variant="square" src={addFriendIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
+									<ListItemText primary="Add Friend" />
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
 								<ListItemButton onClick={handleClose}>
-									<ListItemIcon>
-										<GroupAddIcon />
-									</ListItemIcon>
-									<ListItemText primary="Disbale password" />
+									<Avatar variant="square" src={profileIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
+									<ListItemText primary="Show Profile" />
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
 								<ListItemButton onClick={handleClose}>
-									<ListItemIcon>
-										<GroupAddIcon />
-									</ListItemIcon>
-									<ListItemText primary="Invite a user" />
+									<Avatar variant="square" src={chatIcon} sx={{ marginRight: "14%", width: "20px", height: "20px" }} />
+									<ListItemText primary="Chat" />
+								</ListItemButton>
+							</ListItem>
+							<ListItem disablePadding>
+								<ListItemButton onClick={handleClose}>
+									<Avatar variant="square" src={seAdminIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
+									<ListItemText primary="Set As Admin" />
+								</ListItemButton>
+							</ListItem>
+							<ListItem disablePadding>
+								<ListItemButton onClick={handleClose}>
+									<Avatar variant="square" src={muteIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
+									<ListItemText primary="Mute" />
+								</ListItemButton>
+							</ListItem>
+							<ListItem disablePadding>
+								<ListItemButton onClick={handleClose}>
+									<Avatar variant="square" src={banIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
+									<ListItemText primary="Ban" />
 								</ListItemButton>
 							</ListItem>
 						</List>

@@ -1,7 +1,7 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import avatar2 from '../assets/avatar2.png'
-import DropMenu from './DropMenus/DropMenuRoom';
 import { UserOfRoom } from '../store/roomUsersReducer';
+import DropMenuUsersRoom from './DropMenus/DropMenuUsersRoom';
 
 
 export const UserButton = (Props:UserOfRoom) => {
@@ -49,7 +49,7 @@ export const UserButton = (Props:UserOfRoom) => {
 						}}>{Props.username}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
-					<DropMenu />
+					<DropMenuUsersRoom />
 				</div>
 			</Stack>
 		</Box >

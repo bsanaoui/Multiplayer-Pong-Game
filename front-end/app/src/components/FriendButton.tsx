@@ -1,6 +1,6 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import avatar2 from '../assets/avatar2.png'
-import DropMenu from './DropMenus/DropMenuRoom';
+import DropMenuUser from './DropMenus/DropMenuUser';
 
 
 interface FriendProps {
@@ -52,7 +52,7 @@ export const FriendButton = ({ name }: FriendProps) => {
 						}}>{name}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
-					<DropMenu />
+					<DropMenuUser is_dm_user={false}/>
 				</div>
 			</Stack>
 		</Box >

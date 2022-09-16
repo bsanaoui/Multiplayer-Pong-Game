@@ -21,6 +21,8 @@ import ChatUIFriend from './components/ChatUIFriend';
 import MessageSent from './components/MessageSent';
 import MessageRecieved from './components/MessageRecieved';
 import Rooms from './components/Rooms';
+import { UsersRoom } from './components/UsersRoom';
+import Friends from './components/Friends';
 
 const darkTheme = createTheme({
 	palette: {
@@ -57,7 +59,6 @@ function App() {
 				</Stack> 
 			}
 			{/* <InvitePlayBar/> */}
-			{/* <Rooms/> */}
 		</ThemeProvider>
 	);
 }
