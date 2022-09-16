@@ -26,7 +26,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         // border: '1px solid #ced4da',
         fontSize: 13,
         width: '440px',
-        height: '50px',
+        height: '45px',
         padding: '10px 20px',
         transition: theme.transitions.create([
             'border-color',
@@ -40,13 +40,13 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 const renderMessage = (current: string, user_name: string, msg: string): JSX.Element => {
     if (current === user_name)
         return (
-            <li key={index_msg++} style={{ float: 'right', marginTop: "5px" }}>
+            <li key={index_msg++} style={{ float: 'right'}}>
                 <MessageSent msg={msg} />
             </li>
         );
     else
         return (
-            <li key={index_msg++} style={{ float: 'left', marginTop: "5px" }}>
+            <li key={index_msg++} style={{ float: 'left'}}>
                 <MessageRecieved msg={msg} />
             </li>
         );
@@ -128,10 +128,10 @@ const ChatUI = () => {
             bgcolor="#202541"
             sx={{
                 backgroundColor: "#202541",
-                width: "600px",
+                width: "510px",
                 height: '100vh',
                 // height: 'calc( 100vh - 67px )',
-                paddingLeft: "20px",
+                paddingLeft: "22px",
                 paddingRight: "20px",
                 borderLeft: "1px solid #FFFFFF"
             }}>
@@ -139,8 +139,8 @@ const ChatUI = () => {
                 <div>
                     <HeaderChat name={currentRoom + " " + user_conneced} />
                 </div>
-                <Stack spacing={2} direction="column-reverse" sx={{ width: "532px", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
-                    <Stack direction="row" marginBottom="45px">
+                <Stack spacing={2} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
+                    <Stack direction="row" marginBottom="35px">
                         <FormControl variant="standard">
                             <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
                                 onChange={handleMsgChange}
@@ -148,16 +148,16 @@ const ChatUI = () => {
                                 value={message_input} />
                         </FormControl>
                         <div style={{
-                            backgroundColor: "#151416", padding: "10px", borderRadius: '0 12px 12px 0',
+                            backgroundColor: "#151416", padding: "10px", borderRadius: '0 10px 10px 0',
                         }}>
-                            <Button sx={{ backgroundColor: "#3475D7", height: "50px", color: "#FFF" }} onClick={sendMsg}>
+                            <Button sx={{ backgroundColor: "#3475D7", height: "45px", color: "#FFF" }} onClick={sendMsg}>
                                 <SendIcon />
                             </Button>
                         </div>
                     </Stack>
-                    <List style={{ overflow: 'auto', padding: '0 6px 0px 5px' }} >
+                    <List style={{ overflow: 'auto'}} >
                         {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg)))}
-                        <li key={index_msg++} style={{ float: 'right', marginTop: "5px" }}>
+                        <li key={index_msg++} style={{ float: 'right'}}>
                             <div ref={bottomRef} ></div>
                         </li>
                     </List>

@@ -12,12 +12,12 @@ const MessageSent = ({ msg }: MessageProps) => {
 			<Stack
 				spacing={0}
 				sx={{
-					width: '408px',
+					width: '335px',
 				}}>
 				<Box
 					sx={{
 						backgroundColor: '#3475D7',
-						width: '360px',
+						width: '300px',
 						padding: '0.7em',
 						borderRadius: '14px',
 					}}>
@@ -26,7 +26,7 @@ const MessageSent = ({ msg }: MessageProps) => {
 							fontFamily: 'Lexend',
 							fontStyle: 'normal',
 							fontWeight: '500',
-							fontSize: '16px',
+							fontSize: '15px',
 							lineHeight: '140%',
 						}}>
 						{msg}

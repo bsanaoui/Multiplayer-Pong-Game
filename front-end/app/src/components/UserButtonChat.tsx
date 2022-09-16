@@ -2,7 +2,7 @@ import { Avatar, Box, Stack, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { changeCurrConversation } from "../store/chatUiReducer";
-import DropMenu from './DropMenu';
+import DropMenu from './DropMenus/DropMenuRoom';
 
 interface RoomProps {
     name: string

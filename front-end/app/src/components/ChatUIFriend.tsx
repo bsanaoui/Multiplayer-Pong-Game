@@ -26,7 +26,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         backgroundColor: "#151416",
         fontSize: 13,
         width: '440px',
-        height: '50px',
+        height: '45px',
         padding: '10px 20px',
         transition: theme.transitions.create([
             'border-color',
@@ -40,13 +40,13 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 const renderMessage = (current: string, user_name: string, msg: string): JSX.Element => {
     if (current === user_name)
         return (
-            <li key={index_msg++} style={{ float: 'right', marginTop: "5px" }}>
+            <li key={index_msg++} style={{ float: 'right'}}>
                 <MessageSent msg={msg} />
             </li>
         );
     else
         return (
-            <li key={index_msg++} style={{ float: 'left', marginTop: "5px" }}>
+            <li key={index_msg++} style={{ float: 'left'}}>
                 <MessageRecieved msg={msg} />
             </li>
         );
@@ -76,6 +76,7 @@ const ChatUIFriend = () => {
             socketclient.on('msgToClient_dm', (m: { from: string, to: string, msg: string }) => {
                 console.log(m);
                 dispatch(addMessage({ username: m.from, to: m.to, msg: m.msg }));
+                // {from :   , msg :}
             })
         }
 
@@ -92,6 +93,7 @@ const ChatUIFriend = () => {
     const handleConnection = () => {
         if (socketclient) {
             socketclient.emit('check_room', { from: user_conneced, to: currentConvr, msg: '' });
+            // {to : }
         }
     }
 
@@ -102,6 +104,7 @@ const ChatUIFriend = () => {
     const sendMsg = () => {
         if (message_input) {
             socketclient.emit('dm_message', { from: user_conneced, to: currentConvr, msg: message_input });
+            //{ to :    , msg :}
             setMessage('');
         }
     }
@@ -127,18 +130,18 @@ const ChatUIFriend = () => {
             bgcolor="#202541"
             sx={{
                 backgroundColor: "#202541",
-                width: "600px",
+                width: "510px",
                 height: '100vh',
-                paddingLeft: "20px",
-                paddingRight: "20px",
+                paddingLeft: "22px",
+                paddingRight: "22px",
                 borderLeft: "1px solid #FFFFFF"
             }}>
             <Stack height='inherit'>
                 <div>
                     <HeaderChat name={currentConvr + " " + user_conneced} />
                 </div>
-                <Stack spacing={2} direction="column-reverse" sx={{ width: "532px", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
-                    <Stack direction="row" marginBottom="45px">
+                <Stack spacing={2.7} direction="column-reverse" sx={{ width:"100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
+                    <Stack direction="row" marginBottom="35px">
                         <FormControl variant="standard">
                             <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
                                 onChange={handleMsgChange}
@@ -146,14 +149,14 @@ const ChatUIFriend = () => {
                                 value={message_input} />
                         </FormControl>
                         <div style={{
-                            backgroundColor: "#151416", padding: "10px", borderRadius: '0 12px 12px 0',
+                            backgroundColor: "#151416", padding: "10px", borderRadius: '0 10px 10px 0',
                         }}>
-                            <Button sx={{ backgroundColor: "#3475D7", height: "50px", color: "#FFF" }} onClick={sendMsg}>
+                            <Button sx={{ backgroundColor: "#3475D7", height: "45px", color: "#FFF" }} onClick={sendMsg}>
                                 <SendIcon />
                             </Button>
                         </div>
                     </Stack>
-                    <List style={{ overflowY: 'auto', padding: '0 6px 0px 5px' }} >
+                    <List style={{ overflowY: 'auto' }} >
                         {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg)))}
                         {renderMessage(user_conneced, user_conneced, "Hello")}
                         {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
@@ -164,14 +167,14 @@ const ChatUIFriend = () => {
                         {renderMessage(user_conneced, user_conneced, "Hello")}
                         {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
                         {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
+                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsmLurom ipsmLurom ipsmLurom ipsm ")}
                         {renderMessage(user_conneced, user_conneced, "Hello")}
                         {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
                         {renderMessage(user_conneced, user_conneced, "Hello")}
                         {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
                         {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
-                        <li key={index_msg++} style={{ float: 'right', marginTop: "5px" }}>
+                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm Lurom ipsmLurom ipsmLurom ipsm")}
+                        <li key={index_msg++} style={{ float: 'right'}}>
                             <div ref={bottomRef} ></div>
                         </li>
                     </List>

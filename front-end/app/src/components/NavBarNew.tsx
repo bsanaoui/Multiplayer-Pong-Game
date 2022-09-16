@@ -44,7 +44,7 @@ let getInterface = (interfaceEnum: InterfaceEnum): string => {
 export const NavBarNew = () => {
     const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
     let avatar: File;
-
+    
     return (
         <Box>
             {is_collapsedNav && <NavbarCollapsed />}

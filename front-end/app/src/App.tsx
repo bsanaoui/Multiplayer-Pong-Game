@@ -16,6 +16,11 @@ import { DashboardUser } from './components/DashboardUser';
 import { InterfaceEnum } from './store/interfacesReducer';
 import { InvitationFriend } from './components/InvitationFriend&Game/InvitationFriend';
 import { InvitationsMenu } from './components/InvitationsMenu';
+import InvitePlayBar from './components/InvitePlayBar';
+import ChatUIFriend from './components/ChatUIFriend';
+import MessageSent from './components/MessageSent';
+import MessageRecieved from './components/MessageRecieved';
+import Rooms from './components/Rooms';
 
 const darkTheme = createTheme({
 	palette: {
@@ -37,7 +42,7 @@ function App() {
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			{/* {currentuser === '' && <LoginPage />}
+			{currentuser === '' && <LoginPage />}
 			{currentuser !== '' &&
 				<Stack direction="row"
 					sx={{backgroundColor:"#202541", width:"100%", height:"100%"}}>
@@ -50,11 +55,9 @@ function App() {
 					{currentIterface === InterfaceEnum.Matchmaking && <Box/>}
 					{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs/>}
 				</Stack> 
-			} */}
-
-			<NavBarNew/>
-			{/* <InvitationsMenu/> */}
-			{/* <InvitationFriend username="Cmos Foody" avatar={avatar2}/> */}
+			}
+			{/* <InvitePlayBar/> */}
+			{/* <Rooms/> */}
 		</ThemeProvider>
 	);
 }

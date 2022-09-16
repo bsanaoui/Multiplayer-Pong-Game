@@ -2,7 +2,7 @@ import { Avatar, Box, Stack, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { changeCurrRoom } from "../store/chatUiReducer";
-import DropMenu from './DropMenu';
+import DropMenuRoom from './DropMenus/DropMenuRoom';
 
 interface RoomProps {
     name: string
@@ -25,7 +25,7 @@ const RoomButtonChat = ({ name }: RoomProps) => {
                 position: 'relative',
                 cursor: 'pointer',
             }}>
-            <Stack spacing={2} direction="row" padding='3% 3%'
+            <Stack spacing={2} direction="row" padding='3.5% 3%'
             >
                 <Avatar
                     sx={{
@@ -47,7 +47,7 @@ const RoomButtonChat = ({ name }: RoomProps) => {
                         }}>{name}</Typography>
                 </Box>
                 <div style={{ marginLeft: 'auto' }}>
-                    <DropMenu/>
+                    <DropMenuRoom/>
                 </div>
             </Stack>
         </Box >

@@ -11,7 +11,7 @@ const HeaderChat = ({ name }: FriendProps) => {
         <Box
             sx={{
                 backgroundColor: "#2E3256",
-                width: '540px',
+                width: '460px',
                 height: '67px',
                 paddingTop: '5px',
                 paddingLeft: '13px',

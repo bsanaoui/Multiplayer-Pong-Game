@@ -11,12 +11,12 @@ const MessageRecieved = ({ msg }: MessageProps) => {
       <Stack
         spacing={0}
         sx={{
-          width: '408px',
+          width: '335px',
         }}>
         <Box
           sx={{
             backgroundColor: '#2E3256',
-            width: '360px',
+            width: '300px',
             padding: '0.7em',
             borderRadius: '14px',
             marginLeft: '10%',
@@ -26,21 +26,20 @@ const MessageRecieved = ({ msg }: MessageProps) => {
               fontFamily: 'Lexend',
               fontStyle: 'normal',
               fontWeight: '500',
-              fontSize: '16px',
+              fontSize: '15px',
               lineHeight: '140%',
             }}>
             {msg}
           </Typography>
         </Box>
-          <Avatar
-            sx={{
-              height: '47px',
-              width: '47px',
-              backgroundColor: "#FFF",
-              padding: "3px",
-            }}
-            alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
-
+        <Avatar
+          sx={{
+            height: '47px',
+            width: '47px',
+            backgroundColor: "#FFF",
+            padding: "3px",
+          }}
+          alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
       </Stack>
     </div>
   )

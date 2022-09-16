@@ -15,8 +15,9 @@ import Menu from '@mui/material/Menu';
 import { IconButton } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-
-export default function DropMenu() {
+// disable for current  // set admin 
+//name, 
+export default function DropMenuRoom() {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,9 +74,9 @@ export default function DropMenu() {
 							<ListItem disablePadding>
 								<ListItemButton onClick={handleClose}>
 									<ListItemIcon>
-										<SettingsIcon />
+										<GroupAddIcon />
 									</ListItemIcon>
-									<ListItemText primary="Change type room" />
+									<ListItemText primary="Invite a user" />
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
@@ -83,7 +84,7 @@ export default function DropMenu() {
 									<ListItemIcon>
 										<GroupAddIcon />
 									</ListItemIcon>
-									<ListItemText primary="Invite a user" />
+									<ListItemText primary="Disbale password" />
 								</ListItemButton>
 							</ListItem>
 						</List>

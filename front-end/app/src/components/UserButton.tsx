@@ -1,6 +1,6 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import avatar2 from '../assets/avatar2.png'
-import DropMenu from './DropMenu';
+import DropMenu from './DropMenus/DropMenuRoom';
 import { UserOfRoom } from '../store/roomUsersReducer';
 
 
