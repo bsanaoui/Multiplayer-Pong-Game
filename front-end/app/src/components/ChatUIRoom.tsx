@@ -5,15 +5,12 @@ import SendIcon from '@mui/icons-material/Send'
 import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
 import { useState, useEffect, useRef } from 'react';
-import { io, Socket } from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
-import { addMessage, clearMessages, initMessages } from "../store/chatUiReducer";
+import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestMessages } from '../requests/messages';
 
-let socketclient: Socket;
 let index_msg: number = 0;
-let prev_room: string = '';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
@@ -37,27 +34,28 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 // const msgs = Array.from({ length: 9 }, (_, index) => {return ()}
-const renderMessage = (current: string, user_name: string, msg: string): JSX.Element => {
-    if (current === user_name)
+const renderMessage = (current: string, from: string, msg: string): JSX.Element => {
+    if (current === from)
         return (
-            <li key={index_msg++} style={{ float: 'right'}}>
+            <li key={index_msg++} style={{ float: 'right' }}>
                 <MessageSent msg={msg} />
             </li>
         );
     else
         return (
-            <li key={index_msg++} style={{ float: 'left'}}>
+            <li key={index_msg++} style={{ float: 'left' }}>
                 <MessageRecieved msg={msg} />
             </li>
         );
 }
 
 /* Handle Clear msgs when switch room */
-const ChatUI = () => {
+const ChatUIRoom = () => {
     const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
-    const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
+    const logged_user = useSelector((state: RootState) => state.user).login; // call-back function
     const chat_state = useSelector((state: RootState) => state.chat);
     const [message_input, setMessage] = useState("");
+    const socketclient = useSelector((state: RootState) => state.socketclient).socket;
 
     const dispatch = useDispatch();
 
@@ -65,17 +63,15 @@ const ChatUI = () => {
     const msgs = chat_state.msgs;
 
     useEffect(() => {
-        socketclient = io('http://localhost:3333');
         handleConnection(); // connect to the socket specied room ??
-
         requestMessages(currentRoom).then((value) => {
-            const data = value as Array<{ from: string, to: string, content_msg: string }>;
+            const data = value as Array<MessageState>;
             dispatch(initMessages(data));
         })
 
         if (socketclient) {
-            socketclient.on('msgToClient', (msg: { name: string, room: string, message: string }) => {
-                dispatch(addMessage({ username: msg.name, msg: msg.message, to: currentRoom }));
+            socketclient.on('msgToClient', (msg: MessageState) => {
+                dispatch(addMessage(msg));
                 console.log(msgs);
             })
         }
@@ -86,13 +82,13 @@ const ChatUI = () => {
 
         return () => {
             dispatch(clearMessages());
-            socketclient.disconnect(); // Check if works
         }
-    })
+
+    }, [currentRoom])
 
     const handleConnection = () => {
         if (socketclient) {
-            socketclient.emit('JoinRoom', { name: user_conneced, room: currentRoom, message: '' });
+            socketclient.emit('JoinRoom');
         }
     }
 
@@ -102,7 +98,7 @@ const ChatUI = () => {
     // Delete setMsgs 
     const sendMsg = () => {
         if (message_input) {
-            socketclient.emit('SendMessageRoom', { name: user_conneced, room: currentRoom, message: message_input });
+            socketclient.emit('SendMessageRoom', { msg: message_input });
             console.log(message_input);
             setMessage('');
         }
@@ -137,7 +133,7 @@ const ChatUI = () => {
             }}>
             <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={currentRoom + " " + user_conneced} />
+                    <HeaderChat name={currentRoom + " " + logged_user} />
                 </div>
                 <Stack spacing={2} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="35px">
@@ -155,9 +151,9 @@ const ChatUI = () => {
                             </Button>
                         </div>
                     </Stack>
-                    <List style={{ overflow: 'auto'}} >
-                        {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg)))}
-                        <li key={index_msg++} style={{ float: 'right'}}>
+                    <List style={{ overflow: 'auto' }} >
+                        {msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
+                        <li key={index_msg++} style={{ float: 'right' }}>
                             <div ref={bottomRef} ></div>
                         </li>
                     </List>
@@ -168,4 +164,4 @@ const ChatUI = () => {
 }
 
 
-export default ChatUI
+export default ChatUIRoom

@@ -8,13 +8,10 @@ import { useState, useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
-import { addMessage, clearMessages, initMessages } from "../store/chatUiReducer";
+import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestDirectMsgs } from '../requests/messages';
 
-
-let socketclient: Socket;
 let index_msg: number = 0;
-let prev_room: string = '';
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
@@ -37,16 +34,16 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 // const msgs = Array.from({ length: 9 }, (_, index) => {return ()}
-const renderMessage = (current: string, user_name: string, msg: string): JSX.Element => {
-    if (current === user_name)
+const renderMessage = (current: string, from: string, msg: string): JSX.Element => {
+    if (current === from)
         return (
-            <li key={index_msg++} style={{ float: 'right'}}>
+            <li key={index_msg++} style={{ float: 'right' }}>
                 <MessageSent msg={msg} />
             </li>
         );
     else
         return (
-            <li key={index_msg++} style={{ float: 'left'}}>
+            <li key={index_msg++} style={{ float: 'left' }}>
                 <MessageRecieved msg={msg} />
             </li>
         );
@@ -57,26 +54,24 @@ const ChatUIFriend = () => {
     const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
     const dispatch = useDispatch();
 
-    const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
+    const logged_user = useSelector((state: RootState) => state.user).login; // call-back function
     const chat_state = useSelector((state: RootState) => state.chat);
     const [message_input, setMessage] = useState("");
+    const socketclient = useSelector((state: RootState) => state.socketclient).socket;
 
     const currentConvr = chat_state.curr_converation;
     const msgs = chat_state.msgs;
 
     useEffect(() => {
-        socketclient = io('http://localhost:3333');
         handleConnection();
-        requestDirectMsgs(user_conneced, currentConvr).then((value) => {
-            const data = value as Array<{ from: string; to: string; content_msg: string }>;
+        requestDirectMsgs(currentConvr).then((value) => {
+            const data = value as Array<MessageState>;
             dispatch(initMessages(data));
         })
 
         if (socketclient) {
-            socketclient.on('msgToClient_dm', (m: { from: string, to: string, msg: string }) => {
-                console.log(m);
-                dispatch(addMessage({ username: m.from, to: m.to, msg: m.msg }));
-                // {from :   , msg :}
+            socketclient.on('msgToClient_dm', (m: MessageState) => {
+                dispatch(addMessage(m));
             })
         }
 
@@ -86,14 +81,12 @@ const ChatUIFriend = () => {
 
         return () => {
             dispatch(clearMessages());
-            socketclient.disconnect(); // Check if works
         }
     }, [currentConvr])
 
     const handleConnection = () => {
         if (socketclient) {
-            socketclient.emit('check_room', { from: user_conneced, to: currentConvr, msg: '' });
-            // {to : }
+            socketclient.emit('join_dm_room');
         }
     }
 
@@ -103,8 +96,7 @@ const ChatUIFriend = () => {
     // Delete setMsgs 
     const sendMsg = () => {
         if (message_input) {
-            socketclient.emit('dm_message', { from: user_conneced, to: currentConvr, msg: message_input });
-            //{ to :    , msg :}
+            socketclient.emit('dm_message', { message: message_input });
             setMessage('');
         }
     }
@@ -113,17 +105,6 @@ const ChatUIFriend = () => {
             sendMsg();
         }
     }
-
-    // if (prev_room !== currentConvr && currentConvr !== '')
-    // {
-    //     requestDirectMsgs(user_conneced ,currentConvr).then((value) => {
-
-    // 		const data = value as Array< { from: string; to: string; content_msg: string }>;
-    //         dispatch(initMessages(data));
-    // 	})
-    //     handleConnection(); // connect to the socket specied room ??
-    //     prev_room = currentConvr;
-    // }
 
     return (
         <Box
@@ -138,9 +119,9 @@ const ChatUIFriend = () => {
             }}>
             <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={currentConvr + " " + user_conneced} />
+                    <HeaderChat name={currentConvr + " " + logged_user} />
                 </div>
-                <Stack spacing={2.7} direction="column-reverse" sx={{ width:"100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
+                <Stack spacing={2.7} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="35px">
                         <FormControl variant="standard">
                             <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
@@ -157,24 +138,24 @@ const ChatUIFriend = () => {
                         </div>
                     </Stack>
                     <List style={{ overflowY: 'auto' }} >
-                        {msgs.map((item) => (renderMessage(user_conneced, item.username, item.msg)))}
-                        {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
-                        {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
-                        {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
-                        {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
-                        {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsmLurom ipsmLurom ipsmLurom ipsm ")}
-                        {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
-                        {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm")}
-                        {renderMessage(user_conneced, user_conneced, "Hello")}
-                        {renderMessage(user_conneced, "CTOO2", "Lurom ipsm Lurom ipsmLurom ipsmLurom ipsm")}
-                        <li key={index_msg++} style={{ float: 'right'}}>
+                        {msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
+                        {renderMessage(logged_user, logged_user, "Hello")}
+                        {renderMessage(logged_user, "CTOO2", "Lurom ipsm")}
+                        {renderMessage(logged_user, logged_user, "Hello")}
+                        {renderMessage(logged_user, "CTOO2", "Lurom ipsm")}
+                        {renderMessage(logged_user, logged_user, "Hello")}
+                        {renderMessage(logged_user, "CTOO2", "Lurom ipsm")}
+                        {renderMessage(logged_user, logged_user, "Hello")}
+                        {renderMessage(logged_user, "CTOO2", "Lurom ipsm")}
+                        {renderMessage(logged_user, logged_user, "Hello")}
+                        {renderMessage(logged_user, "CTOO2", "Lurom ipsmLurom ipsmLurom ipsmLurom ipsm ")}
+                        {renderMessage(logged_user, logged_user, "Hello")}
+                        {renderMessage(logged_user, "CTOO2", "Lurom ipsm")}
+                        {renderMessage(logged_user, logged_user, "Hello")}
+                        {renderMessage(logged_user, "CTOO2", "Lurom ipsm")}
+                        {renderMessage(logged_user, logged_user, "Hello")}
+                        {renderMessage(logged_user, "CTOO2", "Lurom ipsm Lurom ipsmLurom ipsmLurom ipsm")}
+                        <li key={index_msg++} style={{ float: 'right' }}>
                             <div ref={bottomRef} ></div>
                         </li>
                     </List>

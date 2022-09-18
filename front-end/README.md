@@ -7,7 +7,8 @@
 * `Yup: `is a schema builder for runtime value parsing and validation.
 * `Axios: `
 * `socket.io-client: `
-
+* `react-cookie: `
+* 
 # CSS Styles && Tailwindcss:
 
 `* flex justify-between`

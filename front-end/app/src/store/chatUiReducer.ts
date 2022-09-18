@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface MessageState {
-    username: string, //from
-    to: string, // To
+    from: string, 
     msg: string
 };
 
@@ -41,9 +40,9 @@ export const chatSlice = createSlice({
             state.msgs.push(action.payload)
         },
 
-        initMessages: (state, action: PayloadAction<{from:string, to:string, content_msg:string}[]>) => {
+        initMessages: (state, action: PayloadAction<MessageState[]>) => {
             state.msgs.length = 0;
-            action.payload.map((item) => ( state.msgs.push({username: item.from, to: item.to ,msg: item.content_msg}) ))
+            action.payload.map((item) => ( state.msgs.push(item) ))
         },
 
         clearMessages: (state) => {

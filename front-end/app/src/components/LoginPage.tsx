@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useDispatch } from 'react-redux';
-import { setUsername } from "../store/userReducer";
+import { initUser } from "../store/userReducer";
 
 
 const LoginPage = () => {
@@ -40,12 +40,12 @@ const LoginPage = () => {
 					Use your keyboard as gamepads
 					and start playing instantly
 				</Typography>
-				<form action='' method='POST'>
+				{/* <form action={process.env.REACT_APP_SERVER_IP} method='POST'> */}
 					<button className='button-Auth center-text center-button' style={{ color:"#FFF", width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}
-						type="submit" onClick={() => { dispatch(setUsername("Cmos")) }}>
+						type="submit" onClick={() => { dispatch(initUser()) }}>
 						Start playing now
 					</button>
-				</form>
+				{/* </form> */}
 			</Stack >
 		</Box>
 	)

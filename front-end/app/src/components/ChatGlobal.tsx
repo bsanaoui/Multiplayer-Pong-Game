@@ -9,10 +9,15 @@ import ChatUIFriend from "./ChatUIFriend"
 import { UsersRoom } from "./UsersRoom"
 import { UsersMessaging } from "./UsersMessaging"
 import { InterfaceEnum } from "../store/interfacesReducer"
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { initSocketClient, disconnectSocket } from "../store/socketReducer";
+import { io, Socket } from "socket.io-client";
 
 
 const ChatGlobal = () => {
     const currentPage = useSelector((state: RootState) => state.interfaces).current;
+
     return (
         <Stack direction="row" height="100vh" >
             {currentPage === (InterfaceEnum.InstantMessaging || InterfaceEnum.Friends) ? <Friends /> : <Rooms />}

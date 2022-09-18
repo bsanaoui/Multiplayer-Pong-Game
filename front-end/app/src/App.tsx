@@ -23,6 +23,9 @@ import MessageRecieved from './components/MessageRecieved';
 import Rooms from './components/Rooms';
 import { UsersRoom } from './components/UsersRoom';
 import Friends from './components/Friends';
+import { useDispatch } from 'react-redux';
+import { clearUser, initUser } from './store/userReducer';
+import { useEffect } from 'react';
 
 const darkTheme = createTheme({
 	palette: {
@@ -37,26 +40,35 @@ const darkTheme = createTheme({
 	}
 });
 
+
 function App() {
-	const currentuser = useSelector((state: RootState) => state.user).username; 
-	const currentIterface = useSelector((state: RootState) => state.interfaces).current
+	const logged_user = useSelector((state: RootState) => state.user).login;
+	const currentIterface = useSelector((state: RootState) => state.interfaces).current;
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (localStorage.getItem("login"))
+			dispatch(initUser())
+		if (currentIterface === InterfaceEnum.Logout)
+			dispatch(clearUser());
+	},)
 
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			{currentuser === '' && <LoginPage />}
-			{currentuser !== '' &&
+			{logged_user === '' && <LoginPage />}
+			{logged_user !== '' &&
 				<Stack direction="row"
-					sx={{backgroundColor:"#202541", width:"100%", height:"100%"}}>
+					sx={{ backgroundColor: "#202541", width: "100%", height: "100%" }}>
 					<NavBarNew />
-					{currentIterface === InterfaceEnum.Home && <Main/>}
-					{currentIterface === InterfaceEnum.Dashboard && <DashboardUser/>}
-					{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal/>}
-					{currentIterface === InterfaceEnum.InstantMessaging && <ChatGlobal/>}
-					{currentIterface === InterfaceEnum.Friends && <ChatGlobal/>}
-					{currentIterface === InterfaceEnum.Matchmaking && <Box/>}
-					{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs/>}
-				</Stack> 
+					{currentIterface === InterfaceEnum.Home && <Main />}
+					{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
+					{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal />}
+					{currentIterface === InterfaceEnum.InstantMessaging && <ChatGlobal />}
+					{currentIterface === InterfaceEnum.Friends && <ChatGlobal />}
+					{currentIterface === InterfaceEnum.Matchmaking && <Box />}
+					{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
+				</Stack>
 			}
 			{/* <InvitePlayBar/> */}
 		</ThemeProvider>

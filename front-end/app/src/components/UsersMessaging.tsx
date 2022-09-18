@@ -1,22 +1,35 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import usersRoomIcon from '../assets/usersRoom.png'
 import { UserButtonChat } from './UserButtonChat';
-
-// function pickRandom() {
-//     const names: string[] = ["JoinRoom1", "JoinRoom2", "JoinRoom3",
-//         "JoinRoom4", "JoinRoom5"];
-//     return names[Math.floor(Math.random() * names.length)];
-// }
-
-// const rooms = Array.from({ length: 5 }, (_, index) => {
-//     return (
-//         <li key={index} className='item-friend'>
-//             <RoomButtonChat name={pickRandom()} />
-//         </li>
-//     );
-// });
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { initSocketClient, disconnectSocket } from "../store/socketReducer";
+import { RootState } from '../store';
 
 export const UsersMessaging = () => {
+    const logged_user = useSelector((state: RootState) => state.user).login;
+    const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+
+        if (currentConv && logged_user) {
+            dispatch(initSocketClient({
+                host: process.env.REACT_APP_SERVER_IP as string, auth: {
+                    auth: {
+                        from: logged_user,
+                        to: currentConv,
+                    }
+                }
+            }));
+
+        }
+        return () => {
+            dispatch(disconnectSocket());
+        }
+    })
+
     return (
         <Box
             sx={{
@@ -29,7 +42,7 @@ export const UsersMessaging = () => {
 
             }}>
             <Stack height="100%">
-            <Stack spacing={1} direction="row">
+                <Stack spacing={1} direction="row">
                     <IconButton>
                         <img src={usersRoomIcon} width="36px" alt='roomIcon' />
                     </IconButton>
@@ -64,7 +77,7 @@ export const UsersMessaging = () => {
                             fontSize: '14px',
                             lineHeight: '109.52%',
                             textDecorationLine: 'underline',
-                            marginTop:"3%"
+                            marginTop: "3%"
                         }}>
                             Create new msg
                         </Typography>
