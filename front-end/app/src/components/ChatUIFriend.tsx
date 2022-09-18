@@ -139,7 +139,7 @@ const ChatUIFriend = () => {
                     </Stack>
                     <List style={{ overflowY: 'auto' }} >
                         {msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
-                        {renderMessage(logged_user, logged_user, "Hello")}
+                        {/* {renderMessage(logged_user, logged_user, "Hello")}
                         {renderMessage(logged_user, "CTOO2", "Lurom ipsm")}
                         {renderMessage(logged_user, logged_user, "Hello")}
                         {renderMessage(logged_user, "CTOO2", "Lurom ipsm")}
@@ -154,7 +154,7 @@ const ChatUIFriend = () => {
                         {renderMessage(logged_user, logged_user, "Hello")}
                         {renderMessage(logged_user, "CTOO2", "Lurom ipsm")}
                         {renderMessage(logged_user, logged_user, "Hello")}
-                        {renderMessage(logged_user, "CTOO2", "Lurom ipsm Lurom ipsmLurom ipsmLurom ipsm")}
+                        {renderMessage(logged_user, "CTOO2", "Lurom ipsm Lurom ipsmLurom ipsmLurom ipsm")} */}
                         <li key={index_msg++} style={{ float: 'right' }}>
                             <div ref={bottomRef} ></div>
                         </li>

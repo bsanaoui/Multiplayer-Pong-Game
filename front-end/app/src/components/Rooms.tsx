@@ -1,33 +1,29 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import roomIcon from '../assets/chat-room.png'
 import RoomButtonChat from './RoomButtonChat';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initSocketClient, disconnectSocket } from "../store/socketReducer";
 import { RootState } from '../store';
+import { getMyRooms, RoomsOfUser } from '../requests/rooms';
 
 
-// function pickRandom() {
-//     const names: string[] = ["JoinRoom1", "JoinRoom2", "JoinRoom3",
-//         "JoinRoom4", "JoinRoom5"];
-//     return names[Math.floor(Math.random() * names.length)];
-// }
-
-// const rooms = Array.from({ length: 5 }, (_, index) => {
-//     return (
-//         <li key={index} className='item-friend'>
-//             <RoomButtonChat name={pickRandom()} />
-//         </li>
-//     );
-// });
+let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
 
 const Rooms = () => {
+	const [rooms, setRooms] = useState(initRooms);
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		// Get Rooms
+		getMyRooms().then((value) => {
+			const data = value as RoomsOfUser[];
+			setRooms(data);
+		}).catch((reason: string) => {
+			console.log("Error ;Rooms of User", reason)
+		})
 
 		if (currentRoom && logged_user) {
 			dispatch(initSocketClient({
@@ -80,7 +76,7 @@ const Rooms = () => {
 						Rooms
 					</Typography>
 					<div className='dot-nb center-button'>
-						8
+						{rooms.length}
 					</div>
 					<div style={{
 						marginLeft: "auto",
@@ -90,7 +86,8 @@ const Rooms = () => {
 							fontSize: '14px',
 							lineHeight: '109.52%',
 							textDecorationLine: 'underline',
-							marginTop: "3%"
+							marginTop: "3%",
+							cursor: "pointer"
 						}}>
 							Create new room
 						</Typography>
@@ -98,12 +95,17 @@ const Rooms = () => {
 				</Stack>
 				<List style={{ overflow: 'auto', height: "100%" }} >
 					{/* {rooms} */}
-					<li key='1' className='item-friend'>
+					{rooms.map((item:RoomsOfUser) => (
+						<li key={item.id} className='item-friend'>
+							<RoomButtonChat name={item.room_id as string} />
+						</li>
+					))}
+					{/* <li key='1' className='item-friend'>
 						<RoomButtonChat name='filles' />
 					</li>
 					<li key='2' className='item-friend'>
 						<RoomButtonChat name='room1' />
-					</li>
+					</li> */}
 				</List>
 			</Stack>
 		</Box>

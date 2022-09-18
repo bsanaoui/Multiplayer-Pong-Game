@@ -98,8 +98,8 @@ const ChatUIRoom = () => {
     // Delete setMsgs 
     const sendMsg = () => {
         if (message_input) {
-            socketclient.emit('SendMessageRoom', { msg: message_input });
-            console.log(message_input);
+            if (socketclient)
+                socketclient.emit('SendMessageRoom', { msg: message_input });
             setMessage('');
         }
     }
