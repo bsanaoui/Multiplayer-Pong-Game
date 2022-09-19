@@ -13,8 +13,8 @@ export async function requestMessages(name_room: string) {
   try {
     // 👇️ const data: CreateUserResponse
     const { data } = await axios.post<MessageState[]>(
-      process.env.REACT_APP_SERVER_IP + "/room/post_name_room",
-      { name: name_room },
+      process.env.REACT_APP_SERVER_IP + "/room/get_room_msgs",
+      { room_id: name_room },
       {
         headers: {
           "Content-Type": "application/json",

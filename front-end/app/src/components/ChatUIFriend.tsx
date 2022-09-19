@@ -12,6 +12,7 @@ import { addMessage, clearMessages, initMessages, MessageState } from "../store/
 import { requestDirectMsgs } from '../requests/messages';
 
 let index_msg: number = 0;
+let socketclient: Socket;
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
@@ -51,27 +52,38 @@ const renderMessage = (current: string, from: string, msg: string): JSX.Element 
 
 /* Handle Clear msgs when switch room */
 const ChatUIFriend = () => {
-    const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
-    const dispatch = useDispatch();
 
-    const logged_user = useSelector((state: RootState) => state.user).login; // call-back function
+    const dispatch = useDispatch();
+    const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
+    const logged_user = useSelector((state: RootState) => state.user).login;
     const chat_state = useSelector((state: RootState) => state.chat);
-    const [message_input, setMessage] = useState("");
-    const socketclient = useSelector((state: RootState) => state.socketclient).socket;
 
     const currentConvr = chat_state.curr_converation;
     const msgs = chat_state.msgs;
 
+    const [message_input, setMessage] = useState("");
     useEffect(() => {
+        console.log("chatUIFriend");
+
+        if ((!socketclient || socketclient.disconnected) && currentConvr !== '') {
+            socketclient = io(process.env.REACT_APP_SERVER_IP as string, {
+                auth: {
+                    from: logged_user,
+                    to: currentConvr,
+                }
+            });
+        }
         handleConnection();
-        requestDirectMsgs(currentConvr).then((value) => {
-            const data = value as Array<MessageState>;
-            dispatch(initMessages(data));
-        })
+        // requestDirectMsgs(currentConvr).then((value) => {
+        //     const data = value as Array<MessageState>;
+        //     dispatch(initMessages(data));
+        // })
 
         if (socketclient) {
             socketclient.on('msgToClient_dm', (m: MessageState) => {
                 dispatch(addMessage(m));
+                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+                console.log(msgs);
             })
         }
 
@@ -80,15 +92,14 @@ const ChatUIFriend = () => {
         }
 
         return () => {
+            console.log("clear");
             dispatch(clearMessages());
+            if (socketclient)
+                socketclient.disconnect();
         }
     }, [currentConvr])
 
-    const handleConnection = () => {
-        if (socketclient) {
-            socketclient.emit('join_dm_room');
-        }
-    }
+
 
     const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(event.target.value);
@@ -96,7 +107,10 @@ const ChatUIFriend = () => {
     // Delete setMsgs 
     const sendMsg = () => {
         if (message_input) {
-            socketclient.emit('dm_message', { message: message_input });
+            if (socketclient) {
+                socketclient.emit('dm_message', { message: message_input });
+                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+            }
             setMessage('');
         }
     }
@@ -119,7 +133,7 @@ const ChatUIFriend = () => {
             }}>
             <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={currentConvr}/>
+                    <HeaderChat name={currentConvr} />
                 </div>
                 <Stack spacing={2.7} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="35px">
@@ -163,6 +177,12 @@ const ChatUIFriend = () => {
             </Stack>
         </Box>
     )
+}
+
+const handleConnection = () => {
+    if (socketclient) {
+        socketclient.emit('join_dm_room');
+    }
 }
 
 export default ChatUIFriend

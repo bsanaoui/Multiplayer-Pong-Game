@@ -62,10 +62,12 @@ const ChatUIRoom = () => {
 
     const [message_input, setMessage] = useState("");
 
-    useEffect(() => {
-        if (logged_user !== '' && currentRoom !== '')
-        {
 
+
+    useEffect(() => {
+        console.log("chatUIRoom");
+
+        if ((!socketclient || socketclient.disconnected) && currentRoom !== '' ) {
             socketclient = io(process.env.REACT_APP_SERVER_IP as string, {
                 auth: {
                     room: currentRoom,
@@ -82,6 +84,7 @@ const ChatUIRoom = () => {
         if (socketclient) {
             socketclient.on('msgToClient', (msg: MessageState) => {
                 dispatch(addMessage(msg));
+                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
                 console.log(msgs);
             })
         }
@@ -91,17 +94,14 @@ const ChatUIRoom = () => {
         }
 
         return () => {
+            console.log("clear");
             dispatch(clearMessages());
-            // socketclient.disconnect();
+            if (socketclient)
+                socketclient.disconnect();
         }
 
     }, [currentRoom])
 
-    const handleConnection = () => {
-        if (socketclient) {
-            socketclient.emit('JoinRoom');
-        }
-    }
 
     const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(event.target.value);
@@ -109,11 +109,11 @@ const ChatUIRoom = () => {
     // Delete setMsgs 
     const sendMsg = () => {
         if (message_input) {
-            if (socketclient)
+            if (socketclient) {
                 socketclient.emit('SendMessageRoom', { msg: message_input });
+                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+            }
             setMessage('');
-            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-            
         }
     }
     const handleEnterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -121,16 +121,6 @@ const ChatUIRoom = () => {
             sendMsg();
         }
     }
-
-    // if (prev_room !== currentRoom && currentRoom !== '')
-    // {
-    //     requestMessages(currentRoom).then((value) => {
-    // 		const data = value as Array<{from:string, to:string, content_msg:string}>;
-    //         dispatch(initMessages(data));
-    // 	})
-    //     handleConnection(); // connect to the socket specied room ??
-    //     prev_room = currentRoom;
-    // }
 
     return (
         <Box
@@ -176,5 +166,10 @@ const ChatUIRoom = () => {
     )
 }
 
+const handleConnection = () => {
+    if (socketclient) {
+        socketclient.emit('JoinRoom');
+    }
+}
 
 export default ChatUIRoom
