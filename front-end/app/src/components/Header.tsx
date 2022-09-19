@@ -4,6 +4,8 @@ import FormNewRoom from './FormNewRoom';
 
 import animatedPong from '../assets/animatedPong.gif'
 import HeaderPong from '../assets/HeaderPong.png'
+import { RootState } from '../store';
+import { useSelector } from 'react-redux';
 
 
 const Header = () => {

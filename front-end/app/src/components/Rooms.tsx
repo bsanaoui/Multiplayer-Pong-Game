@@ -12,33 +12,36 @@ let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
 
 const Rooms = () => {
 	const [rooms, setRooms] = useState(initRooms);
-	const logged_user = useSelector((state: RootState) => state.user).login;
-	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
-	const dispatch = useDispatch();
+	// const logged_user = useSelector((state: RootState) => state.user).login;
+	// const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
+	// const dispatch = useDispatch();
 
 	useEffect(() => {
 		// Get Rooms
-		getMyRooms().then((value) => {
-			const data = value as RoomsOfUser[];
-			setRooms(data);
-		}).catch((reason: string) => {
-			console.log("Error ;Rooms of User", reason)
-		})
-
-		if (currentRoom && logged_user) {
-			dispatch(initSocketClient({
-				host: process.env.REACT_APP_SERVER_IP as string, auth: {
-					auth: {
-						room: currentRoom,
-						user: logged_user,
-					}
-				}
-			}));
-
+		if (rooms.length == 0) {
+			getMyRooms().then((value) => {
+				const data = value as RoomsOfUser[];
+				setRooms(data);
+			})
+			.catch((reason: string) => {
+				console.log("Error ;Rooms of User", reason)
+			})
 		}
-		return () => {
-			dispatch(disconnectSocket());
-		}
+
+		// if (currentRoom && logged_user) {
+		// 	dispatch(initSocketClient({
+		// 		host: process.env.REACT_APP_SERVER_IP as string, auth: {
+		// 			auth: {
+		// 				room: currentRoom,
+		// 				user: logged_user,
+		// 			}
+		// 		}
+		// 	}));
+
+		// }
+		// return () => {
+		// 	dispatch(disconnectSocket());
+		// }
 	})
 
 	return (
@@ -95,7 +98,7 @@ const Rooms = () => {
 				</Stack>
 				<List style={{ overflow: 'auto', height: "100%" }} >
 					{/* {rooms} */}
-					{rooms.map((item:RoomsOfUser) => (
+					{rooms.map((item: RoomsOfUser) => (
 						<li key={item.id} className='item-friend'>
 							<RoomButtonChat name={item.room_id as string} />
 						</li>

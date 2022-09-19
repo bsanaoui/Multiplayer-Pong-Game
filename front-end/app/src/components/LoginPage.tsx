@@ -1,5 +1,6 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Input, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { initUser } from "../store/userReducer";
 
@@ -40,12 +41,12 @@ const LoginPage = () => {
 					Use your keyboard as gamepads
 					and start playing instantly
 				</Typography>
-				{/* <form action={process.env.REACT_APP_SERVER_IP} method='POST'> */}
+				<form action={process.env.REACT_APP_SERVER_IP+"/auth"} method='POST'>
 					<button className='button-Auth center-text center-button' style={{ color:"#FFF", width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}
-						type="submit" onClick={() => { dispatch(initUser()) }}>
+						type="submit">
 						Start playing now
 					</button>
-				{/* </form> */}
+				</form>
 			</Stack >
 		</Box>
 	)
@@ -66,7 +67,7 @@ const LoginPage = () => {
 //                 placeholder="Enter a username..."
 //                 required={true}
 //             />
-//             <Button type="submit" onClick={() => dispatch(setUsername(username))}>Submit</Button>
+//             <Button type="submit" onClick={() => { dispatch(initUser(username)) }}>Submit</Button>
 //         </form>
 //     )
 // }

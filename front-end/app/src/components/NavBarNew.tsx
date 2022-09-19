@@ -42,6 +42,7 @@ let getInterface = (interfaceEnum: InterfaceEnum): string => {
 };
 
 export const NavBarNew = () => {
+    const logged_user = useSelector((state: RootState) => state.user).login; 
     const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
     let avatar: File;
     
@@ -84,7 +85,7 @@ export const NavBarNew = () => {
                                 fontSize="1.4rem"
                                 fontFamily="Lato"
                                 lineHeight="130%">
-                                Cmos Pancake
+                                {logged_user}
                             </Typography>
                             <Stack direction="row" spacing={0.6}>
                                 <SportsEsportsIcon sx={{ width: "18px", paddingTop: "3%" }} />
@@ -128,6 +129,7 @@ interface ButtonProps {
 
 const CustomButton = ({ _name, _icon }: ButtonProps) => {
     const currentInterface = useSelector((state: RootState) => state.interfaces).current;
+
     const dispatch = useDispatch();
 
     let backgroundButton = currentInterface === _name ? "#543EC0" : "#303465";

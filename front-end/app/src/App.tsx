@@ -26,6 +26,8 @@ import Friends from './components/Friends';
 import { useDispatch } from 'react-redux';
 import { clearUser, initUser } from './store/userReducer';
 import { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
+import { Login } from '@mui/icons-material';
 
 const darkTheme = createTheme({
 	palette: {
@@ -42,16 +44,24 @@ const darkTheme = createTheme({
 
 
 function App() {
+	const dispatch = useDispatch();
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentIterface = useSelector((state: RootState) => state.interfaces).current;
-	const dispatch = useDispatch();
+	const [cookies, setCookie, removeCookie] = useCookies();
+
 
 	useEffect(() => {
-		if (localStorage.getItem("login"))
-			dispatch(initUser())
-		if (currentIterface === InterfaceEnum.Logout)
+		if (cookies.Authorization) {
+			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
+			console.log("User token: " + cookies.Authorization);
+		}
+
+		if (currentIterface === InterfaceEnum.Logout) {
+			removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
 			dispatch(clearUser());
-	},)
+		}
+
+	},[logged_user,currentIterface])
 
 	return (
 		<ThemeProvider theme={darkTheme}>
@@ -74,5 +84,7 @@ function App() {
 		</ThemeProvider>
 	);
 }
+
+// function 
 //Snackbar MUI to handle Invite Play
 export default App;

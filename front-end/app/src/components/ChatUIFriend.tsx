@@ -119,7 +119,7 @@ const ChatUIFriend = () => {
             }}>
             <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={currentConvr + " " + logged_user} />
+                    <HeaderChat name={currentConvr}/>
                 </div>
                 <Stack spacing={2.7} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="35px">

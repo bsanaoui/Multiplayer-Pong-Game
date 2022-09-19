@@ -18,14 +18,14 @@ export const UsersRoom = () => {
 
     // init UsersRoom, fetch with axios and when change room init!! && unmout component!!
     useEffect(() => {
-        requestUsersRoom(curr_room).then((value) => {
-            const data = value as Array<UserOfRoom>;
-            dispatch(initUsesrRoom(data));
-        })
+        // requestUsersRoom(curr_room).then((value) => {
+        //     const data = value as Array<UserOfRoom>;
+        //     dispatch(initUsesrRoom(data));
+        // })
 
-        return () => {
-            dispatch(clearUsersRoom());
-        }
+        // return () => {
+        //     dispatch(clearUsersRoom());
+        // }
     }, [curr_room])
     // })
 

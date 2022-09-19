@@ -42,7 +42,7 @@ export const chatSlice = createSlice({
 
         initMessages: (state, action: PayloadAction<MessageState[]>) => {
             state.msgs.length = 0;
-            action.payload.map((item) => ( state.msgs.push(item) ))
+            action.payload.map((item) => { state.msgs.push(item) })
         },
 
         clearMessages: (state) => {

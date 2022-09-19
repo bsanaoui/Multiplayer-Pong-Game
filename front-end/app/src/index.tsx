@@ -5,16 +5,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { CookiesProvider } from "react-cookie";
+
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+	document.getElementById('root') as HTMLElement
 );
 root.render(
-  // <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  // </React.StrictMode>
+	// <React.StrictMode>
+	<CookiesProvider>
+		<Provider store={store}>
+			<App />
+		</Provider>
+	</CookiesProvider>
+	// </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

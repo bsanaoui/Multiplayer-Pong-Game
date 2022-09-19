@@ -9,9 +9,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
 import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestMessages } from '../requests/messages';
+import { io, Socket } from 'socket.io-client';
 
 let index_msg: number = 0;
-
+let socketclient: Socket;
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
         marginTop: theme.spacing(3),
@@ -51,23 +52,32 @@ const renderMessage = (current: string, from: string, msg: string): JSX.Element 
 
 /* Handle Clear msgs when switch room */
 const ChatUIRoom = () => {
-    const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
-    const logged_user = useSelector((state: RootState) => state.user).login; // call-back function
-    const chat_state = useSelector((state: RootState) => state.chat);
-    const [message_input, setMessage] = useState("");
-    const socketclient = useSelector((state: RootState) => state.socketclient).socket;
-
     const dispatch = useDispatch();
+    const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
+    const logged_user = useSelector((state: RootState) => state.user).login;
+    const chat_state = useSelector((state: RootState) => state.chat);
 
     const currentRoom = chat_state.curr_room;
     const msgs = chat_state.msgs;
 
+    const [message_input, setMessage] = useState("");
+
     useEffect(() => {
+        if (logged_user !== '' && currentRoom !== '')
+        {
+
+            socketclient = io(process.env.REACT_APP_SERVER_IP as string, {
+                auth: {
+                    room: currentRoom,
+                    user: logged_user,
+                }
+            });
+        }
         handleConnection(); // connect to the socket specied room ??
-        requestMessages(currentRoom).then((value) => {
-            const data = value as Array<MessageState>;
-            dispatch(initMessages(data));
-        })
+        // requestMessages(currentRoom).then((value) => {
+        //     const data = value as Array<MessageState>;
+        //     dispatch(initMessages(data));
+        // })
 
         if (socketclient) {
             socketclient.on('msgToClient', (msg: MessageState) => {
@@ -82,6 +92,7 @@ const ChatUIRoom = () => {
 
         return () => {
             dispatch(clearMessages());
+            // socketclient.disconnect();
         }
 
     }, [currentRoom])
@@ -101,6 +112,8 @@ const ChatUIRoom = () => {
             if (socketclient)
                 socketclient.emit('SendMessageRoom', { msg: message_input });
             setMessage('');
+            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+            
         }
     }
     const handleEnterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -133,7 +146,7 @@ const ChatUIRoom = () => {
             }}>
             <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={currentRoom + " " + logged_user} />
+                    <HeaderChat name={currentRoom} />
                 </div>
                 <Stack spacing={2} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="35px">
