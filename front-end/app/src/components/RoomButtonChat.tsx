@@ -1,39 +1,48 @@
 import { Avatar, Box, Stack, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
+import { RoomsOfUser } from '../requests/rooms';
 import { RootState } from '../store';
 import { changeCurrRoom } from "../store/chatUiReducer";
 import DropMenuRoom from './DropMenus/DropMenuRoom';
+import owner_role from '../assets/User/owner.png';
+import admin_role from '../assets/User/admin.png';
 
-interface RoomProps {
-    name: string
-}
 
-const RoomButtonChat = ({ name }: RoomProps) => {
+const RoomButtonChat = (Props: RoomsOfUser) => {
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const dispatch = useDispatch();
+    const nameRoom = Props.room_id as string;
+    const color_type = Props.type === "public" ? "#1E83DA"
+        : Props.type === "protected" ? "#9ABC4D"
+            : "#EF4A50";
+    const user_role = Props.user_role === "owner" ? owner_role
+        : Props.user_role === "admin" ? admin_role
+            : "";
 
-    let backgroundButton: string = currentRoom !== name ? "#2E3256" : "#4289F3";
+    let backgroundButton: string = currentRoom !== Props.room_id ? "#2E3256" : "#4289F3";
     return (
         <Box
-            onClick={() => { dispatch(changeCurrRoom(name)) }}
+            onClick={() => { dispatch(changeCurrRoom(nameRoom)) }}
             sx={{
                 backgroundColor: backgroundButton,
-                minWidth: '290px',
-                width: '290px',
+                minWidth: '300px',
+                width: '300px',
                 height: '55px',
                 borderRadius: '12px',
                 position: 'relative',
                 cursor: 'pointer',
             }}>
-            <Stack spacing={2} direction="row" padding='3.5% 3%'
+            <Stack spacing={2} direction="row" alignItems="center" padding="6.5px 9px"
             >
                 <Avatar
                     sx={{
-                        height: '33px',
-                        width: '33px',
-                        backgroundColor: "#FFF",
+                        height: '36px',
+                        width: '36px',
+                        backgroundColor: color_type,
+                        border: "1px solid #FFF",
+                        color: "#FFF",
                     }}>
-                    {name.charAt(0)}
+                    {nameRoom.charAt(0)}
                 </Avatar>
                 <Box
                 >
@@ -43,11 +52,20 @@ const RoomButtonChat = ({ name }: RoomProps) => {
                             fontWeight: '500',
                             fontSize: '1.15rem',
                             fontStyle: 'normal',
-                            margin: '5.2% auto'
-                        }}>{name}</Typography>
+                        }}>{nameRoom}</Typography>
                 </Box>
+                {user_role !== "" &&
+                    <Box sx={{ margin: "auto", }}>
+                        <Avatar
+                            sx={{
+                                height: '23px',
+                                width: '23px',
+                            }}
+                            alt={Props.user_role as string} src={user_role} imgProps={{ style: { width: 'auto' } }} />
+                    </Box>}
                 <div style={{ marginLeft: 'auto' }}>
-                    <DropMenuRoom/>
+                    <DropMenuRoom />
+                    {/* room_id, User Role, type current,  */}
                 </div>
             </Stack>
         </Box >

@@ -19,6 +19,8 @@ import { Box } from '@mui/system';
 import { setCollapse } from '../store/collapseNavReducer';
 
 export const NavbarCollapsed = () => {
+    const userState = useSelector((state: RootState) => state.user);
+    
     return (
         <Stack justifyContent="space-between"
             sx={{ height: "100vh", width: "70px", backgroundColor: "#303465" }}>
@@ -30,10 +32,9 @@ export const NavbarCollapsed = () => {
                         height: '52px',
                         width: '52px',
                         backgroundColor: "#FFF",
-                        padding: "3.5px",
                         border: "3px solid #535995",
                     }}
-                    alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
+                    alt="Lion" src={userState.avatar} imgProps={{ style: { width: 'auto' } }} />
             </Stack>
             <Stack width="100%"
                 divider={<Divider orientation="horizontal" flexItem />}>

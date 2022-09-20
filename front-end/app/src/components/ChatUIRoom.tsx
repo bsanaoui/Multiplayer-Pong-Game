@@ -72,7 +72,6 @@ const ChatUIRoom = () => {
                 const data = value as Array<MessageState>;
                 if ((typeof data) === (typeof msgs))
                     dispatch(initMessages(data));
-                console.log("msgs :" + data);
             })
         }
         if ((!socketclient || socketclient.disconnected) && currentRoom !== '') {

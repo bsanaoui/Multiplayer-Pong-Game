@@ -14,7 +14,6 @@ const Rooms = () => {
 	const [rooms, setRooms] = useState(initRooms);
 	// const logged_user = useSelector((state: RootState) => state.user).login;
 	// const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
-	// const dispatch = useDispatch();
 
 	useEffect(() => {
 		// Get Rooms
@@ -100,18 +99,12 @@ const Rooms = () => {
 					</div>
 				</Stack>
 				<List style={{ overflow: 'auto', height: "100%" }} >
-					{/* {rooms} */}
 					{rooms.length && rooms.map((item: RoomsOfUser) => (
 						<li key={item.id} className='item-friend'>
-							<RoomButtonChat name={item.room_id as string} />
+							<RoomButtonChat room_id={item.room_id as string} user_role={item.user_role} type={item.type} />
 						</li>
 					))}
-					{/* <li key='1' className='item-friend'>
-						<RoomButtonChat name='filles' />
-					</li>
-					<li key='2' className='item-friend'>
-						<RoomButtonChat name='room1' />
-					</li> */}
+	
 				</List>
 			</Stack>
 		</Box>

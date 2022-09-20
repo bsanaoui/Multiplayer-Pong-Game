@@ -28,6 +28,7 @@ import { clearUser, initUser } from './store/userReducer';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { Login } from '@mui/icons-material';
+import RoomButtonChat from './components/RoomButtonChat';
 
 const darkTheme = createTheme({
 	palette: {
@@ -61,7 +62,7 @@ function App() {
 			dispatch(clearUser());
 		}
 
-	},[logged_user,currentIterface])
+	}, [logged_user, currentIterface])
 
 	return (
 		<ThemeProvider theme={darkTheme}>

@@ -2,10 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface UserOfRoom {
     id: number,
-    username: string,
     login:string,
-    avatar: string,
+    username: string,
     user_role: string,
+    avatar: string,
 };
 
 const initialState: UserOfRoom[] = [];
@@ -20,7 +20,7 @@ export const roomUsersSlice = createSlice({
 
         initUsesrRoom: (state, action: PayloadAction<UserOfRoom[]>) => {
             state.length = 0;
-            state = action.payload;
+            action.payload.forEach(val => state.push(Object.assign({}, val)));
         },
 
         clearUsersRoom: (state) => {

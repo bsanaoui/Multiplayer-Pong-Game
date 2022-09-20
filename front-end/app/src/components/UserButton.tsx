@@ -32,9 +32,8 @@ export const UserButton = (Props:UserOfRoom) => {
 								height: '36px',
 								width: '37px',
 								backgroundColor: "#FFF",
-								padding: "3px",
 							}}
-							alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
+							alt="Lion" src={Props.avatar} imgProps={{ style: { width: 'auto' } }} />
 					</Badge>
 				</div>
 				<Box

@@ -42,7 +42,8 @@ let getInterface = (interfaceEnum: InterfaceEnum): string => {
 };
 
 export const NavBarNew = () => {
-    const logged_user = useSelector((state: RootState) => state.user).login; 
+    const userState = useSelector((state: RootState) => state.user);
+    const logged_user = userState.login;
     const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
     let avatar: File;
     
@@ -72,10 +73,9 @@ export const NavBarNew = () => {
                                     height: '60px',
                                     width: '60px',
                                     backgroundColor: "#FFF",
-                                    padding: "3.5px",
                                     border: "3px solid #535995",
                                 }}
-                                alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
+                                alt="Lion" src={userState.avatar} imgProps={{ style: { width: 'auto' } }} />
                         </Badge>
                         <Stack justifyContent="space-between" alignItems="flex-start" spacing={0.25}>
                             <Typography
