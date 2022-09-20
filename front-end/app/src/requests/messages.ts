@@ -17,9 +17,10 @@ export async function requestMessages(name_room: string) {
       { room_id: name_room },
       {
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           Accept: "application/json",
         },
+        withCredentials: true,
       }
     );
 

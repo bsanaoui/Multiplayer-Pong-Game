@@ -67,7 +67,15 @@ const ChatUIRoom = () => {
     useEffect(() => {
         console.log("chatUIRoom");
 
-        if ((!socketclient || socketclient.disconnected) && currentRoom !== '' ) {
+        if (currentRoom !== '') {
+            requestMessages(currentRoom).then((value) => {
+                const data = value as Array<MessageState>;
+                if ((typeof data) === (typeof msgs))
+                    dispatch(initMessages(data));
+                console.log("msgs :" + data);
+            })
+        }
+        if ((!socketclient || socketclient.disconnected) && currentRoom !== '') {
             socketclient = io(process.env.REACT_APP_SERVER_IP as string, {
                 auth: {
                     room: currentRoom,
@@ -76,16 +84,12 @@ const ChatUIRoom = () => {
             });
         }
         handleConnection(); // connect to the socket specied room ??
-        // requestMessages(currentRoom).then((value) => {
-        //     const data = value as Array<MessageState>;
-        //     dispatch(initMessages(data));
-        // })
 
         if (socketclient) {
             socketclient.on('msgToClient', (msg: MessageState) => {
                 dispatch(addMessage(msg));
                 bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-                console.log(msgs);
+                console.log("msg: " + msg.msg + "| user: " + msg.from);
             })
         }
 
@@ -155,7 +159,7 @@ const ChatUIRoom = () => {
                         </div>
                     </Stack>
                     <List style={{ overflow: 'auto' }} >
-                        {msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
+                        {msgs && msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
                         <li key={index_msg++} style={{ float: 'right' }}>
                             <div ref={bottomRef} ></div>
                         </li>

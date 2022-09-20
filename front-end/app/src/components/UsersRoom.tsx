@@ -18,14 +18,16 @@ export const UsersRoom = () => {
 
     // init UsersRoom, fetch with axios and when change room init!! && unmout component!!
     useEffect(() => {
-        // requestUsersRoom(curr_room).then((value) => {
-        //     const data = value as Array<UserOfRoom>;
-        //     dispatch(initUsesrRoom(data));
-        // })
+        requestUsersRoom(curr_room).then((value) => {
+            if (typeof(value) === (typeof(users_room))){
+                const data = value as Array<UserOfRoom>;
+                dispatch(initUsesrRoom(data));
+            }
+        })
 
-        // return () => {
-        //     dispatch(clearUsersRoom());
-        // }
+        return () => {
+            dispatch(clearUsersRoom());
+        }
     }, [curr_room])
     // })
 
@@ -57,12 +59,12 @@ export const UsersRoom = () => {
                 </Stack>
 
                 <List style={{ overflow: 'auto', height: "100%" }} >
-                    {users_room.map((item) => (
+                    {users_room.length && users_room.map((item) => (
                         <li key={index_user++} className='item-friend'>
-                            <UserButton id={item.id} username={item.username} avatar={item.avatar} user_role={item.user_role} />
+                            <UserButton id={item.id} login={item.login} username={item.username} avatar={item.avatar} user_role={item.user_role} />
                         </li>
                     ))}
-                    <li key='3' className='item-friend'>
+                    {/* <li key='3' className='item-friend'>
                         <UserButton id={0} username={'Hama'} avatar={''} user_role={''} />
                     </li>
                     <li key='1' className='item-friend'>
@@ -76,7 +78,7 @@ export const UsersRoom = () => {
                     <li key='4' className='item-friend'>
                         <UserButton id={0} username={'Soukaina'} avatar={''} user_role={''} />
 
-                    </li>
+                    </li> */}
                 </List>
             </Stack>
         </Box>

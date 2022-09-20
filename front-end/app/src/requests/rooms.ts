@@ -7,13 +7,13 @@ export async function requestUsersRoom(room_name: string) {
 	try {
 		// 👇️ const data: CreateUserResponse
 		const { data } = await axios.post<UserOfRoom[]>(
-			process.env.REACT_APP_SERVER_IP + "",
-			{ name: room_name },
+			process.env.REACT_APP_SERVER_IP + "/room/usersRoom",
+			{ room_id: room_name },
 			{
 				headers: {
-					"Content-Type": "application/json",
 					Accept: "application/json",
 				},
+				withCredentials: true,
 			}
 		);
 
@@ -49,7 +49,10 @@ export async function getMyRooms() {
 			{
 				headers: {
 					Accept: "application/json",
+					// "Access-Control-Allow-Origin": "*",
+					// "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
 				},
+				withCredentials: true,
 			}
 		);
 		console.log(JSON.stringify(data, null, 4));

@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export interface UserOfRoom {
     id: number,
     username: string,
+    login:string,
     avatar: string,
     user_role: string,
 };

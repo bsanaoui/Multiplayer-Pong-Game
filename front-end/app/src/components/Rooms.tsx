@@ -18,10 +18,13 @@ const Rooms = () => {
 
 	useEffect(() => {
 		// Get Rooms
-		if (rooms.length == 0) {
+		if (rooms.length === 0) {
 			getMyRooms().then((value) => {
-				const data = value as RoomsOfUser[];
-				setRooms(data);
+				if ((typeof value) === (typeof rooms))
+				{
+					const data = value as RoomsOfUser[];
+					setRooms(data);
+				}
 			})
 			.catch((reason: string) => {
 				console.log("Error ;Rooms of User", reason)
@@ -98,7 +101,7 @@ const Rooms = () => {
 				</Stack>
 				<List style={{ overflow: 'auto', height: "100%" }} >
 					{/* {rooms} */}
-					{rooms.map((item: RoomsOfUser) => (
+					{rooms.length && rooms.map((item: RoomsOfUser) => (
 						<li key={item.id} className='item-friend'>
 							<RoomButtonChat name={item.room_id as string} />
 						</li>
