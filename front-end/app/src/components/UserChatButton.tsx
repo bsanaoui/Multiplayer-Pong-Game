@@ -3,7 +3,7 @@ import avatar2 from '../assets/avatar2.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { changeCurrConversation } from "../store/chatUiReducer";
-import DropMenu from './DropMenus/DropMenuRoom';
+import DropMenuUser from './DropMenus/DropMenuUser';
 
 
 interface FriendProps {
@@ -60,7 +60,7 @@ export const UserChatButton = ({ name }: FriendProps) => {
 						}}>{name}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
-					<DropMenu />
+					<DropMenuUser is_dm_user={false}/>
 				</div>
 			</Stack>
 		</Box >

@@ -44,8 +44,10 @@ Reducer function. The reducer is a pure function that accepts 2 parameters: the 
     - https://bobbyhadz.com/blog/typescript-http-request-axios
 * redux: 
     - https://bluelight.co/blog/redux-toolkit-with-typescript
-* 
-....
+  
+* Context:
+    - https://blog.logrocket.com/how-to-use-react-context-typescript/
+    - https://spencerpauly.com/tech/how-to-type-react-context-with-typescript/\
 
 # Install Socket and Express project for SetupServer test:
 ```

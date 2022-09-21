@@ -29,6 +29,7 @@ import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { Login } from '@mui/icons-material';
 import RoomButtonChat from './components/RoomButtonChat';
+import SocketProvider, { socket, SocketContext } from './context/socket';
 
 const darkTheme = createTheme({
 	palette: {
@@ -66,22 +67,23 @@ function App() {
 
 	return (
 		<ThemeProvider theme={darkTheme}>
-			<CssBaseline />
-			{logged_user === '' && <LoginPage />}
-			{logged_user !== '' &&
-				<Stack direction="row"
-					sx={{ backgroundColor: "#202541", width: "100%", height: "100%" }}>
-					<NavBarNew />
-					{currentIterface === InterfaceEnum.Home && <Main />}
-					{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
-					{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal />}
-					{currentIterface === InterfaceEnum.InstantMessaging && <ChatGlobal />}
-					{currentIterface === InterfaceEnum.Friends && <ChatGlobal />}
-					{currentIterface === InterfaceEnum.Matchmaking && <Box />}
-					{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
-				</Stack>
-			}
-			{/* <InvitePlayBar/> */}
+			<SocketProvider>
+				<CssBaseline />
+				{logged_user === '' && <LoginPage />}
+				{logged_user !== '' &&
+					<Stack direction="row"
+						sx={{ backgroundColor: "#202541", width: "100%", height: "100%" }}>
+						<NavBarNew />
+						{currentIterface === InterfaceEnum.Home && <Main />}
+						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
+						{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal />}
+						{currentIterface === InterfaceEnum.InstantMessaging && <ChatGlobal />}
+						{currentIterface === InterfaceEnum.Friends && <ChatGlobal />}
+						{currentIterface === InterfaceEnum.Matchmaking && <Box />}
+						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
+					</Stack>
+				}
+			</SocketProvider>
 		</ThemeProvider>
 	);
 }

@@ -1,56 +1,51 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import roomIcon from '../assets/chat-room.png'
 import RoomButtonChat from './RoomButtonChat';
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initSocketClient, disconnectSocket } from "../store/socketReducer";
 import { RootState } from '../store';
 import { getMyRooms, RoomsOfUser } from '../requests/rooms';
+import { io, Socket } from 'socket.io-client';
+import { joinRoom } from './ChatGlobal';
 
 
 let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
+let socketclient: Socket;
+
 
 const Rooms = () => {
 	const [rooms, setRooms] = useState(initRooms);
-	// const logged_user = useSelector((state: RootState) => state.user).login;
-	// const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
+	const logged_user = useSelector((state: RootState) => state.user).login;
+	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
+	// let [socketclient, setSocket] = useState(io());
 
+	socketclient = joinRoom(logged_user, currentRoom, socketclient);
 	useEffect(() => {
 		// Get Rooms
 		if (rooms.length === 0) {
 			getMyRooms().then((value) => {
-				if ((typeof value) === (typeof rooms))
-				{
+				if ((typeof value) === (typeof rooms)) {
 					const data = value as RoomsOfUser[];
 					setRooms(data);
 				}
 			})
-			.catch((reason: string) => {
-				console.log("Error ;Rooms of User", reason)
-			})
+				.catch((reason: string) => {
+					console.log("Error ;Rooms of User", reason)
+				})
 		}
-
-		// if (currentRoom && logged_user) {
-		// 	dispatch(initSocketClient({
-		// 		host: process.env.REACT_APP_SERVER_IP as string, auth: {
-		// 			auth: {
-		// 				room: currentRoom,
-		// 				user: logged_user,
-		// 			}
-		// 		}
-		// 	}));
-
-		// }
-		// return () => {
-		// 	dispatch(disconnectSocket());
-		// }
+		return () => {
+			console.log("clear rooms");
+			// setRooms(initRooms);
+			if (socketclient)
+				socketclient.disconnect();
+		}
 	})
 
 	return (
 		<Box
 			sx={{
 				backgroundColor: "#202541",
-				// width: "500px",
 				height: '100vh',
 				padding: '30px'
 
@@ -101,12 +96,13 @@ const Rooms = () => {
 				<List style={{ overflow: 'auto', height: "100%" }} >
 					{rooms.length && rooms.map((item: RoomsOfUser) => (
 						<li key={item.id} className='item-friend'>
-							<RoomButtonChat room_id={item.room_id as string} user_role={item.user_role} type={item.type} />
+							<RoomButtonChat room={item} socket={socketclient} />
 						</li>
 					))}
-	
+
 				</List>
 			</Stack>
+
 		</Box>
 	)
 }

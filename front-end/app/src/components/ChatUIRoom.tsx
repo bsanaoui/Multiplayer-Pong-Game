@@ -4,15 +4,17 @@ import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
 import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
 import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestMessages } from '../requests/messages';
 import { io, Socket } from 'socket.io-client';
+import { joinRoom } from './ChatGlobal';
+import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
-let socketclient: Socket;
+// let socket: Socket;
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
         marginTop: theme.spacing(3),
@@ -50,6 +52,7 @@ const renderMessage = (current: string, from: string, msg: string): JSX.Element 
         );
 }
 
+
 /* Handle Clear msgs when switch room */
 const ChatUIRoom = () => {
     const dispatch = useDispatch();
@@ -61,7 +64,7 @@ const ChatUIRoom = () => {
     const msgs = chat_state.msgs;
 
     const [message_input, setMessage] = useState("");
-
+    const { socket } = useContext(SocketContext) as SocketContextType;
 
 
     useEffect(() => {
@@ -74,18 +77,11 @@ const ChatUIRoom = () => {
                     dispatch(initMessages(data));
             })
         }
-        if ((!socketclient || socketclient.disconnected) && currentRoom !== '') {
-            socketclient = io(process.env.REACT_APP_SERVER_IP as string, {
-                auth: {
-                    room: currentRoom,
-                    user: logged_user,
-                }
-            });
-        }
-        handleConnection(); // connect to the socket specied room ??
 
-        if (socketclient) {
-            socketclient.on('msgToClient', (msg: MessageState) => {
+        // socket = joinRoom(logged_user, currentRoom, socket);
+
+        if (socket) {
+            socket.on('msgToClient', (msg: MessageState) => {
                 dispatch(addMessage(msg));
                 bottomRef.current?.scrollIntoView({ behavior: "smooth" });
                 console.log("msg: " + msg.msg + "| user: " + msg.from);
@@ -97,10 +93,10 @@ const ChatUIRoom = () => {
         }
 
         return () => {
-            console.log("clear");
+            console.log("clear rooms");
             dispatch(clearMessages());
-            if (socketclient)
-                socketclient.disconnect();
+            if (socket)
+                socket.disconnect();
         }
 
     }, [currentRoom])
@@ -112,8 +108,8 @@ const ChatUIRoom = () => {
     // Delete setMsgs 
     const sendMsg = () => {
         if (message_input) {
-            if (socketclient) {
-                socketclient.emit('SendMessageRoom', { msg: message_input });
+            if (socket) {
+                socket.emit('SendMessageRoom', { msg: message_input });
                 bottomRef.current?.scrollIntoView({ behavior: "smooth" });
             }
             setMessage('');
@@ -167,12 +163,6 @@ const ChatUIRoom = () => {
             </Stack>
         </Box>
     )
-}
-
-const handleConnection = () => {
-    if (socketclient) {
-        socketclient.emit('JoinRoom');
-    }
 }
 
 export default ChatUIRoom

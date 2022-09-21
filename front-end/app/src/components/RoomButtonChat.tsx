@@ -6,20 +6,22 @@ import { changeCurrRoom } from "../store/chatUiReducer";
 import DropMenuRoom from './DropMenus/DropMenuRoom';
 import owner_role from '../assets/User/owner.png';
 import admin_role from '../assets/User/admin.png';
+import { Socket } from 'socket.io-client';
 
 
-const RoomButtonChat = (Props: RoomsOfUser) => {
+const RoomButtonChat = (Props: {room:RoomsOfUser, socket:Socket}) => {
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const dispatch = useDispatch();
-    const nameRoom = Props.room_id as string;
-    const color_type = Props.type === "public" ? "#1E83DA"
-        : Props.type === "protected" ? "#9ABC4D"
+    const nameRoom = Props.room.room_id as string;
+    const color_type = Props.room.type === "public" ? "#1E83DA"
+        : Props.room.type === "protected" ? "#9ABC4D"
             : "#EF4A50";
-    const user_role = Props.user_role === "owner" ? owner_role
-        : Props.user_role === "admin" ? admin_role
+    const user_role = Props.room.user_role === "owner" ? owner_role
+        : Props.room.user_role === "admin" ? admin_role
             : "";
 
-    let backgroundButton: string = currentRoom !== Props.room_id ? "#2E3256" : "#4289F3";
+    let backgroundButton: string = currentRoom !== Props.room.room_id ? "#2E3256" : "#4289F3";
+
     return (
         <Box
             onClick={() => { dispatch(changeCurrRoom(nameRoom)) }}
@@ -61,11 +63,10 @@ const RoomButtonChat = (Props: RoomsOfUser) => {
                                 height: '23px',
                                 width: '23px',
                             }}
-                            alt={Props.user_role as string} src={user_role} imgProps={{ style: { width: 'auto' } }} />
+                            alt={Props.room.user_role as string} src={user_role} imgProps={{ style: { width: 'auto' } }} />
                     </Box>}
                 <div style={{ marginLeft: 'auto' }}>
-                    <DropMenuRoom />
-                    {/* room_id, User Role, type current,  */}
+                    <DropMenuRoom room={Props.room} socket={Props.socket} />
                 </div>
             </Stack>
         </Box >
