@@ -21,16 +21,15 @@ import { Socket } from 'socket.io-client';
 import { SocketContext, SocketContextType } from "../../context/socket";
 
 function leaveRoom(socket:Socket){
-	// if (socket)
-	// {
+	if (socket)
+	{
 		socket.emit('leaveRoom');
-		// socket.emit('SendMessageRoom', { msg: "Leave me ???" });
 		console.log("leave room:");
-	// }
+	}
 }
 
+
 export default function DropMenuRoom(Props: {room:RoomsOfUser, socket:Socket}) {
-	const { socket } = React.useContext(SocketContext) as SocketContextType;
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -70,7 +69,7 @@ export default function DropMenuRoom(Props: {room:RoomsOfUser, socket:Socket}) {
 						{Props.room.user_role !== 'owner' &&
 							<List dense={true} >
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose(); leaveRoom(socket) }}>
+									<ListItemButton onClick={() => { handleClose(); leaveRoom(Props.socket) }}>
 										<ListItemIcon>
 											<ExitToAppIcon />
 										</ListItemIcon>

@@ -14,7 +14,7 @@ import { joinRoom } from './ChatGlobal';
 import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
-// let socket: Socket;
+let socket: Socket;
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
         marginTop: theme.spacing(3),
@@ -36,7 +36,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-// const msgs = Array.from({ length: 9 }, (_, index) => {return ()}
 const renderMessage = (current: string, from: string, msg: string): JSX.Element => {
     if (current === from)
         return (
@@ -56,39 +55,58 @@ const renderMessage = (current: string, from: string, msg: string): JSX.Element 
 /* Handle Clear msgs when switch room */
 const ChatUIRoom = () => {
     const dispatch = useDispatch();
-    const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
+    const bottomRef = useRef<HTMLDivElement>(null); // To auto scroll to bottom of window
     const logged_user = useSelector((state: RootState) => state.user).login;
     const chat_state = useSelector((state: RootState) => state.chat);
-
     const currentRoom = chat_state.curr_room;
     const msgs = chat_state.msgs;
 
     const [message_input, setMessage] = useState("");
-    const { socket } = useContext(SocketContext) as SocketContextType;
 
+    const recieveMsgs = () => {
+        socket.on('msgToClient', (msg: MessageState) => {
+            dispatch(addMessage(msg));
+            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        })
+    }
+
+    const initMsgs = () => {
+        requestMessages(currentRoom).then((value) => {
+            const data = value as Array<MessageState>;
+            if ((typeof data) === (typeof msgs))
+                dispatch(initMessages(data));
+        })
+    }
+
+    const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage(event.target.value);
+    }
+    // Delete setMsgs 
+    const sendMsg = () => {
+        if (message_input) {
+            if (socket) {
+                socket.emit('SendMessageRoom', { msg: message_input });
+            }
+            setMessage('');
+        }
+    }
+    const handleEnterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.keyCode === 13) {
+            sendMsg();
+        }
+    }
 
     useEffect(() => {
         console.log("chatUIRoom");
 
-        if (currentRoom !== '') {
-            requestMessages(currentRoom).then((value) => {
-                const data = value as Array<MessageState>;
-                if ((typeof data) === (typeof msgs))
-                    dispatch(initMessages(data));
-            })
-        }
+        if (currentRoom !== '')
+            initMsgs();
 
-        // socket = joinRoom(logged_user, currentRoom, socket);
+        socket = joinRoom(logged_user, currentRoom, socket);
+        if (socket)
+            recieveMsgs();
 
-        if (socket) {
-            socket.on('msgToClient', (msg: MessageState) => {
-                dispatch(addMessage(msg));
-                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-                console.log("msg: " + msg.msg + "| user: " + msg.from);
-            })
-        }
-
-        if (bottomRef) {
+        if (bottomRef.current) {
             bottomRef.current?.scrollIntoView({ behavior: "smooth" });
         }
 
@@ -100,26 +118,6 @@ const ChatUIRoom = () => {
         }
 
     }, [currentRoom])
-
-
-    const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setMessage(event.target.value);
-    }
-    // Delete setMsgs 
-    const sendMsg = () => {
-        if (message_input) {
-            if (socket) {
-                socket.emit('SendMessageRoom', { msg: message_input });
-                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-            }
-            setMessage('');
-        }
-    }
-    const handleEnterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.keyCode === 13) {
-            sendMsg();
-        }
-    }
 
     return (
         <Box

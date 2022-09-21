@@ -46,12 +46,18 @@ export function joinDmRoom(curr_user: string, curr_conv: string, socketclient: S
 const ChatGlobal = () => {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
+	const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
 
 	const { socket, updateSocket } = useContext(SocketContext) as SocketContextType;
-	
+
 	useEffect(() => {
-		updateSocket(joinRoom(logged_user, currentRoom, socket));
+		console.log("Global :" + currentRoom);
+		if (currentPage === (InterfaceEnum.InstantMessaging || InterfaceEnum.Friends))
+			updateSocket(joinDmRoom(logged_user, currentConv, socket));
+		else
+			updateSocket(joinRoom(logged_user, currentRoom, socket));
+		console.log("Leave");
 		return () => {
 			if (socket)
 				socket.disconnect();

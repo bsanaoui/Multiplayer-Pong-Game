@@ -1,26 +1,24 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import roomIcon from '../assets/chat-room.png'
 import RoomButtonChat from './RoomButtonChat';
-import {  useEffect, useState } from "react";
+import {  useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initSocketClient, disconnectSocket } from "../store/socketReducer";
 import { RootState } from '../store';
 import { getMyRooms, RoomsOfUser } from '../requests/rooms';
 import { io, Socket } from 'socket.io-client';
 import { joinRoom } from './ChatGlobal';
+import { SocketContext, SocketContextType } from "../context/socket";
 
 
 let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
-let socketclient: Socket;
-
 
 const Rooms = () => {
 	const [rooms, setRooms] = useState(initRooms);
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
-	// let [socketclient, setSocket] = useState(io());
+	const { socket } = useContext(SocketContext) as SocketContextType;
 
-	socketclient = joinRoom(logged_user, currentRoom, socketclient);
 	useEffect(() => {
 		// Get Rooms
 		if (rooms.length === 0) {
@@ -37,10 +35,8 @@ const Rooms = () => {
 		return () => {
 			console.log("clear rooms");
 			// setRooms(initRooms);
-			if (socketclient)
-				socketclient.disconnect();
 		}
-	})
+	}, [currentRoom])
 
 	return (
 		<Box
@@ -96,7 +92,7 @@ const Rooms = () => {
 				<List style={{ overflow: 'auto', height: "100%" }} >
 					{rooms.length && rooms.map((item: RoomsOfUser) => (
 						<li key={item.id} className='item-friend'>
-							<RoomButtonChat room={item} socket={socketclient} />
+							<RoomButtonChat room={item} socket={socket} />
 						</li>
 					))}
 
