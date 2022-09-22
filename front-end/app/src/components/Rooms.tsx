@@ -116,8 +116,8 @@ const Rooms = () => {
 					))}
 				</List>
 			</Stack>
-			{alertMsg.is_alert && ( alertMsg.status && <Alert severity="success">{alertMsg.msg}</Alert>)}
-			{alertMsg.is_alert && ( !alertMsg.status && <Alert severity="error">{alertMsg.msg}</Alert>)}
+			{alertMsg.is_alert && ( alertMsg.status && <Alert variant="filled" severity="success">{alertMsg.msg}</Alert>)}
+			{alertMsg.is_alert && ( !alertMsg.status && <Alert variant="filled" severity="error">{alertMsg.msg}</Alert>)}
 		</Box>
 	)
 }

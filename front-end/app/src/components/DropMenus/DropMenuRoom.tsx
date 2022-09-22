@@ -18,18 +18,27 @@ import { RoomsOfUser } from '../../requests/rooms';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Socket } from 'socket.io-client';
-import { SocketContext, SocketContextType } from "../../context/socket";
+import { socket, SocketContext, SocketContextType } from "../../context/socket";
+import DialogAction, { ActionInput } from '../Dialogs/DialogAction';
 
-function leaveRoom(socket:Socket){
-	if (socket)
-	{
+function leaveRoom(socket: Socket) {
+	if (socket) {
 		socket.emit('leaveRoom');
 		console.log("leave room:");
 	}
 }
 
+interface ActionInputState {
+	is_open: boolean,
+	action_id: ActionInput,
+}
 
-export default function DropMenuRoom(Props: {room:RoomsOfUser, socket:Socket}) {
+const initActionInputState: ActionInputState = {
+	is_open: false,
+	action_id: ActionInput.InviteUSer,
+}
+
+export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket }) {
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -40,6 +49,10 @@ export default function DropMenuRoom(Props: {room:RoomsOfUser, socket:Socket}) {
 		setAnchorEl(null);
 	};
 
+	/************* For Dialog Input ***************/
+	const [action, setAction] = React.useState(initActionInputState);
+
+	/**********************************************/
 	return (
 		<div>
 			<IconButton id="basic-button"
@@ -80,7 +93,7 @@ export default function DropMenuRoom(Props: {room:RoomsOfUser, socket:Socket}) {
 						{Props.room.user_role === 'owner' &&
 							<List dense={true} >
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose() }}>
+									<ListItemButton onClick={() => { handleClose(); leaveRoom(Props.socket) }}>
 										<ListItemIcon>
 											<ExitToAppIcon />
 										</ListItemIcon>
@@ -88,7 +101,7 @@ export default function DropMenuRoom(Props: {room:RoomsOfUser, socket:Socket}) {
 									</ListItemButton>
 								</ListItem>
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose() }}>
+									<ListItemButton onClick={() => { handleClose() ; setAction({ is_open: true, action_id: ActionInput.ChangePassword })}}>
 										<ListItemIcon>
 											<HttpsIcon />
 										</ListItemIcon>
@@ -100,11 +113,11 @@ export default function DropMenuRoom(Props: {room:RoomsOfUser, socket:Socket}) {
 										<ListItemIcon>
 											<NoEncryptionIcon />
 										</ListItemIcon>
-										<ListItemText primary="Disbale password" />
+										<ListItemText primary="Disable password" />
 									</ListItemButton>
 								</ListItem>
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose() }}>
+									<ListItemButton onClick={() => { handleClose(); setAction({ is_open: true, action_id: ActionInput.InviteUSer }) }}>
 										<ListItemIcon>
 											<GroupAddIcon />
 										</ListItemIcon>
@@ -116,7 +129,10 @@ export default function DropMenuRoom(Props: {room:RoomsOfUser, socket:Socket}) {
 					<Divider />
 				</Box>
 			</Menu>
+			{action.is_open &&  <DialogAction is_open={true} action={action.action_id} socket={socket} />
+}
 		</div>
+		/****** / */
 	);
 }
 
