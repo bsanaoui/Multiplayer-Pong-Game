@@ -35,10 +35,9 @@ export const UsersRoom = () => {
                 height: '100vh',
                 padding: '30px',
                 borderLeft: "1px solid #FFFFFF",
-                paddingTop: "7.2em"
-
+                paddingTop: "7.2em",
             }}>
-            <Stack height="100%">
+            <Stack height="100%"  width="290px">
                 <Stack spacing={1} direction="row" marginBottom="3%">
                     <IconButton >
                         <img src={usersRoomIcon} width="30px" alt='roomIcon' />

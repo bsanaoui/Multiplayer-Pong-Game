@@ -127,7 +127,7 @@ export default function DropMenuRoom(Props: {room:RoomsOfUser, socket:Socket}) {
  * if (false)
  * 		client.emit(  "userRooms" , {"false" , message ,user  :"current"})
  *	else
- * 		client.emit( "userRooms" , {status : true  , message : "" , user  :current})
+ * 		client.emit( "userRooms" , {status : true  , message : "" , user  :current}) 
  * 		server.to(room).emit("usersOfRoom" ,{status : true , message : "" , user : current})
  */
 

@@ -1,7 +1,7 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import roomIcon from '../assets/chat-room.png'
 import RoomButtonChat from './RoomButtonChat';
-import {  useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initSocketClient, disconnectSocket } from "../store/socketReducer";
 import { RootState } from '../store';
@@ -14,25 +14,41 @@ let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
 
 const Rooms = () => {
 	const [rooms, setRooms] = useState(initRooms);
-	// const logged_user = useSelector((state: RootState) => state.user).login;
+	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
 	const { socket } = useContext(SocketContext) as SocketContextType;
 
+
+	function getRooms() {
+		getMyRooms().then((value) => {
+			if ((typeof value) === (typeof rooms)) {
+				const data = value as RoomsOfUser[];
+				setRooms(data);
+			}
+		})
+			.catch((reason: string) => {
+				console.log("Error ;Rooms of User", reason)
+			})
+	}
+
+	const receiveUpdate = () => {
+		socket.on('roomsOfUser', (data: { status: boolean, message: string, user: string }) => {
+			if (data.status)
+			{
+				// if ( data.user === logged_user)
+				// 	// display msg
+				getRooms();
+			}
+			// else
+			// 	// display
+		})
+	}
 	
 	useEffect(() => {
 		// Get Rooms
-		if (rooms.length === 0) {
-			getMyRooms().then((value) => {
-				if ((typeof value) === (typeof rooms)) {
-					const data = value as RoomsOfUser[];
-					setRooms(data);
-				}
-			})
-				.catch((reason: string) => {
-					console.log("Error ;Rooms of User", reason)
-				})
-		}
-
+		if (rooms.length === 0)
+			getRooms();
+		receiveUpdate();
 		return () => {
 			console.log("clear rooms");
 			// setRooms(initRooms);
