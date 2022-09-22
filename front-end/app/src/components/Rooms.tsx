@@ -53,7 +53,7 @@ const Rooms = () => {
 			console.log("clear rooms");
 			// setRooms(initRooms);
 		}
-	}, [currentRoom])
+	}, [socket])
 
 	return (
 		<Box
