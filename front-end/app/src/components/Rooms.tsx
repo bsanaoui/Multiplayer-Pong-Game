@@ -7,7 +7,6 @@ import { initSocketClient, disconnectSocket } from "../store/socketReducer";
 import { RootState } from '../store';
 import { getMyRooms, RoomsOfUser } from '../requests/rooms';
 import { io, Socket } from 'socket.io-client';
-import { joinRoom } from './ChatGlobal';
 import { SocketContext, SocketContextType } from "../context/socket";
 
 
@@ -15,10 +14,11 @@ let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
 
 const Rooms = () => {
 	const [rooms, setRooms] = useState(initRooms);
-	const logged_user = useSelector((state: RootState) => state.user).login;
+	// const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
 	const { socket } = useContext(SocketContext) as SocketContextType;
 
+	
 	useEffect(() => {
 		// Get Rooms
 		if (rooms.length === 0) {
@@ -32,6 +32,7 @@ const Rooms = () => {
 					console.log("Error ;Rooms of User", reason)
 				})
 		}
+
 		return () => {
 			console.log("clear rooms");
 			// setRooms(initRooms);

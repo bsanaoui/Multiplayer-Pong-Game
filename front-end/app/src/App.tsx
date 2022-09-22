@@ -50,7 +50,7 @@ function App() {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentIterface = useSelector((state: RootState) => state.interfaces).current;
 	const [cookies, setCookie, removeCookie] = useCookies();
-
+	
 
 	useEffect(() => {
 		if (cookies.Authorization) {

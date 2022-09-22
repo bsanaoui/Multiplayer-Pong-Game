@@ -10,7 +10,6 @@ import { RootState } from "../store";
 import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestMessages } from '../requests/messages';
 import { io, Socket } from 'socket.io-client';
-import { joinRoom } from './ChatGlobal';
 import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
@@ -53,13 +52,13 @@ const renderMessage = (current: string, from: string, msg: string): JSX.Element 
 
 
 /* Handle Clear msgs when switch room */
-const ChatUIRoom = () => {
+const ChatUIRoom = (Props:{currRoom:string}) => {
     const dispatch = useDispatch();
     const bottomRef = useRef<HTMLDivElement>(null); // To auto scroll to bottom of window
     const logged_user = useSelector((state: RootState) => state.user).login;
-    const chat_state = useSelector((state: RootState) => state.chat);
-    const currentRoom = chat_state.curr_room;
-    const msgs = chat_state.msgs;
+    const msgs = useSelector((state: RootState) => state.chat).msgs;
+    // const Props.currRoom = chat_state.curr_room;
+    // const msgs = chat_state.msgs;
 
     const [message_input, setMessage] = useState("");
 
@@ -71,7 +70,7 @@ const ChatUIRoom = () => {
     }
 
     const initMsgs = () => {
-        requestMessages(currentRoom).then((value) => {
+        requestMessages(Props.currRoom).then((value) => {
             const data = value as Array<MessageState>;
             if ((typeof data) === (typeof msgs))
                 dispatch(initMessages(data));
@@ -90,19 +89,34 @@ const ChatUIRoom = () => {
             setMessage('');
         }
     }
+
     const handleEnterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.keyCode === 13) {
             sendMsg();
         }
     }
 
+    function joinRoom(curr_user: string): Socket {
+        if ((!socket || socket.disconnected) && Props.currRoom !== '') {
+            socket = io(process.env.REACT_APP_SERVER_IP as string, {
+                auth: {
+                    room: Props.currRoom,
+                    user: curr_user,
+                }
+            });
+        }
+        if (socket)
+            socket.emit('JoinRoom');
+        return (socket);
+    }
+
     useEffect(() => {
         console.log("chatUIRoom");
 
-        if (currentRoom !== '')
+        if (Props.currRoom !== '')
             initMsgs();
 
-        socket = joinRoom(logged_user, currentRoom, socket);
+        socket = joinRoom(logged_user);
         if (socket)
             recieveMsgs();
 
@@ -117,7 +131,7 @@ const ChatUIRoom = () => {
                 socket.disconnect();
         }
 
-    }, [currentRoom])
+    }, [Props.currRoom])
 
     return (
         <Box
@@ -133,7 +147,7 @@ const ChatUIRoom = () => {
             }}>
             <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={currentRoom} />
+                    <HeaderChat name={Props.currRoom} />
                 </div>
                 <Stack spacing={2} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="35px">
