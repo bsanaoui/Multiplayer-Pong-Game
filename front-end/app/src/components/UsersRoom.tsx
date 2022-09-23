@@ -10,7 +10,7 @@ import { clearUsersRoom, initUsesrRoom, UserOfRoom } from '../store/roomUsersRed
 import { UserButton } from './UserButton';
 
 
-export const UsersRoom = (props: { curr_room: string }) => {
+export const UsersRoom = (props: { curr_room: string, role_user:string }) => {
     const dispatch = useDispatch();
     const users_room = useSelector((state: RootState) => state.room_users);
     const { socket } = useContext(SocketContext) as SocketContextType;
@@ -71,7 +71,7 @@ export const UsersRoom = (props: { curr_room: string }) => {
                 <List style={{ overflow: 'auto', height: "100%" }} >
                     {users_room && users_room.map((item) => (
                         <li key={item.id} className='item-friend'>
-                            <UserButton id={item.id} login={item.login} username={item.username} avatar={item.avatar} user_role={item.user_role} />
+                            <UserButton user={item} socket={socket} role_user={props.role_user} />
                         </li>
                     ))}
                 </List>

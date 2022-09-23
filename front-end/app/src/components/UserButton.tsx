@@ -1,10 +1,9 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
-import avatar2 from '../assets/avatar2.png'
+import { Socket } from 'socket.io-client';
 import { UserOfRoom } from '../store/roomUsersReducer';
 import DropMenuUsersRoom from './DropMenus/DropMenuUsersRoom';
 
-
-export const UserButton = (Props:UserOfRoom) => {
+export const UserButton = (Props: { user: UserOfRoom, socket: Socket, role_user:string}) => {
 
 	return (
 		<Box
@@ -33,7 +32,7 @@ export const UserButton = (Props:UserOfRoom) => {
 								width: '37px',
 								backgroundColor: "#FFF",
 							}}
-							alt="Lion" src={Props.avatar} imgProps={{ style: { width: 'auto' } }} />
+							alt="Lion" src={Props.user.avatar} imgProps={{ style: { width: 'auto' } }} />
 					</Badge>
 				</div>
 				<Box
@@ -45,10 +44,10 @@ export const UserButton = (Props:UserOfRoom) => {
 							fontSize: '1.15rem',
 							fontStyle: 'normal',
 							margin: '5.2% auto'
-						}}>{Props.username}</Typography>
+						}}>{Props.user.username}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
-					<DropMenuUsersRoom />
+					<DropMenuUsersRoom user={Props.user} socket={Props.socket} role_user={Props.role_user}/>
 				</div>
 			</Stack>
 		</Box >

@@ -16,7 +16,7 @@ export const UserButtonChat = ({ name }: RoomProps) => {
     let backgroundButton: string = currentConv !== name ? "#2E3256" : "#4289F3";
     return (
         <Box
-            onClick={() => { dispatch(changeCurrConversation(name)) }}
+            onClick={() => { dispatch(changeCurrConversation({user:name, avatar:''})) }}
             sx={{
                 backgroundColor: backgroundButton,
                 minWidth: '290px',

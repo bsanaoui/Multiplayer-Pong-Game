@@ -24,7 +24,7 @@ const RoomButtonChat = (Props: {room:RoomsOfUser, socket:Socket}) => {
 
     return (
         <Box
-            onClick={() => { dispatch(changeCurrRoom(nameRoom)) }}
+            onClick={() => { dispatch(changeCurrRoom({room:nameRoom, role:Props.room.user_role as string})) }}
             sx={{
                 backgroundColor: backgroundButton,
                 minWidth: '300px',

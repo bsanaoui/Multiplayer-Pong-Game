@@ -21,7 +21,8 @@ const ChatGlobal = () => {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
-	const curr_conv = useSelector((state: RootState) => state.chat).curr_converation;
+	const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
+	const roleUser = useSelector((state: RootState) => state.chat).curr_role;
 	let { socket, updateSocket } = useContext(SocketContext) as SocketContextType;
 
 	function joinRoom(curr_user: string): Socket {
@@ -39,11 +40,11 @@ const ChatGlobal = () => {
 	}
 
 	function joinDmRoom(curr_user: string): Socket {
-		if ((!socket || socket.disconnected) && curr_conv !== '') {
+		if ((!socket || socket.disconnected) && currentConv !== '') {
 			socket = io(process.env.REACT_APP_SERVER_IP as string, {
 				auth: {
 					from: curr_user,
-					to: curr_conv,
+					to: currentConv,
 				}
 			});
 		}
@@ -53,7 +54,6 @@ const ChatGlobal = () => {
 	}
 
 	useEffect(() => {
-		console.log("Global :" + currentRoom);
 		if ((currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends))
 			updateSocket(joinDmRoom(logged_user));
 		else
@@ -62,12 +62,12 @@ const ChatGlobal = () => {
 			if (socket)
 				socket.disconnect();
 		}
-	}, [currentRoom])
+	}, [currentRoom,currentConv])
 
 	return (
 		<Stack direction="row" height="100vh" >
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <Friends /> : <Rooms />}
-			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <UsersMessaging /> : <UsersRoom curr_room={currentRoom}/>}
+			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <UsersMessaging /> : <UsersRoom curr_room={currentRoom} role_user={roleUser}/>}
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <ChatUIFriend /> : <ChatUIRoom />}
 		</Stack>
 	)

@@ -17,7 +17,7 @@ export const UserChatButton = ({ name }: FriendProps) => {
 	let backgroundButton: string = currentConver !== name ? "#2E3256" : "#4289F3";
 	return (
 		<Box
-			onClick={() => { dispatch(changeCurrConversation(name)) }}
+			onClick={() => { dispatch(changeCurrConversation({ user: name, avatar: '' })) }}
 			sx={{
 				backgroundColor: backgroundButton,
 				minWidth: '290px',
@@ -60,7 +60,7 @@ export const UserChatButton = ({ name }: FriendProps) => {
 						}}>{name}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
-					<DropMenuUser is_dm_user={false}/>
+					<DropMenuUser is_dm_user={false} />
 				</div>
 			</Stack>
 		</Box >

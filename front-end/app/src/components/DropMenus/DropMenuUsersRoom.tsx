@@ -21,10 +21,32 @@ import chatIcon from '../../assets/DropMenus/chat.png'
 import muteIcon from '../../assets/DropMenus/mute.png'
 import banIcon from '../../assets/DropMenus/ban.png'
 import seAdminIcon from '../../assets/DropMenus/admin.png'
+import { UserOfRoom } from '../../store/roomUsersReducer';
+import { Socket } from 'socket.io-client';
 
-// disable for current  // set admin 
-//name, 
-export default function DropMenuUsersRoom() {
+// !!!!!!!! ADD listener ????????????
+function muteUser(socket: Socket, user: string) {
+	if (socket) {
+		socket.emit('tjrj');
+	}
+}
+
+function banUser(socket: Socket, user: string) {
+	if (socket)
+		socket.emit('jtrj');
+}
+
+function setAdmin(socket: Socket, user: string) {
+	if (socket)
+		socket.emit('jtjr');
+}
+
+function addFriend(socket: Socket, user: string) {
+	if (socket)
+		socket.emit('jtjr');
+}
+
+export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Socket, role_user: string }) {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,7 +91,7 @@ export default function DropMenuUsersRoom() {
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
+								<ListItemButton onClick={() => { addFriend(Props.socket, Props.user.login); handleClose() }}>
 									<Avatar variant="square" src={addFriendIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
 									<ListItemText primary="Add Friend" />
 								</ListItemButton>
@@ -86,24 +108,34 @@ export default function DropMenuUsersRoom() {
 									<ListItemText primary="Chat" />
 								</ListItemButton>
 							</ListItem>
-							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
-									<Avatar variant="square" src={seAdminIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
-									<ListItemText primary="Set As Admin" />
-								</ListItemButton>
-							</ListItem>
-							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
-									<Avatar variant="square" src={muteIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
-									<ListItemText primary="Mute" />
-								</ListItemButton>
-							</ListItem>
-							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
-									<Avatar variant="square" src={banIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
-									<ListItemText primary="Ban" />
-								</ListItemButton>
-							</ListItem>
+							{(Props.role_user === "owner" || Props.role_user === "admin") &&
+								<ListItem disablePadding>
+									<ListItemButton onClick={() => { setAdmin(Props.socket, Props.user.login); handleClose() }}>
+										<Avatar variant="square" src={seAdminIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
+										<ListItemText primary="Set As Admin" />
+									</ListItemButton>
+								</ListItem>}
+							{Props.role_user === "owner" &&
+								<ListItem disablePadding>
+									<ListItemButton onClick={() => { muteUser(Props.socket, Props.user.login); handleClose() }}>
+										<Avatar variant="square" src={muteIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
+										<ListItemText primary="Mute" />
+									</ListItemButton>
+								</ListItem>}
+							{Props.role_user === "owner" &&
+								<ListItem disablePadding>
+									<ListItemButton onClick={() => { banUser(Props.socket, Props.user.login); handleClose() }}>
+										<Avatar variant="square" src={banIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
+										<ListItemText primary="Ban" />
+									</ListItemButton>
+								</ListItem>}
+							{Props.role_user === "owner" &&
+								<ListItem disablePadding>
+									<ListItemButton onClick={() => { banUser(Props.socket, Props.user.login); handleClose() }}>
+										<Avatar variant="square" src={banIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
+										<ListItemText primary="kick off" />
+									</ListItemButton>
+								</ListItem>}
 						</List>
 					</nav>
 					<Divider />

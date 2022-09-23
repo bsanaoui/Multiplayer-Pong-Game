@@ -24,7 +24,6 @@ import DialogAction, { ActionInput } from '../Dialogs/DialogAction';
 function leaveRoom(socket: Socket) {
 	if (socket) {
 		socket.emit('leaveRoom');
-		console.log("leave room:");
 	}
 }
 
