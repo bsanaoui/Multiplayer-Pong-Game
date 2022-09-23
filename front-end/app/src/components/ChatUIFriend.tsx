@@ -59,6 +59,7 @@ const ChatUIFriend = () => {
     const chat_state = useSelector((state: RootState) => state.chat);
 
     const currentConvr = chat_state.curr_converation;
+    const avatar = chat_state.curr_conv_avatar;
     const msgs = chat_state.msgs;
 
     const [message_input, setMessage] = useState("");
@@ -133,7 +134,7 @@ const ChatUIFriend = () => {
             }}>
             <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={currentConvr} />
+                    <HeaderChat name={currentConvr} avatar={avatar} />
                 </div>
                 <Stack spacing={2.7} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="35px">

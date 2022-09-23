@@ -1,12 +1,12 @@
 import { Avatar, Box, Stack, Typography } from '@mui/material'
-import avatar2 from '../assets/avatar2.png'
 import dot3Icon from '../assets/dot3_white.png'
 
-interface FriendProps {
-    name: string
+interface PropsHeader {
+    name: string,
+    avatar: string,
 }
 
-const HeaderChat = ({ name }: FriendProps) => {
+const HeaderChat = ({ name,avatar }: PropsHeader) => {
     return (
         <Box
             sx={{
@@ -28,7 +28,9 @@ const HeaderChat = ({ name }: FriendProps) => {
                             backgroundColor: "#FFF",
                             padding: "3px",
                         }}
-                        alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' }}} />
+                        alt="Lion" src={avatar} imgProps={{ style: { width: 'auto' }}} >
+                            {name.charAt(0)}
+                            </Avatar>
                 </div>
                 <Stack width="100%">
                     <Typography
@@ -39,11 +41,11 @@ const HeaderChat = ({ name }: FriendProps) => {
                             fontStyle: 'normal',
                         }}>{name}</Typography>
                 </Stack>
-                <div style={{  margin: 'auto' }}>
+                {/* <div style={{  margin: 'auto' }}>
 					<img
 						style={{ height: '28px', float: 'right' }}
 						className="center-button" alt='users' src={dot3Icon} />
-				</div>
+				</div> */}
             </Stack>
         </Box>
     )

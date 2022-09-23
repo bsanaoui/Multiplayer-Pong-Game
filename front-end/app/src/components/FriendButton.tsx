@@ -1,13 +1,10 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
-import avatar2 from '../assets/avatar2.png'
+import { Socket } from 'socket.io-client';
+import { Friend } from '../requests/directMessage';
 import DropMenuUser from './DropMenus/DropMenuUser';
 
 
-interface FriendProps {
-	name: string
-}
-
-export const FriendButton = ({ name }: FriendProps) => {
+export const FriendButton = (props:{friend:Friend, socket:Socket}) => {
 
 	return (
 		<Box
@@ -37,7 +34,7 @@ export const FriendButton = ({ name }: FriendProps) => {
 								backgroundColor: "#FFF",
 								padding: "3px",
 							}}
-							alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
+							alt={props.friend.login} src={props.friend.avatar} imgProps={{ style: { width: 'auto' } }} />
 					</Badge>
 				</div>
 				<Box
@@ -49,10 +46,10 @@ export const FriendButton = ({ name }: FriendProps) => {
 							fontSize: '1.15rem',
 							fontStyle: 'normal',
 							margin: '5.2% auto'
-						}}>{name}</Typography>
+						}}>{props.friend.username}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
-					<DropMenuUser is_dm_user={false}/>
+					<DropMenuUser is_dm_user={false} friend={props.friend} socket={props.socket}/>
 				</div>
 			</Stack>
 		</Box >

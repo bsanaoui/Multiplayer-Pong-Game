@@ -130,7 +130,7 @@ const ChatUIRoom = () => {
             }}>
             <Stack height='inherit'>
                 <div>
-                    <HeaderChat name={currentRoom} />
+                    <HeaderChat name={currentRoom} avatar="" />
                 </div>
                 <Stack spacing={2} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="35px">

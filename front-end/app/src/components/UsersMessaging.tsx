@@ -1,34 +1,51 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import usersRoomIcon from '../assets/usersRoom.png'
 import { UserButtonChat } from './UserButtonChat';
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { initSocketClient, disconnectSocket } from "../store/socketReducer";
+import { useContext, useEffect, useState } from "react";
 import { RootState } from '../store';
+import { geMessagingUsers, UserMessaging } from '../requests/directMessage';
+import { useSelector } from 'react-redux';
+import { SocketContext, SocketContextType } from '../context/socket';
+import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
+
+let initUsers: UserMessaging[] = [] as UserMessaging[];
 
 export const UsersMessaging = () => {
+    const [users, setUsers] = useState(initUsers);
     const logged_user = useSelector((state: RootState) => state.user).login;
-    const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
+    const { socket } = useContext(SocketContext) as SocketContextType;
+    const [alertMsg, setAlertMsg] = useState(initAlertMsg);
 
-    const dispatch = useDispatch();
+    function getUsers() {
+        geMessagingUsers().then((value) => {
+            if ((typeof value) === (typeof initUsers)) {
+                const data = value as UserMessaging[];
+                setUsers(data);
+            }
+        })
+            .catch((reason: string) => {
+                console.log("Error ;Rooms of User", reason)
+            })
+    }
+
+    const receiveUpdate = () => {
+        socket.on('instant_messaging', (data: { status: boolean, msg: string, from: string, to: string }) => {
+            if (data.from === logged_user)
+                setAlertMsg({ is_alert: true, status: data.status, msg: data.msg });
+            if (data.from === logged_user || data.to === logged_user)
+                getUsers();
+        })
+    }
 
     useEffect(() => {
-
-        if (currentConv && logged_user) {
-            dispatch(initSocketClient({
-                host: process.env.REACT_APP_SERVER_IP as string, auth: {
-                    auth: {
-                        from: logged_user,
-                        to: currentConv,
-                    }
-                }
-            }));
-
-        }
+        // Get Rooms
+        if (users.length === 0)
+            getUsers();
+        receiveUpdate();
         return () => {
-            dispatch(disconnectSocket());
+            console.log("clear users");
         }
-    })
+    }, [socket])
 
     return (
         <Box
@@ -51,7 +68,6 @@ export const UsersMessaging = () => {
                             fontWeight: '700',
                             fontSize: '28px',
                             lineHeight: '109.52%',
-
                         }}>
                             Instant Messaging
                         </Typography>
@@ -84,21 +100,17 @@ export const UsersMessaging = () => {
                     </div>
                 </Stack>
                 <List style={{ overflow: 'auto', height: "100%" }} >
-                    {/* {friends} */}
-                    <li key='3' className='item-friend'>
-                        <UserButtonChat name="Hamza" />
-                    </li>
-                    <li key='1' className='item-friend'>
-                        <UserButtonChat name="Safa" />
-                    </li>
-                    <li key='2' className='item-friend'>
-                        <UserButtonChat name="Brahim" />
-                    </li>
-                    <li key='4' className='item-friend'>
+                    {users.length && users.map((item) => (
+                        <li key={item.id} className='item-friend'>
+                            <UserButtonChat user={item} socket={socket} />
+                        </li>
+                    ))}
+                    {/* <li key='4' className='item-friend'>
                         <UserButtonChat name="Soukaina" />
-                    </li>
+                    </li> */}
                 </List>
             </Stack>
+            {alertMsg.is_alert && <AlertMsg is_alert={true} status={alertMsg.status} msg={alertMsg.msg} />}
         </Box>
     )
 }

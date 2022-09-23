@@ -60,7 +60,7 @@ export const UserChatButton = ({ name }: FriendProps) => {
 						}}>{name}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
-					<DropMenuUser is_dm_user={false} />
+					{/* <DropMenuUser is_dm_user={false} /> */}
 				</div>
 			</Stack>
 		</Box >

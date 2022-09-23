@@ -22,9 +22,8 @@ import { socket, SocketContext, SocketContextType } from "../../context/socket";
 import DialogAction, { ActionInput } from '../Dialogs/DialogAction';
 
 function leaveRoom(socket: Socket) {
-	if (socket) {
+	if (socket)
 		socket.emit('leaveRoom');
-	}
 }
 
 function disablePassword(socket: Socket) {

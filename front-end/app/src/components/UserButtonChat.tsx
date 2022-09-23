@@ -1,22 +1,23 @@
+import { Login } from '@mui/icons-material';
 import { Avatar, Box, Stack, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
+import { Socket } from 'socket.io-client';
+import { UserMessaging } from '../requests/directMessage';
 import { RootState } from '../store';
 import { changeCurrConversation } from "../store/chatUiReducer";
 import DropMenu from './DropMenus/DropMenuRoom';
 import DropMenuUser from './DropMenus/DropMenuUser';
 
-interface RoomProps {
-    name: string
-}
 
-export const UserButtonChat = ({ name }: RoomProps) => {
+
+export const UserButtonChat = (props:{user: UserMessaging, socket: Socket}) => {
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const dispatch = useDispatch();
 
-    let backgroundButton: string = currentConv !== name ? "#2E3256" : "#4289F3";
+    let backgroundButton: string = currentConv !== props.user.login ? "#2E3256" : "#4289F3";
     return (
         <Box
-            onClick={() => { dispatch(changeCurrConversation({user:name, avatar:''})) }}
+            onClick={() => { dispatch(changeCurrConversation({ user: props.user.login, avatar: props.user.avatar })) }}
             sx={{
                 backgroundColor: backgroundButton,
                 minWidth: '290px',
@@ -34,7 +35,7 @@ export const UserButtonChat = ({ name }: RoomProps) => {
                         width: '33px',
                         backgroundColor: "#FFF",
                     }}>
-                    {name.charAt(0)}
+                    {props.user.login.charAt(0)}
                 </Avatar>
                 <Box
                 >
@@ -45,10 +46,10 @@ export const UserButtonChat = ({ name }: RoomProps) => {
                             fontSize: '1.15rem',
                             fontStyle: 'normal',
                             margin: '5.2% auto'
-                        }}>{name}</Typography>
+                        }}>{props.user.username}</Typography>
                 </Box>
                 <div style={{ marginLeft: 'auto' }}>
-                    <DropMenuUser is_dm_user={true} is_friend={true}/>
+                    <DropMenuUser is_dm_user={true} user={props.user} socket={props.socket}/>
                 </div>
             </Stack>
         </Box >

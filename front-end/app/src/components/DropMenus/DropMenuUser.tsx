@@ -14,13 +14,23 @@ import profileIcon from '../../assets/DropMenus/profile.png'
 import chatIcon from '../../assets/DropMenus/chat.png'
 import blockIcon from '../../assets/DropMenus/block.png'
 import addFriendIcon from '../../assets/notification.png'
+import { Friend, UserMessaging } from '../../requests/directMessage';
+import { Socket } from 'socket.io-client';
 
 interface MenuProps{
-	is_friend?:boolean,
-	is_dm_user:boolean
+	is_dm_user:boolean,
+	friend?:Friend,
+	user?:UserMessaging,
+	socket:Socket,
+};
+
+
+const blockUser = (user:string, socket:Socket) => {
+	if (socket)
+		socket.emit('block');
 }
 
-export default function DropMenuUser({is_friend, is_dm_user}:MenuProps) {
+export default function DropMenuUser({friend, user, is_dm_user, socket}:MenuProps) {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,7 +87,7 @@ export default function DropMenuUser({is_friend, is_dm_user}:MenuProps) {
 									<ListItemText primary="Chat" />
 								</ListItemButton>
 							</ListItem>}
-							{(is_dm_user && !is_friend) && 
+							{(is_dm_user && !friend) && 
 							<ListItem disablePadding>
 								<ListItemButton onClick={handleClose}>
 									<Avatar variant="square" src={addFriendIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
@@ -85,7 +95,7 @@ export default function DropMenuUser({is_friend, is_dm_user}:MenuProps) {
 								</ListItemButton>
 							</ListItem>}
 							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
+								<ListItemButton onClick={() => {handleClose(); blockUser(user?.login as string, socket)}}>
 									<Avatar variant="square" src={blockIcon} sx={{ marginRight: "14%", width: "22px", height: "22px" }} />
 									<ListItemText primary="Block" />
 								</ListItemButton>
