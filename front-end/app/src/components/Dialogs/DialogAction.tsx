@@ -25,22 +25,22 @@ function getActionInput(action: ActionInput): string {
     }
 }
 
-function inviteUser(socket: Socket, user_name:string) {
-	if (socket) {
-		socket.emit('inviteUser');
-		console.log("inviteUser: "+ user_name);
-	}
+function inviteUser(socket: Socket, user_name: string) {
+    if (socket) {
+        socket.emit('inviteUser');
+        console.log("inviteUser: " + user_name);
+    }
 }
 
-function changePassword(socket: Socket, new_pass:string) {
-	if (socket) {
-		socket.emit('inviteUser');
-		console.log("new password is : "+ new_pass);
-	}
+function changePassword(socket: Socket, new_pass: string) {
+    if (socket) {
+        socket.emit('inviteUser');
+        console.log("new password is : " + new_pass);
+    }
 }
 
-export default function DialogAction(props:{is_open:boolean, action: ActionInput, socket:Socket}) {
-    const [open, setOpen] = React.useState(true);
+export default function DialogAction(props: { isDialogOpened: boolean, handleCloseDialog: any, action: ActionInput, socket: Socket }) {
+    // const [open, setOpen] = React.useState(true);
     const [input, setInput] = React.useState("");
 
     // const handleClickOpen = () => {
@@ -48,16 +48,15 @@ export default function DialogAction(props:{is_open:boolean, action: ActionInput
     // };
 
     const handleClose = () => {
-        setOpen(false);
+        props.handleCloseDialog({is_open:true, action_id:0});
     };
 
-    console.log("dialog: " + open + " | " + props.is_open);
     return (
         <div>
             {/* <Button variant="outlined" onClick={handleClickOpen}>
                 Open form dialog
             </Button> */}
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={props.isDialogOpened} onClose={handleClose}>
                 <DialogTitle>{getActionInput(props.action)}</DialogTitle>
                 <DialogContent>
                     {/*<DialogContentText>
@@ -80,7 +79,7 @@ export default function DialogAction(props:{is_open:boolean, action: ActionInput
                     <Button onClick={() => {
                         props.action === ActionInput.InviteUSer ? inviteUser(props.socket, input) : changePassword(props.socket, input);
                         handleClose()
-                        }}>Submit</Button>
+                    }}>Submit</Button>
                 </DialogActions>
             </Dialog>
         </div>

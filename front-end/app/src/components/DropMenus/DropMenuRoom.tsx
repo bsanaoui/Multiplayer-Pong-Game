@@ -51,7 +51,9 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket 
 
 	/************* For Dialog Input ***************/
 	const [action, setAction] = React.useState(initActionInputState);
-
+	const handleOpenDialog = (new_action: ActionInput) => {
+		setAction({ is_open: !action.is_open, action_id: new_action });
+	}
 	/**********************************************/
 	return (
 		<div>
@@ -101,7 +103,7 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket 
 									</ListItemButton>
 								</ListItem>
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose() ; setAction({ is_open: true, action_id: ActionInput.ChangePassword })}}>
+									<ListItemButton onClick={() => { handleClose(); handleOpenDialog(ActionInput.ChangePassword) }}>
 										<ListItemIcon>
 											<HttpsIcon />
 										</ListItemIcon>
@@ -117,7 +119,7 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket 
 									</ListItemButton>
 								</ListItem>
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose(); setAction({ is_open: true, action_id: ActionInput.InviteUSer }) }}>
+									<ListItemButton onClick={() => { handleClose(); handleOpenDialog(ActionInput.InviteUSer) }}>
 										<ListItemIcon>
 											<GroupAddIcon />
 										</ListItemIcon>
@@ -129,8 +131,8 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket 
 					<Divider />
 				</Box>
 			</Menu>
-			{action.is_open &&  <DialogAction is_open={true} action={action.action_id} socket={socket} />
-}
+			<DialogAction isDialogOpened={action.is_open} handleCloseDialog={() => setAction({ is_open: false, action_id: 0 })}
+				action={action.action_id} socket={socket} />
 		</div>
 		/****** / */
 	);

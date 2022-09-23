@@ -2,11 +2,9 @@ import { Alert, Box, IconButton, List, Stack, Typography } from '@mui/material'
 import roomIcon from '../assets/chat-room.png'
 import RoomButtonChat from './RoomButtonChat';
 import { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { initSocketClient, disconnectSocket } from "../store/socketReducer";
+import { useSelector } from "react-redux";
 import { RootState } from '../store';
 import { getMyRooms, RoomsOfUser } from '../requests/rooms';
-import { io, Socket } from 'socket.io-client';
 import { SocketContext, SocketContextType } from "../context/socket";
 
 

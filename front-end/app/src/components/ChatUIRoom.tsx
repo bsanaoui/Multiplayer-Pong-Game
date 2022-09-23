@@ -97,20 +97,6 @@ const ChatUIRoom = () => {
         }
     }
 
-    // function joinRoom(curr_user: string): Socket {
-    //     if ((!socket || socket.disconnected) && currentRoom !== '') {
-    //         socket = io(process.env.REACT_APP_SERVER_IP as string, {
-    //             auth: {
-    //                 room: currentRoom,
-    //                 user: curr_user,
-    //             }
-    //         });
-    //     }
-    //     if (socket)
-    //         socket.emit('JoinRoom');
-    //     return (socket);
-    // }
-
     useEffect(() => {
         console.log("chatUIRoom");
 
@@ -128,8 +114,7 @@ const ChatUIRoom = () => {
         return () => {
             console.log("clear rooms");
             dispatch(clearMessages());
-            // if (socket)
-            //     socket.disconnect();
+            index_msg = 0;
         }
 
     }, [socket])
