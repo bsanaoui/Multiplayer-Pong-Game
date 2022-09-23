@@ -56,17 +56,16 @@ const ChatUIRoom = () => {
     const bottomRef = useRef<HTMLDivElement>(null); // To auto scroll to bottom of window
     const logged_user = useSelector((state: RootState) => state.user).login;
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
-
     const msgs = useSelector((state: RootState) => state.chat).msgs;
     const { socket } = useContext(SocketContext) as SocketContextType;
-
 
     const [message_input, setMessage] = useState("");
 
     const recieveMsgs = () => {
         socket.on('msgToClient', (msg: MessageState) => {
             dispatch(addMessage(msg));
-            bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+            if (bottomRef)
+                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
         })
     }
 
@@ -103,13 +102,11 @@ const ChatUIRoom = () => {
         if (currentRoom !== '')
             initMsgs();
 
-        // socket = joinRoom(logged_user);
         if (socket)
             recieveMsgs();
 
-        if (bottomRef.current) {
+        if (bottomRef) 
             bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-        }
 
         return () => {
             console.log("clear rooms");
@@ -151,9 +148,9 @@ const ChatUIRoom = () => {
                             </Button>
                         </div>
                     </Stack>
-                    <List style={{ overflow: 'auto' }} >
+                    <List style={{ overflowY: 'auto' }} >
                         {msgs && msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
-                        <li key={index_msg++} style={{ float: 'right' }}>
+                        <li key={index_msg++} style={{ float: 'left' ,height:"100px", width:"100px"}}>
                             <div ref={bottomRef} ></div>
                         </li>
                     </List>

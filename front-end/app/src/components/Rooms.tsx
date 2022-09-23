@@ -1,4 +1,4 @@
-import { Alert, Box, IconButton, List, Stack, Typography } from '@mui/material'
+import { Alert, Box, IconButton, List, Snackbar, Stack, Typography } from '@mui/material'
 import roomIcon from '../assets/chat-room.png'
 import RoomButtonChat from './RoomButtonChat';
 import { useContext, useEffect, useState } from "react";
@@ -6,19 +6,14 @@ import { useSelector } from "react-redux";
 import { RootState } from '../store';
 import { getMyRooms, RoomsOfUser } from '../requests/rooms';
 import { SocketContext, SocketContextType } from "../context/socket";
+import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
 
 
 let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
-const initAlertMsg: { is_alert: boolean, status: boolean, msg: string } = {
-	is_alert: false,
-	status: false,
-	msg: "",
-};
 
 const Rooms = () => {
 	const [rooms, setRooms] = useState(initRooms);
 	const logged_user = useSelector((state: RootState) => state.user).login;
-	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
 	const { socket } = useContext(SocketContext) as SocketContextType;
 	const [alertMsg, setAlertMsg] = useState(initAlertMsg);
 
@@ -111,8 +106,7 @@ const Rooms = () => {
 					))}
 				</List>
 			</Stack>
-			{alertMsg.is_alert && (alertMsg.status && <Alert variant="filled" severity="success">{alertMsg.msg}</Alert>)}
-			{alertMsg.is_alert && (!alertMsg.status && <Alert variant="filled" severity="error">{alertMsg.msg}</Alert>)}
+			{alertMsg.is_alert && <AlertMsg is_alert={true} status={alertMsg.status} msg={alertMsg.msg}/>}
 		</Box>
 	)
 }

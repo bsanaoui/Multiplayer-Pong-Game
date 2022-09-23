@@ -6,6 +6,7 @@ export interface UserOfRoom {
     username: string,
     user_role: string,
     avatar: string,
+    // is_friend:boolean
 };
 
 const initialState: UserOfRoom[] = [];

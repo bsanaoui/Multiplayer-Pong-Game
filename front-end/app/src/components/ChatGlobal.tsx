@@ -17,7 +17,6 @@ import { SocketContext, SocketContextType } from "../context/socket";
 import { changeCurrRoom } from "../store/chatUiReducer";
 
 
-
 const ChatGlobal = () => {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
@@ -68,7 +67,7 @@ const ChatGlobal = () => {
 	return (
 		<Stack direction="row" height="100vh" >
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <Friends /> : <Rooms />}
-			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <UsersMessaging /> : <UsersRoom />}
+			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <UsersMessaging /> : <UsersRoom curr_room={currentRoom}/>}
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <ChatUIFriend /> : <ChatUIRoom />}
 		</Stack>
 	)
