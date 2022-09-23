@@ -30,9 +30,7 @@ export const UsersRoom = (props: { curr_room: string }) => {
     }
 
     const receiveUpdate = () => {
-        socket.on('usersOfRoom', (data: { status: boolean, message: string, user: string }) => {
-            if (data.user === logged_user)
-                setAlertMsg({ is_alert: true, status: data.status, msg: data.message });
+        socket.on('usersOfRoom', (data: { status: boolean}) => {
             getUsersRoom();
         })
     }
@@ -81,7 +79,6 @@ export const UsersRoom = (props: { curr_room: string }) => {
                     ))}
                 </List>
             </Stack>
-            {alertMsg.is_alert && <AlertMsg is_alert={true} status={alertMsg.status} msg={alertMsg.msg}/>}
         </Box>
     )
 }
