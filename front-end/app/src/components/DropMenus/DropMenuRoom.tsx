@@ -27,6 +27,13 @@ function leaveRoom(socket: Socket) {
 	}
 }
 
+function disablePassword(socket: Socket) {
+    if (socket) {
+        socket.emit('disablePassword');
+        console.log("disable password : ");
+    }
+}
+
 interface ActionInputState {
 	is_open: boolean,
 	action_id: ActionInput,
@@ -110,7 +117,7 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket 
 									</ListItemButton>
 								</ListItem>
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose() }}>
+									<ListItemButton onClick={() => { handleClose(); disablePassword(Props.socket) }}>
 										<ListItemIcon>
 											<NoEncryptionIcon />
 										</ListItemIcon>

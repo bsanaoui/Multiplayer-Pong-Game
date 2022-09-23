@@ -25,19 +25,20 @@ function getActionInput(action: ActionInput): string {
     }
 }
 
-function inviteUser(socket: Socket, user_name: string) {
+function inviteUser(socket: Socket, user_login: string) {
     if (socket) {
-        socket.emit('inviteUser');
-        console.log("inviteUser: " + user_name);
+        socket.emit('inviteUser', {new_user:user_login});
+        console.log("inviteUser: " + user_login);
     }
 }
 
 function changePassword(socket: Socket, new_pass: string) {
     if (socket) {
-        socket.emit('inviteUser');
+        socket.emit('changePassword', {new_password:new_pass});
         console.log("new password is : " + new_pass);
     }
 }
+
 
 export default function DialogAction(props: { isDialogOpened: boolean, handleCloseDialog: any, action: ActionInput, socket: Socket }) {
     // const [open, setOpen] = React.useState(true);
