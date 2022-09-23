@@ -26,7 +26,7 @@ const HeaderChat = ({ name,avatar }: PropsHeader) => {
                             height: '44px',
                             width: '44px',
                             backgroundColor: "#FFF",
-                            padding: "3px",
+                            // padding: "3px",
                         }}
                         alt="Lion" src={avatar} imgProps={{ style: { width: 'auto' }}} >
                             {name.charAt(0)}

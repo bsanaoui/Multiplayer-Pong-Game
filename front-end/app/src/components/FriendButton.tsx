@@ -32,7 +32,7 @@ export const FriendButton = (props:{friend:Friend, socket:Socket}) => {
 								height: '36px',
 								width: '37px',
 								backgroundColor: "#FFF",
-								padding: "3px",
+								// padding: "3px",
 							}}
 							alt={props.friend.login} src={props.friend.avatar} imgProps={{ style: { width: 'auto' } }} />
 					</Badge>
