@@ -25,7 +25,7 @@ export const AlertMsg = (props: AlertMsg) => {
 
     return (
         <Snackbar open={open} onClose={handleClose}
-            autoHideDuration={6000}
+            autoHideDuration={1000}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             TransitionComponent={Slide}
         >

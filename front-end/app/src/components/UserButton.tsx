@@ -37,7 +37,7 @@ export const UserButton = (Props: { user: UserOfRoom, socket: Socket, role_user:
 				</div>
 				<Box
 				>
-					<Typography
+					<Typography 
 						sx={{
 							fontFamily: 'Lexend',
 							fontWeight: '500',
