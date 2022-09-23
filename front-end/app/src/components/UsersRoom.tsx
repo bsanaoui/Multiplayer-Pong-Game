@@ -7,7 +7,6 @@ import { SocketContext, SocketContextType } from '../context/socket';
 import { requestUsersRoom } from '../requests/rooms';
 import { RootState } from '../store';
 import { clearUsersRoom, initUsesrRoom, UserOfRoom } from '../store/roomUsersReducer';
-import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
 import { UserButton } from './UserButton';
 
 
@@ -15,8 +14,6 @@ export const UsersRoom = (props: { curr_room: string }) => {
     const dispatch = useDispatch();
     const users_room = useSelector((state: RootState) => state.room_users);
     const { socket } = useContext(SocketContext) as SocketContextType;
-    const logged_user = useSelector((state: RootState) => state.user).login;
-	const [alertMsg, setAlertMsg] = useState(initAlertMsg);
 
 
     function getUsersRoom() {
