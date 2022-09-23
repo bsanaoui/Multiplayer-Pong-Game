@@ -36,12 +36,9 @@ const Rooms = () => {
 
 	const receiveUpdate = () => {
 		socket.on('roomsOfUser', (data: { status: boolean, message: string, user: string }) => {
-			if ( data.user === logged_user){
-				setAlertMsg({is_alert:true, status:data.status, msg:data.message});
-				getRooms();
-			}
-			else
-				setAlertMsg({is_alert:true, status:data.status, msg:data.message});
+			if (data.user === logged_user)
+				setAlertMsg({ is_alert: true, status: data.status, msg: data.message });
+			getRooms();
 		})
 	}
 
@@ -105,7 +102,7 @@ const Rooms = () => {
 							Create new room
 						</Typography>
 					</div>
-				</Stack> 
+				</Stack>
 				<List style={{ overflow: 'auto', height: "100%" }} >
 					{rooms.length && rooms.map((item: RoomsOfUser) => (
 						<li key={item.id} className='item-friend'>
@@ -114,8 +111,8 @@ const Rooms = () => {
 					))}
 				</List>
 			</Stack>
-			{alertMsg.is_alert && ( alertMsg.status && <Alert variant="filled" severity="success">{alertMsg.msg}</Alert>)}
-			{alertMsg.is_alert && ( !alertMsg.status && <Alert variant="filled" severity="error">{alertMsg.msg}</Alert>)}
+			{alertMsg.is_alert && (alertMsg.status && <Alert variant="filled" severity="success">{alertMsg.msg}</Alert>)}
+			{alertMsg.is_alert && (!alertMsg.status && <Alert variant="filled" severity="error">{alertMsg.msg}</Alert>)}
 		</Box>
 	)
 }
