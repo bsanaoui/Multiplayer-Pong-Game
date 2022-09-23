@@ -58,7 +58,6 @@ const ChatUIRoom = () => {
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const msgs = useSelector((state: RootState) => state.chat).msgs;
     const { socket } = useContext(SocketContext) as SocketContextType;
-
     const [message_input, setMessage] = useState("");
 
     const recieveMsgs = () => {

@@ -4,15 +4,16 @@ import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
 import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
 import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestDirectMsgs } from '../requests/messages';
+import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
-let socketclient: Socket;
+// let socketclient: Socket;
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
@@ -52,41 +53,62 @@ const renderMessage = (current: string, from: string, msg: string): JSX.Element 
 
 /* Handle Clear msgs when switch room */
 const ChatUIFriend = () => {
-
     const dispatch = useDispatch();
     const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
     const logged_user = useSelector((state: RootState) => state.user).login;
+    const [message_input, setMessage] = useState("");
+    
     const chat_state = useSelector((state: RootState) => state.chat);
-
     const currentConvr = chat_state.curr_converation;
     const avatar = chat_state.curr_conv_avatar;
     const msgs = chat_state.msgs;
 
-    const [message_input, setMessage] = useState("");
+    const { socket } = useContext(SocketContext) as SocketContextType;
+
+    const recieveMsgs = () => {
+        socket.on('msgToClient_dm', (m: MessageState) => {
+            dispatch(addMessage(m));
+            if (bottomRef)
+                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        })
+    }
+    
+    const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage(event.target.value);
+    }
+
+    const handleEnterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.keyCode === 13) {
+            sendMsg();
+        }
+    }
+
+    const initMsgs = () => {
+        requestDirectMsgs(currentConvr).then((value) => {
+            const data = value as Array<MessageState>;
+            if ((typeof data) === (typeof msgs))
+                dispatch(initMessages(data));
+        })
+    }
+
+    const sendMsg = () => {
+        if (message_input) {
+            if (socket) {
+                socket.emit('dm_message', { message: message_input });
+                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+            }
+            setMessage('');
+        }
+    }
+
     useEffect(() => {
         console.log("chatUIFriend");
 
-        if ((!socketclient || socketclient.disconnected) && currentConvr !== '') {
-            socketclient = io(process.env.REACT_APP_SERVER_IP as string, {
-                auth: {
-                    from: logged_user,
-                    to: currentConvr,
-                }
-            });
-        }
-        handleConnection();
-        // requestDirectMsgs(currentConvr).then((value) => {
-        //     const data = value as Array<MessageState>;
-        //     dispatch(initMessages(data));
-        // })
+        if (currentConvr !== '')
+            initMsgs();
 
-        if (socketclient) {
-            socketclient.on('msgToClient_dm', (m: MessageState) => {
-                dispatch(addMessage(m));
-                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-                console.log(msgs);
-            })
-        }
+        if (socket)
+            recieveMsgs();
 
         if (bottomRef) {
             bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -95,31 +117,9 @@ const ChatUIFriend = () => {
         return () => {
             console.log("clear");
             dispatch(clearMessages());
-            if (socketclient)
-                socketclient.disconnect();
+            index_msg = 0;
         }
-    }, [currentConvr])
-
-
-
-    const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setMessage(event.target.value);
-    }
-    // Delete setMsgs 
-    const sendMsg = () => {
-        if (message_input) {
-            if (socketclient) {
-                socketclient.emit('dm_message', { message: message_input });
-                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-            }
-            setMessage('');
-        }
-    }
-    const handleEnterkey = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.keyCode === 13) {
-            sendMsg();
-        }
-    }
+    }, [socket])
 
     return (
         <Box
@@ -162,12 +162,6 @@ const ChatUIFriend = () => {
             </Stack>
         </Box>
     )
-}
-
-const handleConnection = () => {
-    if (socketclient) {
-        socketclient.emit('join_dm_room');
-    }
 }
 
 export default ChatUIFriend

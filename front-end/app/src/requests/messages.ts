@@ -39,13 +39,13 @@ export async function requestMessages(name_room: string) {
   }
 }
 
-export async function requestDirectMsgs(to: String) {
+export async function requestDirectMsgs(curr_conv:string) {
   try {
     // 👇️ const data: CreateUserResponse
     const { data } = await axios.post<MessageState[]>
       (
         process.env.REACT_APP_SERVER_IP + "/room/post_name_room_dm",
-        { to: to },
+        { to: curr_conv },
         {
           headers: {
             "Content-Type": "application/json",
