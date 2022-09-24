@@ -10,12 +10,11 @@ import { RootState } from "../store";
 import { useSelector } from "react-redux";
 
 const FormNewRoom = () => {
-    const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
+    // const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
 
     const paperStyle = { padding: '0px 15px 40px 15px', width: 320 }
     const btnStyle = { marginTop: '10px' }
-    const initialValues:RoomInfo = {
-        owner: user_conneced,
+    const initialValues: RoomInfo = {
         name: '',
         type: '',
         password: ''
@@ -25,17 +24,15 @@ const FormNewRoom = () => {
         type: Yup.string().required("Required"),
         password: Yup.string().min(8, "Minimum characters should be 8")
     })
-    
-    const onSubmit = (values: RoomInfo, props: any) => {
 
-        // alert(JSON.stringify(values, null, 2))
+    const onSubmit = (values: RoomInfo, props: any) => {
         createRoom(values);
         props.resetForm()
     }
 
     return (
         <Grid>
-            <Paper elevation={30} style={paperStyle}>
+            <Paper elevation={0} sx={{ backgroundColor: "#130742" }} style={paperStyle}>
                 <Grid alignContent='center' marginBottom='25px'>
                     <Typography variant='caption'>Fill the form to create a new room</Typography>
                 </Grid>
@@ -46,8 +43,8 @@ const FormNewRoom = () => {
                                 error={props.errors.name && props.touched.name}
                                 helperText={<ErrorMessage name='name' />} required />
 
-                            <div id="my-radio-group" style={{margin:"20px 4px 7px"}}>Room Visibility</div>
-                            <div role="group" aria-labelledby="my-radio-group" style={{marginBottom:"20px"}}>
+                            <div id="my-radio-group" style={{ margin: "20px 4px 7px" }}>Room Visibility</div>
+                            <div role="group" aria-labelledby="my-radio-group" style={{ marginBottom: "20px" }}>
                                 <label>
                                     <Field type="radio" name="type" value="public" />
                                     Public
@@ -64,10 +61,9 @@ const FormNewRoom = () => {
 
                             {props.values.type === "protected" &&
                                 < Field as={TextField} name='password' label='Password' type='password' fullWidth
-                            error={props.errors.password && props.touched.password}
-                            helperText={<ErrorMessage name='password' />} required/> 
+                                    error={props.errors.password && props.touched.password}
+                                    helperText={<ErrorMessage name='password' />} required />
                             }
-
                             <Button type='submit' style={btnStyle} variant='contained'
                                 color='primary'>Create Room</Button>
                         </Form>

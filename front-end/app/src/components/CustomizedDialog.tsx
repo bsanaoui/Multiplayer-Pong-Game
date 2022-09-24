@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, IconButton, styled } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, IconButton, styled } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 
@@ -66,14 +66,16 @@ const CustomizedDialog = ({ children }: Props) => {
 			<BootstrapDialog
 				onClose={handleClose}
 				aria-labelledby="customized-dialog-title"
-				open={open}
-			>
-				<BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-					Room Infos
-				</BootstrapDialogTitle>
-				<DialogContent dividers>
-					{children}
-				</DialogContent>
+				open={open}>
+				<Box sx={{ backgroundColor: "#130742" }}> {/** Color in 2 */}
+
+					<BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} >
+						Room Infos
+					</BootstrapDialogTitle>
+					<DialogContent dividers>
+						{children}
+					</DialogContent>
+				</Box>
 			</BootstrapDialog>
 		</div>
 	)

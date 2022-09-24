@@ -1,12 +1,9 @@
 import axios from "axios";
 
 export type RoomData = {
-	name: string,
+	room_id: string,
 	owner: string,
-	_count: {
-		users_room: number
-	}
-
+	count: number,
 };
 
 export async function getRoomsData(kind: string) {
@@ -19,10 +16,11 @@ export async function getRoomsData(kind: string) {
 				headers: {
 					Accept: "application/json",
 				},
+				withCredentials: true,
+
 			}
 		);
-		// console.log(JSON.stringify(data, null, 4));
-
+		console.log(JSON.stringify(data, null, 4));
 		// 👇️ "response status is: 200"
 		console.log('response status is: ', status);
 
@@ -42,7 +40,6 @@ export type RoomInfo = {
 	name: string;
 	type: string;
 	password: string;
-	owner: string;
 };
 
 export async function createRoom(room_info: RoomInfo) {
@@ -53,9 +50,9 @@ export async function createRoom(room_info: RoomInfo) {
 			room_info,
 			{
 				headers: {
-					"Content-Type": "application/json",
 					Accept: "application/json",
 				},
+				withCredentials: true,
 			}
 		);
 

@@ -2,7 +2,7 @@
 import './App.css';
 import Main from './components/Main'
 
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme, Shadows } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import ChatGlobal from './components/ChatGlobal';
 import { useSelector } from 'react-redux';
@@ -41,7 +41,7 @@ const darkTheme = createTheme({
 			"Lexend",
 			"sans-serif"
 		].join(",")
-	}
+	},
 });
 
 
