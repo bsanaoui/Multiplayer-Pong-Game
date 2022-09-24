@@ -22,7 +22,6 @@ const ChatGlobal = () => {
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
 	const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
-	const roleUser = useSelector((state: RootState) => state.chat).curr_role;
 	let { socket, updateSocket } = useContext(SocketContext) as SocketContextType;
 
 	function joinRoom(curr_user: string): Socket {

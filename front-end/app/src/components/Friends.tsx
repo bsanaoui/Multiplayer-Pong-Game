@@ -13,6 +13,7 @@ const Friends = () => {
     const { socket } = useContext(SocketContext) as SocketContextType;
     const [friends, setFriends] = useState(initFriends);
     const logged_user = useSelector((state: RootState) => state.user).login;
+    const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
 
     function getMyFriends() {
         getFriends().then((value) => {
@@ -42,7 +43,7 @@ const Friends = () => {
             setFriends(initFriends);
             console.log("clear friends");
         }
-    }, [socket])
+    }, [socket, currentConv])
 
     return (
         <Box
