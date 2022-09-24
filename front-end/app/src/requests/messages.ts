@@ -48,9 +48,9 @@ export async function requestDirectMsgs(curr_conv:string) {
         { to: curr_conv },
         {
           headers: {
-            "Content-Type": "application/json",
             Accept: "application/json",
           },
+          withCredentials: true,
         }
       );
 
