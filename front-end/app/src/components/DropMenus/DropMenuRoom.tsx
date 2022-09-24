@@ -35,20 +35,22 @@ const initActionInputState: ActionInputState = {
 	action_id: ActionInput.InviteUSer,
 }
 
-export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket }) {
+export default function DropMenuRoom(Props: { room: RoomsOfUser}) {
 	const dispatch = useDispatch();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+	let { socket } = React.useContext(SocketContext) as SocketContextType;
 
-	function leaveRoom(socket: Socket) {
+	function leaveRoom() {
 		if (socket)
 		{
 			socket.emit('leaveRoom');
+			console.log("Leave Room : ");
 			dispatch(changeCurrRoom({room:'', role:''}))
 		}
 	}
 	
-	function disablePassword(socket: Socket) {
+	function disablePassword() {
 		if (socket) {
 			socket.emit('disablePassword');
 			console.log("disable password : ");
@@ -99,7 +101,7 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket 
 						{Props.room.user_role !== 'owner' &&
 							<List dense={true} >
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose();leaveRoom(Props.socket) }}>
+									<ListItemButton onClick={() => { handleClose();leaveRoom() }}>
 										<ListItemIcon>
 											<ExitToAppIcon />
 										</ListItemIcon>
@@ -110,7 +112,7 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket 
 						{Props.room.user_role === 'owner' &&
 							<List dense={true} >
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose(); leaveRoom(Props.socket) }}>
+									<ListItemButton onClick={() => { handleClose(); leaveRoom() }}>
 										<ListItemIcon>
 											<ExitToAppIcon />
 										</ListItemIcon>
@@ -126,7 +128,7 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket 
 									</ListItemButton>
 								</ListItem>
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose(); disablePassword(Props.socket) }}>
+									<ListItemButton onClick={() => { handleClose(); disablePassword() }}>
 										<ListItemIcon>
 											<NoEncryptionIcon />
 										</ListItemIcon>

@@ -9,7 +9,7 @@ import admin_role from '../assets/User/admin.png';
 import { Socket } from 'socket.io-client';
 
 
-const RoomButtonChat = (Props: {room:RoomsOfUser, socket:Socket}) => {
+const RoomButtonChat = (Props: {room:RoomsOfUser}) => {
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const dispatch = useDispatch();
     const nameRoom = Props.room.room_id as string;
@@ -66,7 +66,7 @@ const RoomButtonChat = (Props: {room:RoomsOfUser, socket:Socket}) => {
                             alt={Props.room.user_role as string} src={user_role} imgProps={{ style: { width: 'auto' } }} />
                     </Box>}
                 <div style={{ marginLeft: 'auto' }}>
-                    <DropMenuRoom room={Props.room} socket={Props.socket} />
+                    <DropMenuRoom room={Props.room}/>
                 </div>
             </Stack>
         </Box >

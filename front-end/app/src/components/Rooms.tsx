@@ -104,7 +104,7 @@ const Rooms = () => {
 				<List style={{ overflow: 'auto', height: "100%" }} >
 					{rooms.length && rooms.map((item: RoomsOfUser) => (
 						<li key={item.id} className='item-friend'>
-							<RoomButtonChat room={item} socket={socket} />
+							<RoomButtonChat room={item} />
 						</li>
 					))}
 				</List>
