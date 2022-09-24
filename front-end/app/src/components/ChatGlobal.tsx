@@ -34,7 +34,7 @@ const ChatGlobal = () => {
 				}
 			});
 		}
-		if (socket)
+		if (socket && currentRoom !== '')
 			socket.emit('JoinRoom');
 		return (socket);
 	}
@@ -48,7 +48,7 @@ const ChatGlobal = () => {
 				}
 			});
 		}
-		if (socket)
+		if (socket && currentConv !== '')
 			socket.emit('join_dm_room');
 		return (socket);
 	}
@@ -67,7 +67,7 @@ const ChatGlobal = () => {
 	return (
 		<Stack direction="row" height="100vh" >
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <Friends /> : <Rooms />}
-			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <UsersMessaging /> : <UsersRoom curr_room={currentRoom} role_user={roleUser} />}
+			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <UsersMessaging /> : <UsersRoom />}
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <ChatUIFriend /> : <ChatUIRoom />}
 		</Stack>
 	)

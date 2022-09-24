@@ -10,14 +10,15 @@ import { clearUsersRoom, initUsesrRoom, UserOfRoom } from '../store/roomUsersRed
 import { UserButton } from './UserButton';
 
 
-export const UsersRoom = (props: { curr_room: string, role_user:string }) => {
+export const UsersRoom = () => {
     const dispatch = useDispatch();
     const users_room = useSelector((state: RootState) => state.room_users);
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
+    const role_user = useSelector((state: RootState) => state.chat).curr_role;
     const { socket } = useContext(SocketContext) as SocketContextType;
 
     function getUsersRoom() {
-        requestUsersRoom(props.curr_room).then((value) => {
+        requestUsersRoom(currentRoom).then((value) => {
             const data = value as Array<UserOfRoom>;
             if (typeof (data) === (typeof (users_room)))
                 dispatch(initUsesrRoom(data));
@@ -33,7 +34,7 @@ export const UsersRoom = (props: { curr_room: string, role_user:string }) => {
     }
 
     useEffect(() => {
-        if (users_room.length === 0)
+        if (users_room.length === 0 && currentRoom !== '')
             getUsersRoom();
         receiveUpdate();
 
@@ -74,7 +75,7 @@ export const UsersRoom = (props: { curr_room: string, role_user:string }) => {
                 <List style={{ overflow: 'auto', height: "100%" }} >
                     {users_room && users_room.map((item) => (
                         <li key={item.id} className='item-friend'>
-                            <UserButton user={item} socket={socket} role_user={props.role_user} />
+                            <UserButton user={item} socket={socket} role_user={role_user} />
                         </li>
                     ))}
                 </List>
