@@ -2,16 +2,18 @@ import { Alert, Box, IconButton, List, Snackbar, Stack, Typography } from '@mui/
 import roomIcon from '../assets/chat-room.png'
 import RoomButtonChat from './RoomButtonChat';
 import { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../store';
 import { getMyRooms, RoomsOfUser } from '../requests/rooms';
 import { SocketContext, SocketContextType } from "../context/socket";
 import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
+import { changeCurrRoom } from '../store/chatUiReducer';
 
 
 let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
 
 const Rooms = () => {
+	const dispatch = useDispatch();
 	const [rooms, setRooms] = useState(initRooms);
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const { socket } = useContext(SocketContext) as SocketContextType;
@@ -22,6 +24,7 @@ const Rooms = () => {
 			if ((typeof value) === (typeof rooms)) {
 				const data = value as RoomsOfUser[];
 				setRooms(data);
+				dispatch(changeCurrRoom({room:'', role:''}))
 			}
 		})
 			.catch((reason: string) => {

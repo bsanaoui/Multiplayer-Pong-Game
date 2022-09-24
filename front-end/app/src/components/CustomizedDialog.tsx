@@ -68,7 +68,6 @@ const CustomizedDialog = ({ children }: Props) => {
 				aria-labelledby="customized-dialog-title"
 				open={open}>
 				<Box sx={{ backgroundColor: "#130742" }}> {/** Color in 2 */}
-
 					<BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} >
 						Room Infos
 					</BootstrapDialogTitle>

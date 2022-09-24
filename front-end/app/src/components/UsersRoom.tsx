@@ -13,8 +13,8 @@ import { UserButton } from './UserButton';
 export const UsersRoom = (props: { curr_room: string, role_user:string }) => {
     const dispatch = useDispatch();
     const users_room = useSelector((state: RootState) => state.room_users);
+    const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const { socket } = useContext(SocketContext) as SocketContextType;
-
 
     function getUsersRoom() {
         requestUsersRoom(props.curr_room).then((value) => {
@@ -36,10 +36,13 @@ export const UsersRoom = (props: { curr_room: string, role_user:string }) => {
         if (users_room.length === 0)
             getUsersRoom();
         receiveUpdate();
+
+        if (currentRoom === '')
+            dispatch(clearUsersRoom());
         return () => {
             dispatch(clearUsersRoom());
         }
-    }, [socket])
+    }, [socket, currentRoom])
 
     return (
 

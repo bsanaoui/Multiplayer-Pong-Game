@@ -20,18 +20,10 @@ import { RootState } from '../../store';
 import { Socket } from 'socket.io-client';
 import { socket, SocketContext, SocketContextType } from "../../context/socket";
 import DialogAction, { ActionInput } from '../Dialogs/DialogAction';
+import { changeCurrRoom } from '../../store/chatUiReducer';
+import { useDispatch } from 'react-redux';
 
-function leaveRoom(socket: Socket) {
-	if (socket)
-		socket.emit('leaveRoom');
-}
 
-function disablePassword(socket: Socket) {
-    if (socket) {
-        socket.emit('disablePassword');
-        console.log("disable password : ");
-    }
-}
 
 interface ActionInputState {
 	is_open: boolean,
@@ -44,21 +36,39 @@ const initActionInputState: ActionInputState = {
 }
 
 export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket }) {
-
+	const dispatch = useDispatch();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+
+	function leaveRoom(socket: Socket) {
+		if (socket)
+		{
+			socket.emit('leaveRoom');
+			dispatch(changeCurrRoom({room:'', role:''}))
+		}
+	}
+	
+	function disablePassword(socket: Socket) {
+		if (socket) {
+			socket.emit('disablePassword');
+			console.log("disable password : ");
+		}
+	}
+
+	
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-
+	
 	/************* For Dialog Input ***************/
 	const [action, setAction] = React.useState(initActionInputState);
 	const handleOpenDialog = (new_action: ActionInput) => {
 		setAction({ is_open: !action.is_open, action_id: new_action });
 	}
+
 	/**********************************************/
 	return (
 		<div>
@@ -89,7 +99,7 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser, socket: Socket 
 						{Props.room.user_role !== 'owner' &&
 							<List dense={true} >
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose(); leaveRoom(Props.socket) }}>
+									<ListItemButton onClick={() => { handleClose();leaveRoom(Props.socket) }}>
 										<ListItemIcon>
 											<ExitToAppIcon />
 										</ListItemIcon>
