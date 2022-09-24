@@ -30,6 +30,7 @@ import { useCookies } from 'react-cookie';
 import { Login } from '@mui/icons-material';
 import RoomButtonChat from './components/RoomButtonChat';
 import SocketProvider, { socket, SocketContext } from './context/socket';
+import { ModeGameButton } from './components/Game/ModeGameButton';
 
 const darkTheme = createTheme({
 	palette: {
@@ -69,7 +70,7 @@ function App() {
 		<ThemeProvider theme={darkTheme}>
 			<SocketProvider>
 				<CssBaseline />
-				{logged_user === '' && <LoginPage />}
+				{/* {logged_user === '' && <LoginPage />}
 				{logged_user !== '' &&
 					<Stack direction="row"
 						sx={{ backgroundColor: "#202541", width: "100%", height: "100%" }}>
@@ -82,7 +83,8 @@ function App() {
 						{currentIterface === InterfaceEnum.Matchmaking && <Box />}
 						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
 					</Stack>
-				}
+				} */}
+				<ModeGameButton mode={'2'} watch={false} />
 			</SocketProvider>
 		</ThemeProvider>
 	);
