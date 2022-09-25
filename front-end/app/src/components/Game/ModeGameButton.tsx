@@ -17,7 +17,7 @@ export const ModeGameButton = ({ mode, watch }: modeGameProps) => {
 
 	return (
 		<Box
-			onClick={() => { dispatch((mode === '1') ? setModeGame(ModeEnum.mode1) : setModeGame(ModeEnum.mode2)) }}
+			onClick={() => { dispatch((mode === '1') ? setModeGame({mode:ModeEnum.mode1}) : setModeGame({mode:ModeEnum.mode2})) }}
 			sx={{
 				width: "210px",
 				height: "200px",

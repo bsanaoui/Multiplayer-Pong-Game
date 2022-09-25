@@ -34,6 +34,7 @@ import { ModeGameButton } from './components/Game/ModeGameButton';
 import { ModesInput } from './components/Game/ModesInput';
 import ModeDialog from './components/Game/ModeDialog';
 import { HandleOpeneDialog } from './store/gameReducer';
+import Canvas from './components/canvas';
 
 const darkTheme = createTheme({
 	palette: {
@@ -54,6 +55,7 @@ function App() {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentIterface = useSelector((state: RootState) => state.interfaces).current;
 	const [cookies, setCookie, removeCookie] = useCookies();
+	const isGameSet = useSelector((state: RootState) => state.game).is_game_set;
 
 
 	useEffect(() => {
@@ -67,7 +69,7 @@ function App() {
 			dispatch(clearUser());
 		}
 
-		// dispatch(HandleOpeneDialog()) ///// debug Mode Game
+		dispatch(HandleOpeneDialog()) ///// debug Mode Game
 
 	}, [logged_user, currentIterface])
 
@@ -78,20 +80,23 @@ function App() {
 				{logged_user === '' && <LoginPage />}
 				{logged_user !== '' &&
 					<Stack direction="row"
-						sx={{ backgroundColor: "#202541", width: "100%", height: "100%" }}>
+						sx={{ backgroundColor: "#202541"}}>
 						<NavBarNew />
 						{currentIterface === InterfaceEnum.Home && <Main />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
 						{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal />}
 						{currentIterface === InterfaceEnum.InstantMessaging && <ChatGlobal />}
 						{currentIterface === InterfaceEnum.Friends && <ChatGlobal />}
-						{currentIterface === InterfaceEnum.Matchmaking && <Box />}
+						{currentIterface === InterfaceEnum.Matchmaking &&
+							<ModeDialog>
+								<ModesInput watch={false} />
+							</ModeDialog>
+						}
 						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
+						{isGameSet && <Canvas />}
 					</Stack>
 				}
-				{/* <ModeDialog>
-					<ModesInput watch={false} />
-				</ModeDialog> */}
+
 			</SocketProvider>
 		</ThemeProvider>
 	);

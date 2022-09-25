@@ -27,18 +27,23 @@ import { Socket } from 'socket.io-client';
 // !!!!!!!! ADD listener ????????????
 function muteUser(socket: Socket, user: string) {
 	if (socket) {
-		socket.emit('tjrj');
+		socket.emit('mute',{"who" : user , "time" : 1 , "type" : "minute"});
 	}
 }
 
 function banUser(socket: Socket, user: string) {
 	if (socket)
-		socket.emit('jtrj');
+		socket.emit('ban',{"who" : user , "time" : 1 , "type" : "minute"});
+}
+
+function kickUser(socket: Socket, user: string) {
+	if (socket)
+		socket.emit('kick',{"who" : user});
 }
 
 function setAdmin(socket: Socket, user: string) {
 	if (socket)
-		socket.emit('jtjr');
+		socket.emit('setAdmin',{"new_admin" : user});
 }
 
 function addFriend(socket: Socket, user: string) {
@@ -131,7 +136,7 @@ export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Soc
 								</ListItem>}
 							{Props.role_user === "owner" &&
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { banUser(Props.socket, Props.user.login); handleClose() }}>
+									<ListItemButton onClick={() => { kickUser(Props.socket, Props.user.login); handleClose() }}>
 										<Avatar variant="square" src={banIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
 										<ListItemText primary="kick off" />
 									</ListItemButton>

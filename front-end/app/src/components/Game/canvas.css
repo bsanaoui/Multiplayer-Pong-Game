@@ -1,0 +1,14 @@
+#game {
+    border : 10px solid white;
+    /* border-radius: 1%; */
+    border-radius: 1em;
+    display: flex;
+	margin-left: auto;
+	margin-right: auto
+}
+
+@font-face {
+    font-family: 'oxygen';
+    src: url('./font/Oxygen-Bold.ttf') format('truetype');
+  }
+  

@@ -2,6 +2,9 @@ import { Avatar, Box, ListItem, Typography } from "@mui/material"
 import { Stack } from "@mui/system"
 import avatar1 from '../assets/man.png'
 import avatar2 from '../assets/avatar2.png'
+import { Game } from "./Game/game.entity"
+import { ModeEnum, setModeGame } from "../store/gameReducer"
+import { useDispatch } from "react-redux"
 
 
 interface AvatarProps {
@@ -17,7 +20,6 @@ export const AvatarPlayer = (props: AvatarProps) => {
                     height: '3rem',
                     width: '3rem',
                     backgroundColor: "#FFF",
-                    padding: "7px",
                 }}
                 alt="Lion" src={props.url} imgProps={{ style: { width: 'auto' } }} />
             <Typography sx={{
@@ -32,9 +34,11 @@ export const AvatarPlayer = (props: AvatarProps) => {
     )
 }
 
-const LiveMatchBtn = () => {
+const LiveMatchBtn = (props: { info: any, room_id: string }) => {
+    const dispatch = useDispatch();
     return (
         <Box
+            onClick={() => { dispatch(setModeGame({ mode: ModeEnum.mode3, room: props.room_id })) }}
             sx={{
                 width: '310px',
                 height: '170px',
@@ -64,16 +68,16 @@ const LiveMatchBtn = () => {
                     </Typography>
                 </ListItem>
                 <Stack spacing={1} direction="row" justifyContent="space-between">
-                    <AvatarPlayer name="Cmos" url={avatar2} />
+                    <AvatarPlayer name={props.info.P1.username!} url={props.info.P1.avatar!} />
                     <div style={{ marginTop: '1%' }}>
                         <Typography sx={{
                             fontWeight: '800',
                             fontSize: '2.15rem',
                         }}>
-                            15 - 11
+                            {props.info.P1.score} - {props.info.P2.score}
                         </Typography>
                     </div>
-                    <AvatarPlayer name="Brahim" url={avatar1} />
+                    <AvatarPlayer name={props.info.P2.username!} url={props.info.P2.avatar!} />
                 </Stack>
                 <div style={{ marginTop: '2.5%' }}>
                     <Typography sx={{
@@ -81,7 +85,7 @@ const LiveMatchBtn = () => {
                         fontSize: '0.8rem',
                         color: '#BBFCE4',
                     }}>
-                        - Retro -
+                        - {props.info.mode} -
                     </Typography>
                 </div>
             </Stack>

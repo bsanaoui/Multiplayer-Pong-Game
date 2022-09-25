@@ -1,10 +1,31 @@
-import { List, Stack, Typography } from '@mui/material'
+import { Box, List, Stack, Typography } from '@mui/material'
 import reloadIcon from '../assets/reload-icon.png'
 import Header from './Header'
 import LiveMatchBtn from './LiveMatchBtn'
+import { Game } from "./Game/game.entity";
+import { useEffect, useState } from 'react';
+import { getLiveMatchs } from '../requests/liveGames';
 
+let initLiveMatchs = {};
 
 export const LiveMatchs = () => {
+
+    const [matchs, setMatchs] = useState(initLiveMatchs);
+    function getlivematchs() {
+        getLiveMatchs().then((value) => {
+            if ((typeof value) === (typeof initLiveMatchs)) {
+                const data = value as {};
+                setMatchs(data);
+            }
+        })
+            .catch((reason: string) => {
+                console.log("Error ;matchs:", reason)
+            })
+    }
+    useEffect(() => {
+        getlivematchs();
+    },[])
+
     return (
         <Stack >
             <Header />
@@ -27,19 +48,15 @@ export const LiveMatchs = () => {
                     <img alt="Reload Icon" src={reloadIcon} style={{ width: 35 }} />
                 </Stack>
                 <List style={{ width: "90%", overflow: 'auto', height: "90%" }} >
-                    {/* {friends} */}
-                    <li key='3' className='item-live-match'>
-                        <LiveMatchBtn />
-                    </li>
-                    <li key='1' className='item-live-match'>
-                        <LiveMatchBtn />
-                    </li>
-                    <li key='2' className='item-live-match'>
-                        <LiveMatchBtn />
-                    </li>
-                    <li key='4' className='item-live-match'>
-                        <LiveMatchBtn />
-                    </li>
+                    {
+                        Object.keys(matchs).map((key, index) => {
+                            return (
+                                <li key={index} className='item-live-match'>
+                                    <LiveMatchBtn info={matchs[key as keyof typeof matchs]} room_id={key}/>
+                                </li>
+                            )
+                        })
+                    }
                 </List>
             </Stack>
         </Stack>
