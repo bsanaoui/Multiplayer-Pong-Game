@@ -31,6 +31,9 @@ import { Login } from '@mui/icons-material';
 import RoomButtonChat from './components/RoomButtonChat';
 import SocketProvider, { socket, SocketContext } from './context/socket';
 import { ModeGameButton } from './components/Game/ModeGameButton';
+import { ModesInput } from './components/Game/ModesInput';
+import ModeDialog from './components/Game/ModeDialog';
+import { HandleOpeneDialog } from './store/gameReducer';
 
 const darkTheme = createTheme({
 	palette: {
@@ -51,7 +54,7 @@ function App() {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentIterface = useSelector((state: RootState) => state.interfaces).current;
 	const [cookies, setCookie, removeCookie] = useCookies();
-	
+
 
 	useEffect(() => {
 		if (cookies.Authorization) {
@@ -64,13 +67,15 @@ function App() {
 			dispatch(clearUser());
 		}
 
+		// dispatch(HandleOpeneDialog()) ///// debug Mode Game
+
 	}, [logged_user, currentIterface])
 
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<SocketProvider>
 				<CssBaseline />
-				{/* {logged_user === '' && <LoginPage />}
+				{logged_user === '' && <LoginPage />}
 				{logged_user !== '' &&
 					<Stack direction="row"
 						sx={{ backgroundColor: "#202541", width: "100%", height: "100%" }}>
@@ -83,8 +88,10 @@ function App() {
 						{currentIterface === InterfaceEnum.Matchmaking && <Box />}
 						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
 					</Stack>
-				} */}
-				<ModeGameButton mode={'2'} watch={false} />
+				}
+				{/* <ModeDialog>
+					<ModesInput watch={false} />
+				</ModeDialog> */}
 			</SocketProvider>
 		</ThemeProvider>
 	);

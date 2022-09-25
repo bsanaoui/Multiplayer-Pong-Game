@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import chatReducer from './chatUiReducer'
 import collapseNavReducer from './collapseNavReducer'
+import gameReducer from './gameReducer'
 import interfacesReducer from './interfacesReducer'
 import openDialogReducer from './openDialogReducer'
 import roomUsersReducer from './roomUsersReducer'
@@ -16,6 +17,7 @@ export const store = configureStore({
 		collapseNav: collapseNavReducer,
 		room_users: roomUsersReducer,
 		socketclient: socketReducer,
+		game:gameReducer,
 	},
 	// To fix non serialisable object set on state
 	middleware: getDefaultMiddleware =>
