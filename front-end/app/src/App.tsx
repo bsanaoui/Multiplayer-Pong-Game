@@ -49,7 +49,6 @@ const darkTheme = createTheme({
 	},
 });
 
-
 function App() {
 	const dispatch = useDispatch();
 	const logged_user = useSelector((state: RootState) => state.user).login;
@@ -104,4 +103,4 @@ function App() {
 
 // function 
 //Snackbar MUI to handle Invite Play
-export default App;
+export default App;  
