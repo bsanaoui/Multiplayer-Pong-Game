@@ -11,7 +11,6 @@ import { UsersMessaging } from "./UsersMessaging"
 import { InterfaceEnum } from "../store/interfacesReducer"
 import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { initSocketClient, disconnectSocket } from "../store/socketReducer";
 import { io, Socket } from "socket.io-client";
 import { SocketContext, SocketContextType } from "../context/socket";
 import { changeCurrRoom } from "../store/chatUiReducer";
@@ -20,48 +19,30 @@ import { changeCurrRoom } from "../store/chatUiReducer";
 const ChatGlobal = () => {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
-	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
-	const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
+	// const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
+	// const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
 	let { socket, updateSocket } = useContext(SocketContext) as SocketContextType;
 
-	function joinRoom(curr_user: string): Socket {
-		if ((!socket || socket.disconnected) && currentRoom !== '') {
-			socket = io(process.env.REACT_APP_SERVER_IP as string, {
-				auth: {
-					room: currentRoom,
-					user: curr_user,
-				}
-			});
-		}
-		if (socket && currentRoom !== '')
-			socket.emit('JoinRoom');
-		return (socket);
-	}
 
-	function joinDmRoom(curr_user: string): Socket {
-		if ((!socket || socket.disconnected) && currentConv !== '') {
+	const initSocket = () => {
+		if (!socket || socket.disconnected) {
 			socket = io(process.env.REACT_APP_SERVER_IP as string, {
 				auth: {
-					from: curr_user,
-					to: currentConv,
+					from: logged_user,
 				}
 			});
 		}
-		if (socket && currentConv !== '')
-			socket.emit('join_dm_room');
-		return (socket);
+		updateSocket(socket);
 	}
 
 	useEffect(() => {
-		if ((currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends))
-			updateSocket(joinDmRoom(logged_user));
-		else
-			updateSocket(joinRoom(logged_user));
+
+		initSocket();
 		return () => {
 			if (socket)
 				socket.disconnect();
 		}
-	}, [currentRoom, currentConv])
+	}, [currentPage])
 
 	return (
 		<Stack direction="row" height="100vh" >

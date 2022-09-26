@@ -4,7 +4,7 @@ import { Friend } from '../requests/directMessage';
 import DropMenuUser from './DropMenus/DropMenuUser';
 
 
-export const FriendButton = (props:{friend:Friend, socket:Socket}) => {
+export const FriendButton = (props:{friend:Friend}) => {
 
 	return (
 		<Box
@@ -49,7 +49,7 @@ export const FriendButton = (props:{friend:Friend, socket:Socket}) => {
 						}}>{props.friend.username}</Typography>
 				</Box>
 				<div style={{ marginLeft: 'auto' }}>
-					<DropMenuUser is_dm_user={false} friend={props.friend} socket={props.socket}/>
+					<DropMenuUser is_dm_user={false} friend={props.friend} />
 				</div>
 			</Stack>
 		</Box >

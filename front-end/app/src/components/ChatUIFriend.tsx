@@ -94,7 +94,7 @@ const ChatUIFriend = () => {
     const sendMsg = () => {
         if (message_input) {
             if (socket) {
-                socket.emit('dm_message', { message: message_input });
+                socket.emit('dm_message', { msg: message_input });
                 bottomRef.current?.scrollIntoView({ behavior: "smooth" });
             }
             setMessage('');
@@ -119,7 +119,7 @@ const ChatUIFriend = () => {
             dispatch(clearMessages());
             index_msg = 0;
         }
-    }, [socket])
+    }, [currentConvr, bottomRef.current])
 
     return (
         <Box

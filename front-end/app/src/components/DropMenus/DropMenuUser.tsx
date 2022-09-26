@@ -15,22 +15,25 @@ import chatIcon from '../../assets/DropMenus/chat.png'
 import blockIcon from '../../assets/DropMenus/block.png'
 import addFriendIcon from '../../assets/notification.png'
 import { Friend, UserMessaging } from '../../requests/directMessage';
-import { Socket } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
+import { SocketContext, SocketContextType } from '../../context/socket';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { useDispatch } from 'react-redux';
+import { InterfaceEnum, setCurrentInterface } from '../../store/interfacesReducer';
 
-interface MenuProps{
-	is_dm_user:boolean,
-	friend?:Friend,
-	user?:UserMessaging,
-	socket:Socket,
+interface MenuProps {
+	is_dm_user: boolean,
+	friend?: Friend,
+	user?: UserMessaging,
 };
 
 
-const blockUser = (user:string, socket:Socket) => {
-	if (socket)
-		socket.emit('block');
-}
 
-export default function DropMenuUser({friend, user, is_dm_user, socket}:MenuProps) {
+export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
+	const dispatch = useDispatch();
+	let { socket } = React.useContext(SocketContext) as SocketContextType;
+
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -39,6 +42,27 @@ export default function DropMenuUser({friend, user, is_dm_user, socket}:MenuProp
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	const blockUser = () => {
+		if (socket)
+			socket.emit('block_dm');
+	}
+
+	const blockFriend = (friend:string) => {
+		if (socket)
+			socket.emit('block_friend',{friend:friend});
+	}
+
+	const chat = (user?: string) => { // to edit
+		if (socket) {
+			if (socket && user) {
+
+				socket.emit('join_dm_room', { to: user });
+				dispatch(setCurrentInterface(InterfaceEnum.InstantMessaging))
+				console.log("Chat");
+			}
+		}
+	}
 
 	return (
 		<div>
@@ -80,22 +104,24 @@ export default function DropMenuUser({friend, user, is_dm_user, socket}:MenuProp
 									<ListItemText primary="Show Profile" />
 								</ListItemButton>
 							</ListItem>
-							{(!is_dm_user) && 
+							{(!is_dm_user) &&
+								<ListItem disablePadding>
+									<ListItemButton onClick={() => { handleClose(); chat(friend?.login) }}>
+										<Avatar variant="square" src={chatIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
+										<ListItemText primary="Chat" />
+									</ListItemButton>
+								</ListItem>}
+							{(is_dm_user && !friend) &&
+								<ListItem disablePadding>
+									<ListItemButton onClick={handleClose}>
+										<Avatar variant="square" src={addFriendIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
+										<ListItemText primary="Add Friend" />
+									</ListItemButton>
+								</ListItem>}
 							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
-									<Avatar variant="square" src={chatIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
-									<ListItemText primary="Chat" />
-								</ListItemButton>
-							</ListItem>}
-							{(is_dm_user && !friend) && 
-							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
-									<Avatar variant="square" src={addFriendIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
-									<ListItemText primary="Add Friend" />
-								</ListItemButton>
-							</ListItem>}
-							<ListItem disablePadding>
-								<ListItemButton onClick={() => {handleClose(); blockUser(user?.login as string, socket)}}>
+								<ListItemButton onClick={() => {
+									handleClose();
+									(is_dm_user) ? blockUser() : blockFriend(friend?.login as string) }}>
 									<Avatar variant="square" src={blockIcon} sx={{ marginRight: "14%", width: "22px", height: "22px" }} />
 									<ListItemText primary="Block" />
 								</ListItemButton>

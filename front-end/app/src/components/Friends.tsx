@@ -23,7 +23,7 @@ const Friends = () => {
             }
         })
             .catch((message: string) => {
-                console.log("Error ;Friends", message)
+                console.log("Error; Friends", message)
             })
     }
 
@@ -43,7 +43,7 @@ const Friends = () => {
             setFriends(initFriends);
             console.log("clear friends");
         }
-    }, [socket, currentConv])
+    }, []) // add currentConv
 
     return (
         <Box
@@ -73,7 +73,7 @@ const Friends = () => {
                 <List style={{ overflow: 'auto', height: "100%" }} >
                     {friends.length && friends.map((item) => (
                         <li key={item.id} className='item-friend'>
-                            <FriendButton friend={item} socket={socket} />
+                            <FriendButton friend={item} />
                         </li>
                     ))}
                 </List>

@@ -10,7 +10,7 @@ import DropMenuUser from './DropMenus/DropMenuUser';
 
 
 
-export const UserButtonChat = (props:{user: UserMessaging, socket: Socket}) => {
+export const UserButtonChat = (props:{user: UserMessaging}) => {
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ export const UserButtonChat = (props:{user: UserMessaging, socket: Socket}) => {
                         }}>{props.user.username}</Typography>
                 </Box>
                 <div style={{ marginLeft: 'auto' }}>
-                    <DropMenuUser is_dm_user={true} user={props.user} socket={props.socket}/>
+                    <DropMenuUser is_dm_user={true} user={props.user}/>
                 </div>
             </Stack>
         </Box >

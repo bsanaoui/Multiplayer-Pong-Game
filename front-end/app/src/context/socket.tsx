@@ -18,7 +18,7 @@ export interface Props{
 }
 
 const SocketProvider =  (props:Props) => {
-    const [socket, setSocket] = React.useState<Socket>(io(process.env.REACT_APP_SERVER_IP as string));
+    const [socket, setSocket] = React.useState<Socket>(io());
 
     const updateSocket = (new_socket:Socket) => {
         setSocket(new_socket);
