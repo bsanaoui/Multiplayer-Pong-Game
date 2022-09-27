@@ -18,8 +18,11 @@ export interface Props{
 }
 
 const SocketProvider =  (props:Props) => {
-    const [socket, setSocket] = React.useState<Socket>(io());
+    const socket_:Socket = io();
+    socket_.disconnect();
 
+    const [socket, setSocket] = React.useState<Socket>(socket_);
+    
     const updateSocket = (new_socket:Socket) => {
         setSocket(new_socket);
     }

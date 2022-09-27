@@ -27,8 +27,16 @@ export const socketSlice = createSlice({
     name: 'socketclient',
     initialState,
     reducers: {
-        initSocketClient (state, action: PayloadAction<{host:string, auth: AuthRoom | AuthDM }>) {
-            let socket:Socket = io(action.payload.host, action.payload.auth);
+        // initSocketClient (state, action: PayloadAction<{host:string, auth: AuthRoom | AuthDM }>) {
+        //     let socket:Socket = io(action.payload.host, action.payload.auth);
+        //     return ({socket});
+        // },
+        initSocketClient (state, action: PayloadAction<{host:string, user: string }>) {
+            let socket:Socket = io(action.payload.host, {
+				auth: {
+					from: action.payload.user,
+				}
+			});
             return ({socket});
         },
 

@@ -35,6 +35,7 @@ import { ModesInput } from './components/Game/ModesInput';
 import ModeDialog from './components/Game/ModeDialog';
 import { HandleOpeneDialog } from './store/gameReducer';
 import Canvas from './components/canvas';
+import { SnackbarProvider } from 'notistack';
 
 const darkTheme = createTheme({
 	palette: {
@@ -74,12 +75,12 @@ function App() {
 
 	return (
 		<ThemeProvider theme={darkTheme}>
-			<SocketProvider>
+			<SnackbarProvider maxSnack={10}>
 				<CssBaseline />
 				{logged_user === '' && <LoginPage />}
 				{logged_user !== '' &&
 					<Stack direction="row"
-						sx={{ backgroundColor: "#202541"}}>
+						sx={{ backgroundColor: "#202541" }}>
 						<NavBarNew />
 						{currentIterface === InterfaceEnum.Home && <Main />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
@@ -95,8 +96,7 @@ function App() {
 						{isGameSet && <Canvas />}
 					</Stack>
 				}
-
-			</SocketProvider>
+			</SnackbarProvider>
 		</ThemeProvider>
 	);
 }

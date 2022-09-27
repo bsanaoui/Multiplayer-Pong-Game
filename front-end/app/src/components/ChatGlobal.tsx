@@ -12,8 +12,9 @@ import { InterfaceEnum } from "../store/interfacesReducer"
 import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { io, Socket } from "socket.io-client";
-import { SocketContext, SocketContextType } from "../context/socket";
+import { socket, SocketContext, SocketContextType } from "../context/socket";
 import { changeCurrRoom } from "../store/chatUiReducer";
+import { initSocketClient } from "../store/socketReducer";
 
 
 const ChatGlobal = () => {
@@ -21,23 +22,25 @@ const ChatGlobal = () => {
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
 	// const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
 	// const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
-	let { socket, updateSocket } = useContext(SocketContext) as SocketContextType;
+	// let { socket, updateSocket } = useContext(SocketContext) as SocketContextType;
+	const dispatch = useDispatch();
 
+	console.log("Global ChatUI")
+	// const initSocket = () => {
+	// 	if (!socket || socket.disconnected) {
+	// 		socket = io(process.env.REACT_APP_SERVER_IP as string, {
+	// 			auth: {
+	// 				from: logged_user,
+	// 			}
+	// 		});
+	// 	}
+	// 	updateSocket(socket);
 
-	const initSocket = () => {
-		if (!socket || socket.disconnected) {
-			socket = io(process.env.REACT_APP_SERVER_IP as string, {
-				auth: {
-					from: logged_user,
-				}
-			});
-		}
-		updateSocket(socket);
-	}
+	// }
 
 	useEffect(() => {
-
-		initSocket();
+		dispatch(initSocketClient({host:process.env.REACT_APP_SERVER_IP as string, user:logged_user}));
+		
 		return () => {
 			if (socket)
 				socket.disconnect();

@@ -16,11 +16,12 @@ import blockIcon from '../../assets/DropMenus/block.png'
 import addFriendIcon from '../../assets/notification.png'
 import { Friend, UserMessaging } from '../../requests/directMessage';
 import { io, Socket } from 'socket.io-client';
-import { SocketContext, SocketContextType } from '../../context/socket';
+// import { SocketContext, SocketContextType } from '../../context/socket';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useDispatch } from 'react-redux';
 import { InterfaceEnum, setCurrentInterface } from '../../store/interfacesReducer';
+import { changeCurrConversation } from '../../store/chatUiReducer';
 
 interface MenuProps {
 	is_dm_user: boolean,
@@ -32,7 +33,8 @@ interface MenuProps {
 
 export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 	const dispatch = useDispatch();
-	let { socket } = React.useContext(SocketContext) as SocketContextType;
+	// let { socket } = React.useContext(SocketContext) as SocketContextType;
+	const socket = useSelector((state: RootState) => state.socketclient).socket;
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -45,7 +47,10 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 
 	const blockUser = () => {
 		if (socket)
+		{
 			socket.emit('block_dm');
+			// dispatch(changeCurrConversation({ user: '', avatar: ''}));
+		}
 	}
 
 	const blockFriend = (friend:string) => {
@@ -53,13 +58,12 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 			socket.emit('block_friend',{friend:friend});
 	}
 
-	const chat = (user?: string) => { // to edit
+	const chat = (user?: string, avatar?:string) => { // to edit
 		if (socket) {
 			if (socket && user) {
-
 				socket.emit('join_dm_room', { to: user });
-				dispatch(setCurrentInterface(InterfaceEnum.InstantMessaging))
-				console.log("Chat");
+				// dispatch(changeCurrConversation({ user: user, avatar: avatar as string }));
+				console.log("Chat with theme");
 			}
 		}
 	}
@@ -106,7 +110,7 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 							</ListItem>
 							{(!is_dm_user) &&
 								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose(); chat(friend?.login) }}>
+									<ListItemButton onClick={() => { handleClose(); chat(friend?.login, friend?.avatar) }}>
 										<Avatar variant="square" src={chatIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
 										<ListItemText primary="Chat" />
 									</ListItemButton>

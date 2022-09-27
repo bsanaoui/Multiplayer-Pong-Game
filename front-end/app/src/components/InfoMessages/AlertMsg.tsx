@@ -13,8 +13,10 @@ export const initAlertMsg: AlertMsg = {
     msg: "",
 };
 
+
 export const AlertMsg = (props: AlertMsg) => {
     const [open, setOpen] = React.useState(true);
+
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
@@ -34,5 +36,6 @@ export const AlertMsg = (props: AlertMsg) => {
                 {!props.status && <Alert variant="filled" severity="error">{props.msg}</Alert>}
             </Box>
         </Snackbar>
+        
     )
 }

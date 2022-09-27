@@ -235,7 +235,7 @@ const Canvas = () => {
 	const invite = ''
 	const watching = match_info.room;
 	if (!socket)
-		socket = io('http://localhost:3333/game', {auth : {mode: mode, info: player_info, room: watching}});
+		socket = io('http://localhost:3333/game', {auth : {mode: mode, info: player_info, invite: invite, room: watching}});
 
 	socket!.emit('size_change', width);
   

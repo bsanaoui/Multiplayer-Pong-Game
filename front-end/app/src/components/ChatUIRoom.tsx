@@ -10,7 +10,7 @@ import { RootState } from "../store";
 import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestMessages } from '../requests/messages';
 import { io, Socket } from 'socket.io-client';
-import { SocketContext, SocketContextType } from '../context/socket';
+// import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
 // let socket: Socket;
@@ -57,7 +57,11 @@ const ChatUIRoom = () => {
     const logged_user = useSelector((state: RootState) => state.user).login;
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const msgs = useSelector((state: RootState) => state.chat).msgs;
-    const { socket } = useContext(SocketContext) as SocketContextType;
+    // const { socket } = useContext(SocketContext) as SocketContextType;
+    const socket = useSelector((state: RootState) => state.socketclient).socket;
+
+    const  [isInputEnabled, setInput] = useState(true)
+
     const [message_input, setMessage] = useState("");
 
     const recieveMsgs = () => {
@@ -65,6 +69,13 @@ const ChatUIRoom = () => {
             dispatch(addMessage(msg));
             if (bottomRef)
                 bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        })
+    }
+
+    const disableInputListen = () => {
+        socket.on('disableWriting', (data: {status:boolean, message:string, user:string}) => {
+            if (data.user === logged_user)
+                setInput(data.status);
         })
     }
 
@@ -96,6 +107,14 @@ const ChatUIRoom = () => {
     }
 
     useEffect(() => {
+		if (socket)
+            disableInputListen();
+		return (() => {
+			socket.off("disableWriting");
+		})
+	},)
+
+    useEffect(() => {
         console.log("chatUIRoom");
 
         if (currentRoom !== '')
@@ -113,7 +132,7 @@ const ChatUIRoom = () => {
             index_msg = 0;
         }
 
-    }, [socket])
+    }, [currentRoom])
 
     return (
         <Box
@@ -133,12 +152,13 @@ const ChatUIRoom = () => {
                 </div>
                 <Stack spacing={2} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
                     <Stack direction="row" marginBottom="35px">
+                        {isInputEnabled &&
                         <FormControl variant="standard">
                             <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
                                 onChange={handleMsgChange}
                                 onKeyDown={handleEnterkey}
                                 value={message_input} />
-                        </FormControl>
+                        </FormControl>}
                         <div style={{
                             backgroundColor: "#151416", padding: "10px", borderRadius: '0 10px 10px 0',
                         }}>

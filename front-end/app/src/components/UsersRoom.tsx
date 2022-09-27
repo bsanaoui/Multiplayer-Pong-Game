@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import usersRoomIcon from '../assets/usersRoom.png'
-import { SocketContext, SocketContextType } from '../context/socket';
+// import { SocketContext, SocketContextType } from '../context/socket';
 import { requestUsersRoom } from '../requests/rooms';
 import { RootState } from '../store';
 import { clearUsersRoom, initUsesrRoom, UserOfRoom } from '../store/roomUsersReducer';
@@ -15,7 +15,7 @@ export const UsersRoom = () => {
     const users_room = useSelector((state: RootState) => state.room_users);
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const role_user = useSelector((state: RootState) => state.chat).curr_role;
-    const { socket } = useContext(SocketContext) as SocketContextType;
+    const socket = useSelector((state: RootState) => state.socketclient).socket;
 
     function getUsersRoom() {
         requestUsersRoom(currentRoom).then((value) => {
@@ -27,23 +27,23 @@ export const UsersRoom = () => {
         })
     }
 
-    const receiveUpdate = () => {
-        socket.on('usersOfRoom', (data: { status: boolean}) => {
-            getUsersRoom();
-        })
-    }
+    // const receiveUpdate = () => {
+    //     socket.on('usersOfRoom', (data: { status: boolean}) => {
+    //         getUsersRoom();
+    //     })
+    // }
 
     useEffect(() => {
-        if (users_room.length === 0 && currentRoom !== '')
-            getUsersRoom();
-        receiveUpdate();
+        // if (users_room.length === 0 && currentRoom !== '')
+        getUsersRoom();
+        // receiveUpdate();
 
         if (currentRoom === '')
             dispatch(clearUsersRoom());
         return () => {
             dispatch(clearUsersRoom());
         }
-    }, [socket, currentRoom])
+    }, [currentRoom])
 
     return (
 

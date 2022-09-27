@@ -2,18 +2,21 @@ import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import friendIcon from '../assets/friends.png'
 import { FriendButton } from './FriendButton';
 import { useContext, useEffect, useState } from 'react';
-import { SocketContext, SocketContextType } from '../context/socket';
+// import { SocketContext, SocketContextType } from '../context/socket';
 import { Friend, getFriends } from '../requests/directMessage';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
 let initFriends: Friend[] = [] as Friend[];
-
+initFriends.length = 0;
 const Friends = () => {
-    const { socket } = useContext(SocketContext) as SocketContextType;
+    // const { socket } = useContext(SocketContext) as SocketContextType;
     const [friends, setFriends] = useState(initFriends);
     const logged_user = useSelector((state: RootState) => state.user).login;
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
+    // const [is_recieve_update, setRecieve] = useState(false);
+    const socket = useSelector((state: RootState) => state.socketclient).socket;
+
 
     function getMyFriends() {
         getFriends().then((value) => {
@@ -28,22 +31,24 @@ const Friends = () => {
     }
 
     const receiveUpdate = () => {
+        // setRecieve(true);
         socket.on('friends', (data: { status: boolean, from: string, to: string }) => {
+            console.log("friend ????????")
             if (data.from === logged_user || data.to === logged_user)
                 getMyFriends();
         })
     }
 
+
     useEffect(() => {
-        // Get Rooms
-        if (friends.length === 0)
-            getMyFriends();
-        receiveUpdate();
+        getMyFriends();
+        // if (socket)
+        //     receiveUpdate();
         return () => {
-            setFriends(initFriends);
+            // setFriends(initFriends);
             console.log("clear friends");
         }
-    }, []) // add currentConv
+    }, [currentConv]) // add currentConv
 
     return (
         <Box

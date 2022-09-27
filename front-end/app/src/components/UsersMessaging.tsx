@@ -9,17 +9,22 @@ import { SocketContext, SocketContextType } from '../context/socket';
 import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
 import { useDispatch } from 'react-redux';
 import { changeCurrConversation } from '../store/chatUiReducer';
+import { boolean } from 'yup';
+import { useSnackbar, VariantType } from 'notistack';
 
 let initUsers: UserMessaging[] = [] as UserMessaging[];
-
+initUsers.length = 0;
 export const UsersMessaging = () => {
     const dispatch = useDispatch();
     const [users, setUsers] = useState(initUsers);
     const logged_user = useSelector((state: RootState) => state.user).login;
-    const { socket } = useContext(SocketContext) as SocketContextType;
+    const socket = useSelector((state: RootState) => state.socketclient).socket;
+
     const [alertMsg, setAlertMsg] = useState(initAlertMsg);
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const currentConvAvatar = useSelector((state: RootState) => state.chat).curr_conv_avatar;
+    const { enqueueSnackbar } = useSnackbar();
+
 
     const joinDmRoom = () => {
         if (socket && currentConv !== '')
@@ -39,19 +44,32 @@ export const UsersMessaging = () => {
     }
 
     const receiveUpdate = () => {
-        socket.on('instant_messaging', (data: { status: boolean, msg: string, from: string, to: string }) => {
+        console.log("recieveUpdate ??????");
+        // setRecieve(true);
+        socket.once('instant_messaging', (data: { status: boolean, msg: string, from: string, to: string }) => {
             if (data.from === logged_user)
+            {
                 setAlertMsg({ is_alert: true, status: data.status, msg: data.msg });
+                // handleSnackbarMsg(data.msg, (data.status) ? "success" : "error");
+                console.log("!!!!!!!!!!!! IS Connected");
+                // if (data.to === logged_user)
+            }
             if ((data.from === logged_user && data.to === currentConv) // connect with theme
-                && (data.to === logged_user && data.from === currentConv)) {
+                || (data.to === logged_user && data.from === currentConv)) {
                 getUsers();
+                console.log("dispatch lenght > 0");
                 if (users.length > 0)
+                {
                     dispatch(changeCurrConversation({ user: users[0].login, avatar: users[0].avatar }));
+                }
                 else
+                {
+                    console.log("dispatch lenght === 0");
                     dispatch(changeCurrConversation({ user: '', avatar: '' }));
+                }
             }
             else if ((data.from === logged_user && data.to !== currentConv) // connect with other (join other room)
-                && (data.to === logged_user && data.from !== currentConv)) {
+                || (data.to === logged_user && data.from !== currentConv)) {
                 getUsers();
                 if (users.length > 0)
                     dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar}));
@@ -61,19 +79,34 @@ export const UsersMessaging = () => {
         })
     }
 
+    const handleSnackbarMsg = (msg:string,variant: VariantType) => () => {
+        // variant could be success, error, warning, info, or default
+        enqueueSnackbar(msg, { variant });
+        
+    };
+   
+
+    console.log("User Messaging");
+    
     useEffect(() => {
-        // Get Rooms
-        if (users.length === 0)
-            getUsers();
-
-        joinDmRoom();
-
+        if (socket)
         receiveUpdate();
+        return (() => {
+            socket.off("instant_messaging");
+        })
+    },)
+    
+    useEffect(() => {
+        // if (is_recieve_update)
+        joinDmRoom();
+        getUsers();
+
         return () => {
-            setUsers(initUsers);
+            // setUsers(initUsers);
+            // setRecieve(false);
             console.log("clear users");
         }
-    }, [socket, currentConv])
+    }, [currentConv])
 
     return (
         <Box
@@ -135,7 +168,7 @@ export const UsersMessaging = () => {
                     ))}
                 </List>
             </Stack>
-            {alertMsg.is_alert && <AlertMsg is_alert={true} status={alertMsg.status} msg={alertMsg.msg} />}
+            {alertMsg.is_alert && <AlertMsg is_alert={alertMsg.is_alert} status={alertMsg.status} msg={alertMsg.msg} />}
         </Box>
     )
 }

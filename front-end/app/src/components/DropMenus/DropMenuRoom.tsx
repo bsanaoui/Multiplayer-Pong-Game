@@ -18,7 +18,7 @@ import { RoomsOfUser } from '../../requests/rooms';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Socket } from 'socket.io-client';
-import { socket, SocketContext, SocketContextType } from "../../context/socket";
+// import { socket, SocketContext, SocketContextType } from "../../context/socket";
 import DialogAction, { ActionInput } from '../Dialogs/DialogAction';
 import { changeCurrRoom } from '../../store/chatUiReducer';
 import { useDispatch } from 'react-redux';
@@ -39,14 +39,15 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser}) {
 	const dispatch = useDispatch();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
-	let { socket } = React.useContext(SocketContext) as SocketContextType;
+	// let { socket } = React.useContext(SocketContext) as SocketContextType;
+	const socket = useSelector((state: RootState) => state.socketclient).socket;
 
 	function leaveRoom() {
 		if (socket)
 		{
 			socket.emit('leaveRoom');
 			console.log("Leave Room : ");
-			dispatch(changeCurrRoom({room:'', role:''}))
+			// dispatch(changeCurrRoom({room:'', role:''}))
 		}
 	}
 	
