@@ -26,25 +26,14 @@ const ChatGlobal = () => {
 	const dispatch = useDispatch();
 
 	console.log("Global ChatUI")
-	// const initSocket = () => {
-	// 	if (!socket || socket.disconnected) {
-	// 		socket = io(process.env.REACT_APP_SERVER_IP as string, {
-	// 			auth: {
-	// 				from: logged_user,
-	// 			}
-	// 		});
-	// 	}
-	// 	updateSocket(socket);
-
-	// }
 
 	useEffect(() => {
 		dispatch(initSocketClient({host:process.env.REACT_APP_SERVER_IP as string, user:logged_user}));
 		
-		return () => {
-			if (socket)
-				socket.disconnect();
-		}
+		// return () => {
+		// 	if (socket)
+		// 		socket.disconnect();
+		// }
 	}, [currentPage])
 
 	return (

@@ -158,7 +158,7 @@ const ChatUIRoom = () => {
                                 onChange={handleMsgChange}
                                 onKeyDown={handleEnterkey}
                                 value={message_input} />
-                        </FormControl>}
+                        </FormControl>
                         <div style={{
                             backgroundColor: "#151416", padding: "10px", borderRadius: '0 10px 10px 0',
                         }}>
@@ -166,7 +166,7 @@ const ChatUIRoom = () => {
                                 <SendIcon />
                             </Button>
                         </div>
-                    </Stack>
+                    </Stack>}
                     <List style={{ overflowY: 'auto' }} >
                         {msgs && msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
                         <li key={index_msg++} style={{ float: 'left' ,height:"100px", width:"100px"}}>
