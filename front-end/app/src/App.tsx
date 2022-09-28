@@ -88,12 +88,14 @@ function App() {
 						{currentIterface === InterfaceEnum.InstantMessaging && <ChatGlobal />}
 						{currentIterface === InterfaceEnum.Friends && <ChatGlobal />}
 						{currentIterface === InterfaceEnum.Matchmaking &&
-							<ModeDialog>
-								<ModesInput watch={false} />
-							</ModeDialog>
+							<Box>
+								<ModeDialog>
+									<ModesInput watch={false} />
+								</ModeDialog>
+								{isGameSet && <Canvas />}
+							</Box>
 						}
 						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
-						{isGameSet && <Canvas />}
 					</Stack>
 				}
 			</SnackbarProvider>

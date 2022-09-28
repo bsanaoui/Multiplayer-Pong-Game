@@ -140,7 +140,7 @@ const ChatUIRoom = () => {
             sx={{
                 backgroundColor: "#202541",
                 width: "510px",
-                height: '100vh',
+                height: '100%',
                 // height: 'calc( 100vh - 67px )',
                 paddingLeft: "22px",
                 paddingRight: "20px",
@@ -151,8 +151,8 @@ const ChatUIRoom = () => {
                     <HeaderChat name={currentRoom} avatar="" />
                 </div>
                 <Stack spacing={2} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
-                    <Stack direction="row" marginBottom="35px">
-                        {isInputEnabled &&
+                {isInputEnabled &&
+                    <Stack direction="row" marginBottom="35px">   
                         <FormControl variant="standard">
                             <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
                                 onChange={handleMsgChange}
