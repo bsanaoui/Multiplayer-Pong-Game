@@ -12,7 +12,6 @@ import { InterfaceEnum } from "../store/interfacesReducer"
 import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { io, Socket } from "socket.io-client";
-import { socket, SocketContext, SocketContextType } from "../context/socket";
 import { changeCurrRoom } from "../store/chatUiReducer";
 import { initSocketClient } from "../store/socketReducer";
 
@@ -22,22 +21,26 @@ const ChatGlobal = () => {
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
 	// const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
 	// const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
-	// let { socket, updateSocket } = useContext(SocketContext) as SocketContextType;
+	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const dispatch = useDispatch();
+
 
 	console.log("Global ChatUI")
 
-	useEffect(() => {
-		dispatch(initSocketClient({host:process.env.REACT_APP_SERVER_IP as string, user:logged_user}));
 		
-		// return () => {
-		// 	if (socket)
-		// 		socket.disconnect();
-		// }
-	}, [currentPage])
+	useEffect(() => {
+
+		if (currentPage === InterfaceEnum.ChatRoom)
+			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));
+	
+		return (() => {
+			console.log("Socket Disconnected");
+			socket.disconnect();
+		})
+	},[currentPage]);
 
 	return (
-		<Stack direction="row" alignItems="center" justifyContent="flex-end" height="100%" width="100%" >
+		<Stack direction="row" alignItems="center" justifyContent="flex-end" height="100%" width="100%">
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <Friends /> : <Rooms />}
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <UsersMessaging /> : <UsersRoom />}
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <ChatUIFriend /> : <ChatUIRoom />}

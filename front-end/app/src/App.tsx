@@ -36,6 +36,7 @@ import ModeDialog from './components/Game/ModeDialog';
 import { HandleOpeneDialog } from './store/gameReducer';
 import Canvas from './components/canvas';
 import { SnackbarProvider } from 'notistack';
+import { initSocketClient } from './store/socketReducer';
 
 const darkTheme = createTheme({
 	palette: {
@@ -58,20 +59,21 @@ function App() {
 	const isGameSet = useSelector((state: RootState) => state.game).is_game_set;
 
 
-	useEffect(() => {
+
+	useEffect(() =>{
 		if (cookies.Authorization) {
 			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
 			console.log("User token: " + cookies.Authorization);
 		}
+		dispatch(HandleOpeneDialog()) ///// debug Mode Game
+	},[]);
 
+	useEffect(() => {
 		if (currentIterface === InterfaceEnum.Logout) {
 			removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
 			dispatch(clearUser());
 		}
-
-		dispatch(HandleOpeneDialog()) ///// debug Mode Game
-
-	}, [logged_user, currentIterface])
+	}, [currentIterface])
 
 	return (
 		<ThemeProvider theme={darkTheme}>
@@ -81,7 +83,7 @@ function App() {
 				{logged_user !== '' &&
 					<Stack direction="row" width="100%" height="100%"
 						sx={{ backgroundColor: "#202541" }}>
-						{/* <NavBarNew />
+						<NavBarNew />
 						{currentIterface === InterfaceEnum.Home && <Main />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
 						{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal />}
@@ -95,8 +97,7 @@ function App() {
 								{isGameSet && <Canvas />}
 							</Box>
 						}
-						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />} */}
-						 <ChatGlobal />
+						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
 					</Stack>
 				}
 			</SnackbarProvider>
