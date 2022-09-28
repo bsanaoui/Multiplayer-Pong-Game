@@ -139,12 +139,12 @@ const ChatUIRoom = () => {
             bgcolor="#202541"
             sx={{
                 backgroundColor: "#202541",
-                width: "510px",
+                maxWidth: "510px",
                 height: '100%',
                 // height: 'calc( 100vh - 67px )',
                 paddingLeft: "22px",
                 paddingRight: "20px",
-                borderLeft: "1px solid #FFFFFF"
+                borderLeft: "1px solid #FFFFFF",
             }}>
             <Stack height='inherit'>
                 <div>

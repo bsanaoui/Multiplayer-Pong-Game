@@ -37,7 +37,7 @@ const ChatGlobal = () => {
 	}, [currentPage])
 
 	return (
-		<Stack direction="row" height="100vh" >
+		<Stack direction="row" alignItems="center" justifyContent="flex-end" height="100%" width="100%" >
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <Friends /> : <Rooms />}
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <UsersMessaging /> : <UsersRoom />}
 			{(currentPage === InterfaceEnum.InstantMessaging) || (currentPage === InterfaceEnum.Friends) ? <ChatUIFriend /> : <ChatUIRoom />}

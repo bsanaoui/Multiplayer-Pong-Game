@@ -79,9 +79,9 @@ function App() {
 				<CssBaseline />
 				{logged_user === '' && <LoginPage />}
 				{logged_user !== '' &&
-					<Stack direction="row"
+					<Stack direction="row" width="100%" height="100%"
 						sx={{ backgroundColor: "#202541" }}>
-						<NavBarNew />
+						{/* <NavBarNew />
 						{currentIterface === InterfaceEnum.Home && <Main />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
 						{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal />}
@@ -95,7 +95,8 @@ function App() {
 								{isGameSet && <Canvas />}
 							</Box>
 						}
-						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
+						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />} */}
+						 <ChatGlobal />
 					</Stack>
 				}
 			</SnackbarProvider>

@@ -24,7 +24,7 @@ const Rooms = () => {
 
 	const joinRoom = () => {
 		if (socket && currentRoom !== '')
-			socket.emit('join_room', { room: currentRoom });
+			socket.emit('JoinRoom', { room: currentRoom });
 	}
 
 	function getRooms() {

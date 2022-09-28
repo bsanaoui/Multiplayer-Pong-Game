@@ -49,6 +49,7 @@ export const UsersRoom = () => {
 
         <Box
             sx={{
+                display:"",
                 backgroundColor: "#262948",
                 height: '100vh',
                 padding: '30px',

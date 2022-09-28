@@ -28,7 +28,7 @@ export const UsersMessaging = () => {
 
     const joinDmRoom = () => {
         if (socket && currentConv !== '')
-            socket.emit('JoinRoom', { to: currentConv });
+            socket.emit('join_dm_room', { to: currentConv });
     }
 
     function getUsers() {
