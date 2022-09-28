@@ -31,7 +31,6 @@ const Friends = () => {
     }
 
     const receiveUpdate = () => {
-        // setRecieve(true);
         socket.on('friends', (data: { status: boolean, from: string, to: string }) => {
             console.log("friend ????????")
             if (data.from === logged_user || data.to === logged_user)
@@ -39,16 +38,21 @@ const Friends = () => {
         })
     }
 
+    useEffect(() => {
+        if (socket)
+            receiveUpdate();
+        return (() => {
+            socket.off("friends");
+        })
+    },)
 
     useEffect(() => {
         getMyFriends();
-        // if (socket)
-        //     receiveUpdate();
         return () => {
             // setFriends(initFriends);
             console.log("clear friends");
         }
-    }, [currentConv]) // add currentConv
+    }, []) // add currentConv
 
     return (
         <Box

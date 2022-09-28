@@ -61,13 +61,27 @@ const ChatUIFriend = () => {
     const currentConv = chat_state.curr_converation;
     const avatar = chat_state.curr_conv_avatar;
     const msgs = chat_state.msgs;
+    const [isInputEnabled, setInput] = useState(true)
 
     // const { socket } = useContext(SocketContext) as SocketContextType;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
 
+    const joinDmRoom = () => {
+        if (socket && currentConv !== '')
+            socket.emit('join_dm_room', { to: currentConv });
+    }
+
+    const disableInputListen = () => {
+        socket.on('disableWriting', (data: { status: boolean, msg: string, user: string, from: string }) => {
+            if (data.user === logged_user && data.from === currentConv ||
+                data.user === currentConv && data.from === logged_user)
+                setInput(data.status);
+        })
+    }
 
     const recieveMsgs = () => {
         socket.on('msgToClient_dm', (m: MessageState) => {
+
             dispatch(addMessage(m));
             if (bottomRef)
                 bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -102,19 +116,29 @@ const ChatUIFriend = () => {
         }
     }
 
-    
+    useEffect(() => {
+        if (socket)
+            disableInputListen();
+        return (() => {
+            socket.off("disableWriting");
+        })
+    },)
+
     useEffect(() => {
         console.log("chatUIFriend");
         if (currentConv !== '')
             initMsgs();
-        if (socket)
+        if (socket) {
+            joinDmRoom();
             recieveMsgs();
+        }
         if (bottomRef) {
             bottomRef.current?.scrollIntoView({ behavior: "smooth" });
         }
         return () => {
             console.log("clear");
             dispatch(clearMessages());
+            socket.off("msgToClient_dm");
             index_msg = 0;
         }
     }, [currentConv])
@@ -135,21 +159,23 @@ const ChatUIFriend = () => {
                     <HeaderChat name={currentConv} avatar={avatar} />
                 </div>
                 <Stack spacing={2.7} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
-                    <Stack direction="row" marginBottom="35px">
-                        <FormControl variant="standard">
-                            <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
-                                onChange={handleMsgChange}
-                                onKeyDown={handleEnterkey}
-                                value={message_input} />
-                        </FormControl>
-                        <div style={{
-                            backgroundColor: "#151416", padding: "10px", borderRadius: '0 10px 10px 0',
-                        }}>
-                            <Button sx={{ backgroundColor: "#3475D7", height: "45px", color: "#FFF" }} onClick={sendMsg}>
-                                <SendIcon />
-                            </Button>
-                        </div>
-                    </Stack>
+                    {isInputEnabled &&
+                        <Stack direction="row" marginBottom="35px">
+                            <FormControl variant="standard">
+                                <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
+                                    onChange={handleMsgChange}
+                                    onKeyDown={handleEnterkey}
+                                    value={message_input} />
+                            </FormControl>
+                            <div style={{
+                                backgroundColor: "#151416", padding: "10px", borderRadius: '0 10px 10px 0',
+                            }}>
+                                <Button sx={{ backgroundColor: "#3475D7", height: "45px", color: "#FFF" }} onClick={sendMsg}>
+                                    <SendIcon />
+                                </Button>
+                            </div>
+                        </Stack>
+                    }
                     <List style={{ overflowY: 'auto' }} >
                         {msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
                         <li key={index_msg++} style={{ float: 'right' }}>

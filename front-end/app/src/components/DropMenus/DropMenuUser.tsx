@@ -55,14 +55,14 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 
 	const blockFriend = (friend:string) => {
 		if (socket)
-			socket.emit('block_friend',{friend:friend});
+			socket.emit('block_friend',{to:friend});
 	}
 
 	const chat = (user?: string, avatar?:string) => { // to edit
 		if (socket) {
 			if (socket && user) {
 				socket.emit('join_dm_room', { to: user });
-				// dispatch(changeCurrConversation({ user: user, avatar: avatar as string }));
+				dispatch(changeCurrConversation({ user: user, avatar: avatar as string }));
 				console.log("Chat with theme");
 			}
 		}

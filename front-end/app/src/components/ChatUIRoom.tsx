@@ -129,6 +129,8 @@ const ChatUIRoom = () => {
         return () => {
             console.log("clear rooms");
             dispatch(clearMessages());
+            socket.off("msgToClient");
+
             index_msg = 0;
         }
 

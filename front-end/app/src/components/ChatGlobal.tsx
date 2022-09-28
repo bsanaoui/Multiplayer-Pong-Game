@@ -24,13 +24,12 @@ const ChatGlobal = () => {
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const dispatch = useDispatch();
 
-
 	console.log("Global ChatUI")
 
-		
 	useEffect(() => {
 
-		if (currentPage === InterfaceEnum.ChatRoom)
+		if (currentPage === InterfaceEnum.ChatRoom || currentPage === InterfaceEnum.Friends
+			|| currentPage === InterfaceEnum.InstantMessaging)
 			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));
 	
 		return (() => {

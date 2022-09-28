@@ -58,8 +58,6 @@ function App() {
 	const [cookies, setCookie, removeCookie] = useCookies();
 	const isGameSet = useSelector((state: RootState) => state.game).is_game_set;
 
-
-
 	useEffect(() =>{
 		if (cookies.Authorization) {
 			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
