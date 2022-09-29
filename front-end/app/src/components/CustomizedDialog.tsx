@@ -1,6 +1,11 @@
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, styled } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { setOpenDialogRoom } from '../store/openDialogReducer';
+import { useDispatch } from 'react-redux';
+import { fetchRoomsHome } from '../store/FetchsReducer';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -47,14 +52,14 @@ type Props = {
 };
 
 const CustomizedDialog = ({ children }: Props) => {
-
-	const [open, setOpen] = React.useState(false);
+	const open = useSelector((state: RootState) => state.openDialog).is_open;
+	const dispatch = useDispatch();
 
 	const handleClickOpen = () => {
-		setOpen(true);
+		dispatch(setOpenDialogRoom(true));
 	};
 	const handleClose = () => {
-		setOpen(false);
+		dispatch(setOpenDialogRoom(false));
 	};
 
 	return (

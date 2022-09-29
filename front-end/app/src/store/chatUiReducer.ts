@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface MessageState {
     from: string, 
-    msg: string
+    msg: string,
+    avatar?:string,
 };
 
 export interface ChatUIState {

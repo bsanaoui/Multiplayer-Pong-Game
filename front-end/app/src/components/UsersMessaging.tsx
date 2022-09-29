@@ -52,7 +52,7 @@ export const UsersMessaging = () => {
                     dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar }));
                 }
                 else if (data.to === logged_user)
-                toast.info(data.from + " waving you");
+                toast.info(data.from + " waving you 👋");
             }
             else if (data.action === "block") {
                 if (data.from === logged_user || data.to === logged_user)

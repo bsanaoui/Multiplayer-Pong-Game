@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
+
 function createRooms(rooms_info: Array<RoomData>): JSX.Element[] {
 	const rooms = Array.from({ length: rooms_info.length }, (_, index) => {
 		return (
@@ -24,8 +25,11 @@ interface VisibilityProps {
 }
 
 const initRooms: RoomData[] = [] as RoomData[];
+
 const PublicRooms = ({ kind }: VisibilityProps) => {
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
+	const isFetch = useSelector((state: RootState) => state.fetch).roomsHome;
+
 	const [rooms, setRooms] = useState(initRooms);
 
 	useEffect(() => {
@@ -34,10 +38,11 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 			if ((typeof data) === (typeof initRooms))
 				setRooms(data);
 		})
+		console.log("is Fetch: " + isFetch);
 		return () => {
 			setRooms(initRooms);
 		}
-	},[currentPage]);
+	},[currentPage, isFetch]);
 
 	return (
 		<Stack
@@ -54,7 +59,7 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 						align: 'center',
 					}}>
 					{kind}</Typography>
-				<img alt='reload Icon' src={reloadIcon} style={{ width: 35 }} />
+				<img className='spin animated' alt='reload Icon' src={reloadIcon} style={{ width: 35 }} />
 			</Stack>
 			<div className="horizontal_slider">
 				<div className="slider_container">

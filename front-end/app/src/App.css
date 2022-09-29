@@ -262,10 +262,37 @@
 
 /* ============================ User Stats =================================== */
 
-.global-score{
+.global-score {
   font-style: normal;
   display: inline;
   font-weight: 600;
   font-size: 23px;
   line-height: 109.52%;
 }
+
+/* ============================== Spin rotate ================================== */
+
+.spin {
+  cursor: pointer;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(2520deg);
+  }
+}
+
+.spin.animated {
+  animation-duration: 1s;
+  animation-name: spin;
+  animation-duration: 2800ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+}
+
+
+/* ==============================  ================================== */

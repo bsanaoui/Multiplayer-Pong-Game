@@ -8,10 +8,12 @@ import * as Yup from 'yup'
 import { createRoom, RoomInfo } from "../requests/home";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
+import { setOpenDialogRoom } from "../store/openDialogReducer";
+import { useDispatch } from "react-redux";
+import { fetchRoomsHome } from "../store/FetchsReducer";
 
 const FormNewRoom = () => {
-    // const user_conneced = useSelector((state: RootState) => state.user).username; // call-back function
-
+    const dispatch = useDispatch();
     const paperStyle = { padding: '0px 15px 40px 15px', width: 320 }
     const btnStyle = { marginTop: '10px' }
     const initialValues: RoomInfo = {
@@ -27,7 +29,16 @@ const FormNewRoom = () => {
 
     const onSubmit = (values: RoomInfo, props: any) => {
         createRoom(values);
-        props.resetForm()
+        props.resetForm();
+        dispatch(setOpenDialogRoom(false));
+        FetchNewData();
+    }
+
+    var FetchNewData = function () {
+        console.log('1');
+        setTimeout(function () {
+            dispatch(fetchRoomsHome());
+        }, 100);
     }
 
     return (
@@ -65,7 +76,7 @@ const FormNewRoom = () => {
                                     helperText={<ErrorMessage name='password' />} required />
                             }
                             <Button type='submit' style={btnStyle} variant='contained'
-                                color='primary'>Create Room</Button>
+                                color='primary' >Create Room</Button>
                         </Form>
                     )}
                 </Formik>

@@ -56,6 +56,7 @@ const ChatUIRoom = () => {
     const dispatch = useDispatch();
     const bottomRef = useRef<HTMLDivElement>(null); // To auto scroll to bottom of window
     const logged_user = useSelector((state: RootState) => state.user).login;
+    const loggged_avatar = useSelector((state: RootState) => state.user).avatar;
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const msgs = useSelector((state: RootState) => state.chat).msgs;
     // const { socket } = useContext(SocketContext) as SocketContextType;
@@ -98,7 +99,7 @@ const ChatUIRoom = () => {
     const sendMsg = () => {
         if (message_input) {
             if (socket) {
-                socket.emit('SendMessageRoom', { msg: message_input });
+                socket.emit('SendMessageRoom', { msg: message_input,avatar:loggged_avatar });
             }
             setMessage('');
         }
