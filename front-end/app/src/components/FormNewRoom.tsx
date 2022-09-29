@@ -38,7 +38,7 @@ const FormNewRoom = () => {
         console.log('1');
         setTimeout(function () {
             dispatch(fetchRoomsHome());
-        }, 100);
+        }, 250);
     }
 
     return (

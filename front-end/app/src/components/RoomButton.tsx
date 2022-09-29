@@ -1,11 +1,20 @@
 import { Box, Stack, Typography } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import groupIcon from '../assets/group-icon.svg'
 import { RoomData } from '../requests/home'
+import { changeCurrRoom } from '../store/chatUiReducer'
+import { InterfaceEnum, setCurrentInterface } from '../store/interfacesReducer'
 
 
 const RoomButton = (Props: RoomData) => {
+	const dispatch = useDispatch();
+
 	return (
 		<Box
+			onClick={() => {
+				dispatch(changeCurrRoom({room:Props.room_id, role:"owner"}));
+			dispatch(setCurrentInterface(InterfaceEnum.ChatRoom));
+		}}
 			sx={{
 				width: '320px',
 				height: '210px',
@@ -13,6 +22,7 @@ const RoomButton = (Props: RoomData) => {
 				background: 'linear-gradient(110.14deg, #355B88 27.7%, #341760 83.08%)',
 				border: '2px solid #FFFFFF',
 				borderRadius: '27px',
+				cursor:"pointer",
 			}}>
 			<Box
 				sx={{
