@@ -53,6 +53,7 @@ const Friends = () => {
 
     return (
         <Box
+        className='friends'
             sx={{
                 backgroundColor: "#202541",
                 width: "355px",

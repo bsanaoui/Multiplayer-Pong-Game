@@ -27,16 +27,10 @@ export const UsersRoom = () => {
         })
     }
 
-    // const receiveUpdate = () => {
-    //     socket.on('usersOfRoom', (data: { status: boolean}) => {
-    //         getUsersRoom();
-    //     })
-    // }
 
     useEffect(() => {
         // if (users_room.length === 0 && currentRoom !== '')
         getUsersRoom();
-        // receiveUpdate();
 
         if (currentRoom === '')
             dispatch(clearUsersRoom());
@@ -48,8 +42,8 @@ export const UsersRoom = () => {
     return (
 
         <Box
+            className='users_room'
             sx={{
-                display:"",
                 backgroundColor: "#262948",
                 height: '100vh',
                 padding: '30px',

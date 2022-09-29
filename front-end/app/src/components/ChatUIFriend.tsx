@@ -75,11 +75,10 @@ const ChatUIFriend = () => {
     const disableInputListen = () => {
         socket.on('disableWriting', (data: { status: boolean, msg: string, user: string, from: string }) => {
             if (data.user === logged_user && data.from === currentConv ||
-                data.user === currentConv && data.from === logged_user)
-                {
-                    handleToastMsg(data.status, data.msg);
-                    setInput(data.status);
-                }
+                data.user === currentConv && data.from === logged_user) {
+                handleToastMsg(data.status, data.msg);
+                setInput(data.status);
+            }
         })
     }
 

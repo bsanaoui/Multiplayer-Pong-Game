@@ -98,13 +98,12 @@ export const UsersMessaging = () => {
 
     return (
         <Box
+        className='dm_messaging'
             sx={{
                 backgroundColor: "#262948",
-                // width: "500px",
                 height: '100vh',
                 padding: '30px',
                 borderLeft: "1px solid #FFFFFF",
-                // paddingTop: "7.2em"
 
             }}>
             <Stack height="100%">

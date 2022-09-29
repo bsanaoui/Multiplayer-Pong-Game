@@ -294,5 +294,29 @@
   animation-timing-function: ease;
 }
 
+/* ========================== Media Query on Chat UI Rooms =========================== */
+@media only screen and (max-width: 1300px) {
+  .users_room {
+    display: none;
+  }
+}
 
+@media only screen and (max-width: 870px) {
+  .rooms {
+    display: none;
+  }
+}
+
+/* ========================== Media Query on Chat UI DM =========================== */
+@media only screen and (max-width: 1300px) {
+  .friends {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .dm_messaging {
+    display: none;
+  }
+}
 /* ==============================  ================================== */

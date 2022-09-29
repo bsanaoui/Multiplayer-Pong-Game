@@ -81,6 +81,7 @@ const Rooms = () => {
 
 	return (
 		<Box
+		className='rooms'
 			sx={{
 				backgroundColor: "#202541",
 				height: '100vh',

@@ -25,22 +25,9 @@ function getActionInput(action: ActionInput): string {
     }
 }
 
-function inviteUser(socket: Socket, user_login: string) {
-    if (socket) {
-        socket.emit('inviteUser', {new_user:user_login});
-        console.log("inviteUser: " + user_login);
-    }
-}
-
-function changePassword(socket: Socket, new_pass: string) {
-    if (socket) {
-        socket.emit('changePassword', {new_password:new_pass});
-        console.log("new password is : " + new_pass);
-    }
-}
 
 
-export default function DialogAction(props: { isDialogOpened: boolean, handleCloseDialog: any, action: ActionInput, socket: Socket }) {
+export default function DialogAction(props: { isDialogOpened: boolean, handleCloseDialog: any, action: ActionInput, socket: Socket,room:string }) {
     // const [open, setOpen] = React.useState(true);
     const [input, setInput] = React.useState("");
 
@@ -48,6 +35,21 @@ export default function DialogAction(props: { isDialogOpened: boolean, handleClo
     //     setOpen(true);
     // };
 
+    function inviteUser( user_login: string) {
+        if (props.socket) {
+            props.socket.emit('inviteUser', {room:props.room, user_to_invite: user_login});
+            console.log("inviteUser: " + user_login);
+        }
+    }
+    
+    function changePassword(new_pass: string) {
+        if (props.socket) {
+            props.socket.emit('changePassword', {new_password:new_pass});
+            console.log("new password is : " + new_pass);
+        }
+    }
+
+    
     const handleClose = () => {
         props.handleCloseDialog({is_open:true, action_id:0});
     };
@@ -78,7 +80,7 @@ export default function DialogAction(props: { isDialogOpened: boolean, handleClo
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={() => {
-                        props.action === ActionInput.InviteUSer ? inviteUser(props.socket, input) : changePassword(props.socket, input);
+                        props.action === ActionInput.InviteUSer ? inviteUser(input) : changePassword(input);
                         handleClose()
                     }}>Submit</Button>
                 </DialogActions>

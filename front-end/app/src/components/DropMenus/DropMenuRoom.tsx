@@ -150,7 +150,7 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser}) {
 				</Box>
 			</Menu>
 			<DialogAction isDialogOpened={action.is_open} handleCloseDialog={() => setAction({ is_open: false, action_id: 0 })}
-				action={action.action_id} socket={socket} />
+				action={action.action_id} room={Props.room.room_id as string} socket={socket} />
 		</div>
 		/****** / */
 	);
