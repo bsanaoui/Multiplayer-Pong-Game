@@ -1,5 +1,7 @@
 
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Main from './components/Main'
 
 import { ThemeProvider, createTheme, Shadows } from '@mui/material/styles';
@@ -35,8 +37,8 @@ import { ModesInput } from './components/Game/ModesInput';
 import ModeDialog from './components/Game/ModeDialog';
 import { HandleOpeneDialog } from './store/gameReducer';
 import Canvas from './components/canvas';
-import { SnackbarProvider } from 'notistack';
 import { initSocketClient } from './store/socketReducer';
+import { ToastContainer } from 'react-toastify';
 
 const darkTheme = createTheme({
 	palette: {
@@ -58,13 +60,13 @@ function App() {
 	const [cookies, setCookie, removeCookie] = useCookies();
 	const isGameSet = useSelector((state: RootState) => state.game).is_game_set;
 
-	useEffect(() =>{
+	useEffect(() => {
 		if (cookies.Authorization) {
 			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
 			console.log("User token: " + cookies.Authorization);
 		}
 		dispatch(HandleOpeneDialog()) ///// debug Mode Game
-	},[]);
+	}, []);
 
 	useEffect(() => {
 		if (currentIterface === InterfaceEnum.Logout) {
@@ -73,15 +75,16 @@ function App() {
 		}
 	}, [currentIterface])
 
+
 	return (
 		<ThemeProvider theme={darkTheme}>
-			<SnackbarProvider maxSnack={10}>
-				<CssBaseline />
-				{logged_user === '' && <LoginPage />}
-				{logged_user !== '' &&
-					<Stack direction="row" width="100%" height="100%"
-						sx={{ backgroundColor: "#202541" }}>
-						<NavBarNew />
+			<ToastContainer position="top-right" newestOnTop autoClose={3500} />
+			<CssBaseline />
+			{logged_user === '' && <LoginPage />}
+			{logged_user !== '' &&
+				<Stack direction="row" width="100%" height="100%"
+					sx={{ backgroundColor: "#202541" }}>
+					<NavBarNew />
 						{currentIterface === InterfaceEnum.Home && <Main />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
 						{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal />}
@@ -96,9 +99,9 @@ function App() {
 							</Box>
 						}
 						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
-					</Stack>
-				}
-			</SnackbarProvider>
+					{/* <ChatGlobal /> */}
+				</Stack>
+			}
 		</ThemeProvider>
 	);
 }

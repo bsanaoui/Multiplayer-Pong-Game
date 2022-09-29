@@ -7,6 +7,7 @@ import { RootState } from '../store';
 import { getMyRooms, RoomsOfUser } from '../requests/rooms';
 import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
 import { changeCurrRoom } from '../store/chatUiReducer';
+import { handleToastMsg } from './InfoMessages/Toast';
 
 
 let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
@@ -15,12 +16,9 @@ initRooms.length = 0;
 const Rooms = () => {
 	const dispatch = useDispatch();
 	const [rooms, setRooms] = useState(initRooms);
-	const logged_user = useSelector((state: RootState) => state.user).login;
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
 	const currentRole = useSelector((state: RootState) => state.chat).curr_role;
-
-	const [alertMsg, setAlertMsg] = useState(initAlertMsg);
 
 	const joinRoom = () => {
 		if (socket && currentRoom !== '')
@@ -43,30 +41,23 @@ const Rooms = () => {
 
 	const receiveUpdate = () => {
 		socket.on('roomsOfUser', (data: { status: boolean, action: string, message: string, user: string }) => {
-			// if (data.user === logged_user)
-			// 	setAlertMsg({ is_alert: true, status: data.status, msg: data.message });
-
 			if (data.action === 'setAdmin') {
-				setAlertMsg({ is_alert: true, status: data.status, msg: data.message });
+				handleToastMsg(data.status, data.message);
 				if (data.status) {
 					getRooms();
 					dispatch(changeCurrRoom({ room: currentRoom, role: currentRole }))
 				}
 			}
 			else if (data.action === 'leave') {
-				setAlertMsg({ is_alert: true, status: data.status, msg: data.message });
+				handleToastMsg(data.status, data.message);
 				if (data.status) {
 					getRooms();
 					if (rooms.length > 0)
 						dispatch(changeCurrRoom({ room: rooms[0].room_id as string, role: rooms[0].user_role as string }))
 				}
 			}
-			else if (data.action === "") 
-				setAlertMsg({ is_alert: true, status: data.status, msg: data.message });
-			
-
-
-
+			else if (data.action === "")
+				handleToastMsg(data.status, data.message);
 		})
 	}
 
@@ -146,7 +137,7 @@ const Rooms = () => {
 					))}
 				</List>
 			</Stack>
-			{alertMsg.is_alert && <AlertMsg is_alert={true} status={alertMsg.status} msg={alertMsg.msg} />}
+			{/* {alertMsg.is_alert && <AlertMsg is_alert={true} status={alertMsg.status} msg={alertMsg.msg} />} */}
 		</Box>
 	)
 }

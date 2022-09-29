@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
 import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestDirectMsgs } from '../requests/messages';
+import { handleToastMsg } from './InfoMessages/Toast';
 // import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
@@ -75,7 +76,10 @@ const ChatUIFriend = () => {
         socket.on('disableWriting', (data: { status: boolean, msg: string, user: string, from: string }) => {
             if (data.user === logged_user && data.from === currentConv ||
                 data.user === currentConv && data.from === logged_user)
-                setInput(data.status);
+                {
+                    handleToastMsg(data.status, data.msg);
+                    setInput(data.status);
+                }
         })
     }
 

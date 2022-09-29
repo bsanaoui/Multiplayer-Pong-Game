@@ -2,7 +2,6 @@ import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import friendIcon from '../assets/friends.png'
 import { FriendButton } from './FriendButton';
 import { useContext, useEffect, useState } from 'react';
-// import { SocketContext, SocketContextType } from '../context/socket';
 import { Friend, getFriends } from '../requests/directMessage';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
@@ -10,11 +9,9 @@ import { RootState } from '../store';
 let initFriends: Friend[] = [] as Friend[];
 initFriends.length = 0;
 const Friends = () => {
-    // const { socket } = useContext(SocketContext) as SocketContextType;
     const [friends, setFriends] = useState(initFriends);
     const logged_user = useSelector((state: RootState) => state.user).login;
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
-    // const [is_recieve_update, setRecieve] = useState(false);
     const socket = useSelector((state: RootState) => state.socketclient).socket;
 
 
@@ -32,7 +29,7 @@ const Friends = () => {
 
     const receiveUpdate = () => {
         socket.on('friends', (data: { status: boolean, from: string, to: string }) => {
-            console.log("friend ????????")
+            console.log("New friends");
             if (data.from === logged_user || data.to === logged_user)
                 getMyFriends();
         })
@@ -52,7 +49,7 @@ const Friends = () => {
             // setFriends(initFriends);
             console.log("clear friends");
         }
-    }, []) // add currentConv
+    }, []) 
 
     return (
         <Box

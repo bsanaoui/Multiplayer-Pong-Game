@@ -10,6 +10,7 @@ import { RootState } from "../store";
 import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestMessages } from '../requests/messages';
 import { io, Socket } from 'socket.io-client';
+import { handleToastMsg } from './InfoMessages/Toast';
 // import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
@@ -75,7 +76,10 @@ const ChatUIRoom = () => {
     const disableInputListen = () => {
         socket.on('disableWriting', (data: {status:boolean, message:string, user:string}) => {
             if (data.user === logged_user)
+            {
                 setInput(data.status);
+                handleToastMsg(data.status, data.message);
+            }
         })
     }
 

@@ -16,11 +16,10 @@ import { changeCurrRoom } from "../store/chatUiReducer";
 import { initSocketClient } from "../store/socketReducer";
 
 
+
 const ChatGlobal = () => {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
-	// const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
-	// const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const dispatch = useDispatch();
 
@@ -30,13 +29,14 @@ const ChatGlobal = () => {
 
 		if (currentPage === InterfaceEnum.ChatRoom || currentPage === InterfaceEnum.Friends
 			|| currentPage === InterfaceEnum.InstantMessaging)
-			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));
-	
+			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
+	  
 		return (() => {
 			console.log("Socket Disconnected");
 			socket.disconnect();
 		})
-	},[currentPage]);
+
+	}, [currentPage]);
 
 	return (
 		<Stack direction="row" alignItems="center" justifyContent="flex-end" height="100%" width="100%">

@@ -8,7 +8,7 @@
 * `Axios: `
 * `socket.io-client: `
 * `react-cookie: `
-* `SnackbarProvider: `
+* `react-toastify: `
 # CSS Styles && Tailwindcss:
 
 `* flex justify-between`

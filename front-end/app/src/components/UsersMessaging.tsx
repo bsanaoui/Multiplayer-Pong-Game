@@ -10,7 +10,8 @@ import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
 import { useDispatch } from 'react-redux';
 import { changeCurrConversation } from '../store/chatUiReducer';
 import { boolean } from 'yup';
-import { useSnackbar, VariantType } from 'notistack';
+import { handleToastMsg } from './InfoMessages/Toast';
+import { toast } from 'react-toastify';
 
 let initUsers: UserMessaging[] = [] as UserMessaging[];
 initUsers.length = 0;
@@ -19,11 +20,8 @@ export const UsersMessaging = () => {
     const [users, setUsers] = useState(initUsers);
     const logged_user = useSelector((state: RootState) => state.user).login;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
-
-    const [alertMsg, setAlertMsg] = useState(initAlertMsg);
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const currentConvAvatar = useSelector((state: RootState) => state.chat).curr_conv_avatar;
-    const { enqueueSnackbar } = useSnackbar();
 
 
     const joinDmRoom = () => {
@@ -45,67 +43,27 @@ export const UsersMessaging = () => {
 
     const receiveUpdate = () => {
         console.log("recieveUpdate ??????");
-        // setRecieve(true);
         socket.on('instant_messaging', (data: { status: boolean, action: string, msg: string, from: string, to: string }) => {
             if (data.action === "join") {
-                if(data.from === logged_user || data.to === logged_user)
+                if (data.from === logged_user || data.to === logged_user)
                     getUsers();
                 if (data.from === logged_user) {
-                    setAlertMsg({ is_alert: true, status: data.status, msg: data.msg });
-                    // data.forEach(element => console.log(element));
+                    handleToastMsg(data.status, data.msg);
                     dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar }));
                 }
+                else if (data.to === logged_user)
+                toast.info(data.from + " waving you");
             }
             else if (data.action === "block") {
-                if(data.from === logged_user || data.to === logged_user)
+                if (data.from === logged_user || data.to === logged_user)
                     getUsers();
-                if (data.from === logged_user) {
-                    setAlertMsg({ is_alert: true, status: data.status, msg: data.msg });
-                }
-                else if (data.to === logged_user)
-                {
-                    if (data.from !== currentConv){
-                        dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar }));
-                    }
-                }
+                if (data.from === logged_user)
+                    handleToastMsg(data.status, data.msg);
+                else if (data.to === logged_user && data.from !== currentConv)
+                    dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar }));
             }
-            // if (data.from === logged_user)
-            // {
-            //     setAlertMsg({ is_alert: true, status: data.status, msg: data.msg });
-            //     // handleSnackbarMsg(data.msg, (data.status) ? "success" : "error");
-            //     console.log("!!!!!!!!!!!! IS Connected");
-            //     // if (data.to === logged_user)
-            // }
-            // if ((data.from === logged_user && data.to === currentConv) // connect with theme
-            //     || (data.to === logged_user && data.from === currentConv)) {
-            //     getUsers();
-            //     console.log("dispatch lenght > 0");
-            //     // if (users.length > 0)
-            //     // {
-            //     //     dispatch(changeCurrConversation({ user: users[0].login, avatar: users[0].avatar }));
-            //     // }
-            //     // else
-            //     // {
-            //     //     console.log("dispatch lenght === 0");
-            //     //     dispatch(changeCurrConversation({ user: '', avatar: '' }));
-            //     // }
-            // }
-            // else if ((data.from === logged_user && data.to !== currentConv) // connect with other (join other room)
-            //     || (data.to === logged_user && data.from !== currentConv)) {
-            //     getUsers();
-            //     if (users.length > 0)
-            //         dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar}));
-            //     else
-            //         dispatch(changeCurrConversation({ user: '', avatar: '' }));
-            // }
         })
     }
-
-    const handleSnackbarMsg = (msg: string, variant: VariantType) => () => {
-        // variant could be success, error, warning, info, or default
-        enqueueSnackbar(msg, { variant });
-
-    };
 
 
     console.log("User Messaging");
@@ -198,7 +156,7 @@ export const UsersMessaging = () => {
                     ))}
                 </List>
             </Stack>
-            {alertMsg.is_alert && <AlertMsg is_alert={alertMsg.is_alert} status={alertMsg.status} msg={alertMsg.msg} />}
+            {/* {alertMsg.is_alert && <AlertMsg is_alert={alertMsg.is_alert} status={alertMsg.status} msg={alertMsg.msg} />} */}
         </Box>
     )
 }
