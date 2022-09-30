@@ -6,6 +6,18 @@ export type RoomData = {
 	count: number,
 };
 
+export type RoomInfo = {
+	name: string;
+	type: string;
+	password: string;
+};
+
+export type ProfileNavData = {
+	level: number,
+	invit_count: number,
+	tfa: boolean,
+};
+
 export async function getRoomsData(kind: string) {
 	const url: string = (kind === "Public rooms" ? "/room/public_room" : "/room/protected_room");
 	try {
@@ -36,11 +48,7 @@ export async function getRoomsData(kind: string) {
 	}
 }
 
-export type RoomInfo = {
-	name: string;
-	type: string;
-	password: string;
-};
+
 
 export async function createRoom(room_info: RoomInfo) {
 	try {
@@ -63,6 +71,36 @@ export async function createRoom(room_info: RoomInfo) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
 			// 👇️ error: AxiosError<any, any>
+			return error.message;
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
+}
+
+export async function getProfileNavbar() {
+
+	try {
+		// 👇️ const data: GetUsersResponse
+		const { data, status } = await axios.get<ProfileNavData>(
+			process.env.REACT_APP_SERVER_IP + "profile/navbar",
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+
+			}
+		);
+		console.log(JSON.stringify(data, null, 4));
+		// 👇️ "response status is: 200"
+		console.log('response status is: ', status);
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
 			return error.message;
 		} else {
 			console.log("unexpected error: ", error);

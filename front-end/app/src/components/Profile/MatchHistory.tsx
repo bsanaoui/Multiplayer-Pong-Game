@@ -1,7 +1,7 @@
 import { Avatar, Box, List, Stack, Typography } from "@mui/material"
 import avatar2 from '../../assets/avatar2.png'
-import PlayerTable from "./PlayerTable"
-import ScoreTable from "./ScoreTable"
+import PlayerTable from "./Elements/PlayerTable"
+import ScoreTable from "./Elements/ScoreTable"
 
 interface matchHistoryProps {
 	id: number,

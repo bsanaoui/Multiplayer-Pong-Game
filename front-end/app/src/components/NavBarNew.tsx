@@ -46,7 +46,7 @@ export const NavBarNew = () => {
     const logged_user = userState.login;
     const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
     let avatar: File;
-    
+
     return (
         <Box>
             {is_collapsedNav && <NavbarCollapsed />}
@@ -61,10 +61,12 @@ export const NavBarNew = () => {
                             badgeContent={
                                 <IconButton component="label" sx={{ background: "#0564FC", width: "25px", height: "25px" }}>
                                     <EditIcon sx={{ width: "18px" }} />
-                                    <input hidden accept="image/*" multiple type="file" onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                        if (event.target.files)
-                                            avatar = event.target.files[0];
-                                    }} />
+                                    <form action={process.env.REACT_APP_SERVER_IP + '/profile/avatar'} method='POST'>
+                                        <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                            if (event.target.files)
+                                                avatar = event.target.files[0];
+                                        }} />
+                                    </form>
                                 </IconButton>
                             }>
                             <Avatar
@@ -97,7 +99,7 @@ export const NavBarNew = () => {
                                         paddingTop: '1.2px',
                                     }}>
                                     Level 32</Typography>
-                                    <Box paddingLeft="23px" paddingTop="3px"><InvitationsMenu/></Box>
+                                <Box paddingLeft="23px" paddingTop="3px"><InvitationsMenu /></Box>
                             </Stack>
                         </Stack>
                     </Stack>

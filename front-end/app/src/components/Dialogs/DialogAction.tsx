@@ -37,7 +37,7 @@ export default function DialogAction(props: { isDialogOpened: boolean, handleClo
 
     function inviteUser( user_login: string) {
         if (props.socket) {
-            props.socket.emit('inviteUser', {room:props.room, user_to_invite: user_login});
+            props.socket.emit('inviteUser', {user_to_invite: user_login});
             console.log("inviteUser: " + user_login);
         }
     }

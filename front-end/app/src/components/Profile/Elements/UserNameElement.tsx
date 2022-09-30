@@ -1,7 +1,13 @@
 import { Box, Stack, Typography } from '@mui/material'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 
-const UserNameElement = () => {
+interface PropsUserType {
+	login:string,
+	username:string,
+	level:number,
+}
+
+const UserNameElement = (Props:PropsUserType) => {
 	return (
 		<Box
 			sx={{
@@ -18,6 +24,7 @@ const UserNameElement = () => {
 					fontSize='2.2rem'
 					lineHeight='109.52%'>
 					Jack Linsan
+					{/* {Props.username} */}
 				</Typography>
 				<Stack direction= "row" justifyContent="space-between" alignItems="center" spacing={6}>
 					<Typography
@@ -26,6 +33,7 @@ const UserNameElement = () => {
 						fontSize='1.2rem'
 						color="#A9AEE3">
 						JackL
+						{/* {Props.login} */}
 					</Typography>
 					<Stack direction="row" spacing={0.5}>
 						<SportsEsportsIcon sx={{ width: "19px" }} />
@@ -37,6 +45,7 @@ const UserNameElement = () => {
 								paddingTop: '1.3px',
 							}}>
 							Level 23</Typography>
+							{/* Level {Props.level}</Typography> */}
 					</Stack>
 				</Stack>
 			</Stack>

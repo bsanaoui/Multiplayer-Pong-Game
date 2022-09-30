@@ -14,7 +14,7 @@ import LoginPage from './components/LoginPage';
 import { NavBarNew } from './components/NavBarNew';
 import { Box, Stack } from '@mui/material';
 import { LiveMatchs } from './components/LiveMatchs';
-import { DashboardUser } from './components/DashboardUser';
+import { DashboardUser } from './components/Profile/DashboardUser';
 import { InterfaceEnum } from './store/interfacesReducer';
 import { InvitationFriend } from './components/InvitationFriend&Game/InvitationFriend';
 import { InvitationsMenu } from './components/InvitationsMenu';

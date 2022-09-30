@@ -255,7 +255,6 @@ const Canvas = () => {
 			drawGame(ctx);
 		})
 
-		
 		socket.on('start_game', () => {
 			countdown(ctx);
 			if (mode !== '3')
