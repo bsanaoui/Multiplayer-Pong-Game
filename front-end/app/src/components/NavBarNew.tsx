@@ -27,7 +27,7 @@ import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 let getInterface = (interfaceEnum: InterfaceEnum): string => {
     switch (interfaceEnum) {
@@ -139,6 +139,8 @@ const CustomButton = ({ _name, _icon }: ButtonProps) => {
     const currentInterface = useSelector((state: RootState) => state.interfaces).current;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    // const location = useLocation(); // handle locations
+
 
     let handleNavigation = (interfaceEnum: InterfaceEnum) => {
         switch (interfaceEnum) {

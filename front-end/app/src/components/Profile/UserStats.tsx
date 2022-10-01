@@ -6,7 +6,7 @@ import StatElementBar from './Elements/StatElementBar'
 import StatSegment from './Elements/StatSegment'
 import UserNameElement from './Elements/UserNameElement'
 
-let initUserStats: UserStatsData ;
+let initUserStats: UserStatsData =  {} as UserStatsData;
 
 const UserStats = ({other_user}:{other_user?:string}) => {
 	const [user_stats, setUserStats] = useState(initUserStats);
@@ -14,6 +14,7 @@ const UserStats = ({other_user}:{other_user?:string}) => {
         getStatsInfo(other_user).then((value) => {
             if ((typeof value) === (typeof initUserStats)) {
                 const data = value as UserStatsData;
+				console.log("DATA", data);
                 setUserStats(data);
             }
         })

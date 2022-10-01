@@ -60,7 +60,7 @@ const ContentField = (Props: matchHistoryProps) => {
 	)
 }
 
-let initMatchHistory: MatchHistoryData[] = [];
+let initMatchHistory: MatchHistoryData[] = [] as MatchHistoryData[];
 initMatchHistory.length = 0;
 
 export const MatchHistory = ({ other_user }: { other_user?: string }) => {
@@ -68,10 +68,10 @@ export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 
 	useEffect(() => {
 		getMatchsHistory(other_user).then((value) => {
-			// if ((typeof value) === (typeof initMatchHistory)) {
+			if ((typeof value) === (typeof initMatchHistory)) {
 				const data = value as MatchHistoryData[];
 				setMatchHistorys(data);
-			// }
+			}
 		})
 			.catch((reason: string) => {
 				console.log("Error ;matchs:", reason);

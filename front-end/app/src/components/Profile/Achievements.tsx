@@ -6,7 +6,7 @@ import { RootState } from "../../store";
 import AchievementElement from "./Elements/AchievementElement"
 
 
-let initAchievements: Achievement[] = [];
+let initAchievements: Achievement[] = [] as Achievement[];
 initAchievements.length = 0;
 
 export const Achievements = ({other_user}:{other_user?:string}) => {

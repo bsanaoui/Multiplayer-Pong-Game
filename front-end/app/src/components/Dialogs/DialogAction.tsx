@@ -56,9 +56,7 @@ export default function DialogAction(props: { isDialogOpened: boolean, handleClo
 
     return (
         <div>
-            {/* <Button variant="outlined" onClick={handleClickOpen}>
-                Open form dialog
-            </Button> */}
+
             <Dialog open={props.isDialogOpened} onClose={handleClose}>
                 <DialogTitle>{getActionInput(props.action)}</DialogTitle>
                 <DialogContent>

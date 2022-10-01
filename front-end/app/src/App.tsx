@@ -10,7 +10,7 @@ import { RootState } from "./store";
 
 import LoginPage from './components/LoginPage';
 import { NavBarNew } from './components/NavBarNew';
-import { Box, Stack } from '@mui/material';
+import { Box, CircularProgress, Stack } from '@mui/material';
 import { InterfaceEnum } from './store/interfacesReducer';
 import { InvitationFriend } from './components/InvitationFriend&Game/InvitationFriend';
 import { InvitationsMenu } from './components/InvitationsMenu';
@@ -56,7 +56,7 @@ const InstantMessaging = React.lazy(() => import('./components/GlobalDM'));
 const Matchmaking = React.lazy(() => import('./components/Game'));
 const LiveMatchs = React.lazy(() => import('./components/LiveMatchs'));
 const Login = React.lazy(() => import('./components/LoginPage'));
-const Loading = () => <p>Loading ...</p>;
+const Loading = () => <Box margin="auto"><CircularProgress /><p>Loading ...</p></Box>;
 
 
 function App() {
@@ -85,8 +85,8 @@ function App() {
 		<ThemeProvider theme={darkTheme}>
 			<ToastContainer position="top-right" newestOnTop autoClose={3500} />
 			<CssBaseline />
-			{logged_user === '' && <LoginPage />}
-			{logged_user !== '' &&
+			{/* {logged_user === '' && <LoginPage />} */}
+			{logged_user === '' &&
 				<Stack direction="row" width="100%" height="100%"
 					sx={{ backgroundColor: "#202541" }}>
 					<NavBarNew />
@@ -107,7 +107,6 @@ function App() {
 							<Route path='/login' element={<Login/>}/>
 						</Routes>
 					</React.Suspense>
-
 				</Stack>
 			}
 		</ThemeProvider>
