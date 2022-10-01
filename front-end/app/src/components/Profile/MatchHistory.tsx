@@ -101,8 +101,8 @@ export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 				<HeaderTable name="Duration" />
 			</Stack>
 			<List style={{ width: "100%", overflow: 'auto', height: "100%" }} >
-				{matchs_history && matchs_history.map((item) => (
-					<ContentField id={item.id} name={item.username}
+				{matchs_history && matchs_history.map((item, index) => (
+					<ContentField id={index} name={item.username}
 						url_avatr={item.avatar}
 						level={item.level}
 						score_1={item.my_score} score_2={item.opp_score}

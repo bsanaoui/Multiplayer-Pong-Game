@@ -8,7 +8,6 @@ export type Achievement = {
 }
 
 export type MatchHistoryData ={
-    id:number,
     avatar: string,
     username: string,
     level: number
