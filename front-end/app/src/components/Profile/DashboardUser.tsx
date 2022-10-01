@@ -5,14 +5,14 @@ import { MatchHistory } from './MatchHistory'
 import UserStats from './UserStats'
 
 
-export const DashboardUser = ({other_user}:{other_user?:string}) => {
+const DashboardUser = ({other_user}:{other_user?:string}) => {
     return (
         <Stack direction="row" justifyContent="center" alignItems="center" spacing={4}
             sx={{ width: "100%", margin: "3%" }}>
             {/* ****************** User Stats **************** */}
             <UserStats other_user={other_user} />
             <Stack alignItems="center" spacing={5}
-                sx={{ width: "850px", height: "95%", borderRadius: "30px" }}>
+                sx={{ width: "850px", height: "800px", borderRadius: "30px" }}>
                 {/* **************** User Achievements *************** */}
                 <Achievements other_user={other_user}/>
                 {/* **************** Match History *************** */}
@@ -29,3 +29,5 @@ export const DashboardUser = ({other_user}:{other_user?:string}) => {
         </Stack>
     )
 }
+
+export default DashboardUser

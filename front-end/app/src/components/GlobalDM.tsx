@@ -16,7 +16,7 @@ import { initSocketClient } from "../store/socketReducer";
 import { ChatUIRoomMsg } from "./ChatUIRoomMsg";
 
 
-export const GlobalDM = () => {
+const GlobalDM = () => {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	// const currentPage = useSelector((state: RootState) => state.interfaces).current;
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
@@ -45,3 +45,5 @@ export const GlobalDM = () => {
 		</Stack>
 	)
 }
+
+export default GlobalDM

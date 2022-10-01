@@ -14,7 +14,7 @@ interface matchHistoryProps {
 	level: number,
 	score_1: number,
 	score_2: number,
-	date: Date,
+	date: string,
 	game_type: string,
 	duration: string,
 }
@@ -52,28 +52,29 @@ const ContentField = (Props: matchHistoryProps) => {
 					alt="Lion" src={Props.url_avatr} imgProps={{ style: { width: 'auto' } }} />
 			</Box>
 			<PlayerTable username={Props.name} level={Props.level} />
-			<Box width="19.5%" paddingLeft="auto"><ScoreTable score_1={44} score_2={14} /></Box>
-			<div style={{ width: "14%" }} className="typo-table-history">{Props.date.toISOString().split('T')[0]}</div>
+			<Box width="19.5%" paddingLeft="auto"><ScoreTable score_1={Props.score_2} score_2={Props.score_1} /></Box>
+			<div style={{ width: "14%" }} className="typo-table-history">{Props.date}</div>
 			<div style={{ width: "19%" }} className="typo-table-history">{Props.game_type}</div>
 			<div style={{ width: "17%" }} className="typo-table-history">{Props.duration}</div>
 		</Stack >
 	)
 }
 
-let initMatchHistory: MatchHistoryData[];
+let initMatchHistory: MatchHistoryData[] = [];
+initMatchHistory.length = 0;
 
 export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 	const [matchs_history, setMatchHistorys] = useState(initMatchHistory);
 
 	useEffect(() => {
 		getMatchsHistory(other_user).then((value) => {
-			if ((typeof value) === (typeof initMatchHistory)) {
+			// if ((typeof value) === (typeof initMatchHistory)) {
 				const data = value as MatchHistoryData[];
 				setMatchHistorys(data);
-			}
+			// }
 		})
 			.catch((reason: string) => {
-				console.log("Error ;matchs:", reason)
+				console.log("Error ;matchs:", reason);
 			})
 		return (() => {
 			setMatchHistorys(initMatchHistory);
@@ -86,7 +87,7 @@ export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 			sx={{
 				backgroundColor: "#3F4478",
 				width: "855px",
-				minHeight: "90%",
+				height: "500px",
 				borderRadius: '30px',
 			}}>
 			<Stack
@@ -101,60 +102,62 @@ export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 				<HeaderTable name="Duration" />
 			</Stack>
 			<List style={{ width: "100%", overflow: 'auto', height: "100%" }} >
-				{matchs_history && matchs_history.map((item, index) => (
-					<ContentField id={index} name={item.username}
+				{typeof(matchs_history) == typeof(initMatchHistory) && matchs_history.map((item, index) => (
+					<li key={index}>
+						<ContentField id={index} name={item.username}
 						url_avatr={item.avatar}
 						level={item.level}
 						score_1={item.my_score} score_2={item.opp_score}
 						date={item.date}
 						game_type={item.game}
 						duration={match_h.duration} />
+					</li>
 				))}
-				{!matchs_history && <li key='1' >
-					<ContentField id={1} name={match_h.name}
-						url_avatr={match_h.url_avatr}
-						level={match_h.level}
-						score_1={match_h.score_1} score_2={match_h.score_2}
-						date={match_h.date}
-						game_type={match_h.game_type}
-						duration={match_h.duration} />
-				</li>}
-				{!matchs_history && <li key='2' >
-					<ContentField id={2} name={match_h.name}
-						url_avatr={match_h.url_avatr}
-						level={match_h.level}
-						score_1={match_h.score_1} score_2={match_h.score_2}
-						date={match_h.date}
-						game_type={match_h.game_type}
-						duration={match_h.duration} />
-				</li>}
-				{!matchs_history && <li key='3' >
-					<ContentField id={3} name={match_h.name}
-						url_avatr={match_h.url_avatr}
-						level={match_h.level}
-						score_1={match_h.score_1} score_2={match_h.score_2}
-						date={match_h.date}
-						game_type={match_h.game_type}
-						duration={match_h.duration} />
-				</li>}
-				{!matchs_history && <li key='4' >
-					<ContentField id={4} name={match_h.name}
-						url_avatr={match_h.url_avatr}
-						level={match_h.level}
-						score_1={match_h.score_1} score_2={match_h.score_2}
-						date={match_h.date}
-						game_type={match_h.game_type}
-						duration={match_h.duration} />
-				</li>}
-				{!matchs_history && <li key='5' >
-					<ContentField id={5} name={match_h.name}
-						url_avatr={match_h.url_avatr}
-						level={match_h.level}
-						score_1={match_h.score_1} score_2={match_h.score_2}
-						date={match_h.date}
-						game_type={match_h.game_type}
-						duration={match_h.duration} />
-				</li>}
+				{/*{!matchs_history && <li key='1' >*/}
+				{/*	<ContentField id={1} name={match_h.name}*/}
+				{/*		url_avatr={match_h.url_avatr}*/}
+				{/*		level={match_h.level}*/}
+				{/*		score_1={match_h.score_1} score_2={match_h.score_2}*/}
+				{/*		date={match_h.date}*/}
+				{/*		game_type={match_h.game_type}*/}
+				{/*		duration={match_h.duration} />*/}
+				{/*</li>}*/}
+				{/*{!matchs_history && <li key='2' >*/}
+				{/*	<ContentField id={2} name={match_h.name}*/}
+				{/*		url_avatr={match_h.url_avatr}*/}
+				{/*		level={match_h.level}*/}
+				{/*		score_1={match_h.score_1} score_2={match_h.score_2}*/}
+				{/*		date={match_h.date}*/}
+				{/*		game_type={match_h.game_type}*/}
+				{/*		duration={match_h.duration} />*/}
+				{/*</li>}*/}
+				{/*{!matchs_history && <li key='3' >*/}
+				{/*	<ContentField id={3} name={match_h.name}*/}
+				{/*		url_avatr={match_h.url_avatr}*/}
+				{/*		level={match_h.level}*/}
+				{/*		score_1={match_h.score_1} score_2={match_h.score_2}*/}
+				{/*		date={match_h.date}*/}
+				{/*		game_type={match_h.game_type}*/}
+				{/*		duration={match_h.duration} />*/}
+				{/*</li>}*/}
+				{/*{!matchs_history && <li key='4' >*/}
+				{/*	<ContentField id={4} name={match_h.name}*/}
+				{/*		url_avatr={match_h.url_avatr}*/}
+				{/*		level={match_h.level}*/}
+				{/*		score_1={match_h.score_1} score_2={match_h.score_2}*/}
+				{/*		date={match_h.date}*/}
+				{/*		game_type={match_h.game_type}*/}
+				{/*		duration={match_h.duration} />*/}
+				{/*</li>}*/}
+				{/*{!matchs_history && <li key='5' >*/}
+				{/*	<ContentField id={5} name={match_h.name}*/}
+				{/*		url_avatr={match_h.url_avatr}*/}
+				{/*		level={match_h.level}*/}
+				{/*		score_1={match_h.score_1} score_2={match_h.score_2}*/}
+				{/*		date={match_h.date}*/}
+				{/*		game_type={match_h.game_type}*/}
+				{/*		duration={match_h.duration} />*/}
+				{/*</li>}*/}
 
 			</List>
 		</Stack>
@@ -169,7 +172,7 @@ let match_h: matchHistoryProps = {
 	level: 58,
 	score_1: 54,
 	score_2: 24,
-	date: new Date("2022-09-15"),
+	date: "2022-09-15",
 	game_type: "Classic",
 	duration: "5 Min"
 }

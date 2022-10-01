@@ -8,7 +8,7 @@ import { getLiveMatchs } from '../requests/liveGames';
 
 let initLiveMatchs = {};
 
-export const LiveMatchs = () => {
+const LiveMatchs = () => {
 
     const [matchs, setMatchs] = useState(initLiveMatchs);
     function getlivematchs() {
@@ -62,3 +62,5 @@ export const LiveMatchs = () => {
         </Stack>
     )
 }
+
+export default LiveMatchs

@@ -10,7 +10,7 @@ const ScoreTable = (Props: ScoreProps) => {
 	let msg: string;
 
 	if (Props.score_1 === Props.score_2) { color_bg = "yellow"; msg = "It is a draw" }
-	else if (Props.score_1 > Props.score_2) { color_bg = "#11EF92"; msg = "You are winning" }
+	else if (Props.score_1 < Props.score_2) { color_bg = "#11EF92"; msg = "You are winning" }
 	else { color_bg = "#FD506F"; msg = "You are loosing" }
 	return (
 		<Stack justifyContent="center" alignItems="center" spacing={0} width='110px'

@@ -51,25 +51,5 @@ const LoginPage = () => {
 		</Box>
 	)
 }
-// const LoginPage = () => {
-//     const dispatch = useDispatch();
-
-//     const [username, setUser] = useState("");
-
-//     return (
-//         <form className="enter-username-form" onSubmit={e => {
-//             e.preventDefault();
-//         }}>
-//             <Input
-//                 type="text"
-//                 // value={props.username} 
-//                 onChange={e => setUser(e.target.value)}
-//                 placeholder="Enter a username..."
-//                 required={true}
-//             />
-//             <Button type="submit" onClick={() => { dispatch(initUser(username)) }}>Submit</Button>
-//         </form>
-//     )
-// }
 
 export default LoginPage

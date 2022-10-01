@@ -6,7 +6,7 @@ import StatElementBar from './Elements/StatElementBar'
 import StatSegment from './Elements/StatSegment'
 import UserNameElement from './Elements/UserNameElement'
 
-let initUserStats: UserStatsData;
+let initUserStats: UserStatsData ;
 
 const UserStats = ({other_user}:{other_user?:string}) => {
 	const [user_stats, setUserStats] = useState(initUserStats);
@@ -27,7 +27,7 @@ const UserStats = ({other_user}:{other_user?:string}) => {
 
 	return (
 		<Stack alignItems="flex-start" spacing={10} paddingTop="25px"
-			sx={{ backgroundColor: "#3F4478", width: "380px", height: "95%", borderRadius: "30px" }}>
+			sx={{ backgroundColor: "#3F4478", width: "380px", height: "800px", borderRadius: "30px" }}>
 			{/* ****************** User Head **************** */}
 			<Stack direction="row" alignItems="flex-start" spacing={0.5} paddingLeft="6%">
 				<AvatarProfile avatar={user_stats?.avatar} />
