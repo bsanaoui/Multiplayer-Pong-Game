@@ -3,7 +3,7 @@ import { Stack } from '@mui/system'
 
 interface statSegmentProps {
 	name: string,
-	value: string
+	value: number,
 }
 
 const StatSegment = (Props: statSegmentProps) => {
@@ -26,7 +26,7 @@ const StatSegment = (Props: statSegmentProps) => {
 	)
 }
 
-const StatElementBar = () => {
+const StatElementBar = (Props:{total_matches:number, friends:number, ratio:number}) => {
 	return (
 		<Box sx={{
 			width: "220px",
@@ -39,9 +39,9 @@ const StatElementBar = () => {
 				direction="row"
 				justifyContent="space-between"
 				alignItems="center">
-				<StatSegment name="Matches" value="03" />
-				<StatSegment name="Friends" value="12" />
-				<StatSegment name="Ratio %" value="75" />
+				<StatSegment name="Matches" value={Props.total_matches} />
+				<StatSegment name="Friends" value={Props.friends} />
+				<StatSegment name="Ratio %" value={Props.ratio} />
 			</Stack>
 		</Box>
 	)

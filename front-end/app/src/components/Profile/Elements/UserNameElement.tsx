@@ -23,8 +23,8 @@ const UserNameElement = (Props:PropsUserType) => {
 					fontWeight='800'
 					fontSize='2.2rem'
 					lineHeight='109.52%'>
-					Jack Linsan
-					{/* {Props.username} */}
+					{/* Jack Linsan */}
+					{Props.username}
 				</Typography>
 				<Stack direction= "row" justifyContent="space-between" alignItems="center" spacing={6}>
 					<Typography
@@ -32,8 +32,8 @@ const UserNameElement = (Props:PropsUserType) => {
 						fontWeight='800'
 						fontSize='1.2rem'
 						color="#A9AEE3">
-						JackL
-						{/* {Props.login} */}
+						{/* JackL */}
+						{Props.login}
 					</Typography>
 					<Stack direction="row" spacing={0.5}>
 						<SportsEsportsIcon sx={{ width: "19px" }} />
@@ -44,8 +44,8 @@ const UserNameElement = (Props:PropsUserType) => {
 								fontSize: '0.9rem',
 								paddingTop: '1.3px',
 							}}>
-							Level 23</Typography>
-							{/* Level {Props.level}</Typography> */}
+							{/* Level 23</Typography> */}
+							Level {Props.level}</Typography>
 					</Stack>
 				</Stack>
 			</Stack>

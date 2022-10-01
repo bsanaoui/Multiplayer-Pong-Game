@@ -35,7 +35,7 @@ export const Achievements = ({other_user}:{other_user?:string}) => {
         return (() => {
             setAchievements(initAchievements);
         })
-    }, [achievemetDiscription]);
+    }, []);
 
     return (
         <Stack justifyContent="flex-start" alignItems="flex-start" spacing={3}
@@ -46,26 +46,26 @@ export const Achievements = ({other_user}:{other_user?:string}) => {
                     fontSize: '32px',
                     lineHeight: '109.52%',
                 }}>Achievements </Typography>
-                {/* <Typography display="inline" color="#A1AAFF">(
+                <Typography display="inline" color="#A1AAFF">(
                     {achievemets && countValidAchievements(achievemets)}
-                /6 Received)</Typography> */}
-                <Typography display="inline" color="#A1AAFF">(3/6 Received)</Typography>
+                /6 Received)</Typography>
+                {/* <Typography display="inline" color="#A1AAFF">(3/6 Received)</Typography> */}
             </Box>
             <Stack alignItems="center" justifyContent="center" spacing={3}
                 sx={{ backgroundColor: "#3F4478", width: "100%", height: "100%", borderRadius: "30px" }}>
                 <Stack direction="row" spacing={3}>
-                    {/* {achievemets && achievemets.map((item) => (
+                    {achievemets && achievemets.map((item) => (
                         <AchievementElement achieve_id={item.achieve_id}
                         achieve_name={item.achieve_name}
                         description={item.description}
                         achieved={item.achieved} />
-                    ))} */}
-                    <AchievementElement achieve_id={1} achieve_name={""} description={"achiev 1"} achieved={false} />
-                    <AchievementElement achieve_id={2} achieve_name={""} description={"achiev 2"} achieved={true} />
-                    <AchievementElement achieve_id={3} achieve_name={""} description={"achiev 3"} achieved={true} />
-                    <AchievementElement achieve_id={4} achieve_name={""} description={"achiev 4"} achieved={false} />
-                    <AchievementElement achieve_id={5} achieve_name={""} description={"achiev 5"} achieved={true} />
-                    <AchievementElement achieve_id={6} achieve_name={""} description={"achiev 6"} achieved={false} />
+                    ))}
+                    {!achievemets &&  <AchievementElement achieve_id={1} achieve_name={""} description={"achiev 1"} achieved={false} />}
+                    {!achievemets &&  <AchievementElement achieve_id={2} achieve_name={""} description={"achiev 2"} achieved={false} />}
+                    {!achievemets &&  <AchievementElement achieve_id={3} achieve_name={""} description={"achiev 3"} achieved={false} />}
+                    {!achievemets &&  <AchievementElement achieve_id={4} achieve_name={""} description={"achiev 4"} achieved={false} />}
+                    {!achievemets &&  <AchievementElement achieve_id={5} achieve_name={""} description={"achiev 5"} achieved={false} />}
+                    {!achievemets &&  <AchievementElement achieve_id={6} achieve_name={""} description={"achiev 6"} achieved={false} />}
                 </Stack>
                 <Box width="90%">
                     <Typography display="inline" sx={{
@@ -74,15 +74,15 @@ export const Achievements = ({other_user}:{other_user?:string}) => {
                         lineHeight: '109.52%',
                     }}>Description of the achievement: </Typography>
 
-                    {/* <Typography display="inline" color="#A1AAFF">
+                    <Typography display="inline" color="#A1AAFF">
                         {achievemetDiscription !== "" && achievemetDiscription}
                         {(achievemets && achievemetDiscription === "") && achievemets[0].achieve_name + ", " + achievemets[0].description }
-                    </Typography> */}
-
+                    </Typography>
+                    {!achievemets && 
                      <Typography display="inline" color="#A1AAFF">
                         Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
                         in a piece of classical Latin literature from 45
-                    </Typography> 
+                    </Typography>}
                 </Box>
             </Stack>
         </Stack>

@@ -7,7 +7,8 @@ export type Achievement = {
     achieved: boolean,
 }
 
-export type MatchHistory ={
+export type MatchHistoryData ={
+    id:number,
     avatar: string,
     username: string,
     level: number
@@ -61,9 +62,9 @@ export async function getAchievements(other_user?: string) {
 
 //========================== Get match history ========================= //
 
-export async function getMatchHistory(other_user?: string) {
+export async function getMatchsHistory(other_user?: string) {
     try {
-        const { data, status } = await axios.get<MatchHistory[]>(
+        const { data, status } = await axios.get<MatchHistoryData[]>(
             process.env.REACT_APP_SERVER_IP + "/profile/match_history" +
                 (typeof (other_user) === 'string') ? ("/" + other_user) : "",
             {

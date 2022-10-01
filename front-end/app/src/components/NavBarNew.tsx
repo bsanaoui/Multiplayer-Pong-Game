@@ -1,5 +1,5 @@
 
-import { Avatar, Badge, Button, Divider, IconButton, Stack, Typography } from '@mui/material'
+import { Avatar, Badge, Button, Divider, IconButton, Slide, Stack, Typography } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store";
 import { InterfaceEnum, setCurrentInterface } from "../store/interfacesReducer";
@@ -26,6 +26,7 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NavigationIcon from '@mui/icons-material/Navigation';
+import React from 'react';
 
 let getInterface = (interfaceEnum: InterfaceEnum): string => {
     switch (interfaceEnum) {
@@ -46,81 +47,84 @@ export const NavBarNew = () => {
     const logged_user = userState.login;
     const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
     let avatar: File;
+    const containerRef = React.useRef(null);
 
     return (
-        <Box>
-            {is_collapsedNav && <NavbarCollapsed />}
-            {!is_collapsedNav &&
-                <Stack justifyContent="space-between"
-                    sx={{ height: "100vh", width: "240px", backgroundColor: "#303465" }}>
-                    <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1.8}
-                        sx={{ padding: "3.3%", paddingTop: "5%" }}>
-                        <Badge
-                            overlap="circular"
-                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                            badgeContent={
-                                <IconButton component="label" sx={{ background: "#0564FC", width: "25px", height: "25px" }}>
-                                    <EditIcon sx={{ width: "18px" }} />
-                                    <form action={process.env.REACT_APP_SERVER_IP + '/profile/avatar'} method='POST'>
-                                        <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                            if (event.target.files)
-                                                avatar = event.target.files[0];
-                                        }} />
-                                    </form>
-                                </IconButton>
-                            }>
-                            <Avatar
-                                variant="circular"
-                                sx={{
-                                    height: '60px',
-                                    width: '60px',
-                                    backgroundColor: "#FFF",
-                                    border: "3px solid #535995",
-                                }}
-                                alt="Lion" src={userState.avatar} imgProps={{ style: { width: 'auto' } }} />
-                        </Badge>
-                        <Stack justifyContent="space-between" alignItems="flex-start" spacing={0.25}>
-                            <Typography
-                                className='truncate-typo'
-                                width='100%'
-                                fontWeight="700"
-                                fontSize="1.4rem"
-                                fontFamily="Lato"
-                                lineHeight="130%">
-                                {logged_user}
-                            </Typography>
-                            <Stack direction="row" spacing={0.6}>
-                                <SportsEsportsIcon sx={{ width: "18px", paddingTop: "3%" }} />
-                                <Typography
+        <Slide direction="right" in={true} container={containerRef.current}>
+            <Box>
+                {is_collapsedNav && <NavbarCollapsed />}
+                {!is_collapsedNav &&
+                    <Stack justifyContent="space-between"
+                        sx={{ height: "100vh", width: "240px", backgroundColor: "#303465" }}>
+                        <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1.8}
+                            sx={{ padding: "3.3%", paddingTop: "5%" }}>
+                            <Badge
+                                overlap="circular"
+                                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                                badgeContent={
+                                    <IconButton component="label" sx={{ background: "#0564FC", width: "25px", height: "25px" }}>
+                                        <EditIcon sx={{ width: "18px" }} />
+                                        <form action={process.env.REACT_APP_SERVER_IP + '/profile/avatar'} method='POST'>
+                                            <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                                if (event.target.files)
+                                                    avatar = event.target.files[0];
+                                            }} />
+                                        </form>
+                                    </IconButton>
+                                }>
+                                <Avatar
+                                    variant="circular"
                                     sx={{
-                                        color: '#ADADAD',
-                                        fontWeight: '600',
-                                        fontSize: '1rem',
-                                        paddingTop: '1.2px',
-                                    }}>
-                                    Level 32</Typography>
-                                <Box paddingLeft="23px" paddingTop="3px"><InvitationsMenu /></Box>
+                                        height: '60px',
+                                        width: '60px',
+                                        backgroundColor: "#FFF",
+                                        border: "3px solid #535995",
+                                    }}
+                                    alt="Lion" src={userState.avatar} imgProps={{ style: { width: 'auto' } }} />
+                            </Badge>
+                            <Stack justifyContent="space-between" alignItems="flex-start" spacing={0.25}>
+                                <Typography
+                                    className='truncate-typo'
+                                    width='100%'
+                                    fontWeight="700"
+                                    fontSize="1.4rem"
+                                    fontFamily="Lato"
+                                    lineHeight="130%">
+                                    {logged_user}
+                                </Typography>
+                                <Stack direction="row" spacing={0.6}>
+                                    <SportsEsportsIcon sx={{ width: "18px", paddingTop: "3%" }} />
+                                    <Typography
+                                        sx={{
+                                            color: '#ADADAD',
+                                            fontWeight: '600',
+                                            fontSize: '1rem',
+                                            paddingTop: '1.2px',
+                                        }}>
+                                        Level 32</Typography>
+                                    <Box paddingLeft="23px" paddingTop="3px"><InvitationsMenu /></Box>
+                                </Stack>
                             </Stack>
                         </Stack>
-                    </Stack>
-                    <Stack
-                        divider={<Divider orientation="horizontal" flexItem />}>
-                        <CustomButton _name={InterfaceEnum.Home} _icon={homeIcon} />
-                        <CustomButton _name={InterfaceEnum.Dashboard} _icon={dashboardIcon} />
-                        <CustomButton _name={InterfaceEnum.ChatRoom} _icon={roomIcon} />
-                        <CustomButton _name={InterfaceEnum.InstantMessaging} _icon={messengerIcon} />
-                        <CustomButton _name={InterfaceEnum.Friends} _icon={friendsIcon} />
-                        <CustomButton _name={InterfaceEnum.Matchmaking} _icon={matchmakingIcon} />
-                        <CustomButton _name={InterfaceEnum.LiveGames} _icon={streamingIcon} />
-                    </Stack>
-                    <Box>
-                        <Box sx={{ marginBottom: "20%" }}><Button2FA verified={true} /></Box>
-                        <Collapse />
-                        <Divider orientation="horizontal" flexItem />
-                        <CustomButton _name={InterfaceEnum.Logout} _icon={LogoutIcon} />
-                    </Box>
-                </Stack>}
-        </Box>
+                        <Stack
+                            divider={<Divider orientation="horizontal" flexItem />}>
+                            <CustomButton _name={InterfaceEnum.Home} _icon={homeIcon} />
+                            <CustomButton _name={InterfaceEnum.Dashboard} _icon={dashboardIcon} />
+                            <CustomButton _name={InterfaceEnum.ChatRoom} _icon={roomIcon} />
+                            <CustomButton _name={InterfaceEnum.InstantMessaging} _icon={messengerIcon} />
+                            <CustomButton _name={InterfaceEnum.Friends} _icon={friendsIcon} />
+                            <CustomButton _name={InterfaceEnum.Matchmaking} _icon={matchmakingIcon} />
+                            <CustomButton _name={InterfaceEnum.LiveGames} _icon={streamingIcon} />
+                        </Stack>
+                        <Box>
+                            <Box sx={{ marginBottom: "20%" }}><Button2FA verified={true} /></Box>
+                            <Collapse />
+                            <Divider orientation="horizontal" flexItem />
+                            <CustomButton _name={InterfaceEnum.Logout} _icon={LogoutIcon} />
+                        </Box>
+                    </Stack>}
+            </Box>
+        </Slide>
     )
 }
 

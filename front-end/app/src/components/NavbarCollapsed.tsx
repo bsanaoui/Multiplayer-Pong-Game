@@ -1,5 +1,5 @@
 
-import { Avatar, Divider, Stack } from '@mui/material'
+import { Avatar, Divider, Slide, Stack } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store";
 import { InterfaceEnum, setCurrentInterface } from "../store/interfacesReducer";
@@ -17,11 +17,15 @@ import collapseIcon from '../assets/right-arrow.png';
 
 import { Box } from '@mui/system';
 import { setCollapse } from '../store/collapseNavReducer';
+import React from 'react';
 
 export const NavbarCollapsed = () => {
     const userState = useSelector((state: RootState) => state.user);
-    
+    const containerRef = React.useRef(null);
+
     return (
+        <Slide direction="right" in={true} container={containerRef.current}>
+
         <Stack justifyContent="space-between"
             sx={{ height: "100vh", width: "70px", backgroundColor: "#303465" }}>
             <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1.8}
@@ -55,6 +59,7 @@ export const NavbarCollapsed = () => {
                 <CustomButton _name={InterfaceEnum.Logout} _icon={LogoutIcon} />
             </Box>
         </Stack>
+        </Slide>
     )
 }
 

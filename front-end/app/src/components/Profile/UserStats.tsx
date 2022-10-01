@@ -30,12 +30,12 @@ const UserStats = ({other_user}:{other_user?:string}) => {
 			sx={{ backgroundColor: "#3F4478", width: "380px", height: "95%", borderRadius: "30px" }}>
 			{/* ****************** User Head **************** */}
 			<Stack direction="row" alignItems="flex-start" spacing={0.5} paddingLeft="6%">
-				<AvatarProfile avatar={user_stats.avatar} />
+				<AvatarProfile avatar={user_stats?.avatar} />
 				<Stack alignItems="flex-start" spacing={1}>
 					<Box sx={{ marginLeft: "13px", marginTop: "5px" }}>
-						<UserNameElement login={user_stats.login} username={user_stats.username} level={user_stats.level} />
+						<UserNameElement login={user_stats?.login} username={user_stats?.username} level={user_stats?.level} />
 					</Box>
-					<StatElementBar />
+					<StatElementBar total_matches={user_stats?.total_matches} friends={user_stats?.friends} ratio={user_stats?.ratio} />
 				</Stack>
 			</Stack>
 			{/* ****************** User Stats **************** */}
@@ -45,12 +45,12 @@ const UserStats = ({other_user}:{other_user?:string}) => {
 					<div className="global-score"  >268</div>
 				</Box> */}
 				<Stack direction="row" spacing={5} marginTop="10%">
-					<StatSegment name={'Wins'} value={'23'} />
-					<StatSegment name={'Looses'} value={'15'} />
+					<StatSegment name={'Wins'} value={user_stats?.wins} />
+					<StatSegment name={'Loses'} value={user_stats?.loses} />
 				</Stack>
 				<Stack direction="row" spacing={5} marginTop="10%">
-					<StatSegment name={'Goals'} value={'115'} />
-					<StatSegment name={'Champions'} value={'02'} />
+					<StatSegment name={'Goals'} value={user_stats?.goals} />
+					<StatSegment name={'InGoals'} value={user_stats?.in_goals} />
 				</Stack>
 			</Box>
 		</Stack>

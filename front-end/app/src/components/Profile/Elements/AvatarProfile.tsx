@@ -14,7 +14,6 @@ const AvatarProfile = (props:{avatar: string}) => {
 					border: "6px solid #535995",
 					borderRadius: "30px",
 				}}
-			// alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
 			alt="Lion" src={props.avatar} imgProps={{ style: { width: 'auto' } }} />
 		</Box>
 	)

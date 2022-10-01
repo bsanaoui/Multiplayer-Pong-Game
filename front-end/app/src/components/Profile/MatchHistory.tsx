@@ -1,5 +1,9 @@
 import { Avatar, Box, List, Stack, Typography } from "@mui/material"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 import avatar2 from '../../assets/avatar2.png'
+import { getMatchsHistory, MatchHistoryData } from "../../requests/dashboard"
+import { RootState } from "../../store"
 import PlayerTable from "./Elements/PlayerTable"
 import ScoreTable from "./Elements/ScoreTable"
 
@@ -44,7 +48,6 @@ const ContentField = (Props: matchHistoryProps) => {
 						height: '46px',
 						width: '46px',
 						backgroundColor: "#FFF",
-						padding: "4px",
 					}}
 					alt="Lion" src={Props.url_avatr} imgProps={{ style: { width: 'auto' } }} />
 			</Box>
@@ -57,14 +60,33 @@ const ContentField = (Props: matchHistoryProps) => {
 	)
 }
 
-export const MatchHistory = () => {
+let initMatchHistory: MatchHistoryData[];
+
+export const MatchHistory = ({ other_user }: { other_user?: string }) => {
+	const [matchs_history, setMatchHistorys] = useState(initMatchHistory);
+
+	useEffect(() => {
+		getMatchsHistory(other_user).then((value) => {
+			if ((typeof value) === (typeof initMatchHistory)) {
+				const data = value as MatchHistoryData[];
+				setMatchHistorys(data);
+			}
+		})
+			.catch((reason: string) => {
+				console.log("Error ;matchs:", reason)
+			})
+		return (() => {
+			setMatchHistorys(initMatchHistory);
+		})
+	}, []);
+
 	return (
 		<Stack
 			justifyContent="flex-start" alignItems="center"
 			sx={{
 				backgroundColor: "#3F4478",
 				width: "855px",
-				height: "100%",
+				minHeight: "90%",
 				borderRadius: '30px',
 			}}>
 			<Stack
@@ -79,8 +101,16 @@ export const MatchHistory = () => {
 				<HeaderTable name="Duration" />
 			</Stack>
 			<List style={{ width: "100%", overflow: 'auto', height: "100%" }} >
-				{/* {friends} */}
-				<li key='1' >
+				{matchs_history && matchs_history.map((item) => (
+					<ContentField id={item.id} name={item.username}
+						url_avatr={item.avatar}
+						level={item.level}
+						score_1={item.my_score} score_2={item.opp_score}
+						date={item.date}
+						game_type={item.game}
+						duration={match_h.duration} />
+				))}
+				{!matchs_history && <li key='1' >
 					<ContentField id={1} name={match_h.name}
 						url_avatr={match_h.url_avatr}
 						level={match_h.level}
@@ -88,8 +118,8 @@ export const MatchHistory = () => {
 						date={match_h.date}
 						game_type={match_h.game_type}
 						duration={match_h.duration} />
-				</li>
-				<li key='2' >
+				</li>}
+				{!matchs_history && <li key='2' >
 					<ContentField id={2} name={match_h.name}
 						url_avatr={match_h.url_avatr}
 						level={match_h.level}
@@ -97,8 +127,8 @@ export const MatchHistory = () => {
 						date={match_h.date}
 						game_type={match_h.game_type}
 						duration={match_h.duration} />
-				</li>
-				<li key='3' >
+				</li>}
+				{!matchs_history && <li key='3' >
 					<ContentField id={3} name={match_h.name}
 						url_avatr={match_h.url_avatr}
 						level={match_h.level}
@@ -106,8 +136,8 @@ export const MatchHistory = () => {
 						date={match_h.date}
 						game_type={match_h.game_type}
 						duration={match_h.duration} />
-				</li>
-				<li key='4' >
+				</li>}
+				{!matchs_history && <li key='4' >
 					<ContentField id={4} name={match_h.name}
 						url_avatr={match_h.url_avatr}
 						level={match_h.level}
@@ -115,8 +145,8 @@ export const MatchHistory = () => {
 						date={match_h.date}
 						game_type={match_h.game_type}
 						duration={match_h.duration} />
-				</li>
-				<li key='5' >
+				</li>}
+				{!matchs_history && <li key='5' >
 					<ContentField id={5} name={match_h.name}
 						url_avatr={match_h.url_avatr}
 						level={match_h.level}
@@ -124,8 +154,8 @@ export const MatchHistory = () => {
 						date={match_h.date}
 						game_type={match_h.game_type}
 						duration={match_h.duration} />
-				</li>
-				
+				</li>}
+
 			</List>
 		</Stack>
 	)

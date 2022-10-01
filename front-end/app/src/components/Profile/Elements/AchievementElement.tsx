@@ -1,4 +1,5 @@
-import { Avatar, Box } from '@mui/material'
+import { Avatar, Box, Grow } from '@mui/material'
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import achivJoystickIcon from '../../../assets/Achievements/achiev1-joystick.png';
 import achivSwordIcon from '../../../assets/Achievements/Achiev2-sword.png';
@@ -13,6 +14,7 @@ import { setAchievement } from '../../../store/profileReducer';
 const AchievementElement = (Props: Achievement) => {
 	const dispatch = useDispatch();
 	const bg_achv: string = !Props.achieved ? "#525784" : "#6659FF";
+	const [checked, setChecked] = React.useState(true);
 
 	let icon;
 	switch (Props.achieve_id) {
@@ -27,33 +29,42 @@ const AchievementElement = (Props: Achievement) => {
 
 	const handleMouseOut = () => {
 		dispatch(setAchievement(""));
+		// setChecked((prev) => !prev);
+
 	}
 
 	const handleMouseOver = () => {
 		dispatch(setAchievement(Props.achieve_name + ", " + Props.description))
+		// setChecked((prev) => !prev)
 	}
 
 	return (
-		<Box
-			onMouseOver={handleMouseOver}
-			onMouseOut={handleMouseOut}>
-			<Avatar
-				variant="square"
-				sx={{
-					height: '110px',
-					width: '110px',
-					backgroundColor: bg_achv,
-					padding: "18px",
-					borderRadius: "18px",
-					"&:hover": {
-						height: '140px',
-						width: '140px',
-						border: '4px solid #9CA0B5',
-						borderRadius: '19px',
-					}
-				}}
-			alt="Speed Achievement" src={icon} imgProps={{ style: { width: 'auto' } }} />
-		</Box>
+		<Grow
+			in={checked}
+			style={{ transformOrigin: '0 0 0' }}
+			{...(checked ? { timeout: 1000 } : {})}
+		>
+			<Box
+				onMouseOver={handleMouseOver}
+				onMouseOut={handleMouseOut}>
+				<Avatar
+					variant="square"
+					sx={{
+						height: '110px',
+						width: '110px',
+						backgroundColor: bg_achv,
+						padding: "18px",
+						borderRadius: "18px",
+						"&:hover": {
+							height: '140px',
+							width: '140px',
+							border: '4px solid #9CA0B5',
+							borderRadius: '19px',
+						}
+					}}
+					alt="Speed Achievement" src={icon} imgProps={{ style: { width: 'auto' } }} />
+			</Box >
+		</Grow>
 	)
 }
 

@@ -23,7 +23,7 @@ export const DashboardUser = ({other_user}:{other_user?:string}) => {
                         fontSize: '32px',
                         lineHeight: '109.52%',
                     }}>Match history</Typography>
-                    <MatchHistory />
+                    <MatchHistory other_user={other_user} />
                 </Stack>
             </Stack>
         </Stack>

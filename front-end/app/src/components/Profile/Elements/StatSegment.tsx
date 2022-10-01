@@ -3,7 +3,7 @@ import { Stack } from '@mui/system'
 
 interface statSegmentProps {
 	name: string,
-	value: string
+	value: number,
 }
 
 const StatSegment = (Props: statSegmentProps) => {
@@ -13,7 +13,7 @@ const StatSegment = (Props: statSegmentProps) => {
 		case 'W': cercle_bg = "#19AE66"; break;
 		case 'L': cercle_bg = "#E53D32"; break;
 		case 'G': cercle_bg = "#AE199F"; break;
-		case 'C': cercle_bg = "#1955AE"; break;
+		case 'I': cercle_bg = "#1955AE"; break;
 		default: cercle_bg = "#ADADAD"; break;
 	}
 	
