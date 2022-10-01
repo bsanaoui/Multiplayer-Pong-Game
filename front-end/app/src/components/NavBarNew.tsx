@@ -47,10 +47,10 @@ export const NavBarNew = () => {
     const logged_user = userState.login;
     const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
     let avatar: File;
-    const containerRef = React.useRef(null);
+    // const containerRef = React.useRef(null);
 
     return (
-        <Slide direction="right" in={true} container={containerRef.current}>
+        // <Slide direction="left" in={true} container={containerRef.current}>
             <Box>
                 {is_collapsedNav && <NavbarCollapsed />}
                 {!is_collapsedNav &&
@@ -124,7 +124,7 @@ export const NavBarNew = () => {
                         </Box>
                     </Stack>}
             </Box>
-        </Slide>
+        // </Slide>
     )
 }
 

@@ -4,7 +4,7 @@ import Header from "./Header"
 import PublicRooms from "./PublicRooms"
 
 
-const Main = () => {
+const Home = () => {
     return (
         <div>
             <Header/>
@@ -20,4 +20,4 @@ const Main = () => {
     )
 }
 
-export default Main
+export default Home

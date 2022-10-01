@@ -2,11 +2,9 @@
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Main from './components/Main'
 
 import { ThemeProvider, createTheme, Shadows } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import ChatGlobal from './components/ChatGlobal';
 import { useSelector } from 'react-redux';
 import { RootState } from "./store";
 
@@ -19,7 +17,6 @@ import { InterfaceEnum } from './store/interfacesReducer';
 import { InvitationFriend } from './components/InvitationFriend&Game/InvitationFriend';
 import { InvitationsMenu } from './components/InvitationsMenu';
 import InvitePlayBar from './components/InvitePlayBar';
-import ChatUIFriend from './components/ChatUIFriend';
 import MessageSent from './components/MessageSent';
 import MessageRecieved from './components/MessageRecieved';
 import Rooms from './components/Rooms';
@@ -39,6 +36,10 @@ import { HandleOpeneDialog } from './store/gameReducer';
 import Canvas from './components/canvas';
 import { initSocketClient } from './store/socketReducer';
 import { ToastContainer } from 'react-toastify';
+import Home from './components/Home';
+import { Route, Routes } from 'react-router-dom';
+import { GlobalRooms } from './components/GlobalRooms';
+import { GlobalDM } from './components/GlobalDM';
 
 const darkTheme = createTheme({
 	palette: {
@@ -85,11 +86,11 @@ function App() {
 				<Stack direction="row" width="100%" height="100%"
 					sx={{ backgroundColor: "#202541" }}>
 					<NavBarNew />
-						{currentIterface === InterfaceEnum.Home && <Main />}
+						{currentIterface === InterfaceEnum.Home && <Home />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
-						{currentIterface === InterfaceEnum.ChatRoom && <ChatGlobal />}
-						{currentIterface === InterfaceEnum.InstantMessaging && <ChatGlobal />}
-						{currentIterface === InterfaceEnum.Friends && <ChatGlobal />}
+						{currentIterface === InterfaceEnum.ChatRoom && <GlobalRooms />}
+						{currentIterface === InterfaceEnum.InstantMessaging && <GlobalDM />}
+						{currentIterface === InterfaceEnum.Friends && <GlobalDM />}
 						{currentIterface === InterfaceEnum.Matchmaking &&
 							<Box>
 								<ModeDialog>
@@ -99,7 +100,12 @@ function App() {
 							</Box>
 						}
 						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />}
-					{/* <ChatGlobal /> */}
+						{/* <Routes>
+							<Route path='/' element={<Home/>}></Route>
+							<Route path='/dashboard' element={<DashboardUser/>}></Route>
+							<Route path='/chatRoom' element={<ChatGlobal/>}></Route>
+							<Route path='/liveMatchs' element={<LiveMatchs/>}></Route>
+						</Routes> */}
 				</Stack>
 			}
 		</ThemeProvider>

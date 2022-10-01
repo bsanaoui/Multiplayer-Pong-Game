@@ -9,6 +9,8 @@
 * `socket.io-client: `
 * `react-cookie: `
 * `react-toastify: `
+* `react-router-dom:`
+* 
 # CSS Styles && Tailwindcss:
 
 `* flex justify-between`

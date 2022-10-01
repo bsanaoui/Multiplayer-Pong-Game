@@ -52,7 +52,7 @@ const renderMessage = (current: string, from: string, msg: string): JSX.Element 
 }
 
 /* Handle Clear msgs when switch room */
-const ChatUIRoom = () => {
+export const ChatUIRoomMsg = () => {
     const dispatch = useDispatch();
     const bottomRef = useRef<HTMLDivElement>(null); // To auto scroll to bottom of window
     const logged_user = useSelector((state: RootState) => state.user).login;
@@ -185,5 +185,3 @@ const ChatUIRoom = () => {
         </Box>
     )
 }
-
-export default ChatUIRoom
