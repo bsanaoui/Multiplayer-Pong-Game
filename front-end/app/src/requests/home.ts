@@ -12,7 +12,7 @@ export type RoomInfo = {
 	password: string;
 };
 
-export type ProfileNavData = {
+export interface ProfileNavData {
 	level: number,
 	invit_count: number,
 	tfa: boolean,
@@ -84,7 +84,7 @@ export async function getProfileNavbar() {
 	try {
 		// 👇️ const data: GetUsersResponse
 		const { data, status } = await axios.get<ProfileNavData>(
-			process.env.REACT_APP_SERVER_IP + "profile/navbar",
+			process.env.REACT_APP_SERVER_IP + "/profile/navbar",
 			{
 				headers: {
 					Accept: "application/json",

@@ -46,7 +46,7 @@ let getInterface = (interfaceEnum: InterfaceEnum): string => {
         default: return "Home";
     }
 };
-const initState:ProfileNavData= {} as ProfileNavData;
+const initState: ProfileNavData = {} as ProfileNavData;
 
 export const NavBarNew = () => {
     const userState = useSelector((state: RootState) => state.user);
@@ -55,23 +55,23 @@ export const NavBarNew = () => {
     const [info_user, setInfoUser] = useState(initState);
     let avatar: File;
 
-    const handleUploadAvatar = () => {
-        axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', avatar, {
+    const handleUploadAvatar = (avatar_uploaded: File) => {
+        axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', avatar_uploaded, {
             headers: {
-              'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data'
             }
         })
     }
 
     useEffect(() => {
         getProfileNavbar().then((value) => {
-            if (typeof(value) === typeof(initState)){
+            if (typeof (value) === typeof (initState)) {
                 const data = value as ProfileNavData;
                 setInfoUser(data);
             }
         })
     }, [])
-    
+
     return (
         <Box>
             {is_collapsedNav && <NavbarCollapsed />}
@@ -87,9 +87,11 @@ export const NavBarNew = () => {
                                 <IconButton component="label" sx={{ background: "#0564FC", width: "25px", height: "25px" }}>
                                     <EditIcon sx={{ width: "18px" }} />
                                     {/* <form action={process.env.REACT_APP_SERVER_IP + '/profile/avatar'} method='POST'> */}
-                                        <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                            if (event.target.files)
-                                                avatar = event.target.files[0];
+                                    <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                        if (event.target.files) {
+                                            // avatar = event.target.files[0];
+                                            handleUploadAvatar(event.target.files[0]);
+                                            }
                                         }} />
                                     {/* </form> */}
                                 </IconButton>
@@ -139,15 +141,15 @@ export const NavBarNew = () => {
                         <CustomButton _name={InterfaceEnum.LiveGames} _icon={streamingIcon} />
                     </Stack>
                     <Box>
-                        <Box sx={{ marginBottom: "20%" }}><Button2FA verified={!info_user.tfa} /></Box>
+                        <Box sx={{ marginBottom: "20%" }}><Button2FA verified={info_user.tfa} /></Box>
                         <Collapse />
                         <Divider orientation="horizontal" flexItem />
                         <CustomButton _name={InterfaceEnum.Logout} _icon={LogoutIcon} />
                     </Box>
                 </Stack>}
 
-            <TwoFADialog enable={info_user.tfa}>
-                <TwoFAInput enable={info_user.tfa} />
+            <TwoFADialog enable={!info_user.tfa}>
+                <TwoFAInput enable={!info_user.tfa} />
             </TwoFADialog>
 
         </Box>

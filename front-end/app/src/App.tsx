@@ -85,8 +85,8 @@ function App() {
 		<ThemeProvider theme={darkTheme}>
 			<ToastContainer position="top-right" newestOnTop autoClose={3500} />
 			<CssBaseline />
-			{logged_user === '' && <LoginPage />}
-			{logged_user !== '' &&
+			{logged_user !== '' && <LoginPage />}
+			{logged_user === '' &&
 				<Stack direction="row" width="100%" height="100%"
 					sx={{ backgroundColor: "#202541" }}>
 					<NavBarNew />
