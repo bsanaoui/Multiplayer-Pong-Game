@@ -18,7 +18,7 @@ import notification_invite from '../assets/notification.png'
 import { InvitationFriend } from './InvitationFriend&Game/InvitationFriend';
 import avatar2 from '../assets/man.png'
 
-export const InvitationsMenu = () => {
+export const InvitationsMenu = (Props: {count_invit:number}) => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,7 +30,7 @@ export const InvitationsMenu = () => {
 
 	return (
 		<Box>
-			<Badge badgeContent={4} color="secondary">
+			<Badge badgeContent={Props.count_invit} color="secondary">
 				<IconButton sx={{ width: "20px", height: "20px" }}
 					id="basic-button"
 					aria-controls={open ? 'basic-menu' : undefined}

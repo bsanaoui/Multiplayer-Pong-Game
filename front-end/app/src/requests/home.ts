@@ -137,8 +137,8 @@ export async function getMQrCodeUrl() {
 }
 
 
-// ========================== Send Code 2fa ========================= //
-export async function sendCode2FA(code:string) {
+// ========================== Send Code 2fa to activate ========================= //
+export async function sendCode2FAEnable(code:string) {
 
 	try {
 		// 👇️ const data: GetUsersResponse
@@ -161,7 +161,38 @@ export async function sendCode2FA(code:string) {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			throw Error("Error");
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
+}
+// ========================== Send Code 2fa to disable ========================= //
+export async function sendCode2FADisable(code:string) {
+
+	try {
+		// 👇️ const data: GetUsersResponse
+		const { data, status } = await axios.post<string>(
+			process.env.REACT_APP_SERVER_IP + "/twofactorauth/turnoff",
+			{tfacode:code},
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+
+			}
+		);
+		console.log(JSON.stringify(data, null, 4));
+		// 👇️ "response status is: 200"
+		console.log('response status is: ', status);
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
+			throw Error("Error");
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";

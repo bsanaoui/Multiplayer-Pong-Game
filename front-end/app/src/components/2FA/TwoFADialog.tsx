@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { HandleCloseDialog, HandleOpeneDialog } from '../../store/gameReducer';
 import { useDispatch } from 'react-redux';
+import { setOpenDialog2FA } from '../../store/openDialogReducer';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -48,24 +49,27 @@ export interface DialogTitleProps {
 
 type Props = {
     children: JSX.Element,
+    enable: boolean ,
 };
 
-const TwoFADialog = ({ children }: Props) => {
-    const isOpen = useSelector((state: RootState) => state.game).dialogIsOpen;
+const TwoFADialog = ({ children, enable }: Props) => {
+    const isOpen = useSelector((state: RootState) => state.openDialog).is_open_tfa;
     const dispatch = useDispatch();
-    // useEffect(() => {
-    // }, [modeGame])
 
     return (
         <div>
             <BootstrapDialog
-                onClose={() => {dispatch(HandleCloseDialog())}}
+                onClose={() => {dispatch(setOpenDialog2FA(false))}}
                 aria-labelledby="customized-dialog-title"
                 open={isOpen}>
                 <Box sx={{ backgroundColor: "#36393F"}}>
-                    <BootstrapDialogTitle id="customized-dialog-title" onClose={() => {dispatch(HandleCloseDialog())}} >
-                       ENABLE TWO-FACTOR AUTH
-                       <Typography fontSize="0.8rem">Make your account safer in 3 easy steps:</Typography>
+                    <BootstrapDialogTitle id="customized-dialog-title" onClose={() => {dispatch(setOpenDialog2FA(false))}} >
+                       {enable && "ENABLE TWO-FACTOR AUTH"}
+                       {!enable && "DISABLE TWO-FACTOR AUTH"}
+                       <Typography fontSize="0.8rem">
+                       {enable && "Make your account safer in 3 easy steps:"}
+                       {!enable && "You requested to desactivate two-factor auth (2FA) on your account:"}
+                        </Typography>
                     </BootstrapDialogTitle>
                     <DialogContent dividers>
                         {children}

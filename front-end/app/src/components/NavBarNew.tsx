@@ -26,8 +26,12 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import NavigationIcon from '@mui/icons-material/Navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import TwoFADialog from './2FA/TwoFADialog';
+import { TwoFAInput } from './2FA/TwoFAInput';
+import { getProfileNavbar, ProfileNavData } from '../requests/home';
+import axios from 'axios';
 
 let getInterface = (interfaceEnum: InterfaceEnum): string => {
     switch (interfaceEnum) {
@@ -42,17 +46,33 @@ let getInterface = (interfaceEnum: InterfaceEnum): string => {
         default: return "Home";
     }
 };
+const initState:ProfileNavData= {} as ProfileNavData;
 
 export const NavBarNew = () => {
     const userState = useSelector((state: RootState) => state.user);
     const logged_user = userState.login;
     const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
-
+    const [info_user, setInfoUser] = useState(initState);
     let avatar: File;
-    // const containerRef = React.useRef(null);
 
+    const handleUploadAvatar = () => {
+        axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', avatar, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+        })
+    }
+
+    useEffect(() => {
+        getProfileNavbar().then((value) => {
+            if (typeof(value) === typeof(initState)){
+                const data = value as ProfileNavData;
+                setInfoUser(data);
+            }
+        })
+    }, [])
+    
     return (
-        // <Slide direction="left" in={true} container={containerRef.current}>
         <Box>
             {is_collapsedNav && <NavbarCollapsed />}
             {!is_collapsedNav &&
@@ -66,12 +86,12 @@ export const NavBarNew = () => {
                             badgeContent={
                                 <IconButton component="label" sx={{ background: "#0564FC", width: "25px", height: "25px" }}>
                                     <EditIcon sx={{ width: "18px" }} />
-                                    <form action={process.env.REACT_APP_SERVER_IP + '/profile/avatar'} method='POST'>
+                                    {/* <form action={process.env.REACT_APP_SERVER_IP + '/profile/avatar'} method='POST'> */}
                                         <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                             if (event.target.files)
                                                 avatar = event.target.files[0];
                                         }} />
-                                    </form>
+                                    {/* </form> */}
                                 </IconButton>
                             }>
                             <Avatar
@@ -103,8 +123,8 @@ export const NavBarNew = () => {
                                         fontSize: '1rem',
                                         paddingTop: '1.2px',
                                     }}>
-                                    Level 32</Typography>
-                                <Box paddingLeft="23px" paddingTop="3px"><InvitationsMenu /></Box>
+                                    Level {info_user.level}</Typography>
+                                <Box paddingLeft="23px" paddingTop="3px"><InvitationsMenu count_invit={info_user.invit_count} /></Box>
                             </Stack>
                         </Stack>
                     </Stack>
@@ -119,12 +139,17 @@ export const NavBarNew = () => {
                         <CustomButton _name={InterfaceEnum.LiveGames} _icon={streamingIcon} />
                     </Stack>
                     <Box>
-                        <Box sx={{ marginBottom: "20%" }}><Button2FA verified={true} /></Box>
+                        <Box sx={{ marginBottom: "20%" }}><Button2FA verified={!info_user.tfa} /></Box>
                         <Collapse />
                         <Divider orientation="horizontal" flexItem />
                         <CustomButton _name={InterfaceEnum.Logout} _icon={LogoutIcon} />
                     </Box>
                 </Stack>}
+
+            <TwoFADialog enable={info_user.tfa}>
+                <TwoFAInput enable={info_user.tfa} />
+            </TwoFADialog>
+
         </Box>
         // </Slide>
     )
@@ -140,7 +165,6 @@ const CustomButton = ({ _name, _icon }: ButtonProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const location = useLocation(); // handle locations
-
 
     let handleNavigation = (interfaceEnum: InterfaceEnum) => {
         switch (interfaceEnum) {
