@@ -36,7 +36,7 @@ export async function getAchievements(other_user?: string) {
     try {
         const { data, status } = await axios.get<Achievement[]>(
             process.env.REACT_APP_SERVER_IP + "/profile/achievements" +
-                (other_user !== '') ? ("/" + other_user) : "",
+            ((other_user) ? ("/" + other_user) : ""),
             {
                 headers: {
                     Accept: "application/json",
@@ -65,7 +65,7 @@ export async function getMatchsHistory(other_user?: string) {
     try {
         const { data, status } = await axios.get<MatchHistoryData[]>(
             process.env.REACT_APP_SERVER_IP + "/profile/match_history" +
-                (other_user !== '') ? ("/" + other_user) : "",
+            ((other_user) ? ("/" + other_user) : ""),
             {
                 headers: {
                     Accept: "application/json",
@@ -94,7 +94,7 @@ export async function getStatsInfo(other_user?: string) {
     try {
         const { data, status } = await axios.get<UserStatsData>(
             process.env.REACT_APP_SERVER_IP + "/profile/infos" +
-            (other_user !== '') ? ("/" + other_user) : "",
+            ((other_user) ? ("/" + other_user) : ""),
             {
                 headers: {
                     Accept: "application/json",

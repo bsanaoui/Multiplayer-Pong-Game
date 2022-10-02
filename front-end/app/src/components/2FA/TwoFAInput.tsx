@@ -6,34 +6,26 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { sendCode2FA } from '../../requests/home'
 
-let initImage: Buffer;
-
 export const TwoFAInput = (props: { enable: boolean }) => {
-    const [qr_image, setImage] = useState(initImage);
+    const [qr_image, setImage] = useState("");
     const [input_code, setCode] = useState("");
-    const url: string = "";
+    const imageUrl: string = "";
 
     const handleSentCode = () => {
         sendCode2FA(input_code);
     }
 
-    const getImage = () => {
-        axios
-            .get(url, {
-                responseType: 'arraybuffer'
-            })
-            .then(response => {
-                const buffer = Buffer.from(response.data, 'base64');
-                setImage(buffer);
-            })
-            .catch(ex => {
-                console.error(ex);
-            });
+    const getImage = async () => {
+        const res = await fetch(imageUrl);
+        const imageBlob = await res.blob();
+        const imageObjectURL = URL.createObjectURL(imageBlob);
+        setImage(imageObjectURL);
     }
 
     useEffect(() => {
         getImage();
     }, [])
+    
     return (
         <Stack alignItems="center" spacing={2} paddingRight="3%" paddingLeft="3%"
             divider={<Divider orientation="horizontal" flexItem />}
@@ -43,7 +35,7 @@ export const TwoFAInput = (props: { enable: boolean }) => {
             }}>
             <Stack direction="row" spacing={3} >
                 <Box sx={{ background: "#FFF", width: "190px", height: "190px" }}>
-                    <img src={qr_test} style={{ width: "185px", height: "185px" }} />
+                    <img src={qr_image} style={{ width: "185px", height: "185px" }} />
                     {/* <img src={`data:image/png;base64,${qr_image}`}
                         alt="QrCode" style={{ width: "185px", height: "185px" }} /> */}
                 </Box>
@@ -67,7 +59,7 @@ export const TwoFAInput = (props: { enable: boolean }) => {
                         <TextField id="outlined-basic" label="Code" variant="outlined"
                             onChange={e => setCode(e.target.value)} />
                         <Button variant="contained" color="info" style={{ width: "150px" }}
-                        onClick={handleSentCode}>
+                            onClick={handleSentCode}>
                             Activate
                         </Button>
                     </Stack>
