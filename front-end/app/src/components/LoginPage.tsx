@@ -11,6 +11,8 @@ const LoginPage = () => {
 	return (
 		<Box
 			sx={{
+				width:"100%",
+				height:"100%",
 				background: "linear-gradient( 116.27deg, #191D45 31.5%, #4044A5 61.17% )",
 				boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
 			}}>

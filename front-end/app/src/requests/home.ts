@@ -200,3 +200,33 @@ export async function sendCode2FADisable(code:string) {
 	}
 }
 
+// ========================== Send Code 2fa to authentify ========================= //
+export async function sendCode2FAConnect(code:string) {
+	try {
+		// 👇️ const data: GetUsersResponse
+		const { data, status } = await axios.post<string>(
+			process.env.REACT_APP_SERVER_IP + "/twofactorauth/turnoff",
+			{tfacode:code},
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+
+			}
+		);
+		console.log(JSON.stringify(data, null, 4));
+		// 👇️ "response status is: 200"
+		console.log('response status is: ', status);
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
+			throw Error("Error");
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
+}

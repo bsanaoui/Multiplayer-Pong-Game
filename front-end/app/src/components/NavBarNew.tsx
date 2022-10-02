@@ -56,7 +56,7 @@ export const NavBarNew = () => {
     let avatar: File;
 
     const handleUploadAvatar = (avatar_uploaded: File) => {
-        axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', avatar_uploaded, {
+        axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', { avatar: avatar_uploaded }, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -86,14 +86,10 @@ export const NavBarNew = () => {
                             badgeContent={
                                 <IconButton component="label" sx={{ background: "#0564FC", width: "25px", height: "25px" }}>
                                     <EditIcon sx={{ width: "18px" }} />
-                                    {/* <form action={process.env.REACT_APP_SERVER_IP + '/profile/avatar'} method='POST'> */}
                                     <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                        if (event.target.files) {
-                                            // avatar = event.target.files[0];
+                                        if (event.target.files)
                                             handleUploadAvatar(event.target.files[0]);
-                                            }
-                                        }} />
-                                    {/* </form> */}
+                                    }} />
                                 </IconButton>
                             }>
                             <Avatar

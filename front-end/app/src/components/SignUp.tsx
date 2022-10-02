@@ -15,7 +15,7 @@ interface UserAccount {
     avatar: File,
 }
 
-export const SignUp = () => {
+const SignUp = () => {
     // const fileRef = useRef(null);
     const paperStyle = { padding: '0px 15px 40px 15px', width: 320 }
     const btnStyle = { marginTop: '25px' }
@@ -74,3 +74,5 @@ export const SignUp = () => {
         </Box>
     )
 }
+
+export default SignUp

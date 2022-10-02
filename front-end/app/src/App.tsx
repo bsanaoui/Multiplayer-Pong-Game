@@ -56,6 +56,8 @@ const InstantMessaging = React.lazy(() => import('./components/GlobalDM'));
 const Matchmaking = React.lazy(() => import('./components/Game'));
 const LiveMatchs = React.lazy(() => import('./components/LiveMatchs'));
 const Login = React.lazy(() => import('./components/LoginPage'));
+const SignUp = React.lazy(() => import('./components/SignUp'));
+const SignInTFA = React.lazy(() => import('./components/SignInTFA'));
 const Loading = () => <Box margin="auto"><CircularProgress /><p>Loading ...</p></Box>;
 
 
@@ -85,31 +87,33 @@ function App() {
 		<ThemeProvider theme={darkTheme}>
 			<ToastContainer position="top-right" newestOnTop autoClose={3500} />
 			<CssBaseline />
-			{/* {logged_user === '' && <LoginPage />} */}
-			{logged_user === '' &&
+			<React.Suspense fallback={<Loading />}>
 				<Stack direction="row" width="100%" height="100%"
 					sx={{ backgroundColor: "#202541" }}>
-					<NavBarNew />
+					{logged_user !== '' && <NavBarNew />} {/* Check if route not signin and signup */}
+
 					{/* {currentIterface === InterfaceEnum.Home && <Home />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
 						{currentIterfaˇce === InterfaceEnum.ChatRoom && <GlobalRooms />}
 						{currentIterface === InterfaceEnum.InstantMessaging && <GlobalDM />}
 						{currentIterface === InterfaceEnum.Matchmaking && <Game/>}
 						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />} */}
-					<React.Suspense fallback={<Loading />}>
-						<Routes>
-							<Route path='/' element={<Home/>}/>
-							<Route path='/dashboard' element={<DashboardUser/>}/>
-							<Route path='/chatRoom' element={<ChatRoom/>}/>
-							<Route path='/instantMessaging' element={<InstantMessaging/>}/>
-							<Route path='/matchmaking' element={<Matchmaking/>}/>
-							<Route path='/liveMatchs' element={<LiveMatchs/>}/>
-							<Route path='/login' element={<Login/>}/>
-						</Routes>
-					</React.Suspense>
+
+					<Routes>
+						<Route path='/' element={<Login />} />
+						<Route path='/signUp' element={<SignUp />} />
+						<Route path='/tfa' element={<SignInTFA />} />
+						<Route path='/home' element={<Home />} />
+						<Route path='/dashboard' element={<DashboardUser />} />
+						<Route path='/chatRoom' element={<ChatRoom />} />
+						<Route path='/instantMessaging' element={<InstantMessaging />} />
+						<Route path='/matchmaking' element={<Matchmaking />} />
+						<Route path='/liveMatchs' element={<LiveMatchs />} />
+					</Routes>
 				</Stack>
-			}
-		</ThemeProvider>
+			</React.Suspense>
+
+		</ThemeProvider >
 	);
 }
 

@@ -38,7 +38,8 @@ export const TwoFAInput = (props: { enable: boolean }) => {
     }
 
     useEffect(() => {
-        getImage();
+        if (props.enable)
+            getImage();
     }, [])
 
     return (
