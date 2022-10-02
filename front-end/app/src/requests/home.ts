@@ -109,14 +109,42 @@ export async function getProfileNavbar() {
 	}
 }
  
+// ========================== Get QR CODE 2fa ========================= //
+export async function getMQrCodeUrl() {
+    try {
+        const { data, status } = await axios.get<{qrcodeUrl: string}>(
+            process.env.REACT_APP_SERVER_IP + "/twofactorauth/generate",
+            {
+                headers: {
+                    Accept: "application/json",
+                },
+                withCredentials: true,
+            }
+        );
+        console.log(JSON.stringify(data, null, 4));
+        // 👇️ "response status is: 200"
+        console.log('response status is: ', status);
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.message);
+            return error.message;
+        } else {
+            console.log("unexpected error: ", error);
+            return "An unexpected error occurred";
+        }
+    }
+}
+
+
 // ========================== Send Code 2fa ========================= //
 export async function sendCode2FA(code:string) {
 
 	try {
 		// 👇️ const data: GetUsersResponse
 		const { data, status } = await axios.post<string>(
-			process.env.REACT_APP_SERVER_IP + "",
-			{code:code},
+			process.env.REACT_APP_SERVER_IP + "/twofactorauth/turnon",
+			{tfacode:code},
 			{
 				headers: {
 					Accept: "application/json",
@@ -140,3 +168,4 @@ export async function sendCode2FA(code:string) {
 		}
 	}
 }
+

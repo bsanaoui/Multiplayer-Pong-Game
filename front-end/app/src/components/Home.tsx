@@ -9,7 +9,7 @@ import PublicRooms from "./PublicRooms"
 const Home = () => {
     return (
         <div>
-            <Header/>
+            {/* <Header/>
             <Stack
                 marginTop='45px'
                 marginLeft='6%'
@@ -17,10 +17,10 @@ const Home = () => {
                 <PublicRooms kind="Public rooms"/>
                 <PublicRooms kind="Protected rooms"/>
             </Stack>
-            <AllUsers />
-        {/* <TwoFADialog>
+            <AllUsers /> */}
+        <TwoFADialog>
             <TwoFAInput enable={true}/>
-        </TwoFADialog> */}
+        </TwoFADialog>
 
         </div>
     )

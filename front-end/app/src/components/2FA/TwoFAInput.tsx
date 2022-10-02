@@ -4,22 +4,22 @@ import qr_test from './qr.png'
 import code_qr_icon from '../../assets/code.png'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { sendCode2FA } from '../../requests/home'
+import { getMQrCodeUrl, sendCode2FA } from '../../requests/home'
+import { QRCodeCanvas } from 'qrcode.react'
 
 export const TwoFAInput = (props: { enable: boolean }) => {
     const [qr_image, setImage] = useState("");
     const [input_code, setCode] = useState("");
-    const imageUrl: string = "";
 
     const handleSentCode = () => {
         sendCode2FA(input_code);
     }
 
-    const getImage = async () => {
-        const res = await fetch(imageUrl);
-        const imageBlob = await res.blob();
-        const imageObjectURL = URL.createObjectURL(imageBlob);
-        setImage(imageObjectURL);
+    const getImage = () => {
+        getMQrCodeUrl().then((value)=>{
+            const data = value as {qrcodeUrl: string};
+            setImage(data.qrcodeUrl);
+        })
     }
 
     useEffect(() => {
@@ -35,9 +35,7 @@ export const TwoFAInput = (props: { enable: boolean }) => {
             }}>
             <Stack direction="row" spacing={3} >
                 <Box sx={{ background: "#FFF", width: "190px", height: "190px" }}>
-                    <img src={qr_image} style={{ width: "185px", height: "185px" }} />
-                    {/* <img src={`data:image/png;base64,${qr_image}`}
-                        alt="QrCode" style={{ width: "185px", height: "185px" }} /> */}
+                    <QRCodeCanvas value={qr_image}  style={{ width: "185px", height: "185px", padding:"15px"}}/>
                 </Box>
                 <Box paddingTop="10px">
                     <Typography variant="body2">SCAN THE QR CODE</Typography>
