@@ -45,7 +45,7 @@ export const ModeGameButton = ({ mode, watch }: modeGameProps) => {
 				textShadow: "1px 2px #000"
 			}}>
 				{mode === '1' && "MODE CLASSIC"}
-				{mode === '2' && "MODE RETRO"}
+				{mode === '2' && "MODE RUSH"}
 			</Typography>
 		</Box>
 	)

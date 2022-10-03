@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Player } from '../components/canvas';
 
 export enum ModeEnum {
     mode1,
@@ -7,11 +8,18 @@ export enum ModeEnum {
     default,
 }
 
+interface PlayerData{
+    p1:Player;
+    p2:Player;
+}
+
 export interface ModeState {
     mode: ModeEnum,
     dialogIsOpen: boolean,
     is_game_set: boolean,
     room:string,
+    players:PlayerData;
+
 }
 
 const initialState: ModeState = {
@@ -19,6 +27,7 @@ const initialState: ModeState = {
     dialogIsOpen: false,
     is_game_set: false,
     room:"",
+    players:{p1:{} as Player , p2:{} as Player},
 }
 
 export const GameSlice = createSlice({
@@ -30,6 +39,11 @@ export const GameSlice = createSlice({
             state.dialogIsOpen = false;
             state.is_game_set = true;
             state.room = action.payload.room as string;
+        },
+
+        updateScore: (state, action: PayloadAction<{p1:Player, p2:Player}>) => {
+            state.players.p1 = action.payload.p1;
+            state.players.p2 = action.payload.p2;
         },
 
         finishGame: (state) => {
@@ -44,6 +58,6 @@ export const GameSlice = createSlice({
     }
 })
 
-export const { setModeGame, HandleCloseDialog, HandleOpeneDialog,finishGame } = GameSlice.actions
+export const { setModeGame, HandleCloseDialog, HandleOpeneDialog,finishGame,updateScore } = GameSlice.actions
 
 export default GameSlice.reducer

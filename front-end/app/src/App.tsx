@@ -72,7 +72,7 @@ function App() {
 			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
 			console.log("User token: " + cookies.Authorization);
 		}
-		dispatch(HandleOpeneDialog()) ///// debug Mode Game
+		dispatch(HandleOpeneDialog()) 
 	}, []);
 
 	useEffect(() => {
@@ -80,9 +80,10 @@ function App() {
 			removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
 			dispatch(clearUser());
 		}
+
 	}, [currentIterface])
 
-
+	
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<ToastContainer position="top-right" newestOnTop autoClose={3500} />
@@ -90,7 +91,7 @@ function App() {
 			<React.Suspense fallback={<Loading />}>
 				<Stack direction="row" width="100%" height="100%"
 					sx={{ backgroundColor: "#202541" }}>
-					{logged_user !== '' && <NavBarNew />} {/* Check if route not signin and signup */}
+					{logged_user !== '' && <NavBarNew />}  {/*Check if route not signin and signup*/}
 
 					{/* {currentIterface === InterfaceEnum.Home && <Home />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}

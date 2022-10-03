@@ -73,11 +73,11 @@ export const NavBarNew = () => {
     }, [])
 
     return (
-        <Box>
+        <Box >
             {is_collapsedNav && <NavbarCollapsed />}
             {!is_collapsedNav &&
-                <Stack justifyContent="space-between"
-                    sx={{ height: "100vh", width: "240px", backgroundColor: "#303465" }}>
+                <Stack height="100vh" width= "240px" justifyContent="space-between"
+                    sx={{ backgroundColor: "#303465" }}>
                     <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1.8}
                         sx={{ padding: "3.3%", paddingTop: "5%" }}>
                         <Badge
