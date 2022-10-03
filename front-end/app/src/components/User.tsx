@@ -2,7 +2,7 @@ import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import avatar2 from '../assets/avatar2.png'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import { UserData } from '../requests/home';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const online_bg:string = "#3FFC10";
@@ -11,14 +11,14 @@ const inGame_bg:string = "yellow";
 
 const User = (user_data: UserData) => {
   // const [status, setStatus] = useState("online");
-  let bg_status:string = online_bg;
+  const [bg_status, setBgStatus] = useState(online_bg);
 
   const handleColorStatus = () => {
 
-    bg_status = (user_data.status === "online") ? online_bg
+    setBgStatus( (user_data.status === "online") ? online_bg
       : (user_data.status === "offline") ? offline_bg
       : (user_data.status === "inGame") ? inGame_bg
-      : online_bg;
+      : online_bg)
   }
 
   useEffect(()=>{

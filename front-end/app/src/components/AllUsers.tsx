@@ -73,9 +73,6 @@ function AllUsers() {
 							<User avatar={item.avatar} username={item.username} login={item.login} level={item.level} status={item.status} />
 						</li>
 					))}
-					<li key={1} className="item">
-						<User avatar={""} username="CMOS" login="CMOS" level={24} status="online" />
-					</li>
 				</List>
 			}
 		</Box>
