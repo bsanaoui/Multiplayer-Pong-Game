@@ -17,16 +17,30 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import notification_invite from '../assets/notification.png'
 import { InvitationFriend } from './InvitationFriend&Game/InvitationFriend';
 import avatar2 from '../assets/man.png'
+import { getInvitations, InvitationData } from '../requests/home';
 
-export const InvitationsMenu = (Props: {count_invit:number}) => {
+const initInvitationData: InvitationData[] = [] as InvitationData[];
+
+export const InvitationsMenu = (Props: { count_invit: number }) => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+	const [invitations, setInvitations] = React.useState(initInvitationData);
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+	React.useEffect(() => {
+		getInvitations().then((value) => {
+			if (typeof (value) === typeof (initInvitationData)) {
+				const data = value as InvitationData[];
+				setInvitations(data);
+			}
+		})
+	}, [])
 
 	return (
 		<Box>
@@ -57,7 +71,12 @@ export const InvitationsMenu = (Props: {count_invit:number}) => {
 				<Box sx={{ maxWidth: 380 }}>
 					{/* <nav aria-label="main folders"> */}
 					<List >
-						<ListItem >
+						{invitations && invitations.map((item) => (
+							<ListItem >
+								<InvitationFriend login={item.login} username={item.username} avatar={item.avatar} />
+							</ListItem>
+						))}
+						{/* <ListItem >
 							<InvitationFriend username="Joky Cmos" avatar={avatar2} />
 						</ListItem>
 						<ListItem >
@@ -68,7 +87,7 @@ export const InvitationsMenu = (Props: {count_invit:number}) => {
 						</ListItem>
 						<ListItem >
 							<InvitationFriend username="Joky Cmos" avatar={avatar2} />
-						</ListItem>
+						</ListItem> */}
 					</List>
 					{/* </nav> */}
 					<Divider />

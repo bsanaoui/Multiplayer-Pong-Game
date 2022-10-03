@@ -18,6 +18,86 @@ export interface ProfileNavData {
 	tfa: boolean,
 };
 
+export type UserData = {
+	avatar:string,
+	username:string,
+	login:string,
+	level: number
+	status: string, // offline || online || ingame
+}
+
+export type InvitationData = {
+	avatar:string,
+	login:string,
+	username:string,
+}
+
+// ========================== Get All Users ========================= //
+
+export async function getUsers() {
+
+	try {
+		// 👇️ const data: GetUsersResponse
+		const { data, status } = await axios.get<UserData[]>(
+			process.env.REACT_APP_SERVER_IP + "/users",
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+
+			}
+		);
+		console.log(JSON.stringify(data, null, 4));
+		// 👇️ "response status is: 200"
+		console.log('response status is: ', status);
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
+			return error.message;
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
+}
+
+// ========================== Get All Invitations ========================= //
+
+export async function getInvitations() {
+
+	try {
+		// 👇️ const data: GetUsersResponse
+		const { data, status } = await axios.get<InvitationData[]>(
+			process.env.REACT_APP_SERVER_IP + "/invitation",
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+
+			}
+		);
+		console.log(JSON.stringify(data, null, 4));
+		// 👇️ "response status is: 200"
+		console.log('response status is: ', status);
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
+			return error.message;
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
+}
+
+// ========================== Get Public/ Protected Rooms ========================= //
+
 export async function getRoomsData(kind: string) {
 	const url: string = (kind === "Public rooms" ? "/room/public_room" : "/room/protected_room");
 	try {
@@ -49,6 +129,7 @@ export async function getRoomsData(kind: string) {
 }
 
 
+// ========================== Post new Room ========================= //
 
 export async function createRoom(room_info: RoomInfo) {
 	try {
@@ -78,6 +159,7 @@ export async function createRoom(room_info: RoomInfo) {
 		}
 	}
 }
+// ========================== Get Profile Navbar Info ========================= //
 
 export async function getProfileNavbar() {
 
@@ -108,43 +190,43 @@ export async function getProfileNavbar() {
 		}
 	}
 }
- 
+
 // ========================== Get QR CODE 2fa ========================= //
 export async function getMQrCodeUrl() {
-    try {
-        const { data, status } = await axios.get<{qrcodeUrl: string}>(
-            process.env.REACT_APP_SERVER_IP + "/twofactorauth/generate",
-            {
-                headers: {
-                    Accept: "application/json",
-                },
-                withCredentials: true,
-            }
-        );
-        console.log(JSON.stringify(data, null, 4));
-        // 👇️ "response status is: 200"
-        console.log('response status is: ', status);
-        return data;
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log("error message: ", error.message);
-            return error.message;
-        } else {
-            console.log("unexpected error: ", error);
-            return "An unexpected error occurred";
-        }
-    }
+	try {
+		const { data, status } = await axios.get<{ qrcodeUrl: string }>(
+			process.env.REACT_APP_SERVER_IP + "/twofactorauth/generate",
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+			}
+		);
+		console.log(JSON.stringify(data, null, 4));
+		// 👇️ "response status is: 200"
+		console.log('response status is: ', status);
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
+			return error.message;
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
 }
 
 
 // ========================== Send Code 2fa to activate ========================= //
-export async function sendCode2FAEnable(code:string) {
+export async function sendCode2FAEnable(code: string) {
 
 	try {
 		// 👇️ const data: GetUsersResponse
 		const { data, status } = await axios.post<string>(
 			process.env.REACT_APP_SERVER_IP + "/twofactorauth/turnon",
-			{tfacode:code},
+			{ tfacode: code },
 			{
 				headers: {
 					Accept: "application/json",
@@ -169,13 +251,13 @@ export async function sendCode2FAEnable(code:string) {
 	}
 }
 // ========================== Send Code 2fa to disable ========================= //
-export async function sendCode2FADisable(code:string) {
+export async function sendCode2FADisable(code: string) {
 
 	try {
 		// 👇️ const data: GetUsersResponse
 		const { data, status } = await axios.post<string>(
 			process.env.REACT_APP_SERVER_IP + "/twofactorauth/turnoff",
-			{tfacode:code},
+			{ tfacode: code },
 			{
 				headers: {
 					Accept: "application/json",
@@ -201,12 +283,12 @@ export async function sendCode2FADisable(code:string) {
 }
 
 // ========================== Send Code 2fa to authentify ========================= //
-export async function sendCode2FAConnect(code:string) {
+export async function sendCode2FAConnect(code: string) {
 	try {
 		// 👇️ const data: GetUsersResponse
 		const { data, status } = await axios.post<string>(
 			process.env.REACT_APP_SERVER_IP + "/twofactorauth/turnoff",
-			{tfacode:code},
+			{ tfacode: code },
 			{
 				headers: {
 					Accept: "application/json",

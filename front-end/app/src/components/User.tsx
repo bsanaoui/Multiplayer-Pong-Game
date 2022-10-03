@@ -1,10 +1,30 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import avatar2 from '../assets/avatar2.png'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import { UserData } from '../requests/home';
+import { useEffect } from 'react';
 
 
+const online_bg:string = "#3FFC10";
+const offline_bg:string = "red";
+const inGame_bg:string = "yellow";
 
-const User = () => {
+const User = (user_data: UserData) => {
+  // const [status, setStatus] = useState("online");
+  let bg_status:string = online_bg;
+
+  const handleColorStatus = () => {
+
+    bg_status = (user_data.status === "online") ? online_bg
+      : (user_data.status === "offline") ? offline_bg
+      : (user_data.status === "inGame") ? inGame_bg
+      : online_bg;
+  }
+
+  useEffect(()=>{
+    handleColorStatus();
+  },[])
+
   return (
     <Box
       sx={{
@@ -20,7 +40,7 @@ const User = () => {
             overlap="circular"
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             badgeContent={
-              <div style={{ backgroundColor: '#3FFC10' }} className="dot_status" />
+              <div style={{ backgroundColor: bg_status }} className="dot_status" />
             }
           >
             <Avatar
@@ -30,7 +50,7 @@ const User = () => {
                 backgroundColor: "#FFF",
                 padding: "3px",
               }}
-              alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
+              alt={user_data.login} src={user_data.avatar} imgProps={{ style: { width: 'auto' } }} />
           </Badge>
         </div>
         <Stack>
@@ -38,7 +58,7 @@ const User = () => {
             sx={{
               fontWeight: '600',
               fontSize: '1.4rem',
-            }}>Lion</Typography>
+            }}>{user_data.username}</Typography>
           <Stack direction="row" spacing={0.5}>
             <SportsEsportsIcon sx={{ width: "19px" }} />
             <Typography
@@ -48,7 +68,9 @@ const User = () => {
                 fontSize: '0.9rem',
                 paddingTop: '1.3px',
               }}>
-              Level 23</Typography>
+              Level
+              {" " + user_data.level}
+              </Typography>
           </Stack>
         </Stack>
       </Stack>

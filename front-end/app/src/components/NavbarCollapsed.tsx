@@ -76,7 +76,7 @@ const CustomButton = ({ _name, _icon }: ButtonProps) => {
 
     let handleNavigation = (interfaceEnum: InterfaceEnum) => {
         switch (interfaceEnum) {
-            case InterfaceEnum.Home: navigate('/'); break;
+            case InterfaceEnum.Home: navigate('/home'); break;
             case InterfaceEnum.Dashboard: navigate('/dashboard'); break;
             case InterfaceEnum.ChatRoom: navigate('/chatRoom'); break;
             case InterfaceEnum.InstantMessaging: navigate('/instantMessaging'); break;

@@ -9,17 +9,20 @@ import { QRCodeCanvas } from 'qrcode.react'
 import { useDispatch } from 'react-redux'
 import { setOpenDialog2FA, setOpenDialogRoom } from '../../store/openDialogReducer'
 import { boolean } from 'yup'
+import { useNavigate } from 'react-router-dom'
 
 export const SignInTwoFAInput = () => {
     const dispatch = useDispatch();
     const [input_code, setCode] = useState("");
     const [is_error, setErrorInput] = useState(false);
+    const navigate = useNavigate();
 
     const handleAuth2FA = () => {
         sendCode2FAEnable(input_code)
-        // .then((value) => {
-        //     dispatch(setOpenDialog2FA(false));
-        // })
+        .then(() => {
+            dispatch(setOpenDialog2FA(false));
+            navigate('/home');
+        })
             .catch(() => { setErrorInput(true); });
     }
 

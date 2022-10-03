@@ -2,20 +2,32 @@ import { Box, List, Stack, Typography } from '@mui/material'
 import usersIcon from '../assets/users.png'
 import dot3Icon from '../assets/dot3.png'
 import User from './User';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getUsers, UserData } from '../requests/home';
 
 
-const users = Array.from({ length: 15 }, (_, index) => {
-	return (
-		<li key={index} className="item">
-			<User />
-		</li>
-	);
-});
+// const users = Array.from({ length: 15 }, (_, index) => {
+// 	return (
+// 		<li key={index} className="item">
+// 			<User />
+// 		</li>
+// 	);
+// });
+
+const initUsers: UserData[] = [] as UserData[];
 
 function AllUsers() {
 	const [is_collapse, setCollapse] = useState(true);
+	const [users, setUsers] = useState(initUsers);
 
+	useEffect(() => {
+		getUsers().then((value) => {
+			if (typeof (value) === typeof (initUsers)) {
+				const data = value as UserData[];
+				setUsers(data);
+			}
+		})
+	})
 	return (
 		<Box
 			sx={{
@@ -55,7 +67,15 @@ function AllUsers() {
 			</Stack>
 			{is_collapse &&
 				<List style={{ maxHeight: '500px', overflow: 'auto' }} >
-					{users}
+					{/* {users} */}
+					{users && users.map((item, index) => (
+						<li key={index} className="item">
+							<User avatar={item.avatar} username={item.username} login={item.login} level={item.level} status={item.status} />
+						</li>
+					))}
+					<li key={1} className="item">
+						<User avatar={""} username="CMOS" login="CMOS" level={24} status="online" />
+					</li>
 				</List>
 			}
 		</Box>

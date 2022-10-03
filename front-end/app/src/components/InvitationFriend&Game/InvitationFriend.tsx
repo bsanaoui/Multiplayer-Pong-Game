@@ -1,14 +1,24 @@
 import { Box, Avatar, Typography, Stack, Button } from '@mui/material'
+import axios from 'axios';
 import { useState } from 'react';
 
 interface InvitationProps {
-	id?: number,
+	login: string,
 	username: string,
-	avatar?: string,
+	avatar: string,
 }
 
-export const InvitationFriend = ({ username, avatar }: InvitationProps) => {
+export const InvitationFriend = ({ login, username, avatar }: InvitationProps) => {
 	const [is_confirm, setConfirm] = useState(false);
+
+	const handleAcceptInvite = () => {
+		axios.post(process.env.REACT_APP_SERVER_IP + '/invitation/accept?sender=' + login, {
+		}).then(() => {
+			setConfirm(true);
+		}).catch(() => {
+			// add Error msg
+		})
+	}
 
 	return (
 		<Stack spacing={1.6} direction="row" justifyContent="flex-start" width="270px">
@@ -34,7 +44,7 @@ export const InvitationFriend = ({ username, avatar }: InvitationProps) => {
 					{!is_confirm &&
 						<Button size="small" variant="contained"
 							sx={{ background: "#1977F3", color: "#EFE1FE" }}
-							onClick={() => { setConfirm(true) }}>
+							onClick={() => { handleAcceptInvite()}}>
 							Confirm
 						</Button>}
 					{is_confirm && <Button disabled size="small" variant="contained" sx={{ background: "#1977F3", color: "#EFE1FE" }}>

@@ -90,7 +90,7 @@ function App() {
 			<React.Suspense fallback={<Loading />}>
 				<Stack direction="row" width="100%" height="100%"
 					sx={{ backgroundColor: "#202541" }}>
-					{logged_user !== '' && <NavBarNew />} {/* Check if route not signin and signup */}
+					{logged_user === '' && <NavBarNew />} {/* Check if route not signin and signup */}
 
 					{/* {currentIterface === InterfaceEnum.Home && <Home />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}

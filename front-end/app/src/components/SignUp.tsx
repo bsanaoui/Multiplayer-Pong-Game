@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import * as Yup from 'yup'
 import { Box } from "@mui/material";
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // import backgroundForm from '../assets/background-table.png'
 
@@ -16,9 +18,9 @@ interface UserAccount {
 }
 
 const SignUp = () => {
-    // const fileRef = useRef(null);
     const paperStyle = { padding: '0px 15px 40px 15px', width: 320 }
     const btnStyle = { marginTop: '25px' }
+    const navigate = useNavigate();
 
     const initialValues: UserAccount = { user_name: '', avatar: {} as File };
 
@@ -28,9 +30,18 @@ const SignUp = () => {
     })
 
     const onSubmit = (values: UserAccount, props: any) => {
-
-        // createRoom(values);
         console.log(values);
+        if (values.avatar)
+            axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', { avatar: values.avatar }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        if (values.user_name)
+            axios.post(process.env.REACT_APP_SERVER_IP + '/profile/change_username', { username: values.user_name }, {
+                withCredentials: true,
+            })
+        navigate('/home');
         props.resetForm()
     }
 
@@ -49,7 +60,7 @@ const SignUp = () => {
             <Grid>
                 <Paper elevation={20} style={paperStyle}>
                     <Box height="100px" alignContent='center' marginBottom='20px'>
-                        <Typography textAlign="center" variant='h6'>Welcome To PongGame Online</Typography>
+                        <Typography textAlign="center" variant='h6'>tesssssst Welcome To PongGame Online ?????? DEbug</Typography>
                     </Box>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                         {(props) => (
