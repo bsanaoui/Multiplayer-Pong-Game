@@ -72,7 +72,6 @@ function App() {
 			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
 			console.log("User token: " + cookies.Authorization);
 		}
-		dispatch(HandleOpeneDialog()) 
 	}, []);
 
 	useEffect(() => {

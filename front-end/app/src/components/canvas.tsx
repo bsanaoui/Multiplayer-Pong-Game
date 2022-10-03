@@ -38,6 +38,7 @@ type Ball = {
 
 let socket: Socket;
 let width = (window.innerWidth) * 0.75;
+let g = false;
 // let width = document.getElementById('game-container')?.clientWidth as number;
 console.log("dfdsfsd",)
 let height = width / 2;
@@ -73,22 +74,25 @@ let drawRect = (ctx: CanvasRenderingContext2D,
 	ctx.fillRect(x, y, w, h);
 }
 
-let drawScore = (ctx: CanvasRenderingContext2D,
-	score: number,
-	x: number,
-	y: number,
-	color: string)
-	: void => {
-	ctx.fillStyle = color;
-	let font_size = window.innerWidth / 15;
-	ctx.font = font_size + 'px oxygen';
-	ctx.fillText(`${score}`, x, y);
-}
+// let drawScore = (ctx: CanvasRenderingContext2D,
+// 	score: number,
+// 	x: number,
+// 	y: number,
+// 	color: string)
+// 	: void => {
+// 	ctx.fillStyle = color;
+// 	let font_size = window.innerWidth / 15;
+// 	ctx.font = font_size + 'px oxygen';
+// 	ctx.fillText(`${score}`, x, y);
+// }
 
 let drawGameOver = (ctx: CanvasRenderingContext2D) => {
-	let font_size = window.innerWidth / 15;
-	ctx.font = font_size + 'px oxygen';
-	ctx.fillText('GAME OVER', width / 2 - font_size * 3, height / 2 + font_size / 4);
+	if (gameover)
+	{
+		let font_size = window.innerWidth / 15;
+		ctx.font = font_size + 'px oxygen';
+		ctx.fillText('GAME OVER', width / 2 - font_size * 3, height / 2 + font_size / 4);
+	}
 }
 
 let drawBall = (ctx: CanvasRenderingContext2D,
@@ -113,7 +117,7 @@ let drawGame = (ctx: CanvasRenderingContext2D): void => {
 	drawRect(ctx, 0, 0, width, height, "black");
 	if (P1.x !== 0) {
 		drawRect(ctx, P1.x * cof, P1.y * cof, P1.w * cof, P1.h * cof, 'white');
-		drawScore(ctx, P1.score, (P1.scorpos * (width / 4) - (width / 30)), height / 4, "#cbcbcb");
+		// drawScore(ctx, P1.score, (P1.scorpos * (width / 4) - (width / 30)), height / 4, "#cbcbcb");
 		// let p : keyof typeof players;
 		// for (p in players)
 		// {
@@ -123,7 +127,7 @@ let drawGame = (ctx: CanvasRenderingContext2D): void => {
 	}
 	if (P2.x !== 0) {
 		drawRect(ctx, P2.x * cof, P2.y * cof, P2.w * cof, P2.h * cof, 'white');
-		drawScore(ctx, P2.score, (P2.scorpos * (width / 4) - (width / 30)), height / 4, "#cbcbcb");
+		// drawScore(ctx, P2.score, (P2.scorpos * (width / 4) - (width / 30)), height / 4, "#cbcbcb");
 	}
 	drawNet(ctx);
 	if (gameover)
@@ -226,8 +230,15 @@ const Canvas = () => {
 	const mode: string = getMode(match_info.mode);
 	const invite = ''
 	const watching = match_info.room;
-	if (!socket)
+
+	if (!g)
+	{
+		g = true;
 		socket = io('http://localhost:3333/game', { auth: { mode: mode, info: player_info, invite: invite, room: watching } });
+	}
+	// useEffect(() => {
+	// 	// if (!socket)
+	// },[])
 
 	socket!.emit('size_change', width);
 
@@ -236,6 +247,7 @@ const Canvas = () => {
 
 	const [player1, setPlayer1] = useState(P1);
 	const [player2, setPlayer2] = useState(P2);
+	// const isGameSet = useSelector((state: RootState) => state.game).is_game_set;
 
 	useEffect(() => {
 		const canvas = canvasRef!.current;
@@ -264,17 +276,18 @@ const Canvas = () => {
 		})
 
 		socket.on('update_connections', (p1: Player, p2: Player, b: Ball) => {
-			// players = p;
-			P1 = p1;
-			P2 = p2;
-			// setPlayer1(p1);
-			// setPlayer2(p2)
-			if (room === '')
-				room = P1.room!;
-			ball = b;
-			updateBalldisplay(ball);
-			drawGame(ctx);
-		})
+            if (P1.score !== p1.score)
+                setPlayer1(p1);
+            if (P2.score !== p2.score)
+                setPlayer2(p2)
+            P1 = p1;
+            P2 = p2;
+            if (room === '')
+                room = P1.room!;
+            ball = b;
+            updateBalldisplay(ball);
+            drawGame(ctx);
+        })
 
 		function handleResize() {
 			const canvas = canvasRef!.current;
@@ -291,6 +304,8 @@ const Canvas = () => {
 			})
 		}
 
+		
+
 		window.addEventListener('resize', handleResize)
 		return () => {
 			socket.off('size_change');
@@ -299,9 +314,24 @@ const Canvas = () => {
 		}
 	});
 
+	useEffect(()=>{
+		return(() => {
+			socket.emit('disconnectMe');
+			console.log("Canva Unmounted");
+			let width = (window.innerWidth) * 0.75;
+			g = false;
+			console.log("dfdsfsd",)
+			height = width / 2;
+			cof = 1;
+			room = '';
+			P1 = {} as Player;
+			P2 = {} as Player;
+			gameover = false;
+		})
+	},[])
 	return (
 		<div>
-			{/* <div className="game-bar">
+			<div className="game-bar">
 				<div className="user-side">
 					<div className="user-info">
 						<div className="user-img">
@@ -317,7 +347,7 @@ const Canvas = () => {
 					</div>
 
 				</div>
-			</div> */}
+			</div>
 			<canvas id='game' ref={canvasRef} />
 		</div>)
 };

@@ -27,7 +27,7 @@ function AllUsers() {
 				setUsers(data);
 			}
 		})
-	})
+	},[])
 	return (
 		<Box
 			sx={{
