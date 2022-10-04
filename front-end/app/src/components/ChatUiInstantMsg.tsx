@@ -132,7 +132,7 @@ export const ChatUiInstantMsg = () => {
         if (currentConv !== '')
             initMsgs();
         if (socket) {
-            joinDmRoom();
+            // joinDmRoom();
             recieveMsgs();
         }
         if (bottomRef) {

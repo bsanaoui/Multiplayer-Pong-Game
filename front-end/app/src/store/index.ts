@@ -7,6 +7,7 @@ import interfacesReducer from './interfacesReducer'
 import openDialogReducer from './openDialogReducer'
 import profileReducer from './profileReducer'
 import roomUsersReducer from './roomUsersReducer'
+import socketGlobalReducer from './socketGlobalReducer'
 import socketReducer from './socketReducer'
 import userReducer from './userReducer'
 
@@ -22,6 +23,7 @@ export const store = configureStore({
 		game:gameReducer,
 		fetch:FetchsReducer,
 		profile:profileReducer,
+		socketglobal:socketGlobalReducer,
 	},
 	// To fix non serialisable object set on state
 	middleware: getDefaultMiddleware =>

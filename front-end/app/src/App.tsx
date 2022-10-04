@@ -37,6 +37,7 @@ import React from 'react';
 import { handleToastGame } from './components/InfoMessages/Toast';
 import { emit } from 'process';
 import { P_data } from './components/DropMenus/DropMenuUser';
+import { disconnectSocketGlobal, initSocketGlobal } from './store/socketGlobalReducer';
 
 const darkTheme = createTheme({
 	palette: {
@@ -70,39 +71,18 @@ function App() {
 	const [cookies, setCookie, removeCookie] = useCookies();
 	const location = useLocation();
 	const navigate = useNavigate();
-	const socket = useSelector((state: RootState) => state.socketclient).socket;
-
-	// const handleListenerGame = () => {
-	// 	socket.on('gameInvite', (data: { user: P_data, mod: number }) => {
-	// 		handleToastGame(data);
-	// 	})
-	// }
-
-	// useEffect(() => {
-	// 	if (socket)
-	// 		handleListenerGame();
-	// 	return (() => {
-	// 		socket.off("gameInvite");
-	// 	})
-	// },)
-
-	// useEffect(() => {
-	// 	dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));
-
-	// 	return (() => {
-	// 		console.log("Socket Disconnected Global App");
-	// 		socket.disconnect();
-	// 	})
-
-	// }, []);
 
 	useEffect(() => {
 		if (cookies.Authorization) {
 			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
+			dispatch(initSocketGlobal({ host: (process.env.REACT_APP_SERVER_IP as string) + "/global", user: logged_user }));
 			console.log("User token: " + cookies.Authorization);
-			if (location.pathname === '/' || location.pathname === '/tfa'|| location.pathname === '/signUp' )
+			if (location.pathname === '/' || location.pathname === '/tfa' || location.pathname === '/signUp')
 				navigate("/home");
 		}
+		return (() => {
+			dispatch(disconnectSocketGlobal());
+		})
 		
 	}, []);
 
@@ -111,7 +91,7 @@ function App() {
 			removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
 			dispatch(clearUser());
 		}
-		
+
 	}, [currentIterface])
 
 
