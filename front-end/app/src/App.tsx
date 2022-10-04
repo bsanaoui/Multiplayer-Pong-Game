@@ -34,7 +34,7 @@ import { initSocketClient } from './store/socketReducer';
 import { ToastContainer } from 'react-toastify';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
-import { handleToastGame } from './components/InfoMessages/Toast';
+// import { handleToastGame } from './components/InfoMessages/Toast';
 import { emit } from 'process';
 import { P_data } from './components/DropMenus/DropMenuUser';
 import { disconnectSocketGlobal, initSocketGlobal } from './store/socketGlobalReducer';
@@ -76,7 +76,7 @@ function App() {
 	useEffect(() => {
 		if (cookies.Authorization) {
 			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
-			dispatch(initSocketGlobal({ host: (process.env.REACT_APP_SERVER_IP as string) + "/global", user: logged_user }));
+			dispatch(initSocketGlobal({ host: (process.env.REACT_APP_SERVER_IP as string) + "/global", user: cookies.login }));
 			console.log("User token: " + cookies.Authorization);
 			if (location.pathname === '/' || location.pathname === '/tfa' || location.pathname === '/signUp')
 				navigate("/home");

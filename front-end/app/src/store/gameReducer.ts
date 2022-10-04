@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { string } from 'yup/lib/locale';
 import { Player } from '../components/canvas';
+import {data} from "../components/DropMenus/DropMenuUser";
 
 export enum ModeEnum {
     mode1,
@@ -21,6 +22,8 @@ export interface ModeState {
     room:string,
     players:PlayerData;
     invite_key:string;
+
+    data_accept:data,
 }
 
 const initialState: ModeState = {
@@ -30,6 +33,8 @@ const initialState: ModeState = {
     room:"",
     players:{p1:{} as Player , p2:{} as Player},
     invite_key:'',
+
+    data_accept:{} as data,
 }
 
 export const GameSlice = createSlice({
@@ -63,9 +68,13 @@ export const GameSlice = createSlice({
         HandleOpeneDialog: (state) => {
             state.dialogIsOpen = true;
         },
+
+        handleStoreDataGame :(state, action: PayloadAction<data>) => {
+            state.data_accept = action.payload;
+        }
     }
 })
 
-export const { setModeGame, HandleCloseDialog, HandleOpeneDialog,finishGame,updateScore } = GameSlice.actions
+export const { setModeGame, HandleCloseDialog, HandleOpeneDialog,finishGame,updateScore,handleStoreDataGame } = GameSlice.actions
 
 export default GameSlice.reducer
