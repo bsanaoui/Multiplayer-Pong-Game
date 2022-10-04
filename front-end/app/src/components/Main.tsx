@@ -5,7 +5,7 @@ import { P_data } from './DropMenus/DropMenuUser';
 import { handleToastGame } from './InfoMessages/Toast';
 
 const Main = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
 
     const handleListenerGame = () => {
