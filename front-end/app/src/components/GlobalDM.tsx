@@ -11,7 +11,7 @@ import { InterfaceEnum } from "../store/interfacesReducer"
 import { useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { io, Socket } from "socket.io-client";
-import { changeCurrRoom } from "../store/chatUiReducer";
+import { changeCurrConversation, changeCurrRoom } from "../store/chatUiReducer";
 import { initSocketClient } from "../store/socketReducer";
 import { ChatUIRoomMsg } from "./ChatUIRoomMsg";
 
@@ -33,6 +33,8 @@ const GlobalDM = () => {
 		return (() => {
 			console.log("Socket Disconnected Global DM");
 			socket.disconnect();
+			dispatch(changeCurrConversation({ user: '', avatar: '' }));
+
 		})
 
 	}, []);

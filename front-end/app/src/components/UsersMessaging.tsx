@@ -33,8 +33,9 @@ export const UsersMessaging = () => {
         geMessagingUsers().then((value) => {
             if ((typeof value) === (typeof initUsers)) {
                 const data = value as UserMessaging[];
-                if (users.length === 0 && data.length > 0)
-                    dispatch(changeCurrConversation({ user: data[0].login as string, avatar: data[0].avatar as string }))
+                // if (users.length === 0 && data.length > 0 && currentConv === '')
+                if (currentConv === '' )
+                    dispatch(changeCurrConversation({ user: '', avatar: ''}));
                 setUsers(data);
             }
         })
@@ -63,10 +64,13 @@ export const UsersMessaging = () => {
                     dispatch(changeCurrConversation({ user: '', avatar: '' }));
                     handleToastMsg(data.status, data.msg);
                 }
-                else if (data.to === logged_user && data.from === currentConv)
+                if (data.to === logged_user && data.from === currentConv)
                     dispatch(changeCurrConversation({ user: '', avatar: '' }));
-                else if (data.to === logged_user && data.from !== currentConv)
+                else if (data.to === logged_user && data.from !== currentConv && currentConv !== '')
+                {
+                    console.log("heeeereeee");
                     dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar }));
+                }
             }
         })
     }

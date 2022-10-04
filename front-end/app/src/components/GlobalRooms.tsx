@@ -30,6 +30,8 @@ const GlobalRooms = () => {
 		return (() => {
 			console.log("Socket Disconnected Global Rooms");
 			socket.disconnect();
+			dispatch(changeCurrRoom({ room: '', role: '' }))
+
 		})
 
 	}, []);
