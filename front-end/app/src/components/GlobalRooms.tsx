@@ -15,25 +15,24 @@ import { changeCurrRoom } from "../store/chatUiReducer";
 import { initSocketClient } from "../store/socketReducer";
 import { ChatUIRoomMsg } from "./ChatUIRoomMsg";
 
-
 const GlobalRooms = () => {
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	// const currentPage = useSelector((state: RootState) => state.interfaces).current;
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const dispatch = useDispatch();
 
-	console.log("Global Rooms")
+	console.log("Global Rooms");
 
-	// useEffect(() => {
-	// 	// if (currentPage === InterfaceEnum.ChatRoom )
-	// 		dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
+	useEffect(() => {
+		// if (currentPage === InterfaceEnum.ChatRoom )
+			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
 
-	// 	return (() => {
-	// 		console.log("Socket Disconnected Global Rooms");
-	// 		socket.disconnect();
-	// 	})
+		return (() => {
+			console.log("Socket Disconnected Global Rooms");
+			socket.disconnect();
+		})
 
-	// }, []);
+	}, []);
 
 	return (
 		<Stack direction="row" alignItems="center" justifyContent="flex-end" height="100%" width="100%">

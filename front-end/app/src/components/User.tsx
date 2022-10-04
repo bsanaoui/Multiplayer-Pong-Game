@@ -48,7 +48,7 @@ const User = (user_data: UserData) => {
                 height: '50px',
                 width: '50px',
                 backgroundColor: "#FFF",
-                padding: "3px",
+                // padding: "3px",
               }}
               alt={user_data.login} src={user_data.avatar} imgProps={{ style: { width: 'auto' } }} />
           </Badge>

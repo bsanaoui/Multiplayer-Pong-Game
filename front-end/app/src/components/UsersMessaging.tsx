@@ -33,6 +33,8 @@ export const UsersMessaging = () => {
         geMessagingUsers().then((value) => {
             if ((typeof value) === (typeof initUsers)) {
                 const data = value as UserMessaging[];
+                if (users.length === 0 && data.length > 0)
+                    dispatch(changeCurrConversation({ user: data[0].login as string, avatar: data[0].avatar as string }))
                 setUsers(data);
             }
         })
@@ -52,7 +54,7 @@ export const UsersMessaging = () => {
                     dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar }));
                 }
                 else if (data.to === logged_user)
-                toast.info(data.from + " waving you 👋");
+                    toast.info(data.from + " waving you 👋");
             }
             else if (data.action === "block") {
                 if (data.from === logged_user || data.to === logged_user)
@@ -77,15 +79,6 @@ export const UsersMessaging = () => {
     },)
 
     useEffect(() => {
-        if (socket)
-            receiveUpdate();
-        return (() => {
-            socket.off("instant_messaging");
-        })
-    },)
-
-
-    useEffect(() => {
         joinDmRoom();
         getUsers();
 
@@ -98,7 +91,7 @@ export const UsersMessaging = () => {
 
     return (
         <Box
-        className='dm_messaging'
+            className='dm_messaging'
             sx={{
                 backgroundColor: "#262948",
                 height: '100vh',

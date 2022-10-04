@@ -32,7 +32,7 @@ import { HandleOpeneDialog } from './store/gameReducer';
 import Canvas from './components/canvas';
 import { initSocketClient } from './store/socketReducer';
 import { ToastContainer } from 'react-toastify';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
 import { handleToastGame } from './components/InfoMessages/Toast';
 import { emit } from 'process';
@@ -63,43 +63,45 @@ const SignInTFA = React.lazy(() => import('./components/SignInTFA'));
 const Loading = () => <Box margin="auto"><CircularProgress /><p>Loading ...</p></Box>;
 
 
-
 function App() {
 	const dispatch = useDispatch();
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentIterface = useSelector((state: RootState) => state.interfaces).current;
 	const [cookies, setCookie, removeCookie] = useCookies();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 
-	const handleListenerGame = () => {
-		socket.on('gameInvite', (data: { user: P_data, mod: number }) => {
-			handleToastGame(data);
-		})
-	}
+	// const handleListenerGame = () => {
+	// 	socket.on('gameInvite', (data: { user: P_data, mod: number }) => {
+	// 		handleToastGame(data);
+	// 	})
+	// }
 
-	useEffect(() => {
-		if (socket)
-			handleListenerGame();
-		return (() => {
-			socket.off("gameInvite");
-		})
-	},)
+	// useEffect(() => {
+	// 	if (socket)
+	// 		handleListenerGame();
+	// 	return (() => {
+	// 		socket.off("gameInvite");
+	// 	})
+	// },)
 
-	useEffect(() => {
-		dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));
+	// useEffect(() => {
+	// 	dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));
 
-		return (() => {
-			console.log("Socket Disconnected Global App");
-			socket.disconnect();
-		})
+	// 	return (() => {
+	// 		console.log("Socket Disconnected Global App");
+	// 		socket.disconnect();
+	// 	})
 
-	}, []);
+	// }, []);
 
 	useEffect(() => {
 		if (cookies.Authorization) {
 			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
 			console.log("User token: " + cookies.Authorization);
+			if (location.pathname === '/' || location.pathname === '/tfa'|| location.pathname === '/signUp' )
+				navigate("/home");
 		}
 		
 	}, []);
@@ -109,7 +111,7 @@ function App() {
 			removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
 			dispatch(clearUser());
 		}
-
+		
 	}, [currentIterface])
 
 
