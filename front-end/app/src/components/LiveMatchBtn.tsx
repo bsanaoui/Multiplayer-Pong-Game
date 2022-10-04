@@ -5,6 +5,7 @@ import avatar2 from '../assets/avatar2.png'
 import { Game } from "./Game/game.entity"
 import { ModeEnum, setModeGame } from "../store/gameReducer"
 import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 
 interface AvatarProps {
@@ -36,9 +37,11 @@ export const AvatarPlayer = (props: AvatarProps) => {
 
 const LiveMatchBtn = (props: { info: any, room_id: string }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     return (
         <Box
-            onClick={() => { dispatch(setModeGame({ mode: ModeEnum.mode3, room: props.room_id })) }}
+            onClick={() => { dispatch(setModeGame({ mode: ModeEnum.mode3, room: props.room_id }));navigate('/matchmaking');  }}
             sx={{
                 width: '310px',
                 height: '170px',

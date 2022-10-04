@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { string } from 'yup/lib/locale';
 import { Player } from '../components/canvas';
 
 export enum ModeEnum {
@@ -19,7 +20,7 @@ export interface ModeState {
     is_game_set: boolean,
     room:string,
     players:PlayerData;
-
+    invite_key:string;
 }
 
 const initialState: ModeState = {
@@ -28,6 +29,7 @@ const initialState: ModeState = {
     is_game_set: false,
     room:"",
     players:{p1:{} as Player , p2:{} as Player},
+    invite_key:'',
 }
 
 export const GameSlice = createSlice({
@@ -47,8 +49,14 @@ export const GameSlice = createSlice({
         },
 
         finishGame: (state) => {
-            state.is_game_set = false;
+            state = initialState;
         },
+
+        playInvitedGame:(state, action: PayloadAction<{key:string, mode:ModeEnum}>) => {
+            state.mode=action.payload.mode;
+            state.invite_key = action.payload.key;
+        },
+
         HandleCloseDialog: (state) => {
             state.dialogIsOpen = false;
         },

@@ -24,18 +24,18 @@ const GlobalDM = () => {
 
 	console.log("Global DM")
 
-	useEffect(() => {
+	// useEffect(() => {
 
-		// if (currentPage === InterfaceEnum.Friends
-		// 	|| currentPage === InterfaceEnum.InstantMessaging)
-			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
+	// 	// if (currentPage === InterfaceEnum.Friends
+	// 	// 	|| currentPage === InterfaceEnum.InstantMessaging)
+	// 		dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
 
-		return (() => {
-			console.log("Socket Disconnected Global DM");
-			socket.disconnect();
-		})
+	// 	return (() => {
+	// 		console.log("Socket Disconnected Global DM");
+	// 		socket.disconnect();
+	// 	})
 
-	}, []);
+	// }, []);
 
 	return (
 		<Stack direction="row" alignItems="center" justifyContent="flex-end" height="100%" width="100%">

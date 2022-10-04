@@ -163,7 +163,6 @@ const CustomButton = ({ _name, _icon }: ButtonProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const location = useLocation(); // handle locations
-
     let handleNavigation = (interfaceEnum: InterfaceEnum) => {
         switch (interfaceEnum) {
             case InterfaceEnum.Home: navigate('/'); break;

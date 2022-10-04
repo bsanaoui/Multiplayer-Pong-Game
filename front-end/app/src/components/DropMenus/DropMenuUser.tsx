@@ -30,11 +30,23 @@ interface MenuProps {
 };
 
 
+export type P_data = {
+	username: string;
+	login: string;
+	avatar: string;
+}
+
+export type data = {
+	P1: P_data;
+	P2: P_data;
+	mod: number
+}
 
 export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 	const dispatch = useDispatch();
 	// let { socket } = React.useContext(SocketContext) as SocketContextType;
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
+	const logged_user = useSelector((state: RootState) => state.user);
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
@@ -46,19 +58,18 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 	};
 
 	const blockUser = () => {
-		if (socket)
-		{
+		if (socket) {
 			socket.emit('block_dm');
 			// dispatch(changeCurrConversation({ user: '', avatar: ''}));
 		}
 	}
 
-	const blockFriend = (friend:string) => {
+	const blockFriend = (friend: string) => {
 		if (socket)
-			socket.emit('block_friend',{to:friend});
+			socket.emit('block_friend', { to: friend });
 	}
 
-	const chat = (user?: string, avatar?:string) => { // to edit
+	const chat = (user?: string, avatar?: string) => { // to edit
 		if (socket) {
 			if (socket && user) {
 				socket.emit('join_dm_room', { to: user });
@@ -66,6 +77,13 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 				console.log("Chat with theme");
 			}
 		}
+	}
+
+	const handleSendInviteGame = () => {
+		const p1:P_data = {username: logged_user.username, login:logged_user.login, avatar:logged_user.avatar as string};
+		const p2:P_data = {username: friend?.username as string, login:friend?.login as string, avatar:friend?.avatar as string};
+		const data:data = {P1:p1, P2:p2, mod:0};
+		socket.emit('invite',data);
 	}
 
 	return (
@@ -97,7 +115,7 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 					<nav aria-label="main folders">
 						<List dense={true} >
 							<ListItem disablePadding >
-								<ListItemButton onClick={handleClose}>
+								<ListItemButton onClick={() => { handleClose(); handleSendInviteGame()}}>
 									<Avatar variant="square" src={playIcon} sx={{ marginRight: "15%", width: "19px", height: "19px" }} />
 									<ListItemText primary="Play" />
 								</ListItemButton>
@@ -125,7 +143,8 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 							<ListItem disablePadding>
 								<ListItemButton onClick={() => {
 									handleClose();
-									(is_dm_user) ? blockUser() : blockFriend(friend?.login as string) }}>
+									(is_dm_user) ? blockUser() : blockFriend(friend?.login as string)
+								}}>
 									<Avatar variant="square" src={blockIcon} sx={{ marginRight: "14%", width: "22px", height: "22px" }} />
 									<ListItemText primary="Block" />
 								</ListItemButton>

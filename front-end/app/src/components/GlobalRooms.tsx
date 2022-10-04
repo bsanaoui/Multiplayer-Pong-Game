@@ -24,16 +24,16 @@ const GlobalRooms = () => {
 
 	console.log("Global Rooms")
 
-	useEffect(() => {
-		// if (currentPage === InterfaceEnum.ChatRoom )
-			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
+	// useEffect(() => {
+	// 	// if (currentPage === InterfaceEnum.ChatRoom )
+	// 		dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
 
-		return (() => {
-			console.log("Socket Disconnected Global Rooms");
-			socket.disconnect();
-		})
+	// 	return (() => {
+	// 		console.log("Socket Disconnected Global Rooms");
+	// 		socket.disconnect();
+	// 	})
 
-	}, []);
+	// }, []);
 
 	return (
 		<Stack direction="row" alignItems="center" justifyContent="flex-end" height="100%" width="100%">

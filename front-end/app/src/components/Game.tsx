@@ -12,12 +12,14 @@ import './Game/navGame.css'
 const Game = () => {
 	const dispatch = useDispatch();
 	const isGameSet = useSelector((state: RootState) => state.game).is_game_set;
+	const mode = useSelector((state: RootState) => state.game).mode;
 
 
 	useEffect(() => {
-		dispatch(HandleOpeneDialog())
+		if (mode !== ModeEnum.mode3)
+			dispatch(HandleOpeneDialog())
 	},[])
-	
+
 	useEffect(() => {
 		return (() => {
 			if (isGameSet)

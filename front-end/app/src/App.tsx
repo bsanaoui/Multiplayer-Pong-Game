@@ -33,8 +33,11 @@ import { HandleOpeneDialog } from './store/gameReducer';
 import Canvas from './components/canvas';
 import { initSocketClient } from './store/socketReducer';
 import { ToastContainer } from 'react-toastify';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
+import { handleToastGame } from './components/InfoMessages/Toast';
+import { emit } from 'process';
+import { P_data } from './components/DropMenus/DropMenuUser';
 
 const darkTheme = createTheme({
 	palette: {
@@ -61,17 +64,44 @@ const SignInTFA = React.lazy(() => import('./components/SignInTFA'));
 const Loading = () => <Box margin="auto"><CircularProgress /><p>Loading ...</p></Box>;
 
 
+
 function App() {
 	const dispatch = useDispatch();
 	const logged_user = useSelector((state: RootState) => state.user).login;
 	const currentIterface = useSelector((state: RootState) => state.interfaces).current;
 	const [cookies, setCookie, removeCookie] = useCookies();
+	const location = useLocation();
+
+	const handleListenerGame = () => {
+		socket.on('gameInvite', (data: { user: P_data, mod: number }) => {
+			handleToastGame(data);
+		})
+	}
+
+	useEffect(() => {
+		if (socket)
+			handleListenerGame();
+		return (() => {
+			socket.off("gameInvite");
+		})
+	},)
+
+	useEffect(() => {
+		dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));
+
+		return (() => {
+			console.log("Socket Disconnected Global App");
+			socket.disconnect();
+		})
+
+	}, []);
 
 	useEffect(() => {
 		if (cookies.Authorization) {
 			dispatch(initUser({ login: cookies.login, username: cookies.username, avatar: cookies.avatar }));
 			console.log("User token: " + cookies.Authorization);
 		}
+		
 	}, []);
 
 	useEffect(() => {
@@ -82,15 +112,16 @@ function App() {
 
 	}, [currentIterface])
 
-	
+
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<ToastContainer position="top-right" newestOnTop autoClose={3500} />
 			<CssBaseline />
-			<React.Suspense fallback={<Loading />}>
-				<Stack direction="row" width="100%" height="100%"
-					sx={{ backgroundColor: "#202541" }}>
-					{logged_user !== '' && <NavBarNew />}  {/*Check if route not signin and signup*/}
+			<Stack direction="row" width="100%" height="100%"
+				sx={{ backgroundColor: "#202541" }}>
+				<React.Suspense fallback={<Loading />}>
+					{(logged_user !== '' && location.pathname !== '/' && location.pathname !== '/signUp'
+						&& location.pathname !== '/tfa') && <NavBarNew />}  {/*Check if route not signin and signup*/}
 
 					{/* {currentIterface === InterfaceEnum.Home && <Home />}
 						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
@@ -110,8 +141,8 @@ function App() {
 						<Route path='/matchmaking' element={<Matchmaking />} />
 						<Route path='/liveMatchs' element={<LiveMatchs />} />
 					</Routes>
-				</Stack>
-			</React.Suspense>
+				</React.Suspense>
+			</Stack>
 
 		</ThemeProvider >
 	);
