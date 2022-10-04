@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import groupIcon from '../assets/group-icon.svg'
 import { RoomData } from '../requests/home'
 import { changeCurrRoom } from '../store/chatUiReducer'
@@ -8,12 +9,13 @@ import { InterfaceEnum, setCurrentInterface } from '../store/interfacesReducer'
 
 const RoomButton = (Props: RoomData) => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	return (
 		<Box
 			onClick={() => {
 				dispatch(changeCurrRoom({room:Props.room_id, role:"owner"}));
-			dispatch(setCurrentInterface(InterfaceEnum.ChatRoom));
+			navigate('/chatRoom');
 		}}
 			sx={{
 				width: '320px',

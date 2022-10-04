@@ -23,7 +23,7 @@ export interface ModeState {
     players:PlayerData;
     invite_key:string;
 
-    data_accept:data,
+    // data_accept:data,
 }
 
 const initialState: ModeState = {
@@ -34,7 +34,7 @@ const initialState: ModeState = {
     players:{p1:{} as Player , p2:{} as Player},
     invite_key:'',
 
-    data_accept:{} as data,
+    // data_accept:{} as data,
 }
 
 export const GameSlice = createSlice({
@@ -68,13 +68,9 @@ export const GameSlice = createSlice({
         HandleOpeneDialog: (state) => {
             state.dialogIsOpen = true;
         },
-
-        handleStoreDataGame :(state, action: PayloadAction<data>) => {
-            state.data_accept = action.payload;
-        }
     }
 })
 
-export const { setModeGame, HandleCloseDialog, HandleOpeneDialog,finishGame,updateScore,handleStoreDataGame } = GameSlice.actions
+export const { setModeGame, HandleCloseDialog, HandleOpeneDialog,finishGame,updateScore,playInvitedGame } = GameSlice.actions
 
 export default GameSlice.reducer

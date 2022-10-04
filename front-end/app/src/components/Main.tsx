@@ -2,19 +2,19 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import {data, P_data} from './DropMenus/DropMenuUser';
-// import { handleToastGame } from './InfoMessages/Toast';
-import {handleStoreDataGame} from "../store/gameReducer";
 import {toast} from "react-toastify";
+import { playInvitedGame } from '../store/gameReducer';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
     const dispatch = useDispatch();
     const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
-    let global_data: data;
+    const navigate = useNavigate();
 
     const handleClickAccept = (data:data) => {
         socket_global.emit('accepted', data);
     }
-
+    
     const CustomMsg = (props:data) => {
         return (<div>
             <p> {props.P1.username} want to play with you in mode {props.mod}</p>
@@ -30,7 +30,6 @@ const Main = () => {
     const handleListenerGame = () => {
         socket_global.on('gameInvite', (data:data) => {
             console.log("inviiite", data);
-            global_data = data
             handleToastGame(data);
         })
     }
@@ -44,11 +43,11 @@ const Main = () => {
     },)
 
 
-
     const handleGameStart = () => {
         socket_global.on('start', (data:{key:string, mod:number}) => {
-            // dispatch(handleStoreDataGame(data));
             console.log("KEEEEY", data);
+            dispatch(playInvitedGame({key:data.key, mode:data.mod}));
+            navigate('/matchmaking');
         })
     }
 

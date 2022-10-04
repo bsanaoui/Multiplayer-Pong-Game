@@ -33,16 +33,15 @@ import { TwoFAInput } from './2FA/TwoFAInput';
 import { getProfileNavbar, ProfileNavData } from '../requests/home';
 import axios from 'axios';
 
-let getInterface = (interfaceEnum: InterfaceEnum): string => {
-    switch (interfaceEnum) {
-        case InterfaceEnum.Home: return "Home"
-        case InterfaceEnum.Dashboard: return "Dashboard";
-        case InterfaceEnum.ChatRoom: return "Chat Room";
-        case InterfaceEnum.InstantMessaging: return "Instant Messaging";
-        case InterfaceEnum.Friends: return "Friends";
-        case InterfaceEnum.Matchmaking: return "Matchmaking";
-        case InterfaceEnum.LiveGames: return "Live Games";
-        case InterfaceEnum.Logout: return "Log Out";
+export let getInterface = (currentRoute: string): string => {
+    switch (currentRoute) {
+        case '/home': return "Home"
+        case '/dashboard': return "Dashboard";
+        case '/chatRoom': return "Chat Room";
+        case '/instantMessaging': return "Instant Messaging";
+        case '/matchmaking': return "Matchmaking";
+        case '/liveMatchs': return "Live Games";
+        case '/login': return "Log Out";
         default: return "Home";
     }
 };
@@ -76,7 +75,7 @@ export const NavBarNew = () => {
         <Box >
             {is_collapsedNav && <NavbarCollapsed />}
             {!is_collapsedNav &&
-                <Stack height="100vh" width= "240px" justifyContent="space-between"
+                <Stack height="100vh" width="240px" justifyContent="space-between"
                     sx={{ backgroundColor: "#303465" }}>
                     <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1.8}
                         sx={{ padding: "3.3%", paddingTop: "5%" }}>
@@ -128,19 +127,19 @@ export const NavBarNew = () => {
                     </Stack>
                     <Stack
                         divider={<Divider orientation="horizontal" flexItem />}>
-                        <CustomButton _name={InterfaceEnum.Home} _icon={homeIcon} />
-                        <CustomButton _name={InterfaceEnum.Dashboard} _icon={dashboardIcon} />
-                        <CustomButton _name={InterfaceEnum.ChatRoom} _icon={roomIcon} />
-                        <CustomButton _name={InterfaceEnum.InstantMessaging} _icon={messengerIcon} />
+                        <CustomButton route='/home' _icon={homeIcon} />
+                        <CustomButton route='/dashboard' _icon={dashboardIcon} />
+                        <CustomButton route='/chatRoom' _icon={roomIcon} />
+                        <CustomButton route='/instantMessaging' _icon={messengerIcon} />
                         {/* <CustomButton _name={InterfaceEnum.Friends} _icon={friendsIcon} /> */}
-                        <CustomButton _name={InterfaceEnum.Matchmaking} _icon={matchmakingIcon} />
-                        <CustomButton _name={InterfaceEnum.LiveGames} _icon={streamingIcon} />
+                        <CustomButton route='/matchmaking' _icon={matchmakingIcon} />
+                        <CustomButton route='/liveMatchs' _icon={streamingIcon} />
                     </Stack>
                     <Box>
                         <Box sx={{ marginBottom: "20%" }}><Button2FA verified={info_user.tfa} /></Box>
                         <Collapse />
                         <Divider orientation="horizontal" flexItem />
-                        <CustomButton _name={InterfaceEnum.Logout} _icon={LogoutIcon} />
+                        <CustomButton route='/login' _icon={LogoutIcon} />
                     </Box>
                 </Stack>}
 
@@ -153,34 +152,36 @@ export const NavBarNew = () => {
     )
 }
 
-interface ButtonProps {
-    _name: InterfaceEnum,
+export interface ButtonProps {
+    route: string,
     _icon: string,
 }
 
-const CustomButton = ({ _name, _icon }: ButtonProps) => {
-    const currentInterface = useSelector((state: RootState) => state.interfaces).current;
-    const dispatch = useDispatch();
+const CustomButton = ({ route, _icon }: ButtonProps) => {
+    // const currentInterface = useSelector((state: RootState) => state.interfaces).current;
     const navigate = useNavigate();
-    // const location = useLocation(); // handle locations
-    let handleNavigation = (interfaceEnum: InterfaceEnum) => {
-        switch (interfaceEnum) {
-            case InterfaceEnum.Home: navigate('/'); break;
-            case InterfaceEnum.Dashboard: navigate('/dashboard'); break;
-            case InterfaceEnum.ChatRoom: navigate('/chatRoom'); break;
-            case InterfaceEnum.InstantMessaging: navigate('/instantMessaging'); break;
-            case InterfaceEnum.Matchmaking: navigate('/matchmaking'); break;
-            case InterfaceEnum.LiveGames: navigate('/liveMatchs'); break;
-            case InterfaceEnum.Logout: navigate('/login'); break;
-            default: navigate('/'); break;
-        }
-    };
+    const location = useLocation();
 
-    let backgroundButton = currentInterface === _name ? "#543EC0" : "#303465";
+    // const location = useLocation(); // handle locations
+    // let handleNavigation = (interfaceEnum: InterfaceEnum) => {
+    //     switch (interfaceEnum) {
+    //         case InterfaceEnum.Home: navigate('/'); break;
+    //         case InterfaceEnum.Dashboard: navigate('/dashboard'); break;
+    //         case InterfaceEnum.ChatRoom: navigate('/chatRoom'); break;
+    //         case InterfaceEnum.InstantMessaging: navigate('/instantMessaging'); break;
+    //         case InterfaceEnum.Matchmaking: navigate('/matchmaking'); break;
+    //         case InterfaceEnum.LiveGames: navigate('/liveMatchs'); break;
+    //         case InterfaceEnum.Logout: navigate('/login'); break;
+    //         default: navigate('/'); break;
+    //     }
+    // };
+
+    let backgroundButton = location.pathname === route ? "#543EC0" : "#303465";
     return (
         <div style={{ backgroundColor: backgroundButton }}
             onClick={() => {
-                dispatch(setCurrentInterface(_name)); handleNavigation(_name)
+                // dispatch(setCurrentInterface(_name)); handleNavigation(_name)
+                navigate(route);
             }}>
             <Stack alignItems="center" justifyContent="flex-start" spacing={2} direction="row" sx={{
                 paddingLeft: "10px", cursor: "pointer", height: "44px", ":hover": { backgroundColor: "#3F5274" }
@@ -191,7 +192,7 @@ const CustomButton = ({ _name, _icon }: ButtonProps) => {
                     fontSize: '16px',
                     lineHeight: '109.52%',
                 }}>
-                    {getInterface(_name)}
+                    {getInterface(route)}
                 </Typography>
             </Stack>
         </div>

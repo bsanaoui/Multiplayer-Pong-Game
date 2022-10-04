@@ -228,7 +228,8 @@ const Canvas = () => {
 	const match_info = useSelector((state: RootState) => state.game);
 	const player_info = useSelector((state: RootState) => state.user);
 	const mode: string = getMode(match_info.mode);
-	const invite = ''
+	const invite = useSelector((state: RootState) => state.game).invite_key;
+	// const invite = ''
 	const watching = match_info.room;
 
 	if (!g)
@@ -327,6 +328,7 @@ const Canvas = () => {
 			P1 = {} as Player;
 			P2 = {} as Player;
 			gameover = false;
+
 		})
 	},[])
 	return (

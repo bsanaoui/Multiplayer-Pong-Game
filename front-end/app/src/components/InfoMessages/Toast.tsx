@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import {data, P_data} from "../DropMenus/DropMenuUser";
 import {RootState} from "../../store";
 import {useEffect} from "react";
-import {handleStoreDataGame} from "../../store/gameReducer";
 
 export const handleToastMsg = (status: boolean, msg: string) => {
     if (status)

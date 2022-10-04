@@ -1,4 +1,3 @@
-
 import { Avatar, Divider, Slide, Stack } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store";
@@ -17,7 +16,8 @@ import collapseIcon from '../assets/right-arrow.png';
 import { Box } from '@mui/system';
 import { setCollapse } from '../store/collapseNavReducer';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ButtonProps } from './NavBarNew';
 
 export const NavbarCollapsed = () => {
     const userState = useSelector((state: RootState) => state.user);
@@ -42,13 +42,13 @@ export const NavbarCollapsed = () => {
                 </Stack>
                 <Stack width="100%"
                     divider={<Divider orientation="horizontal" flexItem />}>
-                    <CustomButton _name={InterfaceEnum.Home} _icon={homeIcon} />
-                    <CustomButton _name={InterfaceEnum.Dashboard} _icon={dashboardIcon} />
-                    <CustomButton _name={InterfaceEnum.ChatRoom} _icon={roomIcon} />
-                    <CustomButton _name={InterfaceEnum.InstantMessaging} _icon={messengerIcon} />
+                    <CustomButton route='/home' _icon={homeIcon} />
+                    <CustomButton route='/dashboard' _icon={dashboardIcon} />
+                    <CustomButton route='/chatRoom' _icon={roomIcon} />
+                    <CustomButton route='/instantMessaging' _icon={messengerIcon} />
                     {/* <CustomButton _name={InterfaceEnum.Friends} _icon={friendsIcon} /> */}
-                    <CustomButton _name={InterfaceEnum.Matchmaking} _icon={matchmakingIcon} />
-                    <CustomButton _name={InterfaceEnum.LiveGames} _icon={streamingIcon} />
+                    <CustomButton route='/matchmaking' _icon={matchmakingIcon} />
+                    <CustomButton route='/liveMatchs' _icon={streamingIcon} />
                 </Stack>
                 <Box>
                     <Box sx={{ marginBottom: "20%", height: "189.5px" }}>
@@ -56,47 +56,27 @@ export const NavbarCollapsed = () => {
                     </Box>
                     <Collapse />
                     <Divider orientation="horizontal" flexItem />
-                    <CustomButton _name={InterfaceEnum.Logout} _icon={LogoutIcon} />
+                    <CustomButton route='/login' _icon={LogoutIcon} />
                 </Box>
             </Stack>
         </Slide>
     )
 }
 
-interface ButtonProps {
-    _name: InterfaceEnum,
-    _icon: string,
-}
-
-const CustomButton = ({ _name, _icon }: ButtonProps) => {
-    const currentInterface = useSelector((state: RootState) => state.interfaces).current;
-    const dispatch = useDispatch();
+const CustomButton = ({ route, _icon }: ButtonProps) => {
     const navigate = useNavigate();
-    let backgroundButton = currentInterface === _name ? "#543EC0" : "#303465";
-
-    let handleNavigation = (interfaceEnum: InterfaceEnum) => {
-        switch (interfaceEnum) {
-            case InterfaceEnum.Home: navigate('/home'); break;
-            case InterfaceEnum.Dashboard: navigate('/dashboard'); break;
-            case InterfaceEnum.ChatRoom: navigate('/chatRoom'); break;
-            case InterfaceEnum.InstantMessaging: navigate('/instantMessaging'); break;
-            case InterfaceEnum.Matchmaking: navigate('/matchmaking'); break;
-            case InterfaceEnum.LiveGames: navigate('/liveMatchs'); break;
-            case InterfaceEnum.Logout: navigate('/login'); break;
-            default: navigate('/'); break;
-        }
-    };
+    const location = useLocation();
+    let backgroundButton = location.pathname === route ? "#543EC0" : "#303465";
 
     return (
         <div style={{ backgroundColor: backgroundButton }}
             onClick={() => {
-                dispatch(setCurrentInterface(_name));handleNavigation(_name)
+                navigate(route)
             }}>
             <Stack alignItems="center" justifyContent="flex-start" spacing={2} direction="row" sx={{
                 paddingLeft: "15px", cursor: "pointer", height: "44px", ":hover": { backgroundColor: "#3F5274" }
             }}>
                 <Avatar src={_icon} style={{ padding: "13%" }} />
-
             </Stack>
         </div>
     )
