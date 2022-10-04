@@ -10,7 +10,9 @@ import PublicRooms from "./PublicRooms"
 
 const Home = () => {
     const dispatch = useDispatch();
+    
     return (
+
         <div>
             <Header/>
             <Stack

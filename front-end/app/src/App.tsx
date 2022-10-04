@@ -25,7 +25,6 @@ import { clearUser, initUser } from './store/userReducer';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import RoomButtonChat from './components/RoomButtonChat';
-import SocketProvider, { socket, SocketContext } from './context/socket';
 import { ModeGameButton } from './components/Game/ModeGameButton';
 import { ModesInput } from './components/Game/ModesInput';
 import ModeDialog from './components/Game/ModeDialog';
@@ -71,6 +70,7 @@ function App() {
 	const currentIterface = useSelector((state: RootState) => state.interfaces).current;
 	const [cookies, setCookie, removeCookie] = useCookies();
 	const location = useLocation();
+	const socket = useSelector((state: RootState) => state.socketclient).socket;
 
 	const handleListenerGame = () => {
 		socket.on('gameInvite', (data: { user: P_data, mod: number }) => {
