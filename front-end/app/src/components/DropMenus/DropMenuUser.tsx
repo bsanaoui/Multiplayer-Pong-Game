@@ -44,7 +44,7 @@ export type data = {
 
 export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 	const dispatch = useDispatch();
-	// let { socket } = React.useContext(SocketContext) as SocketContextType;
+	const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const logged_user = useSelector((state: RootState) => state.user);
 
@@ -80,10 +80,10 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 	}
 
 	const handleSendInviteGame = () => {
-		const p1:P_data = {username: logged_user.username, login:logged_user.login, avatar:logged_user.avatar as string};
-		const p2:P_data = {username: friend?.username as string, login:friend?.login as string, avatar:friend?.avatar as string};
-		const data:data = {P1:p1, P2:p2, mod:0};
-		socket.emit('invite',data);
+		const p1: P_data = { username: logged_user.username, login: logged_user.login, avatar: logged_user.avatar as string };
+		const p2: P_data = { username: friend?.username as string, login: friend?.login as string, avatar: friend?.avatar as string };
+		const data: data = { P1: p1, P2: p2, mod: 0 };
+		socket_global.emit('invite', data);
 	}
 
 	return (
@@ -115,7 +115,7 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 					<nav aria-label="main folders">
 						<List dense={true} >
 							<ListItem disablePadding >
-								<ListItemButton onClick={() => { handleClose(); handleSendInviteGame()}}>
+								<ListItemButton onClick={() => { handleClose(); handleSendInviteGame() }}>
 									<Avatar variant="square" src={playIcon} sx={{ marginRight: "15%", width: "19px", height: "19px" }} />
 									<ListItemText primary="Play" />
 								</ListItemButton>
