@@ -14,24 +14,6 @@ import PublicRooms from "./PublicRooms"
 
 
 const Home = () => {
-    const dispatch = useDispatch();
-    const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
-
-    const handleListenerGame = () => {
-        socket_global.on('gameInvite', (data: { user: P_data, mod: number }) => {
-            handleToastGame(data);
-        })
-    }
-
-    useEffect(() => {
-        if (socket_global)
-            handleListenerGame();
-        return (() => {
-            socket_global.off("gameInvite");
-        })
-    },)
-
-
     return (
 
         <div>

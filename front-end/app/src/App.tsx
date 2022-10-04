@@ -38,6 +38,7 @@ import { handleToastGame } from './components/InfoMessages/Toast';
 import { emit } from 'process';
 import { P_data } from './components/DropMenus/DropMenuUser';
 import { disconnectSocketGlobal, initSocketGlobal } from './store/socketGlobalReducer';
+import Main from './components/Main';
 
 const darkTheme = createTheme({
 	palette: {
@@ -98,6 +99,7 @@ function App() {
 		<ThemeProvider theme={darkTheme}>
 			<ToastContainer position="top-right" newestOnTop autoClose={3500} />
 			<CssBaseline />
+			<Main/>
 			<Stack direction="row" width="100%" height="100%"
 				sx={{ backgroundColor: "#202541" }}>
 				<React.Suspense fallback={<Loading />}>
