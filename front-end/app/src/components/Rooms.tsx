@@ -31,7 +31,6 @@ const Rooms = () => {
 				const data = value as RoomsOfUser[];
 				if (rooms.length === 0 && data.length > 0)
 					dispatch(changeCurrRoom({ room: data[0].room_id as string, role: data[0].user_role as string }))
-				
 				setRooms(data);
 			}
 		})

@@ -31,7 +31,7 @@ export const UsersRoom = () => {
     useEffect(() => {
         // if (users_room.length === 0 && currentRoom !== '')
         getUsersRoom();
-
+        
         if (currentRoom === '')
             dispatch(clearUsersRoom());
         return () => {

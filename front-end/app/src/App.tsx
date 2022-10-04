@@ -83,7 +83,6 @@ function App() {
 		return (() => {
 			dispatch(disconnectSocketGlobal());
 		})
-		
 	}, []);
 
 	useEffect(() => {

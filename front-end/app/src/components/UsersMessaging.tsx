@@ -59,8 +59,10 @@ export const UsersMessaging = () => {
             else if (data.action === "block") {
                 if (data.from === logged_user || data.to === logged_user)
                     getUsers();
-                if (data.from === logged_user)
+                if (data.from === logged_user){
+                    dispatch(changeCurrConversation({ user: '', avatar: '' }));
                     handleToastMsg(data.status, data.msg);
+                }
                 else if (data.to === logged_user && data.from !== currentConv)
                     dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar }));
             }

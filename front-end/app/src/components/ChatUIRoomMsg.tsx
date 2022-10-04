@@ -62,10 +62,10 @@ export const ChatUIRoomMsg = () => {
     // const { socket } = useContext(SocketContext) as SocketContextType;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
 
-    const  [isInputEnabled, setInput] = useState(true)
+    const [isInputEnabled, setInput] = useState(true)
 
     const [message_input, setMessage] = useState("");
-
+    
     const recieveMsgs = () => {
         socket.on('msgToClient', (msg: MessageState) => {
             dispatch(addMessage(msg));
@@ -75,9 +75,8 @@ export const ChatUIRoomMsg = () => {
     }
 
     const disableInputListen = () => {
-        socket.on('disableWriting', (data: {status:boolean, message:string, user:string}) => {
-            if (data.user === logged_user)
-            {
+        socket.on('disableWriting', (data: { status: boolean, message: string, user: string }) => {
+            if (data.user === logged_user) {
                 setInput(data.status);
                 handleToastMsg(data.status, data.message);
             }
@@ -99,7 +98,7 @@ export const ChatUIRoomMsg = () => {
     const sendMsg = () => {
         if (message_input) {
             if (socket) {
-                socket.emit('SendMessageRoom', { msg: message_input,avatar:loggged_avatar });
+                socket.emit('SendMessageRoom', { msg: message_input, avatar: loggged_avatar });
             }
             setMessage('');
         }
@@ -112,12 +111,12 @@ export const ChatUIRoomMsg = () => {
     }
 
     useEffect(() => {
-		if (socket)
+        if (socket)
             disableInputListen();
-		return (() => {
-			socket.off("disableWriting");
-		})
-	},)
+        return (() => {
+            socket.off("disableWriting");
+        })
+    },)
 
     useEffect(() => {
         console.log("chatUIRoom");
@@ -128,7 +127,8 @@ export const ChatUIRoomMsg = () => {
         if (socket)
             recieveMsgs();
 
-        if (bottomRef) 
+
+        if (bottomRef)
             bottomRef.current?.scrollIntoView({ behavior: "smooth" });
 
         return () => {
@@ -158,25 +158,25 @@ export const ChatUIRoomMsg = () => {
                     <HeaderChat name={currentRoom} avatar="" />
                 </div>
                 <Stack spacing={2} direction="column-reverse" sx={{ width: "100%", minHeight: "calc( 100vh - 67px )", margin: 'auto' }}>
-                {isInputEnabled &&
-                    <Stack direction="row" marginBottom="35px">   
-                        <FormControl variant="standard">
-                            <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
-                                onChange={handleMsgChange}
-                                onKeyDown={handleEnterkey}
-                                value={message_input} />
-                        </FormControl>
-                        <div style={{
-                            backgroundColor: "#151416", padding: "10px", borderRadius: '0 10px 10px 0',
-                        }}>
-                            <Button sx={{ backgroundColor: "#3475D7", height: "45px", color: "#FFF" }} onClick={sendMsg}>
-                                <SendIcon />
-                            </Button>
-                        </div>
-                    </Stack>}
+                    {isInputEnabled &&
+                        <Stack direction="row" marginBottom="35px">
+                            <FormControl variant="standard">
+                                <BootstrapInput placeholder="Write a message ..." id="bootstrap-input"
+                                    onChange={handleMsgChange}
+                                    onKeyDown={handleEnterkey}
+                                    value={message_input} />
+                            </FormControl>
+                            <div style={{
+                                backgroundColor: "#151416", padding: "10px", borderRadius: '0 10px 10px 0',
+                            }}>
+                                <Button sx={{ backgroundColor: "#3475D7", height: "45px", color: "#FFF" }} onClick={sendMsg}>
+                                    <SendIcon />
+                                </Button>
+                            </div>
+                        </Stack>}
                     <List style={{ overflowY: 'auto' }} >
                         {msgs && msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
-                        <li key={index_msg++} style={{ float: 'left' ,height:"100px", width:"100px"}}>
+                        <li key={index_msg++} style={{ float: 'left', height: "100px", width: "100px" }}>
                             <div ref={bottomRef} ></div>
                         </li>
                     </List>

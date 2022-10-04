@@ -26,7 +26,7 @@ const GlobalRooms = () => {
 	useEffect(() => {
 		// if (currentPage === InterfaceEnum.ChatRoom )
 			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
-
+			
 		return (() => {
 			console.log("Socket Disconnected Global Rooms");
 			socket.disconnect();
