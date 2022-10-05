@@ -1,6 +1,6 @@
 import { Box, List, Stack, Typography } from '@mui/material'
 import usersIcon from '../assets/users.png'
-import dot3Icon from '../assets/dot3.png'
+import collapseIcon from '../assets/collapse-users.png'
 import User from './User';
 import { useEffect, useState } from 'react';
 import { getUsers, UserData } from '../requests/home';
@@ -103,7 +103,7 @@ function AllUsers() {
 				<div style={{ width: "100%", paddingTop: '4px' }}>
 					<img
 						style={{ height: '22px', float: 'right' }}
-						className="center" alt='users' src={dot3Icon} />
+						className="center" alt='users' src={collapseIcon} />
 				</div>
 			</Stack>
 			{is_collapse &&

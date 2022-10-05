@@ -10,6 +10,7 @@ let initUserStats: UserStatsData =  {} as UserStatsData;
 
 const UserStats = ({other_user}:{other_user?:string}) => {
 	const [user_stats, setUserStats] = useState(initUserStats);
+
 	useEffect(() => {
         getStatsInfo(other_user).then((value) => {
             if ((typeof value) === (typeof initUserStats)) {

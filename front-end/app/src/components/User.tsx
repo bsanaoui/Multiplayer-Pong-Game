@@ -1,8 +1,9 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
-import avatar2 from '../assets/avatar2.png'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import { UserData } from '../requests/home';
 import { useEffect, useState } from 'react';
+import dot3Icon from '../assets/dot3.png'
+import DropMenuUserHome from './DropMenus/DropMenuUserHome';
 
 
 const online_bg:string = "#3FFC10";
@@ -10,7 +11,6 @@ const offline_bg:string = "red";
 const inGame_bg:string = "yellow";
 
 const User = (user_data: UserData) => {
-  // const [status, setStatus] = useState("online");
   const [bg_status, setBgStatus] = useState(online_bg);
 
   const handleColorStatus = () => {
@@ -73,6 +73,7 @@ const User = (user_data: UserData) => {
               </Typography>
           </Stack>
         </Stack>
+        <DropMenuUserHome avatar={user_data.avatar} username={user_data.username} login={user_data.login} level={0} status={""} />
       </Stack>
     </Box>
   )

@@ -12,6 +12,7 @@ export const InvitationFriend = ({ login, username, avatar }: InvitationProps) =
 	const [is_confirm, setConfirm] = useState(false);
 
 	const handleAcceptInvite = () => {
+		axios.defaults.withCredentials = true;
 		axios.post(process.env.REACT_APP_SERVER_IP + '/invitation/accept?sender=' + login, {
 		}).then(() => {
 			setConfirm(true);

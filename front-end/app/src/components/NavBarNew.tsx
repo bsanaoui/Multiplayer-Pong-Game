@@ -56,6 +56,7 @@ export const NavBarNew = () => {
 
     const handleUploadAvatar = (avatar_uploaded: File) => {
         axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', { avatar: avatar_uploaded }, {
+            withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

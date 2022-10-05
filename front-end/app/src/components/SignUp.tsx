@@ -30,9 +30,10 @@ const SignUp = () => {
     })
 
     const onSubmit = (values: UserAccount, props: any) => {
-        console.log(values);
+        // console.log(values);
         if (values.avatar)
             axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', { avatar: values.avatar }, {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
