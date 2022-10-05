@@ -23,7 +23,7 @@ import { useDispatch } from 'react-redux';
 import { InterfaceEnum, setCurrentInterface } from '../../store/interfacesReducer';
 import { changeCurrConversation } from '../../store/chatUiReducer';
 import dot3Icon from '../../assets/dot3.png'
-import { UserData } from '../../requests/home';
+import { BlockUserPost, ChatUserPost, UserData } from '../../requests/home';
 import { P_data } from './DropMenuUser';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -58,12 +58,12 @@ export default function DropMenuUserHome(Props: UserData) {
 	}
 
 	const HandleblockUser = () => {
-
+		BlockUserPost(Props.login);
 	}
 
-
-	const Handlechat = (user?: string, avatar?: string) => { // to edit
-
+	const Handlechat = () => { // to edit
+		ChatUserPost(Props.login);
+		navigate('/instantMessaging');
 	}
 
 	const handleShowProfile = () => {

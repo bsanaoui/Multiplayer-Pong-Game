@@ -312,3 +312,65 @@ export async function sendCode2FAConnect(code: string) {
 		}
 	}
 }
+
+// ========================== Post Block ========================= //
+
+export async function BlockUserPost(user_to_block: string) {
+	try {
+		// 👇️ const data: CreateUserResponse
+		const { data } = await axios.post<{}>(
+			process.env.REACT_APP_SERVER_IP + "/room/block_user",
+			{user_to_block:user_to_block},
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+			}
+		);
+
+		console.log(JSON.stringify(data, null, 4));
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
+			// 👇️ error: AxiosError<any, any>
+			return error.message;
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
+}
+
+// ========================== Post Chat ========================= //
+
+export async function ChatUserPost(user: string) {
+	try {
+		// 👇️ const data: CreateUserResponse
+		const { data } = await axios.post<RoomInfo>(
+			process.env.REACT_APP_SERVER_IP + "/room/chat_with_user",
+			{to:user},
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+			}
+		);
+
+		console.log(JSON.stringify(data, null, 4));
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
+			// 👇️ error: AxiosError<any, any>
+			return error.message;
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
+}

@@ -62,7 +62,6 @@ export async function getAchievements(other_user?: string) {
 //========================== Get match history ========================= //
 
 export async function getMatchsHistory(other_user?: string) {
-    console.log("other_user profile", other_user)
     try {
         const { data, status } = await axios.get<MatchHistoryData[]>(
             process.env.REACT_APP_SERVER_IP + "/profile/match_history" +
