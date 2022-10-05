@@ -1,9 +1,10 @@
 import { Avatar, Box, Typography } from '@mui/material'
 import { relative } from 'path'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import classicImage from '../../assets/Game/classic.png'
 import RetroImage from '../../assets/Game/RetroMode.png'
-import { ModeEnum, setModeGame } from '../../store/gameReducer'
+import { HandleCloseDialog, ModeEnum, setModeGame } from '../../store/gameReducer'
 interface modeGameProps {
 	mode: string,
 	watch: boolean,
@@ -11,13 +12,21 @@ interface modeGameProps {
 
 export const ModeGameButton = ({ mode, watch }: modeGameProps) => {
 	const dispatch = useDispatch();
-
+	const navigate = useNavigate();
 	const colorBg = (mode === '1') ? "linear-gradient(to right bottom, #673AB7, #512DA8 )"
 		: "linear-gradient(to right bottom, #000046, #1CB5E0 )";
 
+	const handleNavigate = (mode: string) => {
+		navigate({
+			pathname: '/matchmaking',
+			search: '?mode=' + mode,
+		});
+	}
+
 	return (
 		<Box
-			onClick={() => { dispatch((mode === '1') ? setModeGame({mode:ModeEnum.mode1}) : setModeGame({mode:ModeEnum.mode2})) }}
+			// onClick={() => { dispatch((mode === '1') ? setModeGame({ mode: ModeEnum.mode1 }) : setModeGame({ mode: ModeEnum.mode2 })) }}
+			onClick={() => { ((mode === '1') ? handleNavigate('1') : handleNavigate('2')); dispatch(HandleCloseDialog()) }}
 			sx={{
 				width: "210px",
 				height: "200px",

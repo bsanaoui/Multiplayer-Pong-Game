@@ -5,6 +5,7 @@ import { RootState } from "../store";
 import { useSelector } from "react-redux";
 import { ModeEnum } from "../store/gameReducer";
 import './Game/navGame.css'
+import { useSearchParams } from "react-router-dom";
 
 type Cmds = {
 	room: string;
@@ -13,9 +14,9 @@ type Cmds = {
 }
 
 export type Player = {
-	login?	: string;
+	login?: string;
 	username?: string;
-	avatar?	: string;
+	avatar?: string;
 	id: string,
 	x: number;
 	y: number;
@@ -40,7 +41,6 @@ let socket: Socket;
 let width = (window.innerWidth) * 0.75;
 let g = false;
 // let width = document.getElementById('game-container')?.clientWidth as number;
-console.log("dfdsfsd",)
 let height = width / 2;
 let cof: number;
 let room: string = '';
@@ -87,8 +87,7 @@ let drawRect = (ctx: CanvasRenderingContext2D,
 // }
 
 let drawGameOver = (ctx: CanvasRenderingContext2D) => {
-	if (gameover)
-	{
+	if (gameover) {
 		let font_size = window.innerWidth / 15;
 		ctx.font = font_size + 'px oxygen';
 		ctx.fillText('GAME OVER', width / 2 - font_size * 3, height / 2 + font_size / 4);
@@ -168,7 +167,7 @@ let countdown = (ctx: CanvasRenderingContext2D) => {
 let emit_cmds = (player_cmd: Cmds, gameover: boolean) => {
 	let p_c = player_cmd;
 	p_c.room = room;
-	console.log(room);
+	// console.log(room);
 	if (!gameover)
 		socket.emit('usr_cmd', p_c);
 }
@@ -214,26 +213,22 @@ let updateBalldisplay = (ball: Ball): void => {
 	ball.velY *= cof;
 }
 
-let getMode = (mode: ModeEnum): string => {
-	switch (mode) {
-		case ModeEnum.mode1: return ("1");
-		case ModeEnum.mode2: return ("2");
-		case ModeEnum.mode3: return ("3");
-		default:
-			return ("");
-	}
-}
 
 const Canvas = () => {
-	const match_info = useSelector((state: RootState) => state.game);
-	const player_info = useSelector((state: RootState) => state.user);
-	const mode: string = getMode(match_info.mode);
-	const invite = useSelector((state: RootState) => state.game).invite_key;
-	// const invite = ''
-	const watching = match_info.room;
+	const [searchParams] = useSearchParams();
 
-	if (!g)
-	{
+	// const match_info = useSelector((state: RootState) => state.game);
+	const player_info = useSelector((state: RootState) => state.user);
+	let mode: string =  searchParams.get('mode') as string;
+	if (!mode) mode = "";
+	
+	let invite = searchParams.get('key') as string;
+	if (!invite) invite='';
+	// const invite = ''
+	let watching = searchParams.get('room') as string;
+	if (!watching) watching = '';
+
+	if (!g) {
 		g = true;
 		socket = io('http://localhost:3333/game', { auth: { mode: mode, info: player_info, invite: invite, room: watching } });
 	}
@@ -277,18 +272,18 @@ const Canvas = () => {
 		})
 
 		socket.on('update_connections', (p1: Player, p2: Player, b: Ball) => {
-            if (P1.score !== p1.score)
-                setPlayer1(p1);
-            if (P2.score !== p2.score)
-                setPlayer2(p2)
-            P1 = p1;
-            P2 = p2;
-            if (room === '')
-                room = P1.room!;
-            ball = b;
-            updateBalldisplay(ball);
-            drawGame(ctx);
-        })
+			if (P1.score !== p1.score)
+				setPlayer1(p1);
+			if (P2.score !== p2.score)
+				setPlayer2(p2)
+			P1 = p1;
+			P2 = p2;
+			if (room === '')
+				room = P1.room!;
+			ball = b;
+			updateBalldisplay(ball);
+			drawGame(ctx);
+		})
 
 		function handleResize() {
 			const canvas = canvasRef!.current;
@@ -305,7 +300,7 @@ const Canvas = () => {
 			})
 		}
 
-		
+
 
 		window.addEventListener('resize', handleResize)
 		return () => {
@@ -315,13 +310,12 @@ const Canvas = () => {
 		}
 	});
 
-	useEffect(()=>{
-		return(() => {
+	useEffect(() => {
+		return (() => {
 			socket.emit('disconnectMe');
 			console.log("Canva Unmounted");
 			let width = (window.innerWidth) * 0.75;
 			g = false;
-			console.log("dfdsfsd",)
 			height = width / 2;
 			cof = 1;
 			room = '';
@@ -330,7 +324,7 @@ const Canvas = () => {
 			gameover = false;
 
 		})
-	},[])
+	}, [])
 	return (
 		<div>
 			<div className="game-bar">
@@ -344,7 +338,7 @@ const Canvas = () => {
 
 				</div><div className="users-score"><p><span>{player1.score}</span> : <span>{player2.score}</span></p></div><div className="user-side">
 					<div className="user-info">
-						<div className="user-img"><img alt={player2.username}  src={player2.avatar} style={{ width: "auto" }} /></div>
+						<div className="user-img"><img alt={player2.username} src={player2.avatar} style={{ width: "auto" }} /></div>
 						<p>{player2.username} </p>
 					</div>
 

@@ -60,18 +60,23 @@ export const GameSlice = createSlice({
         playInvitedGame:(state, action: PayloadAction<{key:string, mode:ModeEnum}>) => {
             state.mode=action.payload.mode;
             state.invite_key = action.payload.key;
-            state.is_game_set = false;
+            // state.is_game_set = true;
         },
 
         HandleCloseDialog: (state) => {
             state.dialogIsOpen = false;
+            state.is_game_set = true;
         },
         HandleOpeneDialog: (state) => {
             state.dialogIsOpen = true;
         },
+
+        startInviteGame: (state) => {
+            state.is_game_set = true;
+        },
     }
 })
 
-export const { setModeGame, HandleCloseDialog, HandleOpeneDialog,finishGame,updateScore,playInvitedGame } = GameSlice.actions
+export const { setModeGame, HandleCloseDialog, HandleOpeneDialog,finishGame,updateScore,playInvitedGame,  startInviteGame } = GameSlice.actions
 
 export default GameSlice.reducer

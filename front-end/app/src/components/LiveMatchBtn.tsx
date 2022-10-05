@@ -39,9 +39,17 @@ const LiveMatchBtn = (props: { info: any, room_id: string }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const handleNavigate = () => {
+		navigate({
+			pathname: '/matchmaking',
+			search: '?mode=3&room=' + props.room_id,
+		});
+	}
+
     return (
         <Box
-            onClick={() => { dispatch(setModeGame({ mode: ModeEnum.mode3, room: props.room_id }));navigate('/matchmaking');  }}
+            // onClick={() => { dispatch(setModeGame({ mode: ModeEnum.mode3, room: props.room_id }));navigate('/matchmaking');  }}
+            onClick={() => { handleNavigate() }}
             sx={{
                 width: '310px',
                 height: '170px',
