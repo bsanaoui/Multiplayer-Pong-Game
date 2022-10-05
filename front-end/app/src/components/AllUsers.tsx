@@ -14,22 +14,37 @@ function AllUsers() {
 	const [is_collapse, setCollapse] = useState(true);
 	const [users, setUsers] = useState(initUsers);
 	const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
+	const [connection, setConnection] = useState(false);
 
 
 	const GetAllUsers = () => {
 		getUsers().then((value) => {
 			if (typeof (value) === typeof (initUsers)) {
 				const data = value as UserData[];
+				console.log("DATA", data);
 				setUsers(data);
 			}
 		})
 	}
 
+	const handleDiscconnect = () => {
+		socket_global.on('user_offline', (data:{user: string}) => {
+			setConnection(!connection);
+			GetAllUsers();
+		});
+	}
+
+	const handleConnect= () => {
+		socket_global.on('new_user', (data:{user: string}) => {
+			setConnection(!connection);
+			GetAllUsers();
+		});
+	}
+
+
 	useEffect(() => {
 		if (socket_global)
-			socket_global.on('user_offline', (user: string) => {
-				GetAllUsers();
-			});
+			handleDiscconnect();
 		return (() => {
 			socket_global.off("user_offline");
 		})
@@ -37,18 +52,22 @@ function AllUsers() {
 
 	useEffect(() => {
 		if (socket_global)
-			socket_global.on('new_user', (user: string) => {
-				GetAllUsers();
-			});
+			handleConnect();
 		return (() => {
 			socket_global.off("new_user");
 		})
 	},)
 
+	// useEffect(() =>{
+	//
+	// },[users])
 
 	useEffect(() => {
-		GetAllUsers();
-	}, [])
+		GetAllUsers()
+		return(() => {
+			setUsers(initUsers);
+		});
+	}, [connection])
 
 	return (
 		<Box
