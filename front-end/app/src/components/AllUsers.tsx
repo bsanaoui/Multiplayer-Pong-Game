@@ -4,6 +4,8 @@ import dot3Icon from '../assets/dot3.png'
 import User from './User';
 import { useEffect, useState } from 'react';
 import { getUsers, UserData } from '../requests/home';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 
 // const users = Array.from({ length: 15 }, (_, index) => {
@@ -19,15 +21,43 @@ const initUsers: UserData[] = [] as UserData[];
 function AllUsers() {
 	const [is_collapse, setCollapse] = useState(true);
 	const [users, setUsers] = useState(initUsers);
+	const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
 
-	useEffect(() => {
+
+	const GetAllUsers = () => {
 		getUsers().then((value) => {
 			if (typeof (value) === typeof (initUsers)) {
 				const data = value as UserData[];
 				setUsers(data);
 			}
 		})
-	},[])
+	}
+
+	useEffect(() => {
+		if (socket_global)
+			socket_global.on('user_offline', (user: string) => {
+				GetAllUsers();
+			});
+		return (() => {
+			socket_global.off("user_offline");
+		})
+	},)
+
+	useEffect(() => {
+		if (socket_global)
+			socket_global.on('new_user', (user: string) => {
+				GetAllUsers();
+			});
+		return (() => {
+			socket_global.off("new_user");
+		})
+	},)
+
+
+	useEffect(() => {
+		GetAllUsers();
+	}, [])
+
 	return (
 		<Box
 			sx={{
