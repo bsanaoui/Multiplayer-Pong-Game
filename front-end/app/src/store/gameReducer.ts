@@ -60,6 +60,7 @@ export const GameSlice = createSlice({
         playInvitedGame:(state, action: PayloadAction<{key:string, mode:ModeEnum}>) => {
             state.mode=action.payload.mode;
             state.invite_key = action.payload.key;
+            state.is_game_set = false;
         },
 
         HandleCloseDialog: (state) => {

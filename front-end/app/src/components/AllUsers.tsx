@@ -8,14 +8,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 
 
-// const users = Array.from({ length: 15 }, (_, index) => {
-// 	return (
-// 		<li key={index} className="item">
-// 			<User />
-// 		</li>
-// 	);
-// });
-
 const initUsers: UserData[] = [] as UserData[];
 
 function AllUsers() {
