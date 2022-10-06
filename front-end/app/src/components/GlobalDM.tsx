@@ -22,13 +22,13 @@ const GlobalDM = () => {
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const dispatch = useDispatch();
 
-	console.log("Global DM")
 
 	useEffect(() => {
 
 		// if (currentPage === InterfaceEnum.Friends
 		// 	|| currentPage === InterfaceEnum.InstantMessaging)
 			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
+			console.log("Global DM")
 
 		return (() => {
 			console.log("Socket Disconnected Global DM");

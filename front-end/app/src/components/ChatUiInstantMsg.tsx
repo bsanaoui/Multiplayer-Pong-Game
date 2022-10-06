@@ -10,6 +10,7 @@ import { RootState } from "../store";
 import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestDirectMsgs } from '../requests/messages';
 import { handleToastMsg } from './InfoMessages/Toast';
+import { useNavigate } from 'react-router-dom';
 // import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
@@ -63,14 +64,9 @@ export const ChatUiInstantMsg = () => {
     const avatar = chat_state.curr_conv_avatar;
     const msgs = chat_state.msgs;
     const [isInputEnabled, setInput] = useState(true)
-
+    const navigate = useNavigate();
     // const { socket } = useContext(SocketContext) as SocketContextType;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
-
-    const joinDmRoom = () => {
-        if (socket && currentConv !== '')
-            socket.emit('join_dm_room', { to: currentConv });
-    }
 
     const disableInputListen = () => {
         socket.on('disableWriting', (data: { status: boolean, msg: string, user: string, from: string }) => {
@@ -84,7 +80,6 @@ export const ChatUiInstantMsg = () => {
 
     const recieveMsgs = () => {
         socket.on('msgToClient_dm', (m: MessageState) => {
-
             dispatch(addMessage(m));
             if (bottomRef)
                 bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -106,7 +101,10 @@ export const ChatUiInstantMsg = () => {
             const data = value as Array<MessageState>;
             if ((typeof data) === (typeof msgs))
                 dispatch(initMessages(data));
-        })
+        }).catch((error: any) => {
+            console.log("Error ;matchs:", error);
+            navigate(error.redirectTo);
+        }) 
     }
 
     const sendMsg = () => {
@@ -133,6 +131,8 @@ export const ChatUiInstantMsg = () => {
             initMsgs();
         if (socket) {
             // joinDmRoom();
+            console.log("mmmmmm recieveMsgs:  ");
+
             recieveMsgs();
         }
         if (bottomRef) {

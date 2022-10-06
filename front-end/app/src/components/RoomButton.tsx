@@ -2,21 +2,30 @@ import { Box, Stack, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import groupIcon from '../assets/group-icon.svg'
-import { RoomData } from '../requests/home'
+import { JoinRoomPost, RoomData } from '../requests/home'
 import { changeCurrRoom } from '../store/chatUiReducer'
 import { InterfaceEnum, setCurrentInterface } from '../store/interfacesReducer'
+import { handleToastMsg } from './InfoMessages/Toast'
 
 
 const RoomButton = (Props: RoomData) => {
-	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	return (
 		<Box
 			onClick={() => {
-				dispatch(changeCurrRoom({room:Props.room_id, role:"owner"}));
-			navigate('/chatRoom');
-		}}
+				JoinRoomPost(Props.room_id).then((value) => {
+					const data: { room_id: string } = value as { room_id: string };
+					if (data && data.room_id !== '')
+						handleToastMsg(true, `You are now user at ${data.room_id}`);
+					else
+						handleToastMsg(false, `You already user at ${Props.room_id}`);
+				}).catch((error: any) => {
+					console.log("Error ;matchs:", error);
+					navigate(error.redirectTo);
+				})
+
+			}}
 			sx={{
 				width: '320px',
 				height: '210px',
@@ -24,7 +33,7 @@ const RoomButton = (Props: RoomData) => {
 				background: 'linear-gradient(110.14deg, #355B88 27.7%, #341760 83.08%)',
 				border: '2px solid #FFFFFF',
 				borderRadius: '27px',
-				cursor:"pointer",
+				cursor: "pointer",
 			}}>
 			<Box
 				sx={{
@@ -50,7 +59,7 @@ const RoomButton = (Props: RoomData) => {
 							fontWeight: '300px'
 						}}>
 						{Props.owner}
-						</Typography>
+					</Typography>
 				</Box>
 				<Box>
 					<div className='dot-dotted' />
@@ -66,7 +75,7 @@ const RoomButton = (Props: RoomData) => {
 				<img src={groupIcon} alt="room users" style={{ height: 34, marginTop: 14 }} />
 				<div style={{ fontSize: '44px', fontWeight: 550 }}>
 					{Props.count}
-					</div>
+				</div>
 			</Stack>
 		</Box>
 	)

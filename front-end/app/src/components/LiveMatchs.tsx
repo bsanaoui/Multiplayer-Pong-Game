@@ -5,11 +5,12 @@ import LiveMatchBtn from './LiveMatchBtn'
 import { Game } from "./Game/game.entity";
 import { useEffect, useState } from 'react';
 import { getLiveMatchs } from '../requests/liveGames';
+import { useNavigate } from 'react-router-dom';
 
 let initLiveMatchs = {};
 
 const LiveMatchs = () => {
-
+    const  navigate = useNavigate();
     const [matchs, setMatchs] = useState(initLiveMatchs);
     function getlivematchs() {
         getLiveMatchs().then((value) => {
@@ -18,13 +19,14 @@ const LiveMatchs = () => {
                 setMatchs(data);
             }
         })
-            .catch((reason: string) => {
-                console.log("Error ;matchs:", reason)
+            .catch((error: any) => {
+                console.log("Error ;matchs:", error);
+                navigate(error.redirectTo);
             })
     }
     useEffect(() => {
         getlivematchs();
-    },[])
+    }, [])
 
     return (
         <Stack >
@@ -52,7 +54,7 @@ const LiveMatchs = () => {
                         Object.keys(matchs).map((key, index) => {
                             return (
                                 <li key={index} className='item-live-match'>
-                                    <LiveMatchBtn info={matchs[key as keyof typeof matchs]} room_id={key}/>
+                                    <LiveMatchBtn info={matchs[key as keyof typeof matchs]} room_id={key} />
                                 </li>
                             )
                         })

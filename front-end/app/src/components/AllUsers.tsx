@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getUsers, UserData } from '../requests/home';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 
 const initUsers: UserData[] = [] as UserData[];
@@ -15,7 +16,7 @@ function AllUsers() {
 	const [users, setUsers] = useState(initUsers);
 	const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
 	const [connection, setConnection] = useState(false);
-
+	const navigate = useNavigate();
 
 	const GetAllUsers = () => {
 		getUsers().then((value) => {
@@ -24,7 +25,10 @@ function AllUsers() {
 				console.log("DATA", data);
 				setUsers(data);
 			}
-		})
+		}).catch((error: any) => {
+			console.log("Error ;matchs:", error);
+			navigate(error.redirectTo);
+		}) 
 	}
 
 	const handleDiscconnect = () => {

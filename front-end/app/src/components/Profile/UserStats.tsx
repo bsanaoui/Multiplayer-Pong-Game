@@ -1,31 +1,33 @@
 import { Box, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getStatsInfo, UserStatsData } from '../../requests/dashboard'
 import AvatarProfile from './Elements/AvatarProfile'
 import StatElementBar from './Elements/StatElementBar'
 import StatSegment from './Elements/StatSegment'
 import UserNameElement from './Elements/UserNameElement'
 
-let initUserStats: UserStatsData =  {} as UserStatsData;
+let initUserStats: UserStatsData = {} as UserStatsData;
 
-const UserStats = ({other_user}:{other_user?:string}) => {
+const UserStats = ({ other_user }: { other_user?: string }) => {
 	const [user_stats, setUserStats] = useState(initUserStats);
-
+	const navigate = useNavigate();
+	
 	useEffect(() => {
-        getStatsInfo(other_user).then((value) => {
-            if ((typeof value) === (typeof initUserStats)) {
-                const data = value as UserStatsData;
+		getStatsInfo(other_user).then((value) => {
+			if ((typeof value) === (typeof initUserStats)) {
+				const data = value as UserStatsData;
 				console.log("DATA", data);
-                setUserStats(data);
-            }
-        })
-            .catch((reason: string) => {
-                console.log("Error ;matchs:", reason)
-            })
-        return (() => {
-            setUserStats(initUserStats);
-        })
-    }, []);
+				setUserStats(data);
+			}
+		}).catch((error: any) => {
+			console.log("Error ;matchs:", error);
+			navigate(error.redirectTo);
+		})
+		return (() => {
+			setUserStats(initUserStats);
+		})
+	}, []);
 
 	return (
 		<Stack alignItems="flex-start" spacing={10} paddingTop="25px"

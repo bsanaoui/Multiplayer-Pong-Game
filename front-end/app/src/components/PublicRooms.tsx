@@ -5,6 +5,7 @@ import { getRoomsData, RoomData } from '../requests/home';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 
 function createRooms(rooms_info: Array<RoomData>): JSX.Element[] {
@@ -29,7 +30,7 @@ const initRooms: RoomData[] = [] as RoomData[];
 const PublicRooms = ({ kind }: VisibilityProps) => {
 	const currentPage = useSelector((state: RootState) => state.interfaces).current;
 	const isFetch = useSelector((state: RootState) => state.fetch).roomsHome;
-
+	const navigate = useNavigate();
 	const [rooms, setRooms] = useState(initRooms);
 
 	useEffect(() => {
@@ -37,12 +38,15 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 			const data = value as Array<RoomData>;
 			if ((typeof data) === (typeof initRooms))
 				setRooms(data);
+		}).catch((error: any) => {
+			console.log("Error ;matchs:", error);
+			navigate(error.redirectTo);
 		})
-		console.log("is Fetch: " + isFetch);
+
 		return () => {
 			setRooms(initRooms);
 		}
-	},[currentPage, isFetch]);
+	}, [currentPage, isFetch]);
 
 	return (
 		<Stack

@@ -53,7 +53,8 @@ export const NavBarNew = () => {
     const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
     const [info_user, setInfoUser] = useState(initState);
     let avatar: File;
-
+    const navigate = useNavigate();
+    
     const handleUploadAvatar = (avatar_uploaded: File) => {
         axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', { avatar: avatar_uploaded }, {
             withCredentials: true,
@@ -69,6 +70,9 @@ export const NavBarNew = () => {
                 const data = value as ProfileNavData;
                 setInfoUser(data);
             }
+        }).catch((error: any) => {
+            console.log("Error ;matchs:", error);
+            navigate(error.redirectTo);
         })
     }, [])
 

@@ -21,7 +21,8 @@ export async function getLiveMatchs() {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";

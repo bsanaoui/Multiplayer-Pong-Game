@@ -19,17 +19,17 @@ export interface ProfileNavData {
 };
 
 export type UserData = {
-	avatar:string,
-	username:string,
-	login:string,
+	avatar: string,
+	username: string,
+	login: string,
 	level: number
 	status: string, // offline || online || ingame
 }
 
 export type InvitationData = {
-	avatar:string,
-	login:string,
-	username:string,
+	avatar: string,
+	login: string,
+	username: string,
 }
 
 // ========================== Get All Users ========================= //
@@ -56,7 +56,8 @@ export async function getUsers() {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -88,7 +89,8 @@ export async function getInvitations() {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -120,7 +122,8 @@ export async function getRoomsData(kind: string) {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -128,6 +131,38 @@ export async function getRoomsData(kind: string) {
 	}
 }
 
+// ========================== Post new Room ========================= //
+
+export async function JoinRoomPost(room_id: string) {
+	try {
+		// 👇️ const data: CreateUserResponse
+		const { data } = await axios.post<{ room_id: string }>(
+			process.env.REACT_APP_SERVER_IP + "/room/clickroom",
+			{ room_id: room_id },
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+			}
+		);
+
+		console.log(JSON.stringify(data, null, 4));
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
+			// 👇️ error: AxiosError<any, any>
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
+			// return error.message;
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
+}
 
 // ========================== Post new Room ========================= //
 
@@ -152,7 +187,8 @@ export async function createRoom(room_info: RoomInfo) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
 			// 👇️ error: AxiosError<any, any>
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -183,7 +219,8 @@ export async function getProfileNavbar() {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -210,7 +247,8 @@ export async function getMQrCodeUrl() {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -243,7 +281,7 @@ export async function sendCode2FAEnable(code: string) {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			throw Error("Error");
+			throw (error);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -274,7 +312,7 @@ export async function sendCode2FADisable(code: string) {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			throw Error("Error");
+			throw (error);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -287,7 +325,7 @@ export async function sendCode2FAConnect(code: string) {
 	try {
 		// 👇️ const data: GetUsersResponse
 		const { data, status } = await axios.post<string>(
-			process.env.REACT_APP_SERVER_IP + "/twofactorauth/turnoff",
+			process.env.REACT_APP_SERVER_IP + "/twofactorauth/authenticate",
 			{ tfacode: code },
 			{
 				headers: {
@@ -305,7 +343,7 @@ export async function sendCode2FAConnect(code: string) {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			throw Error("Error");
+			throw (error);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -320,7 +358,7 @@ export async function BlockUserPost(user_to_block: string) {
 		// 👇️ const data: CreateUserResponse
 		const { data } = await axios.post<{}>(
 			process.env.REACT_APP_SERVER_IP + "/room/block_user",
-			{user_to_block:user_to_block},
+			{ user_to_block: user_to_block },
 			{
 				headers: {
 					Accept: "application/json",
@@ -336,7 +374,8 @@ export async function BlockUserPost(user_to_block: string) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
 			// 👇️ error: AxiosError<any, any>
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -351,7 +390,7 @@ export async function ChatUserPost(user: string) {
 		// 👇️ const data: CreateUserResponse
 		const { data } = await axios.post<RoomInfo>(
 			process.env.REACT_APP_SERVER_IP + "/room/chat_with_user",
-			{to:user},
+			{ to: user },
 			{
 				headers: {
 					Accept: "application/json",
@@ -367,7 +406,8 @@ export async function ChatUserPost(user: string) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
 			// 👇️ error: AxiosError<any, any>
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";

@@ -1,6 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Achievement, getAchievements } from "../../requests/dashboard";
 import { RootState } from "../../store";
 import AchievementElement from "./Elements/AchievementElement"
@@ -12,7 +13,7 @@ initAchievements.length = 0;
 export const Achievements = ({other_user}:{other_user?:string}) => {
     const [achievemets, setAchievements] = useState(initAchievements);
     const achievemetDiscription =  useSelector((state: RootState) => state.profile).curr_achievement;
-    
+    const navigate = useNavigate();
 
     const countValidAchievements = (achiev:Achievement[]):number => {
         let count:number = 0;
@@ -30,10 +31,11 @@ export const Achievements = ({other_user}:{other_user?:string}) => {
                 console.log("achivvvvvvvv: " , data)
                 setAchievements(data);
             }
-        })
-            .catch((reason: string) => {
-                console.log("Error ;matchs:", reason)
-            })
+        }).catch((error: any) => {
+            console.log("Error ;matchs:", error);
+            navigate(error.redirectTo);
+        }) 
+
         return (() => {
             setAchievements(initAchievements);
         })

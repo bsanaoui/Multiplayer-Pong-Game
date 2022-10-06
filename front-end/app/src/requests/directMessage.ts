@@ -1,18 +1,18 @@
 import axios from "axios";
 
-export interface Friend{
-    id:number,
-    login:string,
-    username:string,
-    avatar:string,
+export interface Friend {
+	id: number,
+	login: string,
+	username: string,
+	avatar: string,
 }
 
-export interface UserMessaging{
-    id:number,
-    login:string,
-    username:string,
-    avatar:string,
-    type:string, //friend
+export interface UserMessaging {
+	id: number,
+	login: string,
+	username: string,
+	avatar: string,
+	type: string, //friend
 }
 
 export async function getFriends() {
@@ -34,7 +34,8 @@ export async function getFriends() {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -61,7 +62,8 @@ export async function geMessagingUsers() {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";

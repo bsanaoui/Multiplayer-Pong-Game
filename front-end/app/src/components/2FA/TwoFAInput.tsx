@@ -7,14 +7,16 @@ import axios from 'axios'
 import { getMQrCodeUrl, sendCode2FADisable, sendCode2FAEnable } from '../../requests/home'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useDispatch } from 'react-redux'
-import { setOpenDialog2FA, setOpenDialogRoom } from '../../store/openDialogReducer'
+import { setOpenDialog2FA } from '../../store/openDialogReducer'
 import { boolean } from 'yup'
+import { useNavigate } from 'react-router-dom'
 
 export const TwoFAInput = (props: { enable: boolean }) => {
     const dispatch = useDispatch();
     const [qr_image, setImage] = useState("");
     const [input_code, setCode] = useState("");
     const [is_error, setErrorInput] = useState(false);
+    const navigate = useNavigate();
 
     const handleEnable2FA = () => {
         sendCode2FAEnable(input_code).then((value) => {
@@ -34,6 +36,9 @@ export const TwoFAInput = (props: { enable: boolean }) => {
         getMQrCodeUrl().then((value) => {
             const data = value as { qrcodeUrl: string };
             setImage(data.qrcodeUrl);
+        }).catch((error: any) => {
+            console.log("Error ;matchs:", error);
+            navigate(error.redirectTo);
         })
     }
 
@@ -78,7 +83,7 @@ export const TwoFAInput = (props: { enable: boolean }) => {
                                 onClick={handleEnable2FA}>
                                 Activate
                             </Button>}
-                            {!props.enable &&
+                        {!props.enable &&
                             <Button variant="contained" color="warning" style={{ width: "150px" }}
                                 onClick={handleDisable2FA}>
                                 Disable

@@ -4,7 +4,7 @@ import qr_test from './qr.png'
 import code_qr_icon from '../../assets/code.png'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { getMQrCodeUrl, sendCode2FADisable, sendCode2FAEnable } from '../../requests/home'
+import {getMQrCodeUrl, sendCode2FAConnect, sendCode2FADisable, sendCode2FAEnable} from '../../requests/home'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useDispatch } from 'react-redux'
 import { setOpenDialog2FA, setOpenDialogRoom } from '../../store/openDialogReducer'
@@ -18,8 +18,9 @@ export const SignInTwoFAInput = () => {
     const navigate = useNavigate();
 
     const handleAuth2FA = () => {
-        sendCode2FAEnable(input_code)
+        sendCode2FAConnect(input_code)
         .then(() => {
+            console.log("heeeeeere");
             dispatch(setOpenDialog2FA(false));
             navigate('/home');
         })

@@ -24,7 +24,8 @@ export async function requestUsersRoom(room_name: string) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
 			// 👇️ error: AxiosError<any, any>
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";
@@ -62,7 +63,8 @@ export async function getMyRooms() {
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			console.log("error message: ", error.message);
-			return error.message;
+			if (error?.response?.status === 401)
+				throw (error?.response?.data);
 		} else {
 			console.log("unexpected error: ", error);
 			return "An unexpected error occurred";

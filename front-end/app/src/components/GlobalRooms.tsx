@@ -21,12 +21,11 @@ const GlobalRooms = () => {
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const dispatch = useDispatch();
 
-	console.log("Global Rooms");
 
 	useEffect(() => {
 		// if (currentPage === InterfaceEnum.ChatRoom )
 			dispatch(initSocketClient({ host: process.env.REACT_APP_SERVER_IP as string, user: logged_user }));			
-			
+			console.log("Global Rooms");
 		return (() => {
 			console.log("Socket Disconnected Global Rooms");
 			socket.disconnect();

@@ -7,7 +7,7 @@ export type Achievement = {
     achieved: boolean,
 }
 
-export type MatchHistoryData ={
+export type MatchHistoryData = {
     avatar: string,
     username: string,
     level: number
@@ -18,9 +18,9 @@ export type MatchHistoryData ={
 }
 
 export type UserStatsData = {
-    login:string,
-    username:string,
-    avatar:string,
+    login: string,
+    username: string,
+    avatar: string,
     level: number,
     total_matches: number,
     friends: number,
@@ -51,7 +51,8 @@ export async function getAchievements(other_user?: string) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.message);
-            return error.message;
+            if (error?.response?.status === 401)
+                throw (error?.response?.data);
         } else {
             console.log("unexpected error: ", error);
             return "An unexpected error occurred";
@@ -80,7 +81,8 @@ export async function getMatchsHistory(other_user?: string) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.message);
-            return error.message;
+            if (error?.response?.status === 401)
+                throw (error?.response?.data);
         } else {
             console.log("unexpected error: ", error);
             return "An unexpected error occurred";
@@ -109,7 +111,8 @@ export async function getStatsInfo(other_user?: string) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.message);
-            return error.message;
+            if (error?.response?.status === 401)
+                throw (error?.response?.data);
         } else {
             console.log("unexpected error: ", error);
             return "An unexpected error occurred";

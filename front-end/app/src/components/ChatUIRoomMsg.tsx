@@ -11,6 +11,7 @@ import { addMessage, clearMessages, initMessages, MessageState } from "../store/
 import { requestMessages } from '../requests/messages';
 import { io, Socket } from 'socket.io-client';
 import { handleToastMsg } from './InfoMessages/Toast';
+import { useNavigate } from 'react-router-dom';
 // import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
@@ -61,7 +62,7 @@ export const ChatUIRoomMsg = () => {
     const msgs = useSelector((state: RootState) => state.chat).msgs;
     // const { socket } = useContext(SocketContext) as SocketContextType;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
-
+    const navigate = useNavigate();
     const [isInputEnabled, setInput] = useState(true)
 
     const [message_input, setMessage] = useState("");
@@ -88,7 +89,10 @@ export const ChatUIRoomMsg = () => {
             const data = value as Array<MessageState>;
             if ((typeof data) === (typeof msgs))
                 dispatch(initMessages(data));
-        })
+        }).catch((error: any) => {
+            console.log("Error ;matchs:", error);
+            navigate(error.redirectTo);
+        }) 
     }
 
     const handleMsgChange = (event: React.ChangeEvent<HTMLInputElement>) => {

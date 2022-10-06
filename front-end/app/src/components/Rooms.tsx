@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../store';
 import { getMyRooms, RoomsOfUser } from '../requests/rooms';
 import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
-import { changeCurrRoom } from '../store/chatUiReducer';
+import { changeCurrRoom, ChatUIState } from '../store/chatUiReducer';
 import { handleToastMsg } from './InfoMessages/Toast';
+import { useNavigate } from 'react-router-dom';
 
 
 let initRooms: RoomsOfUser[] = [] as RoomsOfUser[];
@@ -19,7 +20,8 @@ const Rooms = () => {
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
 	const currentRole = useSelector((state: RootState) => state.chat).curr_role;
-
+	const navigate = useNavigate();
+	
 	const joinRoom = () => {
 		if (socket && currentRoom !== '')
 			socket.emit('JoinRoom', { room: currentRoom });
@@ -34,17 +36,35 @@ const Rooms = () => {
 				setRooms(data);
 			}
 		})
-			.catch((reason: string) => {
-				console.log("Error ;Rooms of User", reason)
+			.catch((error: any) => {
+				console.log("Error ;matchs:", error);
+				navigate(error.redirectTo);
 			})
 	}
 
 	const receiveUpdate = () => {
 		socket.on('roomsOfUser', (data: { status: boolean, action: string, message: string, user: string }) => {
-			if (data.action === 'setAdmin') {
+			if (data.action === 'admin') {
 				handleToastMsg(data.status, data.message);
 				if (data.status) {
 					getRooms();
+					console.log("current room : ", currentRoom, "role: ", currentRole);
+					dispatch(changeCurrRoom({ room: currentRoom, role: "admin" }))
+				}
+			}
+			else if (data.action === 'owner') {
+				handleToastMsg(data.status, data.message);
+				if (data.status) {
+					getRooms();
+					console.log("current room : ", currentRoom, "role: ", currentRole);
+					dispatch(changeCurrRoom({ room: currentRoom, role: "owner" }))
+				}
+			}
+			else if (data.action === 'setAdmin') {
+				handleToastMsg(data.status, data.message);
+				if (data.status) {
+					getRooms();
+					console.log("current room : ", currentRoom, "role: ", currentRole);
 					dispatch(changeCurrRoom({ room: currentRoom, role: currentRole }))
 				}
 			}
@@ -80,7 +100,7 @@ const Rooms = () => {
 
 	return (
 		<Box
-		className='rooms'
+			className='rooms'
 			sx={{
 				backgroundColor: "#202541",
 				height: '100vh',

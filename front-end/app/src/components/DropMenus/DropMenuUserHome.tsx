@@ -36,7 +36,7 @@ type data = {
 
 
 export default function DropMenuUserHome(Props: UserData) {
-	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
 	const logged_user = useSelector((state: RootState) => state.user);
 	const navigate = useNavigate();
@@ -63,7 +63,11 @@ export default function DropMenuUserHome(Props: UserData) {
 
 	const Handlechat = () => { // to edit
 		ChatUserPost(Props.login);
-		navigate('/instantMessaging');
+		// navigate('/instantMessaging');
+		navigate({
+			pathname: '/instantMessaging',
+			search: '?user=' + Props.login + '&avatar=' + Props.avatar,
+		});
 	}
 
 	const handleShowProfile = () => {

@@ -12,6 +12,7 @@ import { changeCurrConversation } from '../store/chatUiReducer';
 import { boolean } from 'yup';
 import { handleToastMsg } from './InfoMessages/Toast';
 import { toast } from 'react-toastify';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 let initUsers: UserMessaging[] = [] as UserMessaging[];
 initUsers.length = 0;
@@ -22,11 +23,24 @@ export const UsersMessaging = () => {
     const socket = useSelector((state: RootState) => state.socketclient).socket;
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const currentConvAvatar = useSelector((state: RootState) => state.chat).curr_conv_avatar;
-
+    const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     const joinDmRoom = () => {
         if (socket && currentConv !== '')
             socket.emit('join_dm_room', { to: currentConv });
+    }
+
+    const handleChat = () => {
+        const user: string = searchParams.get('user') as string;
+        const avatar: string = searchParams.get('avatar') as string;
+        if (user && user !== '' && avatar && avatar !== '') {
+            console.log("user: ", user, " | avatar: ", avatar);
+            dispatch(changeCurrConversation({ user: user, avatar: avatar }));
+            searchParams.delete('user');
+            searchParams.delete('avatar');
+            setSearchParams(searchParams);
+        }
     }
 
     function getUsers() {
@@ -34,13 +48,15 @@ export const UsersMessaging = () => {
             if ((typeof value) === (typeof initUsers)) {
                 const data = value as UserMessaging[];
                 // if (users.length === 0 && data.length > 0 && currentConv === '')
-                if (currentConv === '' )
-                    dispatch(changeCurrConversation({ user: '', avatar: ''}));
+                if (currentConv === '')
+                    dispatch(changeCurrConversation({ user: '', avatar: '' }));
+                handleChat();
                 setUsers(data);
             }
         })
-            .catch((reason: string) => {
-                console.log("Error ;Rooms of User", reason)
+            .catch((error: any) => {
+                console.log("Error ;matchs:", error);
+                navigate(error.redirectTo);
             })
     }
 
@@ -60,14 +76,13 @@ export const UsersMessaging = () => {
             else if (data.action === "block") {
                 if (data.from === logged_user || data.to === logged_user)
                     getUsers();
-                if (data.from === logged_user){
+                if (data.from === logged_user) {
                     dispatch(changeCurrConversation({ user: '', avatar: '' }));
                     handleToastMsg(data.status, data.msg);
                 }
                 if (data.to === logged_user && data.from === currentConv)
                     dispatch(changeCurrConversation({ user: '', avatar: '' }));
-                else if (data.to === logged_user && data.from !== currentConv && currentConv !== '')
-                {
+                else if (data.to === logged_user && data.from !== currentConv && currentConv !== '') {
                     console.log("heeeereeee");
                     dispatch(changeCurrConversation({ user: currentConv, avatar: currentConvAvatar }));
                 }

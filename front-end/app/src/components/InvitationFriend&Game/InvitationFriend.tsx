@@ -1,6 +1,7 @@
 import { Box, Avatar, Typography, Stack, Button } from '@mui/material'
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface InvitationProps {
 	login: string,
@@ -10,14 +11,16 @@ interface InvitationProps {
 
 export const InvitationFriend = ({ login, username, avatar }: InvitationProps) => {
 	const [is_confirm, setConfirm] = useState(false);
-
+	const navigate = useNavigate();
+	
 	const handleAcceptInvite = () => {
 		axios.defaults.withCredentials = true;
 		axios.post(process.env.REACT_APP_SERVER_IP + '/invitation/accept?sender=' + login, {
 		}).then(() => {
 			setConfirm(true);
-		}).catch(() => {
-			// add Error msg
+		}).catch((error: any) => {
+			console.log("Error ;matchs:", error);
+			navigate(error.redirectTo);
 		})
 	}
 
@@ -45,7 +48,7 @@ export const InvitationFriend = ({ login, username, avatar }: InvitationProps) =
 					{!is_confirm &&
 						<Button size="small" variant="contained"
 							sx={{ background: "#1977F3", color: "#EFE1FE" }}
-							onClick={() => { handleAcceptInvite()}}>
+							onClick={() => { handleAcceptInvite() }}>
 							Confirm
 						</Button>}
 					{is_confirm && <Button disabled size="small" variant="contained" sx={{ background: "#1977F3", color: "#EFE1FE" }}>

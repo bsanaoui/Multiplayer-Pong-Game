@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Friend, getFriends } from '../requests/directMessage';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 let initFriends: Friend[] = [] as Friend[];
 initFriends.length = 0;
@@ -13,7 +14,7 @@ const Friends = () => {
     const logged_user = useSelector((state: RootState) => state.user).login;
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
-
+    const navigate = useNavigate();
 
     function getMyFriends() {
         getFriends().then((value) => {
@@ -22,9 +23,10 @@ const Friends = () => {
                 setFriends(data);
             }
         })
-            .catch((message: string) => {
-                console.log("Error; Friends", message)
-            })
+        .catch((error: any) => {
+            console.log("Error ;matchs:", error);
+            navigate(error.redirectTo);
+        }) 
     }
 
     const receiveUpdate = () => {

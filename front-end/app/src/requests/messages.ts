@@ -30,8 +30,8 @@ export async function requestMessages(name_room: string) {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
-      // 👇️ error: AxiosError<any, any>
-      return error.message;
+      if (error?.response?.status === 401)
+        throw (error?.response?.data);
     } else {
       console.log("unexpected error: ", error);
       return "An unexpected error occurred";
@@ -39,7 +39,7 @@ export async function requestMessages(name_room: string) {
   }
 }
 
-export async function requestDirectMsgs(curr_conv:string) {
+export async function requestDirectMsgs(curr_conv: string) {
   try {
     // 👇️ const data: CreateUserResponse
     const { data } = await axios.post<MessageState[]>
@@ -61,7 +61,8 @@ export async function requestDirectMsgs(curr_conv:string) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
       // 👇️ error: AxiosError<any, any>
-      return error.message;
+      if (error?.response?.status === 401)
+        throw (error?.response?.data);
     } else {
       console.log("unexpected error: ", error);
       return "An unexpected error occurred";

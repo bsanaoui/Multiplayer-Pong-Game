@@ -1,6 +1,7 @@
 import { Avatar, Box, List, Stack, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import avatar2 from '../../assets/avatar2.png'
 import { getMatchsHistory, MatchHistoryData } from "../../requests/dashboard"
 import { RootState } from "../../store"
@@ -65,17 +66,18 @@ initMatchHistory.length = 0;
 
 export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 	const [matchs_history, setMatchHistorys] = useState(initMatchHistory);
-
+	const navigate = useNavigate();
+	
 	useEffect(() => {
 		getMatchsHistory(other_user).then((value) => {
 			if ((typeof value) === (typeof initMatchHistory)) {
 				const data = value as MatchHistoryData[];
 				setMatchHistorys(data);
 			}
+		}).catch((error: any) => {
+			console.log("Error ;matchs:", error);
+			navigate(error.redirectTo);
 		})
-			.catch((reason: string) => {
-				console.log("Error ;matchs:", reason);
-			})
 		return (() => {
 			setMatchHistorys(initMatchHistory);
 		})
@@ -102,15 +104,15 @@ export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 				<HeaderTable name="Duration" />
 			</Stack>
 			<List style={{ width: "100%", overflow: 'auto', height: "100%" }} >
-				{typeof(matchs_history) == typeof(initMatchHistory) && matchs_history.map((item, index) => (
+				{typeof (matchs_history) == typeof (initMatchHistory) && matchs_history.map((item, index) => (
 					<li key={index}>
 						<ContentField id={index} name={item.username}
-						url_avatr={item.avatar}
-						level={item.level}
-						score_1={item.my_score} score_2={item.opp_score}
-						date={item.date}
-						game_type={item.game}
-						duration={match_h.duration} />
+							url_avatr={item.avatar}
+							level={item.level}
+							score_1={item.my_score} score_2={item.opp_score}
+							date={item.date}
+							game_type={item.game}
+							duration={match_h.duration} />
 					</li>
 				))}
 				{/*{!matchs_history && <li key='1' >*/}

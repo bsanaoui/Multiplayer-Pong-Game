@@ -2,10 +2,12 @@ import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import usersRoomIcon from '../assets/usersRoom.png'
 // import { SocketContext, SocketContextType } from '../context/socket';
 import { requestUsersRoom } from '../requests/rooms';
 import { RootState } from '../store';
+import { ChatUIState } from '../store/chatUiReducer';
 import { clearUsersRoom, initUsesrRoom, UserOfRoom } from '../store/roomUsersReducer';
 import { UserButton } from './UserButton';
 
@@ -16,28 +18,46 @@ export const UsersRoom = () => {
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const role_user = useSelector((state: RootState) => state.chat).curr_role;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
+    const chat: ChatUIState = useSelector((state: RootState) => state.chat);
+    const navigate = useNavigate();
 
     function getUsersRoom() {
         requestUsersRoom(currentRoom).then((value) => {
             const data = value as Array<UserOfRoom>;
             if (typeof (data) === (typeof (users_room)))
                 dispatch(initUsesrRoom(data));
-        }).catch((reason: string) => {
-            console.log("Error ;User of Rooms", reason)
+        }).catch((error: any) => {
+            console.log("Error ;matchs:", error);
+            navigate(error.redirectTo);
         })
     }
 
 
+    const receiveUpdate = () => {
+        socket.on('UsersOfRoom', (data: { status: boolean, user: string }) => {
+            getUsersRoom();
+        })
+    }
+
+    useEffect(() => {
+        if (socket)
+            receiveUpdate();
+        return (() => {
+            socket.off("UsersOfRoom");
+        })
+    },)
+
+
     useEffect(() => {
         // if (users_room.length === 0 && currentRoom !== '')
+        console.log("userst room : ", currentRoom);
         getUsersRoom();
-        
         if (currentRoom === '')
             dispatch(clearUsersRoom());
         return () => {
             dispatch(clearUsersRoom());
         }
-    }, [currentRoom])
+    }, [chat])
 
     return (
 

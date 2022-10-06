@@ -18,6 +18,7 @@ import notification_invite from '../assets/notification.png'
 import { InvitationFriend } from './InvitationFriend&Game/InvitationFriend';
 import avatar2 from '../assets/man.png'
 import { getInvitations, InvitationData } from '../requests/home';
+import { useNavigate } from 'react-router-dom';
 
 const initInvitationData: InvitationData[] = [] as InvitationData[];
 
@@ -25,7 +26,7 @@ export const InvitationsMenu = (Props: { count_invit: number }) => {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const [invitations, setInvitations] = React.useState(initInvitationData);
-
+	const navigate = useNavigate();
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -39,6 +40,9 @@ export const InvitationsMenu = (Props: { count_invit: number }) => {
 				const data = value as InvitationData[];
 				setInvitations(data);
 			}
+		}).catch((error: any) => {
+			console.log("Error ;matchs:", error);
+			navigate(error.redirectTo);
 		})
 	}, [])
 
