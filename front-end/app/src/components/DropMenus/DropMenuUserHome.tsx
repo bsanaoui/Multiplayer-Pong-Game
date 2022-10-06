@@ -46,8 +46,6 @@ export default function DropMenuUserHome(Props: UserData) {
 	};
 
 	const handleAddFriend = () => {
-		console.log("Userrrrr:", process.env.REACT_APP_SERVER_IP + '/invitation?sendto=' + Props.login);
-		// sendInvite(Props.login);
 		axios.defaults.withCredentials = true;
 		axios.post(process.env.REACT_APP_SERVER_IP + '/invitation?sendto=' + Props.login);
 	}

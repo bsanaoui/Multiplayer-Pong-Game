@@ -23,6 +23,13 @@ import banIcon from '../../assets/DropMenus/ban.png'
 import seAdminIcon from '../../assets/DropMenus/admin.png'
 import { UserOfRoom } from '../../store/roomUsersReducer';
 import { Socket } from 'socket.io-client';
+import axios from 'axios';
+import { ChatUserPost } from '../../requests/home';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { P_data } from './DropMenuUser';
+import { data, setInviteData } from '../../store/gameReducer';
+import { RootState } from '../../store';
 
 // !!!!!!!! ADD listener ????????????
 function muteUser(socket: Socket, user: string) {
@@ -46,19 +53,53 @@ function setAdmin(socket: Socket, user: string) {
 		socket.emit('setAdmin',{"new_admin" : user});
 }
 
-function addFriend() {
-	
-}
 
 export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Socket, role_user: string }) {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const logged_user = useSelector((state: RootState) => state.user);
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+
+
+	const handleAddFriend = () => {
+		axios.defaults.withCredentials = true;
+		axios.post(process.env.REACT_APP_SERVER_IP + '/invitation?sendto=' + Props.user.login);
+	}
+
+	// const HandleblockUser = () => {
+	// 	BlockUserPost(Props.login);
+	// }
+
+	const Handlechat = () => { // to edit
+		ChatUserPost(Props.user.login);
+		navigate({
+			pathname: '/instantMessaging',
+			search: '?user=' + Props.user.login + '&avatar=' + Props.user.avatar,
+		});
+	}
+
+	const handleShowProfile = () => {
+		navigate({
+			pathname: '/dashboard',
+			search: '?user=' + Props.user.login,
+		});
+	}
+
+	const handleSendInviteGame = () => {
+		const p1: P_data = { username: logged_user.username, login: logged_user.login, avatar: logged_user.avatar as string };
+		const p2: P_data = { username: Props.user.username as string, login: Props.user.login as string, avatar: Props.user.avatar as string };
+		const data: data = { P1: p1, P2: p2, mod: 0 };
+		dispatch(setInviteData(data));
+	}
+
 
 	console.log(Props.role_user , " | " ,Props.user.user_role);
 	return (
@@ -90,25 +131,25 @@ export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Soc
 					<nav aria-label="main folders">
 						<List dense={true} >
 							<ListItem disablePadding >
-								<ListItemButton onClick={handleClose}>
+								<ListItemButton onClick={() => {handleSendInviteGame(); handleClose()}}>
 									<Avatar variant="square" src={playIcon} sx={{ marginRight: "15%", width: "19px", height: "19px" }} />
 									<ListItemText primary="Play" />
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
-								<ListItemButton onClick={() => { addFriend(); handleClose() }}>
+								<ListItemButton onClick={() => { handleAddFriend(); handleClose() }}>
 									<Avatar variant="square" src={addFriendIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
 									<ListItemText primary="Add Friend" />
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
+								<ListItemButton onClick={() => {handleShowProfile(); handleClose()}}>
 									<Avatar variant="square" src={profileIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
 									<ListItemText primary="Show Profile" />
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
+								<ListItemButton onClick={() => { Handlechat();handleClose()}}>
 									<Avatar variant="square" src={chatIcon} sx={{ marginRight: "14%", width: "20px", height: "20px" }} />
 									<ListItemText primary="Chat" />
 								</ListItemButton>

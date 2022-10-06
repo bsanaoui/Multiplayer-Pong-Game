@@ -22,6 +22,9 @@ import { RootState } from '../../store';
 import { useDispatch } from 'react-redux';
 import { InterfaceEnum, setCurrentInterface } from '../../store/interfacesReducer';
 import { changeCurrConversation } from '../../store/chatUiReducer';
+import { useNavigate } from 'react-router-dom';
+import { setInviteData } from '../../store/gameReducer';
+import axios from 'axios';
 
 interface MenuProps {
 	is_dm_user: boolean,
@@ -47,9 +50,12 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 	const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const logged_user = useSelector((state: RootState) => state.user);
+	const navigate = useNavigate();
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -62,6 +68,11 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 			socket.emit('block_dm');
 			// dispatch(changeCurrConversation({ user: '', avatar: ''}));
 		}
+	}
+
+	const handleAddFriend = () => {
+		axios.defaults.withCredentials = true;
+		axios.post(process.env.REACT_APP_SERVER_IP + '/invitation?sendto=' + user?.login);
 	}
 
 	const blockFriend = (friend: string) => {
@@ -79,11 +90,28 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 		}
 	}
 
+	const handleShowProfile = () => {
+		let other_user: string;
+		if (friend)
+			other_user = friend.login;
+		else
+			other_user = user?.login as string;
+		navigate({
+			pathname: '/dashboard',
+			search: '?user=' + other_user,
+		});
+	}
+
+
 	const handleSendInviteGame = () => {
 		const p1: P_data = { username: logged_user.username, login: logged_user.login, avatar: logged_user.avatar as string };
-		const p2: P_data = { username: friend?.username as string, login: friend?.login as string, avatar: friend?.avatar as string };
+		let p2: P_data;
+		if (friend)
+			p2 = { username: friend?.username as string, login: friend?.login as string, avatar: friend?.avatar as string };
+		else
+			p2 = { username: user?.username as string, login: user?.login as string, avatar: user?.avatar as string };
 		const data: data = { P1: p1, P2: p2, mod: 0 };
-		socket_global.emit('invite', data);
+		dispatch(setInviteData(data));
 	}
 
 	return (
@@ -121,7 +149,7 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
-								<ListItemButton onClick={handleClose}>
+								<ListItemButton onClick={() => { handleShowProfile(); handleClose()}}>
 									<Avatar variant="square" src={profileIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
 									<ListItemText primary="Show Profile" />
 								</ListItemButton>
@@ -135,7 +163,7 @@ export default function DropMenuUser({ friend, user, is_dm_user }: MenuProps) {
 								</ListItem>}
 							{(is_dm_user && !friend) &&
 								<ListItem disablePadding>
-									<ListItemButton onClick={handleClose}>
+									<ListItemButton onClick={() => {handleAddFriend(); handleClose()}}>
 										<Avatar variant="square" src={addFriendIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
 										<ListItemText primary="Add Friend" />
 									</ListItemButton>
