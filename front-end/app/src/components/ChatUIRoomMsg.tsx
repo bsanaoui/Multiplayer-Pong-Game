@@ -90,7 +90,7 @@ export const ChatUIRoomMsg = () => {
             if ((typeof data) === (typeof msgs))
                 dispatch(initMessages(data));
         }).catch((error: any) => {
-            console.log("Error ;matchs:", error);
+            console.log("Error ;Not Authorized", error);
             navigate(error.redirectTo);
         }) 
     }

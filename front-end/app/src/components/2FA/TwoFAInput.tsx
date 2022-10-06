@@ -37,7 +37,7 @@ export const TwoFAInput = (props: { enable: boolean }) => {
             const data = value as { qrcodeUrl: string };
             setImage(data.qrcodeUrl);
         }).catch((error: any) => {
-            console.log("Error ;matchs:", error);
+            console.log("Error ;Not Authorized", error);
             navigate(error.redirectTo);
         })
     }

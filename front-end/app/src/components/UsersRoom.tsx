@@ -27,7 +27,7 @@ export const UsersRoom = () => {
             if (typeof (data) === (typeof (users_room)))
                 dispatch(initUsesrRoom(data));
         }).catch((error: any) => {
-            console.log("Error ;matchs:", error);
+            console.log("Error ;Not Authorized", error);
             navigate(error.redirectTo);
         })
     }

@@ -19,7 +19,7 @@ export const InvitationFriend = ({ login, username, avatar }: InvitationProps) =
 		}).then(() => {
 			setConfirm(true);
 		}).catch((error: any) => {
-			console.log("Error ;matchs:", error);
+			console.log("Error ;Not Authorized", error);
 			navigate(error.redirectTo);
 		})
 	}

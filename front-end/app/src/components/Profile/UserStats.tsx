@@ -21,7 +21,7 @@ const UserStats = ({ other_user }: { other_user?: string }) => {
 				setUserStats(data);
 			}
 		}).catch((error: any) => {
-			console.log("Error ;matchs:", error);
+			console.log("Error ;Not Authorized", error);
 			navigate(error.redirectTo);
 		})
 		return (() => {

@@ -8,13 +8,15 @@ import { RootState } from '../store';
 import { useNavigate } from 'react-router-dom';
 
 
-function createRooms(rooms_info: Array<RoomData>): JSX.Element[] {
+
+function createRooms(rooms_info: Array<RoomData>, kind:string): JSX.Element[] {
 	const rooms = Array.from({ length: rooms_info.length }, (_, index) => {
 		return (
 			<li key={index++} className="item">
 				<RoomButton room_id={rooms_info[index].room_id}
 					owner={rooms_info[index].owner}
-					count={rooms_info[index].count} />
+					count={rooms_info[index].count}
+					kind={kind}/>
 			</li>
 		);
 	});
@@ -39,7 +41,7 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 			if ((typeof data) === (typeof initRooms))
 				setRooms(data);
 		}).catch((error: any) => {
-			console.log("Error ;matchs:", error);
+			console.log("Error ;Not Authorized", error);
 			navigate(error.redirectTo);
 		})
 
@@ -67,7 +69,7 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 			</Stack>
 			<div className="horizontal_slider">
 				<div className="slider_container">
-					{rooms.length && createRooms(rooms)}
+					{rooms.length && createRooms(rooms , kind)}
 				</div>
 			</div>
 		</Stack>

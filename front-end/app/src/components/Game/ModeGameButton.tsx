@@ -1,20 +1,24 @@
 import { Avatar, Box, Typography } from '@mui/material'
 import { relative } from 'path'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import classicImage from '../../assets/Game/classic.png'
 import RetroImage from '../../assets/Game/RetroMode.png'
-import { HandleCloseDialog, ModeEnum, setModeGame } from '../../store/gameReducer'
+import { RootState } from '../../store'
+import { data, HandleCloseDialog, ModeEnum, setModeGame } from '../../store/gameReducer'
 interface modeGameProps {
 	mode: string,
-	watch: boolean,
+	invite: boolean,
 }
 
-export const ModeGameButton = ({ mode, watch }: modeGameProps) => {
+export const ModeGameButton = ({ mode, invite }: modeGameProps) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const colorBg = (mode === '1') ? "linear-gradient(to right bottom, #673AB7, #512DA8 )"
 		: "linear-gradient(to right bottom, #000046, #1CB5E0 )";
+	const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
+	const invite_data_send = useSelector((state: RootState) => state.game).inviteData;
+
 
 	const handleNavigate = (mode: string) => {
 		navigate({
@@ -23,10 +27,24 @@ export const ModeGameButton = ({ mode, watch }: modeGameProps) => {
 		});
 	}
 
+	const handleMatchMaking = () => {
+		((mode === '1') ? handleNavigate('1') : handleNavigate('2'))
+	}
+	
+
+	const handleInviteGame = () => {
+		let data;
+		if (mode === "1")
+			data:data = {P1:invite_data_send.P1, P2:invite_data_send.P2, mod:0};
+		else if (mode === "2")
+			data:data = {P1:invite_data_send.P1, P2:invite_data_send.P2, mod:1};
+		socket_global.emit('invite', data);
+	}
+	
 	return (
 		<Box
 			// onClick={() => { dispatch((mode === '1') ? setModeGame({ mode: ModeEnum.mode1 }) : setModeGame({ mode: ModeEnum.mode2 })) }}
-			onClick={() => { ((mode === '1') ? handleNavigate('1') : handleNavigate('2')); dispatch(HandleCloseDialog()) }}
+			onClick={() => { ((!invite) ? handleMatchMaking(): handleInviteGame()); dispatch(HandleCloseDialog()) }}
 			sx={{
 				width: "210px",
 				height: "200px",

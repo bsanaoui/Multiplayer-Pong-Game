@@ -37,7 +37,7 @@ const Rooms = () => {
 			}
 		})
 			.catch((error: any) => {
-				console.log("Error ;matchs:", error);
+				console.log("Error ;Not Authorized", error);
 				navigate(error.redirectTo);
 			})
 	}

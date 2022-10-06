@@ -27,12 +27,7 @@ import { BlockUserPost, ChatUserPost, UserData } from '../../requests/home';
 import { P_data } from './DropMenuUser';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-type data = {
-	P1: P_data;
-	P2: P_data;
-	mod: number
-}
+import { data, setInviteData } from '../../store/gameReducer';
 
 
 export default function DropMenuUserHome(Props: UserData) {
@@ -63,7 +58,6 @@ export default function DropMenuUserHome(Props: UserData) {
 
 	const Handlechat = () => { // to edit
 		ChatUserPost(Props.login);
-		// navigate('/instantMessaging');
 		navigate({
 			pathname: '/instantMessaging',
 			search: '?user=' + Props.login + '&avatar=' + Props.avatar,
@@ -81,7 +75,7 @@ export default function DropMenuUserHome(Props: UserData) {
 		const p1: P_data = { username: logged_user.username, login: logged_user.login, avatar: logged_user.avatar as string };
 		const p2: P_data = { username: Props.username as string, login: Props.login as string, avatar: Props.avatar as string };
 		const data: data = { P1: p1, P2: p2, mod: 0 };
-		socket_global.emit('invite', data);
+		dispatch(setInviteData(data));
 	}
 
 	return (

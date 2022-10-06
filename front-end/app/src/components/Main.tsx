@@ -28,7 +28,6 @@ const Main = () => {
         socket_global.emit('accepted', data);
     }
 
-
     const CustomMsg = (props: data) => {
         return (<div>
             <p> {props.P1.username} want to play with you in mode {props.mod}</p>
@@ -59,7 +58,6 @@ const Main = () => {
 
     const handleGameStart = () => {
         socket_global.on('start', (data: { key: string, mod: number }) => {
-            console.log("KEEEEY", data);
             const params = { key: data.key, mode: data.mod };
             // dispatch(playInvitedGame({key:data.key, mode:data.mod}));
             navigate({
@@ -76,9 +74,11 @@ const Main = () => {
             socket_global.off("start");
         })
     },)
-
-    return (<div></div>);
-
+    return (<div>
+        <ModeDialog>
+            <ModesInput invite={true} />
+        </ModeDialog>
+    </div>);
 }
 
 export default Main

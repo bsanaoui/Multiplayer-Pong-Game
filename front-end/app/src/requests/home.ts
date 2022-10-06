@@ -131,6 +131,38 @@ export async function getRoomsData(kind: string) {
 	}
 }
 
+// ========================== Post Join Protected Room ========================= //
+export async function joinProtectedRoomPost(room_id: string, password: string) {
+
+	try {
+		// 👇️ const data: GetUsersResponse
+		const { data, status } = await axios.post<{ room_id: string }>(
+			process.env.REACT_APP_SERVER_IP + "/room/click_protected_room",
+			{ room_id: room_id, password: password },
+			{
+				headers: {
+					Accept: "application/json",
+				},
+				withCredentials: true,
+
+			}
+		);
+		console.log(JSON.stringify(data, null, 4));
+		// 👇️ "response status is: 200"
+		console.log('response status is: ', status);
+
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			console.log("error message: ", error.message);
+			throw (error);
+		} else {
+			console.log("unexpected error: ", error);
+			return "An unexpected error occurred";
+		}
+	}
+}
+
 // ========================== Post new Room ========================= //
 
 export async function JoinRoomPost(room_id: string) {

@@ -75,7 +75,7 @@ export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 				setMatchHistorys(data);
 			}
 		}).catch((error: any) => {
-			console.log("Error ;matchs:", error);
+			console.log("Error ;Not Authorized", error);
 			navigate(error.redirectTo);
 		})
 		return (() => {

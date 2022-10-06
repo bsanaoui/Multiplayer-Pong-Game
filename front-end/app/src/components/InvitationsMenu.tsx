@@ -41,7 +41,7 @@ export const InvitationsMenu = (Props: { count_invit: number }) => {
 				setInvitations(data);
 			}
 		}).catch((error: any) => {
-			console.log("Error ;matchs:", error);
+			console.log("Error ;Not Authorized", error);
 			navigate(error.redirectTo);
 		})
 	}, [])

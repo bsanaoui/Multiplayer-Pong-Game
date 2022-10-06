@@ -1,31 +1,45 @@
 import { Box, Stack, Typography } from '@mui/material'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import groupIcon from '../assets/group-icon.svg'
 import { JoinRoomPost, RoomData } from '../requests/home'
 import { changeCurrRoom } from '../store/chatUiReducer'
 import { InterfaceEnum, setCurrentInterface } from '../store/interfacesReducer'
+import DialogProtectedRoom from './Dialogs/DialogProtectedRoom'
 import { handleToastMsg } from './InfoMessages/Toast'
 
+type RoomDataButtom = {
+	room_id: string,
+	owner: string,
+	count: number,
+	kind: string,
+};
 
-const RoomButton = (Props: RoomData) => {
+const RoomButton = (Props: RoomDataButtom) => {
 	const navigate = useNavigate();
+	const [is_dialog_open, setDialogOpen] = React.useState(false);
+
+	const handlePublicRoom = () => {
+		JoinRoomPost(Props.room_id).then((value) => {
+			const data: { room_id: string } = value as { room_id: string };
+			if (data && data.room_id !== '')
+				handleToastMsg(true, `You are now user at ${data.room_id}`);
+			else
+				handleToastMsg(false, `You are already user at ${Props.room_id}`);
+		}).catch((error: any) => {
+			console.log("Error ;Not Authorized", error);
+			navigate(error.redirectTo);
+		})
+	}
+
+	const handleDialogProtectedRoom = () => {
+		setDialogOpen(!is_dialog_open);
+	}
 
 	return (
 		<Box
-			onClick={() => {
-				JoinRoomPost(Props.room_id).then((value) => {
-					const data: { room_id: string } = value as { room_id: string };
-					if (data && data.room_id !== '')
-						handleToastMsg(true, `You are now user at ${data.room_id}`);
-					else
-						handleToastMsg(false, `You already user at ${Props.room_id}`);
-				}).catch((error: any) => {
-					console.log("Error ;matchs:", error);
-					navigate(error.redirectTo);
-				})
-
-			}}
+			onClick={() => { (Props.kind === "Public rooms") ? handlePublicRoom() : handleDialogProtectedRoom() }}
 			sx={{
 				width: '320px',
 				height: '210px',
@@ -77,6 +91,7 @@ const RoomButton = (Props: RoomData) => {
 					{Props.count}
 				</div>
 			</Stack>
+			<DialogProtectedRoom isDialogOpened={is_dialog_open} handleCloseDialog={() => setDialogOpen(false)} room={Props.room_id}/>
 		</Box>
 	)
 }

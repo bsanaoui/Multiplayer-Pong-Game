@@ -46,9 +46,8 @@ function setAdmin(socket: Socket, user: string) {
 		socket.emit('setAdmin',{"new_admin" : user});
 }
 
-function addFriend(socket: Socket, user: string) {
-	if (socket)
-		socket.emit('jtjr');
+function addFriend() {
+	
 }
 
 export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Socket, role_user: string }) {
@@ -97,7 +96,7 @@ export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Soc
 								</ListItemButton>
 							</ListItem>
 							<ListItem disablePadding>
-								<ListItemButton onClick={() => { addFriend(Props.socket, Props.user.login); handleClose() }}>
+								<ListItemButton onClick={() => { addFriend(); handleClose() }}>
 									<Avatar variant="square" src={addFriendIcon} sx={{ marginRight: "15%", width: "18px", height: "18px" }} />
 									<ListItemText primary="Add Friend" />
 								</ListItemButton>

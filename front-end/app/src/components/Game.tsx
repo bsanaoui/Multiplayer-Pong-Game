@@ -11,7 +11,6 @@ import { ModesInput } from './Game/ModesInput'
 import './Game/navGame.css'
 import PlayButton from './Game/PlayButton'
 
-
 const Game = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
@@ -23,8 +22,6 @@ const Game = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		// console.log("mode :", mode);
-		// console.log("invitekey :", invite);
 
 		if (location.pathname === '/matchmaking' && !mode && !invite)
 			dispatch(HandleOpeneDialog());
@@ -42,7 +39,7 @@ const Game = () => {
 		<Box sx={{ width: "100%", height: "100%", margin: "auto" }} >
 			{/* {!isGameSet && <PlayButton>} */}
 			<ModeDialog>
-				<ModesInput watch={false} />
+				<ModesInput invite={false} />
 			</ModeDialog>
 			{isGameSet && <Canvas />}
 		</Box>
