@@ -36,17 +36,17 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const renderMessage = (current: string, from: string, msg: string): JSX.Element => {
+const renderMessage = (current: string, from: string, msg: string, avatar:string): JSX.Element => {
     if (current === from)
         return (
             <li key={index_msg++} style={{ float: 'right' }}>
-                <MessageSent msg={msg} />
+                <MessageSent msg={msg} avatar={avatar} />
             </li>
         );
     else
         return (
             <li key={index_msg++} style={{ float: 'left' }}>
-                <MessageRecieved msg={msg} />
+                <MessageRecieved msg={msg} avatar={avatar} />
             </li>
         );
 }
@@ -138,7 +138,6 @@ export const ChatUIRoomMsg = () => {
 
             index_msg = 0;
         }
-
     }, [currentRoom])
 
     return (
@@ -175,7 +174,7 @@ export const ChatUIRoomMsg = () => {
                             </div>
                         </Stack>}
                     <List style={{ overflowY: 'auto' }} >
-                        {msgs && msgs.map((item) => (renderMessage(logged_user, item.from, item.msg)))}
+                        {msgs && msgs.map((item) => (renderMessage(logged_user, item.from, item.msg, item.avatar as string)))}
                         <li key={index_msg++} style={{ float: 'left', height: "100px", width: "100px" }}>
                             <div ref={bottomRef} ></div>
                         </li>

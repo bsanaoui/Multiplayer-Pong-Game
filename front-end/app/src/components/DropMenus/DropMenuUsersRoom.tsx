@@ -61,6 +61,7 @@ export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Soc
 		setAnchorEl(null);
 	};
 
+	console.log(Props.role_user , " | " ,Props.user.user_role);
 	return (
 		<div>
 			<IconButton id="basic-button"
@@ -113,28 +114,31 @@ export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Soc
 									<ListItemText primary="Chat" />
 								</ListItemButton>
 							</ListItem>
-							{(Props.role_user === "owner" || Props.role_user === "admin") &&
+							{(Props.role_user === "owner" && Props.user.user_role === 'user' ) &&
 								<ListItem disablePadding>
 									<ListItemButton onClick={() => { setAdmin(Props.socket, Props.user.login); handleClose() }}>
 										<Avatar variant="square" src={seAdminIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
 										<ListItemText primary="Set As Admin" />
 									</ListItemButton>
 								</ListItem>}
-							{Props.role_user === "owner" &&
+							{((Props.role_user === "owner" && Props.user.user_role !== "owner") ||
+								(Props.role_user === "admin" && Props.user.user_role === "user" )) &&
 								<ListItem disablePadding>
 									<ListItemButton onClick={() => { muteUser(Props.socket, Props.user.login); handleClose() }}>
 										<Avatar variant="square" src={muteIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
 										<ListItemText primary="Mute" />
 									</ListItemButton>
 								</ListItem>}
-							{Props.role_user === "owner" &&
+							{((Props.role_user === "owner" && Props.user.user_role !== "owner") ||
+								(Props.role_user === "admin" && Props.user.user_role === "user" )) &&
 								<ListItem disablePadding>
 									<ListItemButton onClick={() => { banUser(Props.socket, Props.user.login); handleClose() }}>
 										<Avatar variant="square" src={banIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
 										<ListItemText primary="Ban" />
 									</ListItemButton>
 								</ListItem>}
-							{Props.role_user === "owner" &&
+							{((Props.role_user === "owner" && Props.user.user_role !== "owner") ||
+								(Props.role_user === "admin" && Props.user.user_role === "user" )) &&
 								<ListItem disablePadding>
 									<ListItemButton onClick={() => { kickUser(Props.socket, Props.user.login); handleClose() }}>
 										<Avatar variant="square" src={banIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />

@@ -3,9 +3,10 @@ import { Box } from '@mui/system'
 import avatar2 from '../assets/avatar2.png'
 
 interface MessageProps {
-  msg: string
+  msg: string,
+  avatar:string,
 }
-const MessageRecieved = ({ msg }: MessageProps) => {
+const MessageRecieved = ({ msg, avatar }: MessageProps) => {
   return (
     <div>
       <Stack
@@ -37,9 +38,9 @@ const MessageRecieved = ({ msg }: MessageProps) => {
             height: '47px',
             width: '47px',
             backgroundColor: "#FFF",
-            padding: "3px",
+            // padding: "3px",
           }}
-          alt="Lion" src={avatar2} imgProps={{ style: { width: 'auto' } }} />
+          alt="" src={avatar} imgProps={{ style: { width: 'auto' } }} />
       </Stack>
     </div>
   )
