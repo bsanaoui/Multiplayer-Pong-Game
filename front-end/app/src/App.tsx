@@ -86,14 +86,13 @@ function App() {
 		})
 	}, []);
 
-	useEffect(() => {
-		if (currentIterface === InterfaceEnum.Logout) {
-			removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
-			dispatch(clearUser());
-		}
+	// useEffect(() => {
+	// 	if (currentIterface === InterfaceEnum.Logout) {
+	// 		removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
+	// 		dispatch(clearUser());
+	// 	}
 
-	}, [currentIterface])
-
+	// }, [currentIterface])
 
 	return (
 		<ThemeProvider theme={darkTheme}>
@@ -104,14 +103,7 @@ function App() {
 				sx={{ backgroundColor: "#202541" }}>
 				<React.Suspense fallback={<Loading />}>
 					{(logged_user !== '' && location.pathname !== '/' && location.pathname !== '/signUp'
-						&& location.pathname !== '/tfa') && <NavBarNew />}  {/*Check if route not signin and signup*/}
-
-					{/* {currentIterface === InterfaceEnum.Home && <Home />}
-						{currentIterface === InterfaceEnum.Dashboard && <DashboardUser />}
-						{currentIterfaˇce === InterfaceEnum.ChatRoom && <GlobalRooms />}
-						{currentIterface === InterfaceEnum.InstantMessaging && <GlobalDM />}
-						{currentIterface === InterfaceEnum.Matchmaking && <Game/>}
-						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />} */}
+						&& location.pathname !== '/tfa') && <NavBarNew />} 
 					<Routes>
 						<Route path='/' element={<Login />} />
 						<Route path='/signUp' element={<SignUp />} />

@@ -1,5 +1,5 @@
 
-import { Avatar, Badge, Button, Divider, IconButton, Slide, Stack, Typography } from '@mui/material'
+import { Avatar, Badge, Button, Divider, IconButton, Slide, Stack, TextField, Typography } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store";
 import { InterfaceEnum, setCurrentInterface } from "../store/interfacesReducer";
@@ -34,6 +34,7 @@ import { getProfileNavbar, ProfileNavData } from '../requests/home';
 import axios from 'axios';
 import { clearUser } from '../store/userReducer';
 import { useCookies } from 'react-cookie';
+import { toast } from 'react-toastify';
 
 export let getInterface = (currentRoute: string): string => {
     switch (currentRoute) {
@@ -56,7 +57,8 @@ export const NavBarNew = () => {
     const [info_user, setInfoUser] = useState(initState);
     let avatar: File;
     const navigate = useNavigate();
-    
+    const [username, setUsername] = useState("");
+
     const handleUploadAvatar = (avatar_uploaded: File) => {
         axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', { avatar: avatar_uploaded }, {
             withCredentials: true,
@@ -64,6 +66,20 @@ export const NavBarNew = () => {
                 'Content-Type': 'multipart/form-data'
             }
         })
+        navigate(0);
+        toast.success("Your avatar was updated");
+    }
+
+    const handleChangeUserName = (event: any) => {
+        if (event.key === 'Enter') {
+            if (username) {
+                axios.post(process.env.REACT_APP_SERVER_IP + '/profile/change_username', { username: username }, {
+                    withCredentials: true,
+                })
+                navigate(0);
+                toast.success("Your username was updated");
+            }
+        }
     }
 
     useEffect(() => {
@@ -122,7 +138,7 @@ export const NavBarNew = () => {
                                 <SportsEsportsIcon sx={{ width: "18px", paddingTop: "3%" }} />
                                 <Typography
                                     sx={{
-                                        width:'100%',
+                                        width: '100%',
                                         whiteSpace: "nowrap",
                                         color: '#ADADAD',
                                         fontWeight: '600',
@@ -134,6 +150,9 @@ export const NavBarNew = () => {
                             </Stack>
                         </Stack>
                     </Stack>
+                    <TextField onKeyDown={handleChangeUserName} onChange={e => setUsername(e.target.value)}
+                        style={{ maxWidth: "93%", margin: "0 auto" }}
+                        name='new_user_name' label='Change Username' fullWidth />
                     <Stack
                         divider={<Divider orientation="horizontal" flexItem />}>
                         <CustomButton route='/home' _icon={homeIcon} />
@@ -171,19 +190,18 @@ const CustomButton = ({ route, _icon }: ButtonProps) => {
     const dispatch = useDispatch();
     const [cookies, setCookie, removeCookie] = useCookies();
 
-    const handleLocation =() => {
-        if (location.pathname === '/logout')
-        {
+    const handleLocation = () => {
+        if (location.pathname === '/logout') {
             removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
-			dispatch(clearUser());
-			navigate("/")
+            dispatch(clearUser());
+            navigate("/")
         }
-        else if (route === '/matchmaking'){
+        else if (route === '/matchmaking') {
             navigate(route);
             navigate(0)
         }
         else
-        navigate(route);
+            navigate(route);
     }
     let backgroundButton = location.pathname === route ? "#543EC0" : "#303465";
     return (

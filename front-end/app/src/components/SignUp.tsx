@@ -42,6 +42,7 @@ const SignUp = () => {
             axios.post(process.env.REACT_APP_SERVER_IP + '/profile/change_username', { username: values.user_name }, {
                 withCredentials: true,
             })
+        // navigate(0);
         navigate('/home');
         props.resetForm()
     }
