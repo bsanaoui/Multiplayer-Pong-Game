@@ -97,7 +97,7 @@ function App() {
 
 	return (
 		<ThemeProvider theme={darkTheme}>
-			<ToastContainer position="top-right" newestOnTop autoClose={4000000} />
+			<ToastContainer position="top-right" newestOnTop autoClose={1500} />
 			<CssBaseline />
 			<Main/>
 			<Stack direction="row" width="100%" height="100%"
@@ -112,7 +112,6 @@ function App() {
 						{currentIterface === InterfaceEnum.InstantMessaging && <GlobalDM />}
 						{currentIterface === InterfaceEnum.Matchmaking && <Game/>}
 						{currentIterface === InterfaceEnum.LiveGames && <LiveMatchs />} */}
-
 					<Routes>
 						<Route path='/' element={<Login />} />
 						<Route path='/signUp' element={<SignUp />} />

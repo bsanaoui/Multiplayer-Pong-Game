@@ -18,6 +18,8 @@ import { setCollapse } from '../store/collapseNavReducer';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ButtonProps } from './NavBarNew';
+import { clearUser } from '../store/userReducer';
+import { useCookies } from 'react-cookie';
 
 export const NavbarCollapsed = () => {
     const userState = useSelector((state: RootState) => state.user);
@@ -56,7 +58,7 @@ export const NavbarCollapsed = () => {
                     </Box>
                     <Collapse />
                     <Divider orientation="horizontal" flexItem />
-                    <CustomButton route='/login' _icon={LogoutIcon} />
+                    <CustomButton route='/logout' _icon={LogoutIcon} />
                 </Box>
             </Stack>
         </Slide>
@@ -66,10 +68,19 @@ export const NavbarCollapsed = () => {
 const CustomButton = ({ route, _icon }: ButtonProps) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
+    const [cookies, setCookie, removeCookie] = useCookies();
+    
     let backgroundButton = location.pathname === route ? "#543EC0" : "#303465";
-
+    
     const handleLocation =() => {
-        if (route === '/matchmaking'){
+        if (location.pathname === '/logout')
+        {
+            removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
+			dispatch(clearUser());
+			navigate("/")
+        }
+        else if (route === '/matchmaking'){
             navigate(route);
             navigate(0)
         }

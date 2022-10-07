@@ -32,6 +32,8 @@ import TwoFADialog from './2FA/TwoFADialog';
 import { TwoFAInput } from './2FA/TwoFAInput';
 import { getProfileNavbar, ProfileNavData } from '../requests/home';
 import axios from 'axios';
+import { clearUser } from '../store/userReducer';
+import { useCookies } from 'react-cookie';
 
 export let getInterface = (currentRoute: string): string => {
     switch (currentRoute) {
@@ -138,7 +140,6 @@ export const NavBarNew = () => {
                         <CustomButton route='/dashboard' _icon={dashboardIcon} />
                         <CustomButton route='/chatRoom' _icon={roomIcon} />
                         <CustomButton route='/instantMessaging' _icon={messengerIcon} />
-                        {/* <CustomButton _name={InterfaceEnum.Friends} _icon={friendsIcon} /> */}
                         <CustomButton route='/matchmaking' _icon={matchmakingIcon} />
                         <CustomButton route='/liveMatchs' _icon={streamingIcon} />
                     </Stack>
@@ -146,7 +147,7 @@ export const NavBarNew = () => {
                         <Box sx={{ marginBottom: "20%" }}><Button2FA verified={info_user.tfa} /></Box>
                         <Collapse />
                         <Divider orientation="horizontal" flexItem />
-                        <CustomButton route='/login' _icon={LogoutIcon} />
+                        <CustomButton route='/logout' _icon={LogoutIcon} />
                     </Box>
                 </Stack>}
 
@@ -167,9 +168,17 @@ export interface ButtonProps {
 const CustomButton = ({ route, _icon }: ButtonProps) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
+    const [cookies, setCookie, removeCookie] = useCookies();
 
     const handleLocation =() => {
-        if (route === '/matchmaking'){
+        if (location.pathname === '/logout')
+        {
+            removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
+			dispatch(clearUser());
+			navigate("/")
+        }
+        else if (route === '/matchmaking'){
             navigate(route);
             navigate(0)
         }

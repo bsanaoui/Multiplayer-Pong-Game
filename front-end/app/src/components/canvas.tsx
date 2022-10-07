@@ -215,6 +215,7 @@ let updateBalldisplay = (ball: Ball): void => {
 	ball.velY *= cof;
 }
 
+let profile = false;
 
 const Canvas = () => {
 	const [searchParams] = useSearchParams();
@@ -263,9 +264,9 @@ const Canvas = () => {
 		socket.on('start_game', () => {
 			countdown(ctx);
 			if (mode !== '3')
-				commands(canvas!, player_cmd);
+			commands(canvas!, player_cmd);
 		})
-
+		
 		socket.on('game_over', () => {
 			gameover = true;
 			room = '';
@@ -273,10 +274,11 @@ const Canvas = () => {
 		})
 
 		socket.on('update_connections', (p1: Player, p2: Player, b: Ball) => {
-			if(P1.username !== p1.username)
-				setPlayer1(P1);
-			if(P2.username !== p2.username)
-				setPlayer2(P2);
+			if (player1.login != p1.login)
+				setPlayer1(p1);
+			if (player2.login != p2.login)
+				setPlayer2(p2);
+			
 			if (P1.score !== p1.score)
 				setScore1(p1.score);
 			if (P2.score !== p2.score)
