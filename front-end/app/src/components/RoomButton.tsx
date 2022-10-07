@@ -27,6 +27,7 @@ const RoomButton = (Props: RoomDataButtom) => {
 				handleToastMsg(true, `You are now user at ${data.room_id}`);
 			else
 				handleToastMsg(false, `You are already user at ${Props.room_id}`);
+			navigate("/chatRoom");
 		}).catch((error: any) => {
 			console.log("Error ;Not Authorized", error);
 			navigate(error.redirectTo);

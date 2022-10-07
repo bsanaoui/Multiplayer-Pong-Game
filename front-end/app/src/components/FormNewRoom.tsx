@@ -22,7 +22,7 @@ const FormNewRoom = () => {
         password: ''
     }
     const validationSchema = Yup.object().shape({
-        name: Yup.string().min(5, "It's too short").required("Required"),
+        name: Yup.string().min(5, "Name too short").required("Required").max(20, "Name too long"),
         type: Yup.string().required("Required"),
         password: Yup.string().min(8, "Minimum characters should be 8")
     })

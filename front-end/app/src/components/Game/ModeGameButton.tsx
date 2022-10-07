@@ -46,6 +46,7 @@ export const ModeGameButton = ({ mode, invite }: modeGameProps) => {
 			// onClick={() => { dispatch((mode === '1') ? setModeGame({ mode: ModeEnum.mode1 }) : setModeGame({ mode: ModeEnum.mode2 })) }}
 			onClick={() => { ((!invite) ? handleMatchMaking(): handleInviteGame()); dispatch(HandleCloseDialog()) }}
 			sx={{
+				align:"center",
 				width: "210px",
 				height: "200px",
 				backgroundImage: colorBg,
@@ -65,7 +66,7 @@ export const ModeGameButton = ({ mode, invite }: modeGameProps) => {
 			<Typography sx={{
 				position: 'absolute',
 				bottom: 10,
-				left: 14,
+				left: 22,
 				fontSize: "1.19rem",
 				fontWeight: "800",
 				fontStyle: "italic",

@@ -79,7 +79,7 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 								fontWeight: '400',
 								fontSize: '1rem',
 								paddingTop: '1.2px',
-							}}>No room exists, you can create new room!</Typography>
+							}}>No rooms exist at the moment! you can be the first to create your own.</Typography>
 					}
 				</div>
 			</div>

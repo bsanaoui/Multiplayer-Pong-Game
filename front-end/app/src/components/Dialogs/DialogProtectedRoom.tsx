@@ -32,6 +32,7 @@ export default function DialogProtectedRoom(props: { isDialogOpened: boolean, ha
             {
 				handleToastMsg(data.status, data.msg);
                 handleClose();
+                navigate("/chatRoom");
             }
 		}).catch((error: any) => {
 			console.log("Error ;Not Authorized", error);

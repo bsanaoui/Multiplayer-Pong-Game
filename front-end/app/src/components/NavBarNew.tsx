@@ -72,13 +72,15 @@ export const NavBarNew = () => {
 
     const handleChangeUserName = (event: any) => {
         if (event.key === 'Enter') {
-            if (username) {
+            if (username && username.length < 12 && username.length > 6) {
                 axios.post(process.env.REACT_APP_SERVER_IP + '/profile/change_username', { username: username }, {
                     withCredentials: true,
                 })
                 navigate(0);
                 toast.success("Your username was updated");
             }
+            else
+                toast.error("your username must have between 6 and 12 characters!");
         }
     }
 

@@ -66,7 +66,7 @@ export async function getMatchsHistory(other_user?: string) {
     try {
         const { data, status } = await axios.get<MatchHistoryData[]>(
             process.env.REACT_APP_SERVER_IP + "/profile/match_history" +
-            ((other_user !== '') ? ("/" + other_user) : ""),
+            ((other_user) ? ("/" + other_user) : ""),
             {
                 headers: {
                     Accept: "application/json",

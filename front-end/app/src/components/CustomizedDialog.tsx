@@ -66,7 +66,7 @@ const CustomizedDialog = ({ children }: Props) => {
 		<div>
 			<div className='button-custom center-text center-button' style={{ width: '280px' }}
 				onClick={handleClickOpen}>
-				Start a new room
+				Create a new room
 			</div>
 			<BootstrapDialog
 				onClose={handleClose}
