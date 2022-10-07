@@ -32,7 +32,7 @@ export const InvitationFriend = ({ login, username, avatar }: InvitationProps) =
 						height: '65px',
 						width: '65px',
 						backgroundColor: "#FFF",
-						padding: "7px",
+						// padding: "7px",
 					}}
 					alt={username} src={avatar} imgProps={{ style: { width: 'auto' } }} />
 			</Box>

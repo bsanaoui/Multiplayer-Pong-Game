@@ -120,6 +120,7 @@ export const UsersMessaging = () => {
                 height: '100vh',
                 padding: '30px',
                 borderLeft: "1px solid #FFFFFF",
+                width:"31%",
 
             }}>
             <Stack height="100%">
@@ -163,7 +164,7 @@ export const UsersMessaging = () => {
                         </Typography>
                     </div>
                 </Stack>
-                <List style={{ overflow: 'auto', height: "100%" }} >
+                <List style={{ overflowY: 'auto', overflowX:"hidden", height: "100%" }} >
                     {users.length && users.map((item) => (
                         <li key={item.id} className='item-friend'>
                             <UserButtonChat user={item} />

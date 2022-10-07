@@ -28,16 +28,23 @@ const Main = () => {
         socket_global.emit('accepted', data);
     }
 
+    
     const CustomMsg = (props: data) => {
+        let mode:string;
+
+        if (props.mod === 0)
+            mode = "Classic";
+        else
+            mode = "Rush"
         return (<div>
-            <p> {props.P1.username} want to play with you in mode {props.mod}</p>
+            <p> {props.P1.username} want to play with you in mode {mode}</p>
             <button onClick={() => { handleClickAccept(props) }}>Accept</button>
             <button >Cancel</button>
         </div>)
     }
 
     const handleToastGame = (data: data) => {
-        toast.info(CustomMsg(data));
+        toast.info(CustomMsg(data), {className: "inviteGame"});
     };
 
     const handleListenerGame = () => {
@@ -66,7 +73,7 @@ const Main = () => {
             });
         })
     }
-
+    
     useEffect(() => {
         if (socket_global)
             handleGameStart();

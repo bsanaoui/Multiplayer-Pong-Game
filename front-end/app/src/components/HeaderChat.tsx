@@ -11,7 +11,7 @@ const HeaderChat = ({ name,avatar }: PropsHeader) => {
         <Box
             sx={{
                 backgroundColor: "#2E3256",
-                width: '460px',
+                // width: '460px',
                 height: '67px',
                 paddingTop: '5px',
                 paddingLeft: '13px',

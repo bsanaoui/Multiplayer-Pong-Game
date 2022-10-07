@@ -58,7 +58,7 @@ const Friends = () => {
         className='friends'
             sx={{
                 backgroundColor: "#202541",
-                width: "355px",
+                width: "calc(100% - 510px)",
                 height: '100vh',
                 padding: '30px',
 

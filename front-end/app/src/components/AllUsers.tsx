@@ -111,7 +111,7 @@ function AllUsers() {
 				</div>
 			</Stack>
 			{is_collapse &&
-				<List style={{ maxHeight: '500px', overflow: 'auto' }} >
+				<List style={{ maxHeight: '500px', overflowX: 'hidden', overflowY:"auto" }} >
 					{/* {users} */}
 					{users && users.map((item, index) => (
 						<li key={index} className="item" style={{marginBottom:"8px"}}>

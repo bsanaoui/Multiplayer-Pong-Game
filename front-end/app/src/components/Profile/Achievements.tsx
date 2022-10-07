@@ -56,7 +56,7 @@ export const Achievements = ({other_user}:{other_user?:string}) => {
             </Box>
             <Stack alignItems="center" justifyContent="space-between"
                 sx={{ backgroundColor: "#3F4478", width: "100%", height: "215px", borderRadius: "30px",
-                paddingTop:"2%", paddingBottom:"2%"}}>
+                paddingTop:"3%", paddingBottom:"3%"}}>
                 <Stack direction="row" spacing={3}>
                     {achievemets && achievemets.map((item, index) => (
                         // <li key={index}>
@@ -73,7 +73,7 @@ export const Achievements = ({other_user}:{other_user?:string}) => {
                     {/*{!achievemets &&  <AchievementElement achieve_id={5} achieve_name={""} description={"achiev 5"} achieved={false} />}*/}
                     {/*{!achievemets &&  <AchievementElement achieve_id={6} achieve_name={""} description={"achiev 6"} achieved={false} />}*/}
                 </Stack>
-                <Box width="90%">
+                <Box width="100%" paddingLeft="3%" paddingRight="5px">
                     <Typography display="inline" sx={{
                         fontWeight: '700',
                         fontSize: '18px',

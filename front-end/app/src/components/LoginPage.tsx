@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { initUser } from "../store/userReducer";
-
+import ImagePong from '../assets/HeaderPongSin.png'
 
 const LoginPage = () => {
 	const dispatch = useDispatch();
@@ -15,8 +15,10 @@ const LoginPage = () => {
 				height:"100%",
 				background: "linear-gradient( 116.27deg, #191D45 31.5%, #4044A5 61.17% )",
 				boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-			}}>
+			}}
+			>
 			<Stack
+				className="home__container"
 				margin="auto"
 				width="50vw"
 				height="100vh"
@@ -24,7 +26,8 @@ const LoginPage = () => {
 				justifyContent="center"
 				alignItems="center"
 				spacing={2}>
-				<Typography sx={{
+					<img src={ImagePong}></img>
+				<Typography className="hometitle" sx={{
 					width: "80%",
 					fontWeight: '700',
 					fontSize: '2.9vw',
@@ -33,7 +36,7 @@ const LoginPage = () => {
 					Playing games together
 					has never been so easy
 				</Typography>
-				<Typography sx={{
+				<Typography className="hometxt" sx={{
 					width: "60%",
 					fontWeight: '300',
 					fontSize: '1.8vw',
@@ -44,7 +47,7 @@ const LoginPage = () => {
 					and start playing instantly
 				</Typography>
 				<form action={process.env.REACT_APP_SERVER_IP+"/auth"} method='POST'>
-					<button className='button-Auth center-text center-button' style={{ color:"#FFF", width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}
+					<button className='button-Auth center-text center-button home-bnt' style={{ color:"#FFF", width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}
 						type="submit">
 						Start playing now
 					</button>

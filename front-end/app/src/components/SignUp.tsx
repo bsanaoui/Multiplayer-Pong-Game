@@ -55,13 +55,14 @@ const SignUp = () => {
                 display: "flex",
                 width: "100vw",
                 height: "100vh",
-                background: "linear-gradient( 116.27deg, #191D45 31.5%, #4044A5 61.17% )",
+                // background: "linear-gradient( 116.27deg, #191D45 31.5%, #4044A5 61.17% )",
                 boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-            }}>
-            <Grid>
-                <Paper elevation={20} style={paperStyle}>
+            }}
+            className="bg-animation">
+            <Grid style={{width: "100%"}}>
+                <Paper elevation={20} style={paperStyle} className="loggin-container">
                     <Box height="100px" alignContent='center' marginBottom='20px'>
-                        <Typography textAlign="center" variant='h6'>tesssssst Welcome To PongGame Online ?????? DEbug</Typography>
+                        <Typography textAlign="center" variant='h6'>Welcome To PongGame Online</Typography>
                     </Box>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                         {(props) => (

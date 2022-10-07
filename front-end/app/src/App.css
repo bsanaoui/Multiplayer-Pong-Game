@@ -13,6 +13,20 @@
   }
 }
 
+
+  *::-webkit-scrollbar  {
+    width: 10px
+  }
+
+  *::-webkit-scrollbar-track  {
+    background: #E4EFEF
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #1D388F61;
+    borderRadius: 2px;
+  }
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -38,9 +52,9 @@
   }
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .center-img {
   display: block;
@@ -135,7 +149,7 @@
 .horizontal_slider {
   display: block;
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
   padding: 25px 0px;
   box-sizing: border-box;
 }
@@ -312,11 +326,133 @@
   .friends {
     display: none;
   }
+  .dm_messaging {
+    width: calc(100% - 510px) !important;
+  }
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 870px) {
   .dm_messaging {
     display: none;
   }
 }
 /* ==============================  ================================== */
+
+.inviteGame{
+  width: 400px ;
+  right: 73px;
+  font-family: Lexend;
+}
+.inviteGame p{
+  margin: 10px  auto;
+  color: #000;
+  font-weight: 500;
+}
+.inviteGame div > button {
+  width: 150px;
+  margin: 0 5px 10px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  background: rgb(84, 62, 192, 0.8);
+  color: #fff;
+}
+.inviteGame div > button:hover {
+  cursor: pointer;
+  background: rgb(84, 62, 192);
+}
+
+p.hometitle
+{
+    font-size: calc(33px + (75 - 33) * ((100vw - 480px) / (1600 - 480)));
+    line-height: normal;
+    width: 100%;
+}
+p.hometxt {
+    font-size: calc(18px + (46 - 18) * ((100vw - 480px) / (1600 - 480)));
+    line-height: normal;
+    width: 100%;
+}
+.home-bnt{
+  min-width: 260px;
+}
+.home__container img{
+  width: 350px;
+}
+.loggin-container {
+  width: 90% !important;
+  max-width: 500px;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 1.5% !important;
+  background: rgba(0 ,0 ,0 , 0.5) !important;
+  border: 1px solid #fff;
+  border-radius: 10px;
+}
+.loggin-container h6
+{
+  font-size: 35px;
+}
+.loggin-container form > label, .loggin-container form > button {
+  width: 100%;
+  color: #fff;
+  background: rgb(153,165,212);
+  background: linear-gradient(90deg, rgba(153,165,212,1) 0%, rgba(84,62,192,1) 100%);
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+.bg-animation {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: 300% 300%;
+  background-image: linear-gradient(
+        -45deg, 
+        rgba(59,173,227,1) 0%, 
+        rgba(87,111,230,1) 25%, 
+        rgba(152,68,183,1) 51%, 
+        rgba(255,53,127,1) 100%
+  );  
+  animation: AnimateBG 20s ease infinite;
+}
+
+@keyframes AnimateBG { 
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@media screen and (min-width: 1600px){
+    p.hometitle {
+        font-size: 75px;
+    }
+    p.hometxt {
+        font-size: 46px;
+    }
+}
+@media screen and (max-width: 1300px){
+  .home-bnt {
+    min-width: 260px !important;
+    font-size: 20px !important;
+    padding: 20px 10px;
+}
+}
+@media screen and (max-width: 480px){
+    p.hometitle {
+        font-size: 33px;
+    }
+    p.hometxt {
+        font-size: 18px;
+    }
+    .home__container img{
+      width: 250px;
+    }
+}
+@media screen and (max-width: 992px){
+    .home__container {
+        width: 90% !important;
+    }
+}

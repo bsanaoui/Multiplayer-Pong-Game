@@ -104,7 +104,8 @@ const Rooms = () => {
 			sx={{
 				backgroundColor: "#202541",
 				height: '100vh',
-				padding: '30px'
+				padding: '30px',
+				width: "calc(100% - 510px)",
 
 			}}>
 			<Stack height="100%">

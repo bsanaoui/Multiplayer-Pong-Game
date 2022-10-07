@@ -1,3 +1,4 @@
+import { Scale } from '@mui/icons-material';
 import { Avatar, Box, Grow } from '@mui/material'
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -56,8 +57,7 @@ const AchievementElement = (Props: Achievement) => {
 						padding: "18px",
 						borderRadius: "18px",
 						"&:hover": {
-							height: '140px',
-							width: '140px',
+							transform: "scale(1.2)",
 							border: '4px solid #9CA0B5',
 							borderRadius: '19px',
 						}

@@ -97,7 +97,7 @@ function App() {
 
 	return (
 		<ThemeProvider theme={darkTheme}>
-			<ToastContainer position="top-right" newestOnTop autoClose={3500} />
+			<ToastContainer position="top-right" newestOnTop autoClose={4000000} />
 			<CssBaseline />
 			<Main/>
 			<Stack direction="row" width="100%" height="100%"
