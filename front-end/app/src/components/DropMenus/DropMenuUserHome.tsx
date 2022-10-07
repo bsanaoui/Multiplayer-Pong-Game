@@ -77,8 +77,8 @@ export default function DropMenuUserHome(Props: UserData) {
 	}
 
 	return (
-		<div style={{ width: "100%", paddingTop: '4px' }}>
-			<Button style={{ width: "100%", paddingTop: '4px', backgroundColor: 'transparent' }}
+		<Box style={{ paddingTop: '8px', paddingLeft:"0px"}}>
+			<Button style={{  backgroundColor: 'transparent' }}
 
 				id="basic-button"
 				aria-controls={open ? 'basic-menu' : undefined}
@@ -144,7 +144,7 @@ export default function DropMenuUserHome(Props: UserData) {
 					<Divider />
 				</Box>
 			</Menu>
-		</div>
+		</Box>
 	);
 }
 

@@ -150,7 +150,7 @@ export const ChatUIRoomMsg = () => {
             sx={{
                 backgroundColor: "#202541",
                 maxWidth: "510px",
-                height: '100%',
+                height: '100vh',
                 // height: 'calc( 100vh - 67px )',
                 paddingLeft: "22px",
                 paddingRight: "20px",

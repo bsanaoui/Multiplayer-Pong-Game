@@ -13,6 +13,7 @@ import { joinProtectedRoomPost } from '../../requests/home'
 export default function DialogProtectedRoom(props: { isDialogOpened: boolean, handleCloseDialog: any, room: string }) {
     const [input, setInput] = React.useState("");
     const navigate = useNavigate();
+    const [is_error, setErrorInput] = React.useState(false);
 
     const handleClose = () => {
         props.handleCloseDialog(true);
@@ -20,11 +21,18 @@ export default function DialogProtectedRoom(props: { isDialogOpened: boolean, ha
 
     const handleProtectedRoom = () => {
         joinProtectedRoomPost(props.room, input).then((value) => {
-			const data: { room_id: string } = value as { room_id: string };
-			if (data && data.room_id !== '')
-				handleToastMsg(true, `You are now user at ${data.room_id}`);
+			const data: {status : boolean, msg :string} = value as {status : boolean, "msg" :string};
+			if (!data.status)
+            {
+                console.log("errorrrrrrr\n");
+                setErrorInput(true);
+            }
+				// handleToastMsg(true, `You are now user at ${data.room_id}`);
 			else
-				handleToastMsg(false, `The Password is incorrect`);
+            {
+				handleToastMsg(data.status, data.msg);
+                handleClose();
+            }
 		}).catch((error: any) => {
 			console.log("Error ;Not Authorized", error);
 			navigate(error.redirectTo);
@@ -38,6 +46,7 @@ export default function DialogProtectedRoom(props: { isDialogOpened: boolean, ha
                 <DialogTitle>Enter password of the room</DialogTitle>
                 <DialogContent>
                     <TextField
+                        error={is_error}
                         autoFocus
                         margin="dense"
                         id="name"
@@ -51,7 +60,7 @@ export default function DialogProtectedRoom(props: { isDialogOpened: boolean, ha
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={() => {
-                        handleProtectedRoom(); handleClose()
+                        handleProtectedRoom(); 
                     }}>Submit</Button>
                 </DialogActions>
             </Dialog>

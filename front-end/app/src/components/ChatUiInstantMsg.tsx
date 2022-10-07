@@ -37,11 +37,11 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 // const msgs = Array.from({ length: 9 }, (_, index) => {return ()}
-const renderMessage = (current: string, from: string, msg: string, avatar:string): JSX.Element => {
+const renderMessage = (current: string, from: string, msg: string, avatar:string, my_avatar:string): JSX.Element => {
     if (current === from)
         return (
             <li key={index_msg++} style={{ float: 'right' }}>
-                <MessageSent msg={msg} avatar={avatar}/>
+                <MessageSent msg={msg} avatar={my_avatar}/>
             </li>
         );
     else
@@ -57,6 +57,7 @@ export const ChatUiInstantMsg = () => {
     const dispatch = useDispatch();
     const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
     const logged_user = useSelector((state: RootState) => state.user).login;
+    const logged_user_avatar = useSelector((state: RootState) => state.user).login;
     const [message_input, setMessage] = useState("");
 
     const chat_state = useSelector((state: RootState) => state.chat);
@@ -180,7 +181,7 @@ export const ChatUiInstantMsg = () => {
                         </Stack>
                     }
                     <List style={{ overflowY: 'auto' }} >
-                        {msgs.map((item) => (renderMessage(logged_user, item.from, item.msg, avatar)))}
+                        {msgs.map((item) => (renderMessage(logged_user, item.from, item.msg, avatar, logged_user_avatar)))}
                         <li key={index_msg++} style={{ float: 'right' }}>
                             <div ref={bottomRef} ></div>
                         </li>

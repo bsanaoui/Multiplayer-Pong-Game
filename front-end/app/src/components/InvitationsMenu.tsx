@@ -80,18 +80,10 @@ export const InvitationsMenu = (Props: { count_invit: number }) => {
 								<InvitationFriend login={item.login} username={item.username} avatar={item.avatar} />
 							</ListItem>
 						))}
-						{/* <ListItem >
-							<InvitationFriend username="Joky Cmos" avatar={avatar2} />
-						</ListItem>
-						<ListItem >
-							<InvitationFriend username="Foody Cmos" avatar={avatar2} />
-						</ListItem>
-						<ListItem >
-							<InvitationFriend username="Cmo Cmos" avatar={avatar2} />
-						</ListItem>
-						<ListItem >
-							<InvitationFriend username="Joky Cmos" avatar={avatar2} />
-						</ListItem> */}
+						{invitations.length === 0 &&
+							<ListItem >
+								No request friend found
+							</ListItem>}
 					</List>
 					{/* </nav> */}
 					<Divider />

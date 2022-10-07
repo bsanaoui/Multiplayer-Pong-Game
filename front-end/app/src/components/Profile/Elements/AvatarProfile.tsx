@@ -10,7 +10,6 @@ const AvatarProfile = (props:{avatar: string}) => {
 					height: '110px',
 					width: '110px',
 					backgroundColor: "#FFF",
-					padding: "7px",
 					border: "6px solid #535995",
 					borderRadius: "30px",
 				}}

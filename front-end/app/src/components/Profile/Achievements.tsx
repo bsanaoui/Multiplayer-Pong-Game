@@ -53,10 +53,10 @@ export const Achievements = ({other_user}:{other_user?:string}) => {
                 <Typography display="inline" color="#A1AAFF">(
                     {achievemets && countValidAchievements(achievemets)}
                 /6 Received)</Typography>
-                {/* <Typography display="inline" color="#A1AAFF">(3/6 Received)</Typography> */}
             </Box>
-            <Stack alignItems="center" justifyContent="center" spacing={3}
-                sx={{ backgroundColor: "#3F4478", width: "100%", height: "100%", borderRadius: "30px" }}>
+            <Stack alignItems="center" justifyContent="space-between"
+                sx={{ backgroundColor: "#3F4478", width: "100%", height: "215px", borderRadius: "30px",
+                paddingTop:"2%", paddingBottom:"2%"}}>
                 <Stack direction="row" spacing={3}>
                     {achievemets && achievemets.map((item, index) => (
                         // <li key={index}>
@@ -84,11 +84,6 @@ export const Achievements = ({other_user}:{other_user?:string}) => {
                         {achievemetDiscription !== "" && achievemetDiscription}
                         {(achievemets.length && achievemetDiscription === "") && achievemets[0].achieve_name + ", " + achievemets[0].description }
                     </Typography>
-                    {/*{!achievemets && */}
-                    {/*//  <Typography display="inline" color="#A1AAFF">*/}
-                    {/*//     Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots*/}
-                    {/*//     in a piece of classical Latin literature from 45*/}
-                    {/*// </Typography>}*/}
                 </Box>
             </Stack>
         </Stack>

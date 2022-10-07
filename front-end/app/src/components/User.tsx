@@ -34,7 +34,8 @@ const User = (user_data: UserData) => {
         paddingTop: '5px',
         paddingLeft: '13px'
       }}>
-      <Stack spacing={2} direction="row">
+      <Stack spacing={3} direction="row"  justifyContent="space-between" >
+        <Stack spacing={2} direction="row">
         <div>
           <Badge
             overlap="circular"
@@ -72,6 +73,7 @@ const User = (user_data: UserData) => {
               {" " + user_data.level}
               </Typography>
           </Stack>
+        </Stack>
         </Stack>
         <DropMenuUserHome avatar={user_data.avatar} username={user_data.username} login={user_data.login} level={0} status={""} />
       </Stack>

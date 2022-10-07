@@ -26,7 +26,7 @@ const UserNameElement = (Props:PropsUserType) => {
 					{/* Jack Linsan */}
 					{Props.username}
 				</Typography>
-				<Stack direction= "row" justifyContent="space-between" alignItems="center" spacing={6}>
+				<Stack direction= "row" justifyContent="space-between" alignItems="center" spacing={3}>
 					<Typography
 						fontFamily="Lato"
 						fontWeight='800'

@@ -77,10 +77,10 @@ export const NavBarNew = () => {
     }, [])
 
     return (
-        <Box >
+        <Box height="100vh">
             {is_collapsedNav && <NavbarCollapsed />}
             {!is_collapsedNav &&
-                <Stack height="100vh" width="240px" justifyContent="space-between"
+                <Stack height="100%" width="240px" justifyContent="space-between"
                     sx={{ backgroundColor: "#303465" }}>
                     <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1.8}
                         sx={{ padding: "3.3%", paddingTop: "5%" }}>
@@ -106,7 +106,7 @@ export const NavBarNew = () => {
                                 }}
                                 alt="Lion" src={userState.avatar} imgProps={{ style: { width: 'auto' } }} />
                         </Badge>
-                        <Stack justifyContent="space-between" alignItems="flex-start" spacing={0.25}>
+                        <Stack justifyContent="space-between" alignItems="flex-start" spacing={0.5} width="100%">
                             <Typography
                                 className='truncate-typo'
                                 width='100%'
@@ -116,17 +116,19 @@ export const NavBarNew = () => {
                                 lineHeight="130%">
                                 {logged_user}
                             </Typography>
-                            <Stack direction="row" spacing={0.6}>
+                            <Stack direction="row" spacing={0.3} width="100%">
                                 <SportsEsportsIcon sx={{ width: "18px", paddingTop: "3%" }} />
                                 <Typography
                                     sx={{
+                                        width:'100%',
+                                        whiteSpace: "nowrap",
                                         color: '#ADADAD',
                                         fontWeight: '600',
                                         fontSize: '1rem',
                                         paddingTop: '1.2px',
                                     }}>
                                     Level {info_user.level}</Typography>
-                                <Box paddingLeft="23px" paddingTop="3px"><InvitationsMenu count_invit={info_user.invit_count} /></Box>
+                                <Box width="100%" paddingLeft="2%"><InvitationsMenu count_invit={info_user.invit_count} /></Box>
                             </Stack>
                         </Stack>
                     </Stack>
@@ -163,30 +165,23 @@ export interface ButtonProps {
 }
 
 const CustomButton = ({ route, _icon }: ButtonProps) => {
-    // const currentInterface = useSelector((state: RootState) => state.interfaces).current;
     const navigate = useNavigate();
     const location = useLocation();
 
-    // const location = useLocation(); // handle locations
-    // let handleNavigation = (interfaceEnum: InterfaceEnum) => {
-    //     switch (interfaceEnum) {
-    //         case InterfaceEnum.Home: navigate('/'); break;
-    //         case InterfaceEnum.Dashboard: navigate('/dashboard'); break;
-    //         case InterfaceEnum.ChatRoom: navigate('/chatRoom'); break;
-    //         case InterfaceEnum.InstantMessaging: navigate('/instantMessaging'); break;
-    //         case InterfaceEnum.Matchmaking: navigate('/matchmaking'); break;
-    //         case InterfaceEnum.LiveGames: navigate('/liveMatchs'); break;
-    //         case InterfaceEnum.Logout: navigate('/login'); break;
-    //         default: navigate('/'); break;
-    //     }
-    // };
-
+    const handleLocation =() => {
+        if (route === '/matchmaking'){
+            navigate(route);
+            navigate(0)
+        }
+        else
+        navigate(route);
+    }
     let backgroundButton = location.pathname === route ? "#543EC0" : "#303465";
     return (
         <div style={{ backgroundColor: backgroundButton }}
             onClick={() => {
                 // dispatch(setCurrentInterface(_name)); handleNavigation(_name)
-                navigate(route);
+                handleLocation();
             }}>
             <Stack alignItems="center" justifyContent="flex-start" spacing={2} direction="row" sx={{
                 paddingLeft: "10px", cursor: "pointer", height: "44px", ":hover": { backgroundColor: "#3F5274" }

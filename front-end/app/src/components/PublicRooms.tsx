@@ -9,14 +9,14 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-function createRooms(rooms_info: Array<RoomData>, kind:string): JSX.Element[] {
+function createRooms(rooms_info: Array<RoomData>, kind: string): JSX.Element[] {
 	const rooms = Array.from({ length: rooms_info.length }, (_, index) => {
 		return (
 			<li key={index++} className="item">
 				<RoomButton room_id={rooms_info[index].room_id}
 					owner={rooms_info[index].owner}
 					count={rooms_info[index].count}
-					kind={kind}/>
+					kind={kind} />
 			</li>
 		);
 	});
@@ -69,7 +69,18 @@ const PublicRooms = ({ kind }: VisibilityProps) => {
 			</Stack>
 			<div className="horizontal_slider">
 				<div className="slider_container">
-					{rooms.length && createRooms(rooms , kind)}
+					{rooms && createRooms(rooms, kind)}
+					{!rooms.length &&
+						<Typography
+							sx={{
+								width: '100%',
+								whiteSpace: "nowrap",
+								color: '#ADADAD',
+								fontWeight: '400',
+								fontSize: '1rem',
+								paddingTop: '1.2px',
+							}}>No room exists, you can create new room!</Typography>
+					}
 				</div>
 			</div>
 		</Stack>

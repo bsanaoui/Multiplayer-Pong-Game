@@ -272,9 +272,9 @@
 
 /* ============================== Spin rotate ================================== */
 
-.spin {
+/* .spin {
   cursor: pointer;
-}
+} */
 
 @keyframes spin {
   from {

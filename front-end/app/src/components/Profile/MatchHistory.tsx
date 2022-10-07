@@ -89,7 +89,7 @@ export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 			sx={{
 				backgroundColor: "#3F4478",
 				width: "855px",
-				height: "500px",
+				height: "445px",
 				borderRadius: '30px',
 			}}>
 			<Stack

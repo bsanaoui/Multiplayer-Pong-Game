@@ -28,18 +28,18 @@ function AllUsers() {
 		}).catch((error: any) => {
 			console.log("Error ;Not Authorized", error);
 			navigate(error.redirectTo);
-		}) 
+		})
 	}
 
 	const handleDiscconnect = () => {
-		socket_global.on('user_offline', (data:{user: string}) => {
+		socket_global.on('user_offline', (data: { user: string }) => {
 			setConnection(!connection);
 			GetAllUsers();
 		});
 	}
 
-	const handleConnect= () => {
-		socket_global.on('new_user', (data:{user: string}) => {
+	const handleConnect = () => {
+		socket_global.on('new_user', (data: { user: string }) => {
 			setConnection(!connection);
 			GetAllUsers();
 		});
@@ -68,7 +68,7 @@ function AllUsers() {
 
 	useEffect(() => {
 		GetAllUsers()
-		return(() => {
+		return (() => {
 			setUsers(initUsers);
 		});
 	}, [connection])
@@ -114,7 +114,7 @@ function AllUsers() {
 				<List style={{ maxHeight: '500px', overflow: 'auto' }} >
 					{/* {users} */}
 					{users && users.map((item, index) => (
-						<li key={index} className="item">
+						<li key={index} className="item" style={{marginBottom:"8px"}}>
 							<User avatar={item.avatar} username={item.username} login={item.login} level={item.level} status={item.status} />
 						</li>
 					))}

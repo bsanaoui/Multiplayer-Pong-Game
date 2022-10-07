@@ -68,10 +68,18 @@ const CustomButton = ({ route, _icon }: ButtonProps) => {
     const location = useLocation();
     let backgroundButton = location.pathname === route ? "#543EC0" : "#303465";
 
+    const handleLocation =() => {
+        if (route === '/matchmaking'){
+            navigate(route);
+            navigate(0)
+        }
+        else
+        navigate(route);
+    }
     return (
         <div style={{ backgroundColor: backgroundButton }}
             onClick={() => {
-                navigate(route)
+                handleLocation()
             }}>
             <Stack alignItems="center" justifyContent="flex-start" spacing={2} direction="row" sx={{
                 paddingLeft: "15px", cursor: "pointer", height: "44px", ":hover": { backgroundColor: "#3F5274" }

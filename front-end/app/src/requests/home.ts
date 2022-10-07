@@ -136,15 +136,14 @@ export async function joinProtectedRoomPost(room_id: string, password: string) {
 
 	try {
 		// 👇️ const data: GetUsersResponse
-		const { data, status } = await axios.post<{ room_id: string }>(
-			process.env.REACT_APP_SERVER_IP + "/room/click_protected_room",
+		const { data, status } = await axios.post<{"status" : boolean, "msg" :string}>(
+			process.env.REACT_APP_SERVER_IP + "/room/checkprotected",
 			{ room_id: room_id, password: password },
 			{
 				headers: {
 					Accept: "application/json",
 				},
 				withCredentials: true,
-
 			}
 		);
 		console.log(JSON.stringify(data, null, 4));
@@ -162,7 +161,6 @@ export async function joinProtectedRoomPost(room_id: string, password: string) {
 		}
 	}
 }
-
 // ========================== Post new Room ========================= //
 
 export async function JoinRoomPost(room_id: string) {

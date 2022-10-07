@@ -31,7 +31,7 @@ const UserStats = ({ other_user }: { other_user?: string }) => {
 
 	return (
 		<Stack alignItems="flex-start" spacing={10} paddingTop="25px"
-			sx={{ backgroundColor: "#3F4478", width: "380px", height: "800px", borderRadius: "30px" }}>
+			sx={{ backgroundColor: "#3F4478", width: "380px", height: "850px", borderRadius: "30px" }}>
 			{/* ****************** User Head **************** */}
 			<Stack direction="row" alignItems="flex-start" spacing={0.5} paddingLeft="6%">
 				<AvatarProfile avatar={user_stats?.avatar} />
