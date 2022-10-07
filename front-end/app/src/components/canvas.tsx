@@ -233,7 +233,7 @@ const Canvas = () => {
 
 	if (!g) {
 		g = true;
-		socket = io('http://localhost:3333/game', { auth: { mode: mode, info: player_info, invite: invite, room: watching } });
+		socket = io(process.env.REACT_APP_SERVER_IP as string + '/game', { auth: { mode: mode, info: player_info, invite: invite, room: watching } });
 	}
 
 	socket!.emit('size_change', width);
