@@ -5,7 +5,9 @@ import { RootState } from "../store";
 import { useSelector } from "react-redux";
 import { ModeEnum } from "../store/gameReducer";
 import './Game/navGame.css'
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
 type Cmds = {
 	room: string;
@@ -216,14 +218,14 @@ let updateBalldisplay = (ball: Ball): void => {
 
 const Canvas = () => {
 	const [searchParams] = useSearchParams();
-
+	const navigate = useNavigate();
 	// const match_info = useSelector((state: RootState) => state.game);
 	const player_info = useSelector((state: RootState) => state.user);
-	let mode: string =  searchParams.get('mode') as string;
+	let mode: string = searchParams.get('mode') as string;
 	if (!mode) mode = "";
-	
+
 	let invite = searchParams.get('key') as string;
-	if (!invite) invite='';
+	if (!invite) invite = '';
 	// const invite = ''
 	let watching = searchParams.get('room') as string;
 	if (!watching) watching = '';
@@ -232,9 +234,6 @@ const Canvas = () => {
 		g = true;
 		socket = io('http://localhost:3333/game', { auth: { mode: mode, info: player_info, invite: invite, room: watching } });
 	}
-	// useEffect(() => {
-	// 	// if (!socket)
-	// },[])
 
 	socket!.emit('size_change', width);
 
@@ -243,7 +242,9 @@ const Canvas = () => {
 
 	const [player1, setPlayer1] = useState(P1);
 	const [player2, setPlayer2] = useState(P2);
-	// const isGameSet = useSelector((state: RootState) => state.game).is_game_set;
+
+	const [score1, setScore1] = useState(P1.score);
+	const [score2, setScore2] = useState(P2.score);
 
 	useEffect(() => {
 		const canvas = canvasRef!.current;
@@ -272,10 +273,14 @@ const Canvas = () => {
 		})
 
 		socket.on('update_connections', (p1: Player, p2: Player, b: Ball) => {
+			if(P1.username !== p1.username)
+				setPlayer1(P1);
+			if(P2.username !== p2.username)
+				setPlayer2(P2);
 			if (P1.score !== p1.score)
-				setPlayer1(p1);
+				setScore1(p1.score);
 			if (P2.score !== p2.score)
-				setPlayer2(p2)
+				setScore2(p2.score);
 			P1 = p1;
 			P2 = p2;
 			if (room === '')
@@ -336,7 +341,7 @@ const Canvas = () => {
 						<p>{player1.username}</p>
 					</div>
 
-				</div><div className="users-score"><p><span>{player1.score}</span> : <span>{player2.score}</span></p></div><div className="user-side">
+				</div><div className="users-score"><p><span>{score1}</span> : <span>{score2}</span></p></div><div className="user-side">
 					<div className="user-info">
 						<div className="user-img"><img alt={player2.username} src={player2.avatar} style={{ width: "auto" }} /></div>
 						<p>{player2.username} </p>
@@ -345,6 +350,9 @@ const Canvas = () => {
 				</div>
 			</div>
 			<canvas id='game' ref={canvasRef} />
+			<Box className="exit-button" onClick={() => {navigate('/home')}}>
+				<Typography fontWeight="800">LEAVE MATCH</Typography> 
+				</Box>
 		</div>)
 };
 
