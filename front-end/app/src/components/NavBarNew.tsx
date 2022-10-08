@@ -63,9 +63,14 @@ export const NavBarNew = () => {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
+        }).then((data) => {
+            setCookie("avatar", data.data.avatar);
+            navigate(0);
+            toast.success("Your avatar was updated");
+        }).catch(() => {
+            toast.error("Error");
         })
-        navigate(0);
-        toast.success("Your avatar was updated");
+
     }
 
     const handleChangeUserName = (event: any) => {
@@ -73,15 +78,13 @@ export const NavBarNew = () => {
             if (username && username.length < 10 && username.length > 6) {
                 axios.post(process.env.REACT_APP_SERVER_IP + '/profile/change_username', { username: username }, {
                     withCredentials: true,
+                }).then((value) => {
+                    setCookie("username", value.data.username);
+                    navigate(0);
+                    toast.success("Your username was updated");
+                }).catch(() => {
+                    toast.error("Error");
                 })
-                setCookie("username", username);
-                // .then(() => {
-                //     // dispatch(initUser({login:userState.login, username:}))
-                   
-                //     console.log("Holaasfdsfs");
-                // })
-                navigate(0);
-                toast.success("Your username was updated");
             }
             else
                 toast.error("your username must have between 6 and 10 characters!");
@@ -114,10 +117,10 @@ export const NavBarNew = () => {
                             badgeContent={
                                 <IconButton component="label" sx={{ background: "#0564FC", width: "25px", height: "25px" }}>
                                     <EditIcon sx={{ width: "18px" }} />
-                                        <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                            if (event.target.files)
-                                                handleUploadAvatar(event.target.files[0]);
-                                        }} />
+                                    <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                        if (event.target.files)
+                                            handleUploadAvatar(event.target.files[0]);
+                                    }} />
                                 </IconButton>
                             }>
                             <Avatar

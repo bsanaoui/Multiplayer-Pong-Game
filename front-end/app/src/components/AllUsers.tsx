@@ -45,6 +45,21 @@ function AllUsers() {
 		});
 	}
 
+	const handleInGame = () => {
+		socket_global.on('in_game', (data: { user: string }) => {
+			setConnection(!connection);
+			GetAllUsers();
+		});
+	}
+
+	useEffect(() => {
+		if (socket_global)
+		handleInGame();
+		return (() => {
+			socket_global.off("in_game");
+		})
+	},)
+
 
 	useEffect(() => {
 		if (socket_global)

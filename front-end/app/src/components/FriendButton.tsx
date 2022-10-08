@@ -5,7 +5,7 @@ import DropMenuUser from './DropMenus/DropMenuUser';
 
 
 export const FriendButton = (props:{friend:Friend}) => {
-
+props.friend
 	return (
 		<Box
 			sx={{
