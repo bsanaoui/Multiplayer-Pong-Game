@@ -5,6 +5,7 @@ export interface Friend {
 	login: string,
 	username: string,
 	avatar: string,
+	status:string,
 }
 
 export interface UserMessaging {

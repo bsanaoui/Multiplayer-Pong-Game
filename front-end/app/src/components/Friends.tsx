@@ -14,6 +14,8 @@ const Friends = () => {
     const logged_user = useSelector((state: RootState) => state.user).login;
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
+    const connection = useSelector((state: RootState) => state.user).connection;
+
     const navigate = useNavigate();
 
     function getMyFriends() {
@@ -51,7 +53,10 @@ const Friends = () => {
             // setFriends(initFriends);
             console.log("clear friends");
         }
-    }, []) 
+        return (() => {
+			setFriends(initFriends);
+		});
+    }, [connection]) 
 
     return (
         <Box

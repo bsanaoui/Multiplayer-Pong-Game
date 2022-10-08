@@ -1,16 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { stat } from 'fs';
+import { boolean } from 'yup';
 import { reqUserAuth } from '../requests/user';
 
 export interface UserState {
     login: string,
     username: string,
     avatar?: string,
+    connection:boolean,
 }
 
 const initialState: UserState = {
     username: '',
     login: '',
     avatar: '',
+    connection:false,
 }
 
 export const userSlice = createSlice({
@@ -38,9 +42,13 @@ export const userSlice = createSlice({
             state.username = '';
         },
         // Clear UserState
+
+        handleConnectionStatus:(state) => {
+            state.connection = !state.connection;
+        }
     }
 })
 
-export const { initUser, changeUser, clearUser } = userSlice.actions
+export const { initUser, changeUser, clearUser,handleConnectionStatus} = userSlice.actions
 
 export default userSlice.reducer

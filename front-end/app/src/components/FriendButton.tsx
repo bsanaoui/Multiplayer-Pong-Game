@@ -1,11 +1,29 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
+import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { Friend } from '../requests/directMessage';
 import DropMenuUser from './DropMenus/DropMenuUser';
 
+const online_bg:string = "#3FFC10";
+const offline_bg:string = "red";
+const inGame_bg:string = "yellow";
 
 export const FriendButton = (props:{friend:Friend}) => {
-props.friend
+	const [bg_status, setBgStatus] = useState(online_bg);
+
+	const handleColorStatus = () => {
+  
+	  setBgStatus( (props.friend.status === "online") ? online_bg
+		: (props.friend.status === "offline") ? offline_bg
+		: (props.friend.status === "inGame") ? inGame_bg
+		: online_bg)
+	}
+  
+	useEffect(()=>{
+	  handleColorStatus();
+	},[])
+
+	
 	return (
 		<Box
 			sx={{
@@ -24,7 +42,7 @@ props.friend
 						overlap="circular"
 						anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
 						badgeContent={
-							<div style={{ backgroundColor: '#3FFC10' }} className="dot_status" />
+							<div style={{ backgroundColor: bg_status }} className="dot_status" />
 						}
 					>
 						<Avatar
@@ -32,7 +50,6 @@ props.friend
 								height: '36px',
 								width: '37px',
 								backgroundColor: "#FFF",
-								// padding: "3px",
 							}}
 							alt={props.friend.login} src={props.friend.avatar} imgProps={{ style: { width: 'auto' } }} />
 					</Badge>

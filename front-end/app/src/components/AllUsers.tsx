@@ -7,15 +7,19 @@ import { getUsers, UserData } from '../requests/home';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { handleConnectionStatus } from '../store/userReducer';
 
 
 const initUsers: UserData[] = [] as UserData[];
 
 function AllUsers() {
+	const dispatch = useDispatch();
 	const [is_collapse, setCollapse] = useState(true);
 	const [users, setUsers] = useState(initUsers);
 	const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
-	const [connection, setConnection] = useState(false);
+	const connection = useSelector((state: RootState) => state.user).connection;
+	// const [connection, setConnection] = useState(false);
 	const navigate = useNavigate();
 
 	const GetAllUsers = () => {
@@ -33,21 +37,21 @@ function AllUsers() {
 
 	const handleDiscconnect = () => {
 		socket_global.on('user_offline', (data: { user: string }) => {
-			setConnection(!connection);
+			dispatch(handleConnectionStatus());
 			GetAllUsers();
 		});
 	}
 
 	const handleConnect = () => {
 		socket_global.on('new_user', (data: { user: string }) => {
-			setConnection(!connection);
+			dispatch(handleConnectionStatus());
 			GetAllUsers();
 		});
 	}
 
 	const handleInGame = () => {
 		socket_global.on('in_game', (data: { user: string }) => {
-			setConnection(!connection);
+			dispatch(handleConnectionStatus());
 			GetAllUsers();
 		});
 	}
@@ -76,10 +80,6 @@ function AllUsers() {
 			socket_global.off("new_user");
 		})
 	},)
-
-	// useEffect(() =>{
-	//
-	// },[users])
 
 	useEffect(() => {
 		GetAllUsers()
