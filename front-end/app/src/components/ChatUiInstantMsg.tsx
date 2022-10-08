@@ -66,7 +66,6 @@ export const ChatUiInstantMsg = () => {
     const msgs = chat_state.msgs;
     const [isInputEnabled, setInput] = useState(true)
     const navigate = useNavigate();
-    // const { socket } = useContext(SocketContext) as SocketContextType;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
 
     const disableInputListen = () => {
@@ -180,7 +179,7 @@ export const ChatUiInstantMsg = () => {
                             </div>
                         </Stack>
                     }
-                    <List style={{ overflowY: 'auto' }} >
+                    <List style={{ overflowX: 'auto',  }} >
                         {msgs.map((item) => (renderMessage(logged_user, item.from, item.msg, avatar, logged_user_avatar)))}
                         <li key={index_msg++} style={{ float: 'right' }}>
                             <div ref={bottomRef} ></div>

@@ -176,7 +176,7 @@ export const ChatUIRoomMsg = () => {
                                 </Button>
                             </div>
                         </Stack>}
-                    <List style={{ overflowY: 'auto' }} >
+                    <List style={{ overflowX: 'auto' }} >
                         {msgs && msgs.map((item) => (renderMessage(logged_user, item.from, item.msg, item.avatar as string)))}
                         <li key={index_msg++} style={{ float: 'left', height: "100px", width: "100px" }}>
                             <div ref={bottomRef} ></div>

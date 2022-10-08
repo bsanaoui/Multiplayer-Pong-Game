@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import usersRoomIcon from '../assets/usersRoom.png'
-// import { SocketContext, SocketContextType } from '../context/socket';
 import { requestUsersRoom } from '../requests/rooms';
 import { RootState } from '../store';
 import { ChatUIState } from '../store/chatUiReducer';
@@ -73,9 +72,9 @@ export const UsersRoom = () => {
             }}>
             <Stack height="100%" width="100%">
                 <Stack spacing={1} direction="row" marginBottom="3%">
-                    <IconButton >
+                    {/* <IconButton >
                         <img src={usersRoomIcon} width="30px" alt='roomIcon' />
-                    </IconButton>
+                    </IconButton> */}
                     <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
                         <Stack direction="row" spacing={1}>
 

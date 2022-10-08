@@ -22,9 +22,9 @@ export const UserButton = (Props: { user: UserOfRoom, socket: Socket, role_user:
 					<Badge
 						overlap="circular"
 						anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-						badgeContent={
-							<div style={{ backgroundColor: '#3FFC10' }} className="dot_status" />
-						}
+						// badgeContent={
+						// 	<div style={{ backgroundColor: '#3FFC10' }} className="dot_status" />
+						// }
 					>
 						<Avatar
 							sx={{

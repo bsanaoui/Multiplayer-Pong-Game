@@ -8,6 +8,7 @@ import { RootState } from '../store';
 import { useNavigate } from 'react-router-dom';
 import { handleConnectionStatus } from '../store/userReducer';
 import { useDispatch } from 'react-redux';
+import { connect } from 'http2';
 
 let initFriends: Friend[] = [] as Friend[];
 initFriends.length = 0;
@@ -16,27 +17,14 @@ const Friends = () => {
     const logged_user = useSelector((state: RootState) => state.user).login;
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
-    const connection = useSelector((state: RootState) => state.user).connection;
+    // const connection = useSelector((state: RootState) => state.user).connection;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
 
-    const handleInGame = () => {
-		socket_global.on('in_game', (data: { user: string }) => {
-			dispatch(handleConnectionStatus());
-			getMyFriends();
-		});
-	}
+    const [connection, setConnection] = useState(false);
 
-	useEffect(() => {
-		if (socket_global)
-		handleInGame();
-		return (() => {
-			socket_global.off("in_game");
-		})
-	},)
-
-
+   
     function getMyFriends() {
         getFriends().then((value) => {
             if ((typeof value) === (typeof initFriends)) {
@@ -57,6 +45,23 @@ const Friends = () => {
                 getMyFriends();
         })
     }
+
+    const handleInGame = () => {
+		socket_global.on('in_game', (data: { user: string }) => {
+            setConnection(!connection);
+			getMyFriends();
+            console.log("frrrrrrr online ?//");
+		});
+	}
+
+	useEffect(() => {
+		if (socket_global)
+		handleInGame();
+		return (() => {
+			socket_global.off("in_game");
+		})
+	},)
+
 
     useEffect(() => {
         if (socket)

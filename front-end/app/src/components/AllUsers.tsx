@@ -50,7 +50,6 @@ function AllUsers() {
 	}
 
 	
-
 	useEffect(() => {
 		if (socket_global)
 			handleDiscconnect();
@@ -66,7 +65,6 @@ function AllUsers() {
 			socket_global.off("new_user");
 		})
 	},)
-
 
 
 	useEffect(() => {
@@ -115,7 +113,6 @@ function AllUsers() {
 			</Stack>
 			{is_collapse &&
 				<List style={{ maxHeight: '500px', overflowX: 'hidden', overflowY:"auto" }} >
-					{/* {users} */}
 					{users && users.map((item, index) => (
 						<li key={index} className="item" style={{marginBottom:"8px"}}>
 							<User avatar={item.avatar} username={item.username} login={item.login} level={item.level} status={item.status} />
