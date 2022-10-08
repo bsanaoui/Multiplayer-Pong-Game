@@ -6,6 +6,8 @@ import { Friend, getFriends } from '../requests/directMessage';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useNavigate } from 'react-router-dom';
+import { handleConnectionStatus } from '../store/userReducer';
+import { useDispatch } from 'react-redux';
 
 let initFriends: Friend[] = [] as Friend[];
 initFriends.length = 0;
@@ -15,8 +17,25 @@ const Friends = () => {
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
     const connection = useSelector((state: RootState) => state.user).connection;
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
+
+    const handleInGame = () => {
+		socket_global.on('in_game', (data: { user: string }) => {
+			dispatch(handleConnectionStatus());
+			getMyFriends();
+		});
+	}
+
+	useEffect(() => {
+		if (socket_global)
+		handleInGame();
+		return (() => {
+			socket_global.off("in_game");
+		})
+	},)
+
 
     function getMyFriends() {
         getFriends().then((value) => {

@@ -57,7 +57,7 @@ export const ChatUiInstantMsg = () => {
     const dispatch = useDispatch();
     const bottomRef = useRef<null | HTMLDivElement>(null); // To auto scroll to bottom of window
     const logged_user = useSelector((state: RootState) => state.user).login;
-    const logged_user_avatar = useSelector((state: RootState) => state.user).login;
+    const logged_user_avatar = useSelector((state: RootState) => state.user).avatar as string;
     const [message_input, setMessage] = useState("");
 
     const chat_state = useSelector((state: RootState) => state.chat);

@@ -49,21 +49,7 @@ function AllUsers() {
 		});
 	}
 
-	const handleInGame = () => {
-		socket_global.on('in_game', (data: { user: string }) => {
-			dispatch(handleConnectionStatus());
-			GetAllUsers();
-		});
-	}
-
-	useEffect(() => {
-		if (socket_global)
-		handleInGame();
-		return (() => {
-			socket_global.off("in_game");
-		})
-	},)
-
+	
 
 	useEffect(() => {
 		if (socket_global)
@@ -80,6 +66,8 @@ function AllUsers() {
 			socket_global.off("new_user");
 		})
 	},)
+
+
 
 	useEffect(() => {
 		GetAllUsers()
