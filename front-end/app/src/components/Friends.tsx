@@ -24,7 +24,7 @@ const Friends = () => {
 
     const [connection, setConnection] = useState(false);
 
-   
+
     function getMyFriends() {
         getFriends().then((value) => {
             if ((typeof value) === (typeof initFriends)) {
@@ -32,10 +32,10 @@ const Friends = () => {
                 setFriends(data);
             }
         })
-        .catch((error: any) => {
-            console.log("Error ;Not Authorized", error);
-            navigate(error.redirectTo);
-        }) 
+            .catch((error: any) => {
+                console.log("Error ;Not Authorized", error);
+                navigate(error.redirectTo);
+            })
     }
 
     const receiveUpdate = () => {
@@ -46,23 +46,38 @@ const Friends = () => {
         })
     }
 
-    const handleInGame = () => {
-		socket_global.on('in_game', (data: { user: string }) => {
+    // *********************************************************//
+    const handleNewUSer = () => {
+        socket_global.on('new_user', (data: { user: string }) => {
             setConnection(!connection);
-			getMyFriends();
-            console.log("frrrrrrr online ?//");
-		});
-	}
+            getMyFriends();
+        });
+    }
 
-	useEffect(() => {
-		if (socket_global)
-		handleInGame();
-		return (() => {
-			socket_global.off("in_game");
-		})
-	},)
+    useEffect(() => {
+        if (socket_global)
+            handleNewUSer();
+        return (() => {
+            socket_global.off("new_user");
+        })
+    },)
 
+    const handleDisconnect = () => {
+        socket_global.on('user_offline', (data: { user: string }) => {
+            setConnection(!connection);
+            getMyFriends();
+        });
+    }
 
+    useEffect(() => {
+        if (socket_global)
+            handleDisconnect();
+        return (() => {
+            socket_global.off("user_offline");
+        })
+    },)
+
+    // **************************************************************//
     useEffect(() => {
         if (socket)
             receiveUpdate();
@@ -74,14 +89,14 @@ const Friends = () => {
     useEffect(() => {
         getMyFriends();
         return (() => {
-			setFriends(initFriends);
+            setFriends(initFriends);
             console.log("clear friends");
-		});
-    }, [connection]) 
+        });
+    }, [connection])
 
     return (
         <Box
-        className='friends'
+            className='friends'
             sx={{
                 backgroundColor: "#202541",
                 width: "calc(100% - 510px)",
@@ -112,17 +127,17 @@ const Friends = () => {
                         </li>
                     ))}
                     {!friends.length &&
-						<Typography
-							sx={{
-								width: '100%',
-								// whiteSpace: "nowrap",
-								color: '#ADADAD',
-								fontWeight: '400',
-								fontSize: '1rem',
-								paddingTop: '1.2px',
-								paddingLeft: "8px",
-							}}>Invite a friend.. NOW !!</Typography>
-					}
+                        <Typography
+                            sx={{
+                                width: '100%',
+                                // whiteSpace: "nowrap",
+                                color: '#ADADAD',
+                                fontWeight: '400',
+                                fontSize: '1rem',
+                                paddingTop: '1.2px',
+                                paddingLeft: "8px",
+                            }}>Invite a friend.. NOW !!</Typography>
+                    }
                 </List>
             </Stack>
         </Box>
