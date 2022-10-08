@@ -21,6 +21,7 @@ const HeaderChat = ({ name,avatar }: PropsHeader) => {
             <Stack spacing={2} direction="row"
                 sx={{ paddingTop: '0.22em' }}>
                 <div>
+                    {name !== '' && 
                     <Avatar
                         sx={{
                             height: '44px',
@@ -30,7 +31,7 @@ const HeaderChat = ({ name,avatar }: PropsHeader) => {
                         }}
                         alt="Lion" src={avatar} imgProps={{ style: { width: 'auto' }}} >
                             {name.charAt(0)}
-                            </Avatar>
+                            </Avatar>}
                 </div>
                 <Stack width="100%">
                     <Typography

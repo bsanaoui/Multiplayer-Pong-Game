@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 let initLiveMatchs = {};
 
 const LiveMatchs = () => {
-    const  navigate = useNavigate();
+    const navigate = useNavigate();
     const [matchs, setMatchs] = useState(initLiveMatchs);
     function getlivematchs() {
         getLiveMatchs().then((value) => {
@@ -58,6 +58,18 @@ const LiveMatchs = () => {
                                 </li>
                             )
                         })
+                    }
+                    {!Object.keys(matchs).length &&
+                        <Typography
+                            sx={{
+                                width: '100%',
+                                whiteSpace: "nowrap",
+                                color: '#ADADAD',
+                                fontWeight: '400',
+                                fontSize: '1.2rem',
+                                paddingTop: '1.2px',
+                                // paddingLeft: "8px",
+                            }}>No one is Playing Pong currentely !</Typography>
                     }
                 </List>
             </Stack>

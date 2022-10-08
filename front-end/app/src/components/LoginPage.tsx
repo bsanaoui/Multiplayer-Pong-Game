@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { initUser } from "../store/userReducer";
 import ImagePong from '../assets/HeaderPongSin.png'
+import backgroundgif from '../assets/backgroundLogin.gif'
 
 const LoginPage = () => {
 	const dispatch = useDispatch();
@@ -11,12 +12,25 @@ const LoginPage = () => {
 	return (
 		<Box
 			sx={{
-				width:"100%",
-				height:"100%",
-				background: "linear-gradient( 116.27deg, #191D45 31.5%, #4044A5 61.17% )",
-				boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+				height: '100%',
+				width: '100%',
+				position:"relative",
+				// background: "linear-gradient( 116.27deg, #191D45 31.5%, #4044A5 61.17% )",
+				// "::before": {
+				// 	// content: "",
+					backgroundImage: `url(${backgroundgif})`,
+					backgroundRepeat: 'no-repeat',
+					backgroundSize: 'cover',
+					// position: 'absolute',
+					// width: "100%",
+					// height: "100%",
+					left: 0,
+					top: 0,
+					// boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+					// opacity: 0.8,
+				// }
 			}}
-			>
+		>
 			<Stack
 				className="home__container"
 				margin="auto"
@@ -26,7 +40,7 @@ const LoginPage = () => {
 				justifyContent="center"
 				alignItems="center"
 				spacing={2}>
-					<img src={ImagePong}></img>
+				<img src={ImagePong}></img>
 				<Typography className="hometitle" sx={{
 					width: "80%",
 					fontWeight: '700',
@@ -46,8 +60,8 @@ const LoginPage = () => {
 					Use your keyboard as gamepads
 					and start playing instantly
 				</Typography>
-				<form action={process.env.REACT_APP_SERVER_IP+"/auth"} method='POST'>
-					<button className='button-Auth center-text center-button home-bnt' style={{ color:"#FFF", width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}
+				<form action={process.env.REACT_APP_SERVER_IP + "/auth"} method='POST'>
+					<button className='button-Auth center-text center-button home-bnt' style={{ color: "#FFF", width: '21vw', marginTop: '7%', fontSize: '1.6vw' }}
 						type="submit">
 						Start playing now
 					</button>

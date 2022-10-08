@@ -80,11 +80,23 @@ const Friends = () => {
                     </div>
                 </Stack>
                 <List style={{ overflow: 'auto', height: "100%" }} >
-                    {friends.length && friends.map((item) => (
+                    {friends && friends.map((item) => (
                         <li key={item.id} className='item-friend'>
                             <FriendButton friend={item} />
                         </li>
                     ))}
+                    {!friends.length &&
+						<Typography
+							sx={{
+								width: '100%',
+								// whiteSpace: "nowrap",
+								color: '#ADADAD',
+								fontWeight: '400',
+								fontSize: '1rem',
+								paddingTop: '1.2px',
+								paddingLeft: "8px",
+							}}>Invite a friend.. NOW !!</Typography>
+					}
                 </List>
             </Stack>
         </Box>

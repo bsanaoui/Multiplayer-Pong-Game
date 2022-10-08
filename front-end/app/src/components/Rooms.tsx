@@ -21,7 +21,7 @@ const Rooms = () => {
 	const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
 	const currentRole = useSelector((state: RootState) => state.chat).curr_role;
 	const navigate = useNavigate();
-	
+
 	const joinRoom = () => {
 		if (socket && currentRoom !== '')
 			socket.emit('JoinRoom', { room: currentRoom });
@@ -129,7 +129,6 @@ const Rooms = () => {
 						fontWeight: '600',
 						fontSize: '22px',
 						lineHeight: '109.52%',
-
 					}}>
 						Rooms
 					</Typography>
@@ -139,7 +138,7 @@ const Rooms = () => {
 					<div style={{
 						marginLeft: "auto",
 					}}>
-						<Typography sx={{
+						{/* <Typography sx={{
 							fontWeight: '400',
 							fontSize: '14px',
 							lineHeight: '109.52%',
@@ -148,15 +147,27 @@ const Rooms = () => {
 							cursor: "pointer"
 						}}>
 							Create new room
-						</Typography>
+						</Typography> */}
 					</div>
 				</Stack>
 				<List style={{ overflow: 'auto', height: "100%" }} >
-					{rooms.length && rooms.map((item: RoomsOfUser) => (
+					{rooms && rooms.map((item: RoomsOfUser) => (
 						<li key={item.id} className='item-friend'>
 							<RoomButtonChat room={item} />
 						</li>
 					))}
+					{!rooms.length &&
+						<Typography
+							sx={{
+								width: '100%',
+								// whiteSpace: "nowrap",
+								color: '#ADADAD',
+								fontWeight: '400',
+								fontSize: '1rem',
+								paddingTop: '1.2px',
+								paddingLeft: "8px",
+							}}>Try joining a room first ;) </Typography>
+					}
 				</List>
 			</Stack>
 			{/* {alertMsg.is_alert && <AlertMsg is_alert={true} status={alertMsg.status} msg={alertMsg.msg} />} */}

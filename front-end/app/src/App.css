@@ -366,12 +366,12 @@
 
 p.hometitle
 {
-    font-size: calc(33px + (75 - 33) * ((100vw - 480px) / (1600 - 480)));
+    font-size: calc(33px + (60 - 33) * ((100vw - 480px) / (1600 - 480)));
     line-height: normal;
     width: 100%;
 }
 p.hometxt {
-    font-size: calc(18px + (46 - 18) * ((100vw - 480px) / (1600 - 480)));
+    font-size: calc(18px + (36 - 18) * ((100vw - 480px) / (1600 - 480)));
     line-height: normal;
     width: 100%;
 }
@@ -427,10 +427,10 @@ p.hometxt {
 }
 @media screen and (min-width: 1600px){
     p.hometitle {
-        font-size: 75px;
+        font-size: 60px;
     }
     p.hometxt {
-        font-size: 46px;
+        font-size: 36px;
     }
 }
 @media screen and (max-width: 1300px){

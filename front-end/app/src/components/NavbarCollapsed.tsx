@@ -74,7 +74,7 @@ const CustomButton = ({ route, _icon }: ButtonProps) => {
     let backgroundButton = location.pathname === route ? "#543EC0" : "#303465";
     
     const handleLocation =() => {
-        if (location.pathname === '/logout')
+        if (route === '/logout')
         {
             removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
 			dispatch(clearUser());

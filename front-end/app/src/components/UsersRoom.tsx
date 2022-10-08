@@ -69,7 +69,7 @@ export const UsersRoom = () => {
                 padding: '30px',
                 borderLeft: "1px solid #FFFFFF",
                 paddingTop: "7.2em",
-                width:"31%",
+                width: "31%",
             }}>
             <Stack height="100%" width="100%">
                 <Stack spacing={1} direction="row" marginBottom="3%">
@@ -77,14 +77,19 @@ export const UsersRoom = () => {
                         <img src={usersRoomIcon} width="30px" alt='roomIcon' />
                     </IconButton>
                     <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>
-                        <Typography sx={{
-                            fontWeight: '600',
-                            fontSize: '22px',
-                            lineHeight: '109.52%',
+                        <Stack direction="row" spacing={1}>
 
-                        }}>
-                            Room Users ({users_room.length})
-                        </Typography>
+                            <Typography sx={{
+                                fontWeight: '600',
+                                fontSize: '22px',
+                                lineHeight: '109.52%',
+                            }}>
+                                Room Users
+                            </Typography>
+                            <div className='dot-nb center-button'>
+                                {users_room.length}
+                            </div>
+                        </Stack>
                     </div>
                 </Stack>
 
@@ -94,6 +99,18 @@ export const UsersRoom = () => {
                             <UserButton user={item} socket={socket} role_user={role_user} />
                         </li>
                     ))}
+                    {!users_room.length &&
+                        <Typography
+                            sx={{
+                                width: '100%',
+                                // whiteSpace: "nowrap",
+                                color: '#ADADAD',
+                                fontWeight: '400',
+                                fontSize: '1rem',
+                                paddingTop: '1.2px',
+                                paddingLeft: "8px",
+                            }}>Whoa! it's empty in here.</Typography>
+                    }
                 </List>
             </Stack>
         </Box>

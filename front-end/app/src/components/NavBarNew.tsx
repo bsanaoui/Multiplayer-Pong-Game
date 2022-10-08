@@ -44,7 +44,7 @@ export let getInterface = (currentRoute: string): string => {
         case '/instantMessaging': return "Instant Messaging";
         case '/matchmaking': return "Matchmaking";
         case '/liveMatchs': return "Live Games";
-        case '/login': return "Log Out";
+        case '/logout': return "Log Out";
         default: return "Home";
     }
 };
@@ -193,7 +193,7 @@ const CustomButton = ({ route, _icon }: ButtonProps) => {
     const [cookies, setCookie, removeCookie] = useCookies();
 
     const handleLocation = () => {
-        if (location.pathname === '/logout') {
+        if (route === '/logout') {
             removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
             dispatch(clearUser());
             navigate("/")

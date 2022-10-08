@@ -133,6 +133,8 @@ export const UsersMessaging = () => {
                             fontWeight: '700',
                             fontSize: '28px',
                             lineHeight: '109.52%',
+                            whiteSpace: "nowrap",
+
                         }}>
                             Instant Messaging
                         </Typography>
@@ -148,29 +150,32 @@ export const UsersMessaging = () => {
                         Messages
                     </Typography>
                     <div className='dot-nb center-button'>
-                        4
+                        {users.length}
                     </div>
                     <div style={{
                         marginLeft: "auto",
                     }}>
-                        <Typography sx={{
-                            fontWeight: '400',
-                            fontSize: '14px',
-                            lineHeight: '109.52%',
-                            textDecorationLine: 'underline',
-                            marginTop: "3%"
-                        }}>
-                            Create new msg
-                        </Typography>
                     </div>
                 </Stack>
+                {!users.length &&
+						<Typography
+							sx={{
+								width: '100%',
+								color: '#ADADAD',
+								fontWeight: '400',
+								fontSize: '1rem',
+								paddingTop: '1.2px',
+								paddingLeft: "8px",
+							}}>Start a conversation with a friend :)</Typography>
+					}
                 <List style={{ overflowY: 'auto', overflowX:"hidden", height: "100%" }} >
-                    {users.length && users.map((item) => (
+                    {users && users.map((item) => (
                         <li key={item.id} className='item-friend'>
                             <UserButtonChat user={item} />
                         </li>
                     ))}
                 </List>
+            
             </Stack>
             {/* {alertMsg.is_alert && <AlertMsg is_alert={alertMsg.is_alert} status={alertMsg.status} msg={alertMsg.msg} />} */}
         </Box>
