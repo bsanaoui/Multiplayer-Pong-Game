@@ -11,7 +11,6 @@ import { addMessage, clearMessages, initMessages, MessageState } from "../store/
 import { requestDirectMsgs } from '../requests/messages';
 import { handleToastMsg } from './InfoMessages/Toast';
 import { useNavigate } from 'react-router-dom';
-// import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
 // let socketclient: Socket;
@@ -37,17 +36,17 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 // const msgs = Array.from({ length: 9 }, (_, index) => {return ()}
-const renderMessage = (current: string, from: string, msg: string, avatar:string, my_avatar:string): JSX.Element => {
+const renderMessage = (current: string, from: string, msg: string, avatar: string, my_avatar: string): JSX.Element => {
     if (current === from)
         return (
             <li key={index_msg++} style={{ float: 'right' }}>
-                <MessageSent msg={msg} avatar={my_avatar}/>
+                <MessageSent msg={msg} avatar={my_avatar} />
             </li>
         );
     else
         return (
             <li key={index_msg++} style={{ float: 'left' }}>
-                <MessageRecieved msg={msg} avatar={avatar}/>
+                <MessageRecieved msg={msg} avatar={avatar} />
             </li>
         );
 }
@@ -81,8 +80,8 @@ export const ChatUiInstantMsg = () => {
     const recieveMsgs = () => {
         socket.on('msgToClient_dm', (m: MessageState) => {
             dispatch(addMessage(m));
-            if (bottomRef)
-                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+            // if (bottomRef)
+            //     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
         })
     }
 
@@ -104,14 +103,13 @@ export const ChatUiInstantMsg = () => {
         }).catch((error: any) => {
             console.log("Error ;Not Authorized", error);
             navigate(error.redirectTo);
-        }) 
+        })
     }
 
     const sendMsg = () => {
         if (message_input) {
             if (socket) {
                 socket.emit('dm_message', { msg: message_input });
-                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
             }
             setMessage('');
         }
@@ -130,9 +128,6 @@ export const ChatUiInstantMsg = () => {
         if (currentConv !== '')
             initMsgs();
         if (socket) {
-            // joinDmRoom();
-            console.log("mmmmmm recieveMsgs:  ");
-
             recieveMsgs();
         }
         if (bottomRef) {
@@ -146,6 +141,9 @@ export const ChatUiInstantMsg = () => {
         }
     }, [currentConv])
 
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [msgs])
     return (
         <Box
             bgcolor="#202541"
@@ -179,7 +177,7 @@ export const ChatUiInstantMsg = () => {
                             </div>
                         </Stack>
                     }
-                    <List style={{ overflowX: 'auto',  }} >
+                    <List style={{ overflowY: 'auto' }} >
                         {msgs.map((item) => (renderMessage(logged_user, item.from, item.msg, avatar, logged_user_avatar)))}
                         <li key={index_msg++} style={{ float: 'right' }}>
                             <div ref={bottomRef} ></div>

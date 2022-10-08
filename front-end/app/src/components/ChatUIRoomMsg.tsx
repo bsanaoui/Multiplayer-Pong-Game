@@ -60,7 +60,6 @@ export const ChatUIRoomMsg = () => {
     const loggged_avatar = useSelector((state: RootState) => state.user).avatar;
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const msgs = useSelector((state: RootState) => state.chat).msgs;
-    // const { socket } = useContext(SocketContext) as SocketContextType;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
     const navigate = useNavigate();
     const [isInputEnabled, setInput] = useState(true)
@@ -70,8 +69,8 @@ export const ChatUIRoomMsg = () => {
     const recieveMsgs = () => {
         socket.on('msgToClient', (msg: MessageState) => {
             dispatch(addMessage(msg));
-            if (bottomRef)
-                bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+            // if (bottomRef)
+            //     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
         })
     }
 
@@ -143,6 +142,10 @@ export const ChatUIRoomMsg = () => {
             index_msg = 0;
         }
     }, [currentRoom])
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [msgs]);
 
     return (
         <Box
