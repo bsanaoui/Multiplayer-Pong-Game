@@ -1,15 +1,14 @@
 import { Box } from '@mui/material'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { RootState } from '../store'
-import { finishGame, HandleOpeneDialog, ModeEnum, setModeGame, startInviteGame } from '../store/gameReducer'
+import { finishGame, HandleOpeneDialog,startInviteGame } from '../store/gameReducer'
 import Canvas from './canvas'
 import ModeDialog from './Game/ModeDialog'
 import { ModesInput } from './Game/ModesInput'
 import './Game/navGame.css'
-import PlayButton from './Game/PlayButton'
 
 const Game = () => {
 	const dispatch = useDispatch();

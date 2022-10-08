@@ -1,9 +1,6 @@
 import { Box, Dialog, DialogContent, DialogTitle, IconButton, styled, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { HandleCloseDialog, HandleOpeneDialog } from '../../store/gameReducer';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setOpenDialog2FA } from '../../store/openDialogReducer';
 

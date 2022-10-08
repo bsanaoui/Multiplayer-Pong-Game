@@ -6,8 +6,6 @@ import { changeCurrRoom } from "../store/chatUiReducer";
 import DropMenuRoom from './DropMenus/DropMenuRoom';
 import owner_role from '../assets/User/owner.png';
 import admin_role from '../assets/User/admin.png';
-import { Socket } from 'socket.io-client';
-
 
 const RoomButtonChat = (Props: {room:RoomsOfUser}) => {
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;

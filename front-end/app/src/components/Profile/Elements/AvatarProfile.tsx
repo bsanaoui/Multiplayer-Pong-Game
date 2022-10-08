@@ -1,5 +1,4 @@
 import { Box, Avatar } from '@mui/material'
-import avatar2 from '../../../assets/man.png'
 
 const AvatarProfile = (props:{avatar: string}) => {
 	return (

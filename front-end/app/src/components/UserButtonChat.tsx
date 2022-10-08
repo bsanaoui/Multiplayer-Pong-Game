@@ -1,29 +1,15 @@
-import { Login } from '@mui/icons-material';
 import { Avatar, Box, Stack, Typography } from '@mui/material'
-import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Socket } from 'socket.io-client';
 import { UserMessaging } from '../requests/directMessage';
 import { RootState } from '../store';
 import { changeCurrConversation } from "../store/chatUiReducer";
-import DropMenu from './DropMenus/DropMenuRoom';
 import DropMenuUser from './DropMenus/DropMenuUser';
-
-
 
 export const UserButtonChat = (props: { user: UserMessaging }) => {
     const currentConv = useSelector((state: RootState) => state.chat).curr_converation;
     const dispatch = useDispatch();
     let backgroundButton: string = currentConv !== props.user.login ? "#2E3256" : "#4289F3";
-    // const { socket } = useContext(SocketContext) as SocketContextType;
 
-    // useEffect(() => {
-    //     backgroundButton = currentConv !== props.user.login ? "#2E3256" : "#4289F3";
-
-    //     return () => {
-    //         console.log("clear UserDM Btn");
-    //     }
-    // }, [socket]) // add currentConv
     const changeConv = () => {
         if (props.user.login !== currentConv)
             dispatch(changeCurrConversation({ user: props.user.login, avatar: props.user.avatar }))

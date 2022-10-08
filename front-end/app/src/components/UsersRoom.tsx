@@ -1,12 +1,10 @@
-import { Box, IconButton, List, Stack, Typography } from '@mui/material'
-import { useContext, useEffect, useState } from 'react';
+import { Box,  List, Stack, Typography } from '@mui/material'
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import usersRoomIcon from '../assets/usersRoom.png'
 import { requestUsersRoom } from '../requests/rooms';
 import { RootState } from '../store';
-import { ChatUIState } from '../store/chatUiReducer';
 import { clearUsersRoom, initUsesrRoom, UserOfRoom } from '../store/roomUsersReducer';
 import { UserButton } from './UserButton';
 
@@ -17,7 +15,6 @@ export const UsersRoom = () => {
     const currentRoom = useSelector((state: RootState) => state.chat).curr_room;
     const role_user = useSelector((state: RootState) => state.chat).curr_role;
     const socket = useSelector((state: RootState) => state.socketclient).socket;
-    const chat: ChatUIState = useSelector((state: RootState) => state.chat);
     const navigate = useNavigate();
 
     function getUsersRoom() {
@@ -56,7 +53,7 @@ export const UsersRoom = () => {
         return () => {
             dispatch(clearUsersRoom());
         }
-    }, [chat])
+    }, [currentRoom])
 
     return (
 

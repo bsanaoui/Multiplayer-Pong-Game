@@ -1,6 +1,5 @@
 import { Avatar, Stack, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import avatar1 from '../assets/man.png'
 
 interface MessageProps {
 	msg: string,
@@ -9,7 +8,7 @@ interface MessageProps {
 
 const MessageSent = ({ msg, avatar }: MessageProps) => {
 	return (
-		<div>
+		<div style={{height:"100%"}}>
 			<Stack
 				spacing={0}
 				sx={{
@@ -21,6 +20,9 @@ const MessageSent = ({ msg, avatar }: MessageProps) => {
 						width: '300px',
 						padding: '0.7em',
 						borderRadius: '14px',
+						display:'inline-block',
+						height:"auto",
+						overflowWrap: "break-word",
 					}}>
 					<Typography
 						sx={{
@@ -29,6 +31,7 @@ const MessageSent = ({ msg, avatar }: MessageProps) => {
 							fontWeight: '500',
 							fontSize: '15px',
 							lineHeight: '140%',
+							// whiteSpace: 'nowrap',
 						}}>
 						{msg}
 					</Typography>
@@ -39,7 +42,6 @@ const MessageSent = ({ msg, avatar }: MessageProps) => {
 							height: '47px',
 							width: '47px',
 							backgroundColor: "#FFF",
-							// padding: "3px",
 						}}
 						alt="" src={avatar} imgProps={{ style: { width: 'auto' } }} />
 				</div>

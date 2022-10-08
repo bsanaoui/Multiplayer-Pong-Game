@@ -1,11 +1,10 @@
 import { Avatar, Box, Typography } from '@mui/material'
-import { relative } from 'path'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import classicImage from '../../assets/Game/classic.png'
 import RetroImage from '../../assets/Game/RetroMode.png'
 import { RootState } from '../../store'
-import { data, HandleCloseDialog, ModeEnum, setModeGame } from '../../store/gameReducer'
+import {  HandleCloseDialog } from '../../store/gameReducer'
 interface modeGameProps {
 	mode: string,
 	invite: boolean,

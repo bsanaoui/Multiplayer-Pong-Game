@@ -1,11 +1,11 @@
 import { Avatar, Stack, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import avatar2 from '../assets/avatar2.png'
 
 interface MessageProps {
   msg: string,
   avatar:string,
 }
+
 const MessageRecieved = ({ msg, avatar }: MessageProps) => {
   return (
     <div>
@@ -21,6 +21,7 @@ const MessageRecieved = ({ msg, avatar }: MessageProps) => {
             padding: '0.7em',
             borderRadius: '14px',
             marginLeft: '10%',
+            overflowWrap: "break-word",
           }}>
           <Typography
             sx={{

@@ -1,10 +1,8 @@
 import { Avatar, Box, List, Stack, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import avatar2 from '../../assets/avatar2.png'
 import { getMatchsHistory, MatchHistoryData } from "../../requests/dashboard"
-import { RootState } from "../../store"
 import PlayerTable from "./Elements/PlayerTable"
 import ScoreTable from "./Elements/ScoreTable"
 

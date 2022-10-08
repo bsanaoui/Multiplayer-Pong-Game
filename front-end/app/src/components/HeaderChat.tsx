@@ -1,5 +1,4 @@
 import { Avatar, Box, Stack, Typography } from '@mui/material'
-import dot3Icon from '../assets/dot3_white.png'
 
 interface PropsHeader {
     name: string,

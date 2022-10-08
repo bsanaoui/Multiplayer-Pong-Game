@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import './Game/canvas.css'
 import { io, Socket } from "socket.io-client";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
-import { ModeEnum } from "../store/gameReducer";
 import './Game/navGame.css'
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Box } from "@mui/system";
@@ -215,8 +214,6 @@ let updateBalldisplay = (ball: Ball): void => {
 	ball.velY *= cof;
 }
 
-let profile = false;
-
 const Canvas = () => {
 	const [searchParams] = useSearchParams();
 	const navigate = useNavigate();
@@ -274,9 +271,9 @@ const Canvas = () => {
 		})
 
 		socket.on('update_connections', (p1: Player, p2: Player, b: Ball) => {
-			if (player1.login != p1.login)
+			if (player1.login !== p1.login)
 				setPlayer1(p1);
-			if (player2.login != p2.login)
+			if (player2.login !== p2.login)
 				setPlayer2(p2);
 			
 			if (P1.score !== p1.score)

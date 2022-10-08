@@ -4,15 +4,13 @@ import HeaderChat from './HeaderChat'
 import SendIcon from '@mui/icons-material/Send'
 import MessageSent from './MessageSent';
 import MessageRecieved from './MessageRecieved';
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../store";
 import { addMessage, clearMessages, initMessages, MessageState } from "../store/chatUiReducer";
 import { requestMessages } from '../requests/messages';
-import { io, Socket } from 'socket.io-client';
 import { handleToastMsg } from './InfoMessages/Toast';
 import { useNavigate } from 'react-router-dom';
-// import { SocketContext, SocketContextType } from '../context/socket';
 
 let index_msg: number = 0;
 // let socket: Socket;

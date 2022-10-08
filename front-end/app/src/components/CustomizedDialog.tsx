@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { setOpenDialogRoom } from '../store/openDialogReducer';
 import { useDispatch } from 'react-redux';
-import { fetchRoomsHome } from '../store/FetchsReducer';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

@@ -1,15 +1,12 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import usersRoomIcon from '../assets/usersRoom.png'
 import { UserButtonChat } from './UserButtonChat';
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { RootState } from '../store';
 import { geMessagingUsers, UserMessaging } from '../requests/directMessage';
 import { useSelector } from 'react-redux';
-import { SocketContext, SocketContextType } from '../context/socket';
-import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
 import { useDispatch } from 'react-redux';
 import { changeCurrConversation } from '../store/chatUiReducer';
-import { boolean } from 'yup';
 import { handleToastMsg } from './InfoMessages/Toast';
 import { toast } from 'react-toastify';
 import { useNavigate, useSearchParams } from 'react-router-dom';

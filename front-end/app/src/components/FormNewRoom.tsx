@@ -6,8 +6,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as Yup from 'yup'
 import { createRoom, RoomInfo } from "../requests/home";
-import { RootState } from "../store";
-import { useSelector } from "react-redux";
 import { setOpenDialogRoom } from "../store/openDialogReducer";
 import { useDispatch } from "react-redux";
 import { fetchRoomsHome } from "../store/FetchsReducer";

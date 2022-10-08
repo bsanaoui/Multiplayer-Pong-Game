@@ -6,7 +6,6 @@ import { Achievement, getAchievements } from "../../requests/dashboard";
 import { RootState } from "../../store";
 import AchievementElement from "./Elements/AchievementElement"
 
-
 let initAchievements: Achievement[] = [] as Achievement[];
 initAchievements.length = 0;
 

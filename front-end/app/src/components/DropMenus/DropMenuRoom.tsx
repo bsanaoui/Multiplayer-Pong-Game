@@ -17,10 +17,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { RoomsOfUser } from '../../requests/rooms';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { Socket } from 'socket.io-client';
-// import { socket, SocketContext, SocketContextType } from "../../context/socket";
 import DialogAction, { ActionInput } from '../Dialogs/DialogAction';
-import { changeCurrRoom } from '../../store/chatUiReducer';
 import { useDispatch } from 'react-redux';
 
 

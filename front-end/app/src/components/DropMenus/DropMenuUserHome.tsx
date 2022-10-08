@@ -7,21 +7,15 @@ import Divider from '@mui/material/Divider';
 
 import * as React from 'react';
 import Menu from '@mui/material/Menu';
-import { Avatar, Button, IconButton } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Avatar, Button } from '@mui/material';
 import playIcon from '../../assets/DropMenus/play.png'
 import profileIcon from '../../assets/DropMenus/profile.png'
 import chatIcon from '../../assets/DropMenus/chat.png'
 import blockIcon from '../../assets/DropMenus/block.png'
 import addFriendIcon from '../../assets/notification.png'
-import { Friend, UserMessaging } from '../../requests/directMessage';
-import { io, Socket } from 'socket.io-client';
-// import { SocketContext, SocketContextType } from '../../context/socket';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useDispatch } from 'react-redux';
-import { InterfaceEnum, setCurrentInterface } from '../../store/interfacesReducer';
-import { changeCurrConversation } from '../../store/chatUiReducer';
 import dot3Icon from '../../assets/dot3.png'
 import { BlockUserPost, ChatUserPost, UserData } from '../../requests/home';
 import { P_data } from './DropMenuUser';

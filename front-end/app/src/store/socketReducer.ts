@@ -1,20 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { io, Socket } from 'socket.io-client';
 
-interface AuthRoom{
-    auth: {
-        user: string,
-        room: string,
-    }
-}
-
-interface AuthDM{
-    auth: {
-        from: string,
-        to: string,
-    }
-}
-
 export interface SocketState {
     socket: Socket;
 }

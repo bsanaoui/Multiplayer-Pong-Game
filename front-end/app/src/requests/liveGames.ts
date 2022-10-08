@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Game } from "../components/Game/game.entity";
 
 export async function getLiveMatchs() {
 	try {

@@ -2,18 +2,13 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import HttpsIcon from '@mui/icons-material/Https';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import { Avatar, IconButton } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import NoEncryptionIcon from '@mui/icons-material/NoEncryption';
 import playIcon from '../../assets/DropMenus/play.png'
 import addFriendIcon from '../../assets/notification.png'
 import profileIcon from '../../assets/DropMenus/profile.png'

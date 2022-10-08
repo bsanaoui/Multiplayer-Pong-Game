@@ -1,19 +1,16 @@
 
-import { Avatar, Badge, Button, Divider, IconButton, Slide, Stack, TextField, Typography } from '@mui/material'
+import { Avatar, Badge,  Divider, IconButton, Stack, TextField, Typography } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store";
-import { InterfaceEnum, setCurrentInterface } from "../store/interfacesReducer";
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import EditIcon from '@mui/icons-material/Edit';
 
 import messengerIcon from '../assets/messenger.png'
 import roomIcon from '../assets/chat-room.png'
 import dashboardIcon from '../assets/dashboard-icon.png'
-import friendsIcon from '../assets/friends.png'
 import matchmakingIcon from '../assets/matchmaking-icon.png'
 import streamingIcon from '../assets/streaming.png'
 import homeIcon from '../assets/home.png'
-import avatar2 from '../assets/avatar2.png'
 import LogoutIcon from '../assets/log-out.png';
 import collapseIcon from '../assets/collapse-nav.png';
 
@@ -23,12 +20,12 @@ import { setCollapse } from '../store/collapseNavReducer';
 import { NavbarCollapsed } from './NavbarCollapsed';
 import { InvitationsMenu } from './InvitationsMenu';
 import React, { useEffect, useState } from 'react';
-import { Form, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import TwoFADialog from './2FA/TwoFADialog';
 import { TwoFAInput } from './2FA/TwoFAInput';
 import { getProfileNavbar, ProfileNavData } from '../requests/home';
 import axios from 'axios';
-import { clearUser, initUser } from '../store/userReducer';
+import { clearUser} from '../store/userReducer';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-toastify';
 
@@ -48,13 +45,11 @@ const initState: ProfileNavData = {} as ProfileNavData;
 
 export const NavBarNew = () => {
     const userState = useSelector((state: RootState) => state.user);
-    const logged_user = userState.login;
     const is_collapsedNav = useSelector((state: RootState) => state.collapseNav).is_collapsed;
     const [info_user, setInfoUser] = useState(initState);
     let avatar: File;
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
-    const dispatch = useDispatch();
     const [cookies, setCookie, removeCookie] = useCookies();
 
     const handleUploadAvatar = (avatar_uploaded: File) => {

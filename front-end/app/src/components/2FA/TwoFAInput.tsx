@@ -1,14 +1,11 @@
-import { Avatar, Box, Button, Divider, Input, TextField, Typography } from '@mui/material'
+import { Box, Button, Divider, TextField, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
-import qr_test from './qr.png'
 import code_qr_icon from '../../assets/code.png'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { getMQrCodeUrl, sendCode2FADisable, sendCode2FAEnable } from '../../requests/home'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useDispatch } from 'react-redux'
 import { setOpenDialog2FA } from '../../store/openDialogReducer'
-import { boolean } from 'yup'
 import { useNavigate } from 'react-router-dom'
 
 export const TwoFAInput = (props: { enable: boolean }) => {

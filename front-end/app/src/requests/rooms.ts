@@ -1,5 +1,4 @@
 import axios from "axios";
-import interfacesReducer from "../store/interfacesReducer";
 import { UserOfRoom } from "../store/roomUsersReducer";
 
 /* ============================ Get User's Room ======================= */
@@ -72,32 +71,3 @@ export async function getMyRooms() {
 	}
 }
 
-/* ============================ ***** ======================= */
-
-// export async function disablePassword(room_name: string) {
-// 	try {
-// 		// 👇️ const data: GetUsersResponse
-// 		const { data, status } = await axios.post<{status:boolean, msg:string}>(
-// 			process.env.REACT_APP_SERVER_IP + "/room/removepass",
-// 			{ room_id: room_name },
-// 			{
-// 				headers: {
-// 					Accept: "application/json",
-// 				},
-// 				withCredentials: true,
-// 			}
-// 		);
-// 		console.log(JSON.stringify(data, null, 4));
-// 		// 👇️ "response status is: 200"
-// 		console.log('response status is: ', status);
-// 		return data;
-// 	} catch (error) {
-// 		if (axios.isAxiosError(error)) {
-// 			console.log("error message: ", error.message);
-// 			return error.message;
-// 		} else {
-// 			console.log("unexpected error: ", error);
-// 			return "An unexpected error occurred";
-// 		}
-// 	}
-// }

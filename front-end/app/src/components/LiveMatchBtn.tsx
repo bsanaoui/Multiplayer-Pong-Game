@@ -1,9 +1,5 @@
 import { Avatar, Box, ListItem, Typography } from "@mui/material"
 import { Stack } from "@mui/system"
-import avatar1 from '../assets/man.png'
-import avatar2 from '../assets/avatar2.png'
-import { Game } from "./Game/game.entity"
-import { ModeEnum, setModeGame } from "../store/gameReducer"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 

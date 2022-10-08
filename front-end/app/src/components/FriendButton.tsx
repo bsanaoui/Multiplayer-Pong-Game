@@ -1,6 +1,5 @@
 import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react';
-import { Socket } from 'socket.io-client';
 import { Friend } from '../requests/directMessage';
 import DropMenuUser from './DropMenus/DropMenuUser';
 

@@ -1,11 +1,10 @@
 import { Box, Stack, Typography } from '@mui/material'
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import groupIcon from '../assets/group-icon.svg'
-import { JoinRoomPost, RoomData } from '../requests/home'
-import { changeCurrRoom } from '../store/chatUiReducer'
-import { InterfaceEnum, setCurrentInterface } from '../store/interfacesReducer'
+import { JoinRoomPost } from '../requests/home'
+import { RootState } from '../store'
 import DialogProtectedRoom from './Dialogs/DialogProtectedRoom'
 import { handleToastMsg } from './InfoMessages/Toast'
 
@@ -19,6 +18,7 @@ type RoomDataButtom = {
 const RoomButton = (Props: RoomDataButtom) => {
 	const navigate = useNavigate();
 	const [is_dialog_open, setDialogOpen] = React.useState(false);
+	const logged_user = useSelector((state: RootState) => state.user).login;
 
 	const handlePublicRoom = () => {
 		JoinRoomPost(Props.room_id).then((value) => {
@@ -35,7 +35,13 @@ const RoomButton = (Props: RoomDataButtom) => {
 	}
 
 	const handleDialogProtectedRoom = () => {
-		setDialogOpen(!is_dialog_open);
+		if (Props.owner !== logged_user )
+			setDialogOpen(!is_dialog_open);
+		else
+		{
+			handleToastMsg(true, `You are already user at ${Props.room_id}`);
+			navigate("/chatRoom");
+		}
 	}
 
 	return (

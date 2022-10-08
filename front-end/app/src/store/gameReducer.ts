@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { string } from 'yup/lib/locale';
 import { Player } from '../components/canvas';
 import { P_data} from "../components/DropMenus/DropMenuUser";
 

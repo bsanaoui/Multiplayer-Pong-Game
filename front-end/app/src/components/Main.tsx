@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { data, P_data } from './DropMenus/DropMenuUser';
+import { data } from './DropMenus/DropMenuUser';
 import { toast } from "react-toastify";
-import { HandleOpeneDialog, ModeEnum, playInvitedGame } from '../store/gameReducer';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  ModeEnum } from '../store/gameReducer';
+import { useNavigate } from 'react-router-dom';
 import ModeDialog from './Game/ModeDialog';
 import { ModesInput } from './Game/ModesInput';
 

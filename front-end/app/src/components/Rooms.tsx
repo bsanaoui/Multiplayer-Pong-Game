@@ -1,12 +1,11 @@
-import { Alert, Box, IconButton, List, Snackbar, Stack, Typography } from '@mui/material'
+import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import roomIcon from '../assets/chat-room.png'
 import RoomButtonChat from './RoomButtonChat';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../store';
 import { getMyRooms, RoomsOfUser } from '../requests/rooms';
-import { AlertMsg, initAlertMsg } from './InfoMessages/AlertMsg';
-import { changeCurrRoom, ChatUIState } from '../store/chatUiReducer';
+import { changeCurrRoom } from '../store/chatUiReducer';
 import { handleToastMsg } from './InfoMessages/Toast';
 import { useNavigate } from 'react-router-dom';
 

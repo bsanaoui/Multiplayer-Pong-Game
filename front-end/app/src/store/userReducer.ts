@@ -1,7 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { stat } from 'fs';
-import { boolean } from 'yup';
-import { reqUserAuth } from '../requests/user';
 
 export interface UserState {
     login: string,
@@ -29,10 +26,11 @@ export const userSlice = createSlice({
 
         // Change UserState
         changeUser: (state, action: PayloadAction<{ username?: string, avatar?: string }>) => {
-            if (typeof action.payload.username !== undefined) 
+            let a:undefined;
+            if (typeof (action.payload.username) !== typeof(a)) 
                 state.username = action.payload.username as string;
 
-            if (typeof action.payload.avatar !== undefined) 
+            if (typeof (action.payload.avatar) !== typeof(a)) 
                 state.avatar = action.payload.avatar;
         },
 

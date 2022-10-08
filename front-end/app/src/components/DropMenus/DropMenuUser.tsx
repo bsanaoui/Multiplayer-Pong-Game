@@ -15,12 +15,9 @@ import chatIcon from '../../assets/DropMenus/chat.png'
 import blockIcon from '../../assets/DropMenus/block.png'
 import addFriendIcon from '../../assets/notification.png'
 import { Friend, UserMessaging } from '../../requests/directMessage';
-import { io, Socket } from 'socket.io-client';
-// import { SocketContext, SocketContextType } from '../../context/socket';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useDispatch } from 'react-redux';
-import { InterfaceEnum, setCurrentInterface } from '../../store/interfacesReducer';
 import { changeCurrConversation } from '../../store/chatUiReducer';
 import { useNavigate } from 'react-router-dom';
 import { setInviteData } from '../../store/gameReducer';

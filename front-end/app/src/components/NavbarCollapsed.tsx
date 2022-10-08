@@ -1,12 +1,10 @@
 import { Avatar, Divider, Slide, Stack } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store";
-import { InterfaceEnum, setCurrentInterface } from "../store/interfacesReducer";
 
 import messengerIcon from '../assets/messenger.png'
 import roomIcon from '../assets/chat-room.png'
 import dashboardIcon from '../assets/dashboard-icon.png'
-import friendsIcon from '../assets/friends.png'
 import matchmakingIcon from '../assets/matchmaking-icon.png'
 import streamingIcon from '../assets/streaming.png'
 import homeIcon from '../assets/home.png'

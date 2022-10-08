@@ -19,7 +19,6 @@ function AllUsers() {
 	const [users, setUsers] = useState(initUsers);
 	const socket_global = useSelector((state: RootState) => state.socketglobal).socket_global;
 	const connection = useSelector((state: RootState) => state.user).connection;
-	// const [connection, setConnection] = useState(false);
 	const navigate = useNavigate();
 
 	const GetAllUsers = () => {

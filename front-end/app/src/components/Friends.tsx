@@ -1,14 +1,12 @@
 import { Box, IconButton, List, Stack, Typography } from '@mui/material'
 import friendIcon from '../assets/friends.png'
 import { FriendButton } from './FriendButton';
-import { useContext, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { Friend, getFriends } from '../requests/directMessage';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useNavigate } from 'react-router-dom';
-import { handleConnectionStatus } from '../store/userReducer';
 import { useDispatch } from 'react-redux';
-import { connect } from 'http2';
 
 let initFriends: Friend[] = [] as Friend[];
 initFriends.length = 0;

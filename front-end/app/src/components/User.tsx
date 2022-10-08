@@ -2,9 +2,7 @@ import { Avatar, Badge, Box, Stack, Typography } from '@mui/material'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import { UserData } from '../requests/home';
 import { useEffect, useState } from 'react';
-import dot3Icon from '../assets/dot3.png'
 import DropMenuUserHome from './DropMenus/DropMenuUserHome';
-
 
 const online_bg:string = "#3FFC10";
 const offline_bg:string = "red";

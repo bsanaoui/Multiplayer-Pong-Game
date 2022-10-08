@@ -1,8 +1,6 @@
-import { Box, Button, Input, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { initUser } from "../store/userReducer";
 import ImagePong from '../assets/HeaderPongSin.png'
 import backgroundgif from '../assets/backgroundLogin.gif'
 

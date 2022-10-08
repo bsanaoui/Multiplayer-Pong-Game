@@ -27,7 +27,6 @@ export default function DialogProtectedRoom(props: { isDialogOpened: boolean, ha
                 console.log("errorrrrrrr\n");
                 setErrorInput(true);
             }
-				// handleToastMsg(true, `You are now user at ${data.room_id}`);
 			else
             {
 				handleToastMsg(data.status, data.msg);

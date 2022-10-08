@@ -3,22 +3,16 @@ import Friends from "./Friends"
 import { useSelector } from "react-redux"
 import { RootState } from "../store";
 
-import Rooms from "./Rooms"
 import { ChatUiInstantMsg } from "./ChatUiInstantMsg"
-import { UsersRoom } from "./UsersRoom"
 import { UsersMessaging } from "./UsersMessaging"
-import { InterfaceEnum } from "../store/interfacesReducer"
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { io, Socket } from "socket.io-client";
 import { changeCurrConversation, changeCurrRoom } from "../store/chatUiReducer";
 import { initSocketClient } from "../store/socketReducer";
-import { ChatUIRoomMsg } from "./ChatUIRoomMsg";
 
 
 const GlobalDM = () => {
 	const logged_user = useSelector((state: RootState) => state.user).login;
-	// const currentPage = useSelector((state: RootState) => state.interfaces).current;
 	const socket = useSelector((state: RootState) => state.socketclient).socket;
 	const dispatch = useDispatch();
 

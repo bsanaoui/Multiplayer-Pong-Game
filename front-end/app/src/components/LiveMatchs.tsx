@@ -1,11 +1,10 @@
-import { Box, List, Stack, Typography } from '@mui/material'
+import {  List, Stack, Typography } from '@mui/material'
 import reloadIcon from '../assets/reload-icon.png'
-import Header from './Header'
 import LiveMatchBtn from './LiveMatchBtn'
-import { Game } from "./Game/game.entity";
 import { useEffect, useState } from 'react';
 import { getLiveMatchs } from '../requests/liveGames';
 import { useNavigate } from 'react-router-dom';
+import HeaderMatchs from './HeaderMatchs';
 
 let initLiveMatchs = {};
 
@@ -30,7 +29,7 @@ const LiveMatchs = () => {
 
     return (
         <Stack >
-            <Header />
+           <HeaderMatchs/>
             <Stack
                 spacing={3}
                 sx={{

@@ -2,35 +2,17 @@
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-import { ThemeProvider, createTheme, Shadows } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useSelector } from 'react-redux';
 import { RootState } from "./store";
 
-import LoginPage from './components/LoginPage';
 import { NavBarNew } from './components/NavBarNew';
 import { Box, CircularProgress, Stack } from '@mui/material';
-import { InterfaceEnum } from './store/interfacesReducer';
-import { InvitationFriend } from './components/InvitationFriend&Game/InvitationFriend';
-import { InvitationsMenu } from './components/InvitationsMenu';
-import InvitePlayBar from './components/InvitePlayBar';
-import MessageSent from './components/MessageSent';
-import MessageRecieved from './components/MessageRecieved';
-import Rooms from './components/Rooms';
-import { UsersRoom } from './components/UsersRoom';
-import Friends from './components/Friends';
 import { useDispatch } from 'react-redux';
-import { clearUser, initUser } from './store/userReducer';
+import { initUser } from './store/userReducer';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import RoomButtonChat from './components/RoomButtonChat';
-import { ModeGameButton } from './components/Game/ModeGameButton';
-import { ModesInput } from './components/Game/ModesInput';
-import ModeDialog from './components/Game/ModeDialog';
-import { HandleOpeneDialog } from './store/gameReducer';
-import Canvas from './components/canvas';
-import { initSocketClient } from './store/socketReducer';
 import { ToastContainer } from 'react-toastify';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
@@ -82,14 +64,6 @@ function App() {
 		})
 	}, []);
 
-	// useEffect(() => {
-	// 	if (currentIterface === InterfaceEnum.Logout) {
-	// 		removeCookie("login"); removeCookie("username"); removeCookie("avatar"); removeCookie("Authorization");
-	// 		dispatch(clearUser());
-	// 	}
-
-	// }, [currentIterface])
-
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<ToastContainer position="top-right" newestOnTop autoClose={1500} />
@@ -118,6 +92,4 @@ function App() {
 	);
 }
 
-// function 
-//Snackbar MUI to handle Invite Play
 export default App;  

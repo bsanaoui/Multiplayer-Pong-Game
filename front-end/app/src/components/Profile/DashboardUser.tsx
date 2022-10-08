@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material'
 import { Stack } from '@mui/system'
-import { useEffect, useState } from 'react'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import {  useSearchParams } from 'react-router-dom'
 import { Achievements } from './Achievements'
 import { MatchHistory } from './MatchHistory'
 import UserStats from './UserStats'
