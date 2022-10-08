@@ -49,12 +49,9 @@ const Friends = () => {
 
     useEffect(() => {
         getMyFriends();
-        return () => {
-            // setFriends(initFriends);
-            console.log("clear friends");
-        }
         return (() => {
 			setFriends(initFriends);
+            console.log("clear friends");
 		});
     }, [connection]) 
 
