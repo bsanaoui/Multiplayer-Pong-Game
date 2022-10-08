@@ -99,18 +99,6 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser}) {
 			>
 				<Box sx={{ maxWidth: 360 }}>
 					<nav aria-label="main folders">
-						{Props.room.user_role !== 'owner' &&
-							<List dense={true} >
-								<ListItem disablePadding>
-									<ListItemButton onClick={() => { handleClose();leaveRoom() }}>
-										<ListItemIcon>
-											<ExitToAppIcon />
-										</ListItemIcon>
-										<ListItemText primary="Leave" />
-									</ListItemButton>
-								</ListItem>
-							</List>}
-						{Props.room.user_role === 'owner' &&
 							<List dense={true} >
 								<ListItem disablePadding>
 									<ListItemButton onClick={() => { handleClose(); leaveRoom() }}>
@@ -120,6 +108,7 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser}) {
 										<ListItemText primary="Leave" />
 									</ListItemButton>
 								</ListItem>
+								{(Props.room.user_role === 'owner' && Props.room.type === 'protected') &&
 								<ListItem disablePadding>
 									<ListItemButton onClick={() => { handleClose(); handleOpenDialog(ActionInput.ChangePassword) }}>
 										<ListItemIcon>
@@ -127,7 +116,8 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser}) {
 										</ListItemIcon>
 										<ListItemText primary="Change the password" />
 									</ListItemButton>
-								</ListItem>
+								</ListItem>}
+								{(Props.room.user_role === 'owner' && Props.room.type === 'protected') &&
 								<ListItem disablePadding>
 									<ListItemButton onClick={() => { handleClose(); disablePassword() }}>
 										<ListItemIcon>
@@ -135,7 +125,8 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser}) {
 										</ListItemIcon>
 										<ListItemText primary="Disable password" />
 									</ListItemButton>
-								</ListItem>
+								</ListItem>}
+								{Props.room.user_role === 'owner' &&
 								<ListItem disablePadding>
 									<ListItemButton onClick={() => { handleClose(); handleOpenDialog(ActionInput.InviteUSer) }}>
 										<ListItemIcon>
@@ -143,8 +134,8 @@ export default function DropMenuRoom(Props: { room: RoomsOfUser}) {
 										</ListItemIcon>
 										<ListItemText primary="Invite a user" />
 									</ListItemButton>
-								</ListItem>
-							</List>}
+								</ListItem>}
+							</List>
 					</nav>
 					<Divider />
 				</Box>

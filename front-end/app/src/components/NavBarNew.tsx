@@ -22,17 +22,13 @@ import { Button2FA } from './Button2FA';
 import { setCollapse } from '../store/collapseNavReducer';
 import { NavbarCollapsed } from './NavbarCollapsed';
 import { InvitationsMenu } from './InvitationsMenu';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import NavigationIcon from '@mui/icons-material/Navigation';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Form, useLocation, useNavigate } from 'react-router-dom';
 import TwoFADialog from './2FA/TwoFADialog';
 import { TwoFAInput } from './2FA/TwoFAInput';
 import { getProfileNavbar, ProfileNavData } from '../requests/home';
 import axios from 'axios';
-import { clearUser } from '../store/userReducer';
+import { clearUser, initUser } from '../store/userReducer';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-toastify';
 
@@ -58,6 +54,8 @@ export const NavBarNew = () => {
     let avatar: File;
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
+    const dispatch = useDispatch();
+    const [cookies, setCookie, removeCookie] = useCookies();
 
     const handleUploadAvatar = (avatar_uploaded: File) => {
         axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', { avatar: avatar_uploaded }, {
@@ -72,15 +70,21 @@ export const NavBarNew = () => {
 
     const handleChangeUserName = (event: any) => {
         if (event.key === 'Enter') {
-            if (username && username.length < 12 && username.length > 6) {
+            if (username && username.length < 10 && username.length > 6) {
                 axios.post(process.env.REACT_APP_SERVER_IP + '/profile/change_username', { username: username }, {
                     withCredentials: true,
                 })
+                setCookie("username", username);
+                // .then(() => {
+                //     // dispatch(initUser({login:userState.login, username:}))
+                   
+                //     console.log("Holaasfdsfs");
+                // })
                 navigate(0);
                 toast.success("Your username was updated");
             }
             else
-                toast.error("your username must have between 6 and 12 characters!");
+                toast.error("your username must have between 6 and 10 characters!");
         }
     }
 
@@ -110,10 +114,10 @@ export const NavBarNew = () => {
                             badgeContent={
                                 <IconButton component="label" sx={{ background: "#0564FC", width: "25px", height: "25px" }}>
                                     <EditIcon sx={{ width: "18px" }} />
-                                    <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                        if (event.target.files)
-                                            handleUploadAvatar(event.target.files[0]);
-                                    }} />
+                                        <input hidden accept="image/*" type="file" id='avatar' onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                            if (event.target.files)
+                                                handleUploadAvatar(event.target.files[0]);
+                                        }} />
                                 </IconButton>
                             }>
                             <Avatar
@@ -134,7 +138,7 @@ export const NavBarNew = () => {
                                 fontSize="1.4rem"
                                 fontFamily="Lato"
                                 lineHeight="130%">
-                                {logged_user}
+                                {userState.username}
                             </Typography>
                             <Stack direction="row" spacing={0.3} width="100%">
                                 <SportsEsportsIcon sx={{ width: "18px", paddingTop: "3%" }} />

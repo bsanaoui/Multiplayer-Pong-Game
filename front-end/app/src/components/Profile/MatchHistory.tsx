@@ -42,7 +42,7 @@ const ContentField = (Props: matchHistoryProps) => {
 			sx={{
 				height: "70px", width: "100%", background: bg_color,
 			}}>
-			<Box width="8.3%">
+			<Box width="8.3%" marginRight="35px">
 				<Avatar
 					sx={{
 						margin: 'auto',
@@ -53,10 +53,10 @@ const ContentField = (Props: matchHistoryProps) => {
 					alt="Lion" src={Props.url_avatr} imgProps={{ style: { width: 'auto' } }} />
 			</Box>
 			<PlayerTable username={Props.name} level={Props.level} />
-			<Box width="19.5%" paddingLeft="auto"><ScoreTable score_1={Props.score_2} score_2={Props.score_1} /></Box>
-			<div style={{ width: "14%" }} className="typo-table-history">{Props.date}</div>
-			<div style={{ width: "19%" }} className="typo-table-history">{Props.game_type}</div>
-			<div style={{ width: "17%" }} className="typo-table-history">{Props.duration}</div>
+			<Box width="19.5%" marginLeft="26px"><ScoreTable score_1={Props.score_2} score_2={Props.score_1} /></Box>
+			<div style={{ width: "23%" }} className="typo-table-history">{Props.date}</div>
+			<div style={{ width: "18%" }} className="typo-table-history">{Props.game_type}</div>
+			{/* <div style={{ width: "17%" }} className="typo-table-history">{Props.duration}</div> */}
 		</Stack >
 	)
 }
@@ -101,7 +101,7 @@ export const MatchHistory = ({ other_user }: { other_user?: string }) => {
 				<HeaderTable name="Score" />
 				<HeaderTable name="Date" />
 				<HeaderTable name="Game" />
-				<HeaderTable name="Duration" />
+				{/* <HeaderTable name="Duration" /> */}
 			</Stack>
 			<List style={{ width: "100%", overflow: 'auto', height: "100%" }} >
 				{typeof (matchs_history) == typeof (initMatchHistory) && matchs_history.map((item, index) => (

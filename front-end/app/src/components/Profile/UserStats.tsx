@@ -2,6 +2,7 @@ import { Box, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getStatsInfo, UserStatsData } from '../../requests/dashboard'
+import DropMenuUserHome from '../DropMenus/DropMenuUserHome'
 import AvatarProfile from './Elements/AvatarProfile'
 import StatElementBar from './Elements/StatElementBar'
 import StatSegment from './Elements/StatSegment'
@@ -29,6 +30,7 @@ const UserStats = ({ other_user }: { other_user?: string }) => {
 		})
 	}, []);
 
+	
 	return (
 		<Stack alignItems="flex-start" spacing={10} paddingTop="25px"
 			sx={{ backgroundColor: "#3F4478", width: "380px", height: "850px", borderRadius: "30px" }}>
@@ -37,7 +39,7 @@ const UserStats = ({ other_user }: { other_user?: string }) => {
 				<AvatarProfile avatar={user_stats?.avatar} />
 				<Stack alignItems="flex-start" spacing={1}>
 					<Box sx={{ marginLeft: "13px", marginTop: "5px" }}>
-						<UserNameElement login={user_stats?.login} username={user_stats?.username} level={user_stats?.level} />
+						<UserNameElement login={user_stats?.login} username={user_stats?.username} level={user_stats?.level} avatar={user_stats.avatar} />
 					</Box>
 					<StatElementBar total_matches={user_stats?.total_matches} friends={user_stats?.friends} ratio={user_stats?.ratio} />
 				</Stack>

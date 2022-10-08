@@ -32,11 +32,8 @@ import { HandleOpeneDialog } from './store/gameReducer';
 import Canvas from './components/canvas';
 import { initSocketClient } from './store/socketReducer';
 import { ToastContainer } from 'react-toastify';
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
-// import { handleToastGame } from './components/InfoMessages/Toast';
-import { emit } from 'process';
-import { P_data } from './components/DropMenus/DropMenuUser';
 import { disconnectSocketGlobal, initSocketGlobal } from './store/socketGlobalReducer';
 import Main from './components/Main';
 
@@ -68,7 +65,6 @@ const Loading = () => <Box margin="auto"><CircularProgress /><p>Loading ...</p><
 function App() {
 	const dispatch = useDispatch();
 	const logged_user = useSelector((state: RootState) => state.user).login;
-	const currentIterface = useSelector((state: RootState) => state.interfaces).current;
 	const [cookies, setCookie, removeCookie] = useCookies();
 	const location = useLocation();
 	const navigate = useNavigate();

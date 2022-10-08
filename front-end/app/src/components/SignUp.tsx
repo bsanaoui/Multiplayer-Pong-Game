@@ -10,7 +10,6 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-// import backgroundForm from '../assets/background-table.png'
 
 interface UserAccount {
     user_name: string,
@@ -25,22 +24,23 @@ const SignUp = () => {
     const initialValues: UserAccount = { user_name: '', avatar: {} as File };
 
     const validationSchema = Yup.object().shape({
-        user_name: Yup.string().min(8, "It's too short"),
+        user_name: Yup.string().min(5, "It's too short").max(10, "It's too long"),
 
     })
 
     const onSubmit = (values: UserAccount, props: any) => {
         // console.log(values);
+        axios.defaults.withCredentials = true;
         if (values.avatar)
             axios.post(process.env.REACT_APP_SERVER_IP + '/profile/avatar', { avatar: values.avatar }, {
-                withCredentials: true,
+                // withCredentials: true,
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
         if (values.user_name)
             axios.post(process.env.REACT_APP_SERVER_IP + '/profile/change_username', { username: values.user_name }, {
-                withCredentials: true,
+                // withCredentials: true,
             })
         // navigate(0);
         navigate('/home');

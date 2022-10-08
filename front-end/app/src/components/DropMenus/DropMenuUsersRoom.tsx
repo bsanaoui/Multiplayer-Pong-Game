@@ -24,7 +24,7 @@ import seAdminIcon from '../../assets/DropMenus/admin.png'
 import { UserOfRoom } from '../../store/roomUsersReducer';
 import { Socket } from 'socket.io-client';
 import axios from 'axios';
-import { ChatUserPost } from '../../requests/home';
+import { BlockUserPost, ChatUserPost } from '../../requests/home';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { P_data } from './DropMenuUser';
@@ -93,6 +93,10 @@ export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Soc
 		});
 	}
 
+	const HandleblockUser = () => {
+		BlockUserPost(Props.user.login);
+	}
+	
 	const handleSendInviteGame = () => {
 		const p1: P_data = { username: logged_user.username, login: logged_user.login, avatar: logged_user.avatar as string };
 		const p2: P_data = { username: Props.user.username as string, login: Props.user.login as string, avatar: Props.user.avatar as string };
@@ -182,9 +186,15 @@ export default function DropMenuUsersRoom(Props: { user: UserOfRoom, socket: Soc
 								<ListItem disablePadding>
 									<ListItemButton onClick={() => { kickUser(Props.socket, Props.user.login); handleClose() }}>
 										<Avatar variant="square" src={banIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
-										<ListItemText primary="kick off" />
+										<ListItemText primary="kick" />
 									</ListItemButton>
 								</ListItem>}
+								<ListItem disablePadding>
+									<ListItemButton onClick={() => { HandleblockUser();handleClose() }}>
+										<Avatar variant="square" src={banIcon} sx={{ marginRight: "15%", width: "20px", height: "20px" }} />
+										<ListItemText primary="Block" />
+									</ListItemButton>
+								</ListItem>
 						</List>
 					</nav>
 					<Divider />
