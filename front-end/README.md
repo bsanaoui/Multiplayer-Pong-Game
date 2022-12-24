@@ -12,7 +12,7 @@ Pong-Game is a onepage fullstack website where you can play pong with players am
 * `react-cookie: `
 * `react-toastify: `
 * `react-router-dom:`
-* 
+
 # CSS Styles && Tailwindcss:
 
 `* flex justify-between`
