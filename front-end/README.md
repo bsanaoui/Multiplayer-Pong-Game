@@ -1,6 +1,5 @@
 Pong-Game is a onepage fullstack website where you can play pong with players among other things such as 2FA Google, a Direct messaging, friends list, rooms, Dashboard, a Matchmaking system, a watch system and modifications to the pong game such as different gamemodes.
 
-U
 # Installed Libraries:
 * `Material UI: `to use some components
 * `Joy UI: `
